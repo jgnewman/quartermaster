@@ -1,13 +1,12 @@
 import React, {
-  Component,
+  PureComponent,
   ReactNode,
   ReactNodeArray,
 } from "react"
 
-import { noopEvtHandler } from "./lib/noops"
-
-import CloseIcon from "./icons/CloseIcon"
-import Button from "./Button"
+import { noopEvtHandler } from "../lib/noops"
+import CloseIcon from "../icons/CloseIcon"
+import { StyledModalDiv, StyledModalContentDiv, StyledCloseButton } from "./styles"
 
 export interface ModalProps {
   children?: ReactNode | ReactNodeArray
@@ -17,7 +16,7 @@ export interface ModalProps {
   closeHandler?: React.MouseEventHandler
 }
 
-class Modal extends Component<ModalProps> {
+class Modal extends PureComponent<ModalProps> {
   public static displayName = "Modal"
   private body: HTMLElement = window.document.body
 
@@ -57,16 +56,23 @@ class Modal extends Component<ModalProps> {
     } = this.props
 
     return (
-      <div className={`qm-modal ${isOpen ? "is-open" : "is-closed"} ${className || ""}`}>
+      <StyledModalDiv
+        className={`qm-modal ${isOpen ? "is-open" : "is-closed"} ${className || ""}`}
+        isOpen={isOpen}>
+
         {!hideCloseButton && (
-          <Button
+          <StyledCloseButton
             className="qm-modal-close-button"
-            clickHandler={closeHandler || noopEvtHandler}>
+            onClick={closeHandler || noopEvtHandler}>
             <CloseIcon />
-          </Button>
+          </StyledCloseButton>
         )}
-        {children}
-      </div>
+
+        <StyledModalContentDiv>
+          {children}
+        </StyledModalContentDiv>
+
+      </StyledModalDiv>
     )
   }
 }

@@ -4,7 +4,9 @@ import React, {
   ReactNodeArray,
 } from "react"
 
-import { noopEvtHandler } from "./lib/noops"
+import { noopEvtHandler } from "../lib/noops"
+
+import { StyledAnchor, StyledButton } from "./styles"
 
 export interface ButtonProps {
   children?: ReactNode | ReactNodeArray
@@ -59,17 +61,17 @@ class Button extends PureComponent<ButtonProps> {
     switch (tag) {
       case "a":
         return (
-          <a {...dynamicProps}>
+          <StyledAnchor {...dynamicProps}>
             {content}
-          </a>
+          </StyledAnchor>
         )
 
       case "button":
       default:
         return (
-          <button {...dynamicProps}>
+          <StyledButton {...dynamicProps}>
             {content}
-          </button>
+          </StyledButton>
         )
     }
   }

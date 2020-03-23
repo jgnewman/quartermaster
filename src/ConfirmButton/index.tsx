@@ -1,9 +1,9 @@
 import React, { Component } from "react"
 
-import { noopEvtHandler } from "./lib/noops"
+import { noopEvtHandler } from "../lib/noops"
 
-import Button, { ButtonProps } from "./Button"
-import Modal from "./Modal"
+import Button, { ButtonProps } from "../Button"
+import Modal from "../Modal"
 
 export interface ConfirmButtonProps extends ButtonProps {
   confirmationText?: string
@@ -59,32 +59,38 @@ class ConfirmButton extends Component<ConfirmButtonProps, ConfirmButtonState> {
 
     return (
       <>
+
         <Button
           tag={tag}
           text={text}
           className={className}
           isDisabled={isDisabled}
           isProcessing={isProcessing}
-          clickHandler={buttonClickHandler}
-        >
+          clickHandler={buttonClickHandler}>
           {children}
         </Button>
+
         <Modal
-          className="qm-confirm-button"
+          className="qm-confirm-button-modal"
           hideCloseButton={true}
           isOpen={this.state.open}>
-          <div className="qm-confirm-button-content">
-            <h1 className="qm-confirm-button-title">{confirmationText || "Are you sure?"}</h1>
-            <div className="qm-confirm-button-options">
-              <a className="qm-confirm-button-continue" onClick={confirmationContinueHandler}>
-                { confirmationContinueText || "Yes" }
-              </a>
-              <a className="qm-confirm-button-cancel" onClick={confirmationCancelHandler}>
-                { confirmationCancelText || "Nevermind" }
-              </a>
-            </div>
+
+          <h2 className="qm-confirm-button-title">
+            {confirmationText || "Are you sure?"}
+          </h2>
+
+          <div className="qm-confirm-button-options">
+            <Button className="qm-confirm-button-continue" clickHandler={confirmationContinueHandler}>
+              { confirmationContinueText || "Yes" }
+            </Button>
+
+            <Button className="qm-confirm-button-cancel" clickHandler={confirmationCancelHandler}>
+              { confirmationCancelText || "Nevermind" }
+            </Button>
           </div>
+
         </Modal>
+
       </>
     )
   }
