@@ -31,16 +31,16 @@ const config = {
       template: "./app/index.ejs",
       filename: "./index.html",
       favicon: "./app/assets/favicon.png",
-      vars: {}
+      vars: {},
     }),
 
     new MiniCssExtractPlugin({
-      filename: "styles.css"
+      filename: "styles.css",
     }),
 
     new CopyWebpackPlugin([{
       from: "./app/assets",
-      to: "assets"
+      to: "assets",
     }]),
 
     new webpack.DefinePlugin({
@@ -55,8 +55,8 @@ const config = {
         include: [path.resolve(__dirname, "app"), path.resolve(__dirname, "src")],
         enforce: "pre",
         use: {
-          loader: "eslint-loader"
-        }
+          loader: "eslint-loader",
+        },
       },
 
       {
@@ -66,13 +66,13 @@ const config = {
           {
             loader: "babel-loader",
             options: {
-              presets: [["@babel/preset-env", { targets: { ie: "11" } }]]
-            }
+              presets: [["@babel/preset-env", { targets: { ie: "11" } }]],
+            },
           },
           {
-            loader: "ts-loader"
+            loader: "ts-loader",
           },
-        ]
+        ],
       },
 
       {
@@ -81,21 +81,21 @@ const config = {
           {
             loader: "url-loader",
             options: {
-              limit: 10000
-            }
-          }
-        ]
+              limit: 10000,
+            },
+          },
+        ],
       },
 
       {
         test: /\.css$/,
         use: [
           {
-            loader: MiniCssExtractPlugin.loader // creates style nodes from JS strings
+            loader: MiniCssExtractPlugin.loader, // creates style nodes from JS strings
           },
           {
             loader: "css-loader", // translates CSS into CommonJS
-            options: {sourceMap: true}
+            options: {sourceMap: true},
           },
         ],
       },
@@ -104,23 +104,23 @@ const config = {
         test: /\.styl$/,
         use: [
           {
-            loader: MiniCssExtractPlugin.loader // creates style nodes from JS strings
+            loader: MiniCssExtractPlugin.loader,// creates style nodes from JS strings
           },
           {
             loader: "css-loader", // translates CSS into CommonJS
-            options: {sourceMap: true}
+            options: {sourceMap: true},
           },
           {
             loader: "stylus-loader", // compiles stylus to CSS
           },
           {
-            loader: "import-glob-loader" // allows importing directories
+            loader: "import-glob-loader", // allows importing directories
           },
-        ]
+        ],
       },
 
-    ]
-  }
+    ],
+  },
 }
 
 if (process.env.NODE_ENV === "development") {
