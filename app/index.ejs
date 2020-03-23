@@ -1,0 +1,17 @@
+<% const vars = htmlWebpackPlugin.options.vars %>
+<% const isDev = process.env.NODE_ENV === "development" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/ >
+  <title>Hey DJ DJ</title>
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,400i,900,900i" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" rel="stylesheet" />
+  <% if (!isDev) { %><link type="text/css" rel="stylesheet" href="/styles.css" /><% } %>
+</head>
+<body>
+  <div id="app"></div>
+  <script async src="https://api.mqcdn.com/sdk/place-search-js/v1.0.0/place-search.js"></script>
+</body>
+</html>
