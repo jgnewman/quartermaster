@@ -1,9 +1,10 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import { ButtonProps } from "../Button";
 export interface ConfirmButtonProps extends ButtonProps {
+    cancelText?: string;
     confirmationText?: string;
-    confirmationContinueText?: string;
-    confirmationCancelText?: string;
+    continueText?: string;
+    postCancelHook?: React.MouseEventHandler;
 }
 interface ConfirmButtonState {
     open: boolean;

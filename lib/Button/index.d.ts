@@ -1,12 +1,12 @@
 import React, { PureComponent, ReactNode, ReactNodeArray } from "react";
 export interface ButtonProps {
     children?: ReactNode | ReactNodeArray;
-    tag?: "a" | "button";
-    text?: string;
     className?: string;
+    clickHandler?: React.MouseEventHandler;
     isDisabled?: boolean;
     isProcessing?: boolean;
-    clickHandler?: React.MouseEventHandler;
+    tag?: "a" | "button";
+    text?: string;
 }
 declare class Button extends PureComponent<ButtonProps> {
     static displayName: string;

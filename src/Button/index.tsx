@@ -10,12 +10,12 @@ import { StyledAnchor, StyledButton } from "./styles"
 
 export interface ButtonProps {
   children?: ReactNode | ReactNodeArray
-  tag?: "a" | "button"
-  text?: string
   className?: string
+  clickHandler?: React.MouseEventHandler
   isDisabled?: boolean
   isProcessing?: boolean
-  clickHandler?: React.MouseEventHandler
+  tag?: "a" | "button"
+  text?: string
 }
 
 interface DynamicProps {
@@ -28,12 +28,12 @@ class Button extends PureComponent<ButtonProps> {
   render() {
     const {
       children,
-      tag,
-      text,
       className,
+      clickHandler,
       isDisabled,
       isProcessing,
-      clickHandler,
+      tag,
+      text,
     } = this.props
 
     const buttonClickHandler = clickHandler || noopEvtHandler

@@ -24,6 +24,10 @@ class App extends React.Component {
     this.setState({ counter: this.state.counter + 1 })
   }
 
+  decrementCounter() {
+    this.setState({ counter: this.state.counter - 1 })
+  }
+
   render() {
     return (
       <div>
@@ -40,7 +44,9 @@ class App extends React.Component {
         </QM.Button>
 
         <QM.ConfirmButton
-          clickHandler={this.incrementCounter.bind(this)}>
+          cancelText="No, decrement it!"
+          clickHandler={this.incrementCounter.bind(this)}
+          postCancelHook={this.decrementCounter.bind(this)}>
           Click me to increment counter
         </QM.ConfirmButton>
 

@@ -6,9 +6,10 @@ import Button, { ButtonProps } from "../Button"
 import Modal from "../Modal"
 
 export interface ConfirmButtonProps extends ButtonProps {
+  cancelText?: string
   confirmationText?: string
-  confirmationContinueText?: string
-  confirmationCancelText?: string
+  continueText?: string
+  postCancelHook?: React.MouseEventHandler
 }
 
 interface ConfirmButtonState {
@@ -30,15 +31,12 @@ class ConfirmButton extends Component<ConfirmButtonProps, ConfirmButtonState> {
   render() {
     const {
       children,
-      className,
       clickHandler,
-      confirmationCancelText,
-      confirmationContinueText,
+      cancelText,
+      continueText,
       confirmationText,
-      isDisabled,
-      isProcessing,
-      tag,
-      text,
+      postCancelHook,
+      ...rest
     } = this.props
 
     const buttonClickHandler = (evt: React.MouseEvent) => {
@@ -55,18 +53,18 @@ class ConfirmButton extends Component<ConfirmButtonProps, ConfirmButtonState> {
     const confirmationCancelHandler = (evt: React.MouseEvent) => {
       evt.preventDefault()
       this.closeConfirmation()
+      return (postCancelHook || noopEvtHandler)(evt)
+    }
+
+    const buttonProps = {
+      ...rest,
+      clickHandler: buttonClickHandler,
     }
 
     return (
       <>
 
-        <Button
-          tag={tag}
-          text={text}
-          className={className}
-          isDisabled={isDisabled}
-          isProcessing={isProcessing}
-          clickHandler={buttonClickHandler}>
+        <Button {...buttonProps}>
           {children}
         </Button>
 
@@ -81,11 +79,11 @@ class ConfirmButton extends Component<ConfirmButtonProps, ConfirmButtonState> {
 
           <div className="qm-confirm-button-options">
             <Button className="qm-confirm-button-continue" clickHandler={confirmationContinueHandler}>
-              { confirmationContinueText || "Yes" }
+              { continueText || "Yes" }
             </Button>
 
             <Button className="qm-confirm-button-cancel" clickHandler={confirmationCancelHandler}>
-              { confirmationCancelText || "Nevermind" }
+              { cancelText || "Nevermind" }
             </Button>
           </div>
 

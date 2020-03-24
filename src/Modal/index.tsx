@@ -11,9 +11,9 @@ import { StyledModalDiv, StyledModalContentDiv, StyledCloseButton } from "./styl
 export interface ModalProps {
   children?: ReactNode | ReactNodeArray
   className?: string
-  isOpen: boolean
-  hideCloseButton?: boolean
   closeHandler?: React.MouseEventHandler
+  hideCloseButton?: boolean
+  isOpen: boolean
 }
 
 class Modal extends PureComponent<ModalProps> {
@@ -57,9 +57,9 @@ class Modal extends PureComponent<ModalProps> {
     const {
       children,
       className,
-      isOpen,
-      hideCloseButton,
       closeHandler,
+      hideCloseButton,
+      isOpen,
     } = this.props
 
     return (

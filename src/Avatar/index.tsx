@@ -7,11 +7,11 @@ import {
   StyledAvatarContentSpan,
 } from "./styles"
 
-interface AvatarProps {
+export interface AvatarProps {
   className?: string
-  url?: string
-  showActivity?: boolean
   isActive?: boolean
+  showActivity?: boolean
+  url?: string
 }
 
 interface DynamicProps {
@@ -20,9 +20,9 @@ interface DynamicProps {
 
 function Avatar({
   className,
-  url,
-  showActivity,
   isActive,
+  showActivity,
+  url,
 }: AvatarProps) {
 
   const style: DynamicProps = {}
