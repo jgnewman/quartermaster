@@ -28,6 +28,12 @@ class App extends React.Component {
     return (
       <div>
 
+        <QM.Avatar
+          showActivity
+          isActive
+          url="https://s.gravatar.com/avatar/cee1d21082337cc54cf9cf07339411e1?size=50&default=retro"
+        />
+
         <QM.Button
           clickHandler={this.openModal.bind(this)}>
           Click me to open modal

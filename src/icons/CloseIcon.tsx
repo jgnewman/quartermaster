@@ -20,8 +20,7 @@ const CloseIcon = ({ className, title }: CloseIconProps) => {
       height="13px"
       viewBox="0 0 13 13"
       version="1.1"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+      xmlns="http://www.w3.org/2000/svg">
       <title>{ title || "Close symbol" }</title>
       <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
         <path fill="#FFFFFF" fillRule="nonzero" d={pathData}></path>
