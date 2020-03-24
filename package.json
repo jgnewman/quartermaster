@@ -8,7 +8,7 @@
   "sideEffects": false,
   "scripts": {
     "start": "NODE_ENV=development webpack-dev-server --http --color --progress --inline --mode development --offline",
-    "build": "NODE_ENV=production rm -rf ./dist && tsc --rootDir src --outDir dist --declaration"
+    "build": "NODE_ENV=production rm -rf ./lib && tsc --rootDir src --outDir ./lib --declaration"
   },
   "repository": {
     "type": "git",
