@@ -3,12 +3,12 @@
   "access": "restricted",
   "version": "0.0.0-semantic-release",
   "description": "A shared component library",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "sideEffects": false,
   "scripts": {
     "start": "NODE_ENV=development webpack-dev-server --http --color --progress --inline --mode development --offline",
-    "build": "NODE_ENV=production rm -rf ./lib && tsc --rootDir src --outDir ./lib --declaration"
+    "build": "NODE_ENV=production rm -rf lib && tsc --rootDir src --outDir lib --declaration"
   },
   "repository": {
     "type": "git",
