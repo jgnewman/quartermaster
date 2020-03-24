@@ -1,7 +1,6 @@
 {
-  "name": "quartermaster",
-  "access": "restricted",
-  "version": "0.0.0-semantic-release",
+  "name": "@jgnewman/quartermaster",
+  "version": "0.0.1",
   "description": "A shared component library",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -15,7 +14,7 @@
     "url": "git+https://github.com/jgnewman/quartermaster.git"
   },
   "author": "John Newman",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/jgnewman/quartermaster/issues"
   },
@@ -58,5 +57,11 @@
     "react": "^16.x.x",
     "styled-components": "^5.0.1"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "directories": {
+    "lib": "lib"
+  },
+  "bin": {
+    "quartermaster": "release.js"
+  }
 }
