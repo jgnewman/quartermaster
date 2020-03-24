@@ -19,13 +19,20 @@ export interface ModalProps {
 class Modal extends PureComponent<ModalProps> {
   public static displayName = "Modal"
   private body: HTMLElement = window.document.body
+  private originalBodyHeight: string = this.body.style.height
+  private originalBodyOverflow: string = this.body.style.overflow
 
   disableScrolling() {
-    this.body.setAttribute("style", "height: 100%; overflow: hidden;")
+    this.originalBodyHeight = this.body.style.height
+    this.originalBodyOverflow = this.body.style.overflow
+
+    this.body.style.height = "100%"
+    this.body.style.overflow = "hidden"
   }
 
   enableScrolling() {
-    this.body.removeAttribute("style")
+   this.body.style.height = this.originalBodyHeight
+   this.body.style.overflow = this.originalBodyOverflow
   }
 
   handleScrolling() {
