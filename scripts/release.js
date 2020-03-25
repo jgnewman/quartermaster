@@ -3,6 +3,7 @@ const package = require("../package.json")
 
 // ex: jgnewman/quartermaster
 const apiPath = package.repository.url.replace(/^[^\.]+\.com\/|\.git$/g, "")
+const releaseType = process.argv[2] || "inc"
 
 async function getBranches() {
   const branchesURL = `https://api.github.com/repos/${apiPath}/branches`
@@ -12,10 +13,22 @@ async function getBranches() {
 
 async function getLatestVersion() {
   const branches = await getBranches()
-  console.log(branches)
+  const versionBranches = branches.filter(branch => /^v\d/.test(branch.name))
+  const latestBranch = versionBranches.sort((a, b) => {
+    if (a.name < b.name) {
+      return 1
+    } else if (a.name > b.name) {
+      return -1
+    } else {
+      return 0
+    }
+  })[0]
+  return latestBranch.name
 }
 
 getLatestVersion()
+
+console.log(releaseType)
 
 /*
 Plan is to...
