@@ -1,6 +1,6 @@
 {
   "name": "quartermaster",
-  "version": "0.0.1",
+  "version": "0.0.0-semantic",
   "description": "A shared component library",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -8,7 +8,7 @@
   "scripts": {
     "start": "NODE_ENV=development webpack-dev-server --http --color --progress --inline --mode development --offline",
     "build": "NODE_ENV=production rm -rf dist && tsc --rootDir src --outDir dist --declaration",
-    "release": "npm run build && node scripts/release"
+    "release": ". .env && node scripts/release"
   },
   "repository": {
     "type": "git",
