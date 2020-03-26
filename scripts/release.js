@@ -48,6 +48,26 @@ async function getBranches() {
   return branches.json()
 }
 
+async function createRelease(version, description) {
+  const releaseURL = `https://api.github.com/repos/${apiPath}/releases`
+  const result = await fetch(releaseURL, {
+    method: "POST",
+    headers: {
+      Authorization: `token ${process.env.GITHUB_TOKEN}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      tag_name: version,
+      target_commitish: version,
+      name: version,
+      body: description,
+      draft: false,
+      prerelease: false
+    }),
+  })
+  return result.json()
+}
+
 async function getLatestVersion() {
   const branches = await getBranches()
   const versionBranches = branches.filter(branch => /^v\d/.test(branch.name))
@@ -96,7 +116,8 @@ async function release() {
     await execPromise(`git status`)
     console.log("\n")
 
-    logWarn("Do not attempt to create a new release if you have uncommited changes.")
+    logWarn("Sanity check! Make sure you don't have uncommit changes before proceeding.")
+    logWarn("Sanity check! Make sure you are creating your release from master.\n")
     const { confirmed } = await prompts({
       type: "confirm",
       name: "confirmed",
@@ -108,7 +129,26 @@ async function release() {
       return
     }
 
+    const { description } = await prompts({
+      type: "text",
+      name: "description",
+      message: "Please describe your release:",
+    })
+    log("If you don't like your release message you can always change it in github!")
+
+    log(`Checking out branch ${newVersion}...`)
     await execPromise(`git checkout -b ${newVersion}`)
+
+    log("Pushing new release...")
+    await execPromise(`git push origin ${newVersion}`)
+
+    log("Registering branch as release with github...")
+    await createRelease(newVersion, description)
+
+    log("Returning to master branch...")
+    await execPromise("git checkout master")
+
+    log("Release created successfully.")
 
   } catch (err) {
     logErr(err)
