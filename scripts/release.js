@@ -133,7 +133,6 @@ async function release() {
       type: "text",
       name: "description",
       message: "Please describe your release:",
-      validate: value => !!value.trim.length
     })
     log("If you don't like your release message you can always change it in github!")
 
