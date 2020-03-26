@@ -162,12 +162,3 @@ async function release() {
 }
 
 release()
-
-/*
-Plan is to...
-
-create a new branch named with the new version and switch over to it,
-run a build then copy everything from dist over to lib,
-commit and push to the new branch,
-switch back to master branch.
-*/

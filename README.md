@@ -1,8 +1,8 @@
 # quartermaster
-A shared React component library.
+A shared React component library. Read the [contributing guide](https://github.com/jgnewman/quartermaster/blob/master/CONTRIBUTING.md) to pitch in!
 
 ## Installation
-Currently quartermaster is private, not published on npm so installation should be done via `npm install jgnewman/quartermaster` and will fail for anyone without read access to the repository.
+Currently quartermaster is private, not published on npm so installation should be done via `npm install jgnewman/quartermaster#<RELEASE_BRANCH>` where `RELEASE_BRANCH` matches an existing release tag such as `v0.0.1`. It will currently fail for anyone without read access to the repository.
 
 Note that quartermaster does not have any dependencies but it does require two peer dependencies namely React and styled-components. This allows your app to determine the proper versions of these packages, thus allowing you to avoid duplicates.
 
