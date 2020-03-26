@@ -139,8 +139,14 @@ async function release() {
     log(`Checking out branch ${newVersion}...`)
     await execPromise(`git checkout -b ${newVersion}`)
 
-    log("Pushing new release...")
-    await execPromise(`git push origin ${newVersion}`)
+    log(`Building library...`)
+    await execPromise(`npm run build`)
+
+    log(`Copying files...`)
+    await execPromise(`mkdir ./lib && cp -R ./dist/* ./lib`)
+
+    log("Committing and pushing new release...")
+    await execPromise(`git add . && git commit -m "Create release ${newVersion}" && git push origin ${newVersion}`)
 
     log("Registering branch as release with github...")
     await createRelease(newVersion, description)
