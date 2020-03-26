@@ -8,7 +8,7 @@
   "scripts": {
     "start": "NODE_ENV=development webpack-dev-server --http --color --progress --inline --mode development --offline",
     "build": "NODE_ENV=production rm -rf dist && tsc --rootDir src --outDir dist --declaration",
-    "release": ". .env && node scripts/release"
+    "release": ". ./.env && node scripts/release"
   },
   "repository": {
     "type": "git",
@@ -37,11 +37,13 @@
     "eslint": "^6.8.0",
     "eslint-loader": "^3.0.3",
     "eslint-plugin-react": "^7.19.0",
+    "exec-sh": "^0.3.4",
     "file-loader": "^6.0.0",
     "html-webpack-plugin": "^3.2.0",
     "import-glob-loader": "^1.1.0",
     "mini-css-extract-plugin": "^0.9.0",
     "node-fetch": "^2.6.0",
+    "prompts": "^2.3.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "styled-components": "^5.0.1",
