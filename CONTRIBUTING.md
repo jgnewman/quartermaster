@@ -30,7 +30,11 @@ Because quartermaster uses TypeScript, you may want to view your component's com
 
 ## Releasing
 
-If you have write access to the repository you can create quartermaster releases using the automated release script.
+If you have write access to the repository you can create quartermaster releases using the automated release script. Before using this script you will need to generate a github auth token with full read access and place it in a file called `.env` at the root of this project. For example:
+
+```
+export GITHUB_TOKEN="asdfasdfadsfasdfafd"
+```
 
 To prepare for a new, automated release, first make sure that you have no uncommitted changes and that you are on the master branch. This is important because the release script will generate a new release from the branch you are currently on and it will automatically perform a git commit and a git push.
 
