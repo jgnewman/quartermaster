@@ -57,6 +57,21 @@ interface ButtonProps {
 - custom sizes
 - specify rounded corners maybe
 
+### CharLimitCounter
+Displays a counter in relation to a limit, for example `22 / 25` as well as a colored progress bar indicating how close the counter is coming to the limit. This component is most commonly enabled automatically via props passed to the TextField component, but is available for use independently.
+
+```typescript
+interface CharLimitCounterProps {
+  className?: string
+  count: number
+  hideProgressBar?: boolean
+  hideText?: boolean
+  limit: number
+  limitIsMinimum?: boolean // indicates that the count should be greater than limit
+  suffix?: string // a unit to append to limit, for example "px"
+}
+```
+
 ### ConfirmButton
 Behaves similarly to `Button` but intercepts the click handler with a confirmation modal allowing the user to confirm or cancel the action taken before firing the initial click handler. If the action is canceled, the click handler is not fired and the modal is closed. You can specify the confirmation text as well as the text on both the confirm or cancel buttons, all of which have defaults.
 
@@ -85,8 +100,39 @@ interface ModalProps {
 }
 ```
 
+### TextField
+Generates an input field or textarea as specified by props. Allows capturing the field ref via a function such as `elem => this.myRef = elem`. Takes both a `changeHandler` and a `keyUpHandler` that you can use to capture new values and capture things like enter key presses. Allows enabling character limits, setting a label and placeholder, marking the field as disabled, and displaying error text.
+
+```typescript
+interface TextFieldProps {
+  changeHandler?: React.ChangeEventHandler
+  charLimit?: number // Enables a CharLimitCounter component on the field
+  charLimitIsMinimum?: boolean
+  children?: ReactNode | ReactNodeArray
+  className?: string
+  dangerouslyAutoTruncateLimitBreakingValues?: boolean
+  defaultValue?: string
+  disabled?: boolean
+  enableTextAreaResize?: boolean
+  errorText?: string
+  fieldRef?: (elem: HTMLElement | null) => void
+  hideCharLimitProgress?: boolean
+  hideCharLimitText?: boolean
+  id?: string
+  ignoreLastPass?: boolean
+  keyUpHandler?: React.KeyboardEventHandler
+  label?: string
+  placeholder?: string
+  preventInputAtLimit?: boolean // Stops firing events once the char limit has been reached
+  tabIndex?: number
+  type?: string // For example "text" | "tel" | "password"
+  value?: string
+}
+```
+
+With regard to `dangerouslyAutoTruncateLimitBreakingValues`, this prop is rarely ever needed but is applicable in any case where you might attempt to pass a value to the text field that is greater than a provided char limit, assuming the character count is not expected to be greater than the limit. With this prop set to true, the component will automatically truncate the provided value and fire both a `change` and `keyUp` event with the new value. The prop is labeled as dangerous because if you are not handling these events in such a way that the component re-renders with the new, truncated value, you will trigger an infinitely recursive loop.
+
 ## General Todos
 - Create some default CSS values for styled-components
 - Create new components (forms and fields)
-  - Do any necessary styled-component stuff for charlimitcounter and text field
 - Pick correct real deps and peer deps (ex: react, styled-components)

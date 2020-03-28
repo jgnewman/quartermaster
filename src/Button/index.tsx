@@ -4,7 +4,7 @@ import React, {
   ReactNodeArray,
 } from "react"
 
-import { noopEvtHandler } from "../lib/noops"
+import { noopEvtHandler } from "../lib/helpers"
 
 import { StyledAnchor, StyledButton } from "./styles"
 

@@ -4,7 +4,7 @@ import React, {
   ReactNodeArray,
 } from "react"
 
-import { noopEvtHandler } from "../lib/noops"
+import { noopEvtHandler } from "../lib/helpers"
 import CloseIcon from "../icons/CloseIcon"
 import { StyledModalDiv, StyledModalContentDiv, StyledCloseButton } from "./styles"
 

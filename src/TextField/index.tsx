@@ -4,22 +4,35 @@ import React, {
   ReactNodeArray,
 } from "react"
 
+import {
+  StyledInputWrapperDiv,
+  StyledInput,
+  StyledTextArea,
+  StyledTextAreaLabel,
+  StyledTextAreaErr,
+} from "./styles"
+
+import { manuallySetFieldValue } from "../lib/helpers"
 import CharLimitCounter from "../CharLimitCounter"
 
 export interface TextFieldProps {
   changeHandler?: React.ChangeEventHandler
   charLimit?: number
+  charLimitIsMinimum?: boolean
   children?: ReactNode | ReactNodeArray
   className?: string
+  dangerouslyAutoTruncateLimitBreakingValues?: boolean // almost never necessary
   defaultValue?: string
   disabled?: boolean
+  enableTextAreaResize?: boolean
   errorText?: string
   fieldRef?: (elem: HTMLElement | null) => void // function like (elem => this.myRef = elem)
+  hideCharLimitProgress?: boolean
+  hideCharLimitText?: boolean
   id?: string
   ignoreLastPass?: boolean
   keyUpHandler?: React.KeyboardEventHandler
   label?: string
-  limitIsMinimum?: boolean
   placeholder?: string
   preventInputAtLimit?: boolean
   tabIndex?: number
@@ -27,23 +40,21 @@ export interface TextFieldProps {
   value?: string
 }
 
-interface TextFieldState {
-  valueLength: number
-}
-
 interface DynamicProps {
   [key: string]: unknown
 }
 
-class TextField extends Component<TextFieldProps, TextFieldState> {
-  public displayName = "TextField"
-  public state: TextFieldState = { valueLength: 0 }
-  private inputRef: HTMLElement | null
+type InputElem = HTMLInputElement | HTMLTextAreaElement
+type NullableInputElem = InputElem | null
 
-  shouldPreventInput(evtTarget: HTMLInputElement) {
+class TextField extends Component<TextFieldProps> {
+  public displayName = "TextField"
+  private inputRef: NullableInputElem
+
+  shouldPreventInput(evtTarget: InputElem) {
     const {
       charLimit,
-      limitIsMinimum,
+      charLimitIsMinimum,
       preventInputAtLimit,
       value="",
     } = this.props
@@ -51,7 +62,7 @@ class TextField extends Component<TextFieldProps, TextFieldState> {
     const newValue = evtTarget.value
 
     return typeof charLimit !== "undefined"
-      && !limitIsMinimum
+      && !charLimitIsMinimum
       && preventInputAtLimit
       && value.length >= charLimit
       && newValue.length > value.length
@@ -60,7 +71,7 @@ class TextField extends Component<TextFieldProps, TextFieldState> {
   handleChange(evt: React.ChangeEvent) {
     const { changeHandler, type } = this.props
 
-    const target = evt.target as HTMLInputElement
+    const target = evt.target as InputElem
     const shouldPreventInput = this.shouldPreventInput(target)
 
     if (type === "textarea" && this.inputRef) {
@@ -71,10 +82,6 @@ class TextField extends Component<TextFieldProps, TextFieldState> {
       return
     }
 
-    this.setState({
-      valueLength: target.value.length,
-    })
-
     if (changeHandler) {
       changeHandler(evt)
     }
@@ -84,12 +91,46 @@ class TextField extends Component<TextFieldProps, TextFieldState> {
     const { keyUpHandler } = this.props
 
     if (keyUpHandler) {
-      if (this.shouldPreventInput(evt.target as HTMLInputElement)) {
+      if (this.shouldPreventInput(evt.target as InputElem)) {
         return
       }
 
       keyUpHandler(evt)
     }
+  }
+
+  maybeTruncateValue() {
+    const {
+      charLimit = 0,
+      dangerouslyAutoTruncateLimitBreakingValues = false,
+      charLimitIsMinimum = false,
+      preventInputAtLimit = false,
+      type,
+      value = "",
+    } = this.props
+
+    const { inputRef } = this
+    const shouldAutoTrunc = charLimit &&
+                            !charLimitIsMinimum &&
+                            preventInputAtLimit &&
+                            dangerouslyAutoTruncateLimitBreakingValues &&
+                            value.length > charLimit
+
+    // In case a value is passed in that is greater than our limit,
+    // we want to trigger a keyup/change event with a truncated value.
+    if (inputRef && shouldAutoTrunc) {
+      const newValue = value.slice(0, charLimit)
+      const isTextArea = type === "textArea"
+      manuallySetFieldValue(inputRef, newValue, isTextArea, ["keyup", "change"])
+    }
+  }
+
+  componentDidUpdate() {
+    this.maybeTruncateValue()
+  }
+
+  componentDidMount() {
+    this.maybeTruncateValue()
   }
 
   render() {
@@ -99,12 +140,15 @@ class TextField extends Component<TextFieldProps, TextFieldState> {
       className,
       defaultValue,
       disabled,
+      enableTextAreaResize,
       errorText,
       fieldRef,
+      hideCharLimitProgress,
+      hideCharLimitText,
       id,
       ignoreLastPass,
       label,
-      limitIsMinimum,
+      charLimitIsMinimum,
       placeholder,
       tabIndex,
       type,
@@ -134,23 +178,7 @@ class TextField extends Component<TextFieldProps, TextFieldState> {
       dynamicProps["data-lpignore"] = true
     }
 
-    if (charLimit) {
-      const defaultFieldPadding = isTextArea ? 12 : 16
-      const charLimitTextSize = isTextArea ? 24 : charLimit.toString().length
-      const paddingPerChar = isTextArea ? 1 : 22
-
-      if (isTextArea) {
-        dynamicProps.style = {
-          paddingBottom: `${(charLimitTextSize * paddingPerChar) + defaultFieldPadding}px`,
-        }
-      } else {
-        dynamicProps.style = {
-          paddingRight: `${(charLimitTextSize * paddingPerChar) + (defaultFieldPadding * 2)}px`,
-        }
-      }
-    }
-
-    const refFn = (elem: HTMLElement | null) => {
+    const refFn = (elem: NullableInputElem) => {
       this.inputRef = elem
       if (fieldRef) {
         fieldRef(elem)
@@ -171,46 +199,59 @@ class TextField extends Component<TextFieldProps, TextFieldState> {
       <div className={`${classNames.join(" ")} ${className || ""}`}>
 
         {label && (
-          <label className="qm-text-field-label">{ label }</label>
+          <StyledTextAreaLabel className="qm-text-field-label">
+            {label}
+          </StyledTextAreaLabel>
         )}
 
-        <div className={`qm-text-field-input-wrapper`}>
+        <StyledInputWrapperDiv
+          className={`qm-text-field-input-wrapper`}
+          isTextArea={isTextArea}>
+
           {isTextArea && (
-            <textarea
-              ref={refFn}
+            <StyledTextArea
+              charLimit={charLimit}
               className="qm-text-field-input textarea"
-              placeholder={placeholder || ""}
               disabled={disabled || false}
+              enableTextAreaResize={!!enableTextAreaResize}
+              hideCharLimitText={hideCharLimitText}
               onChange={this.handleChange.bind(this)}
               onKeyUp={this.handleKeyUp.bind(this)}
+              placeholder={placeholder || ""}
+              ref={refFn}
               {...dynamicProps}
             />
           )}
 
           {!isTextArea && (
-            <input
-              ref={refFn}
+            <StyledInput
+              charLimit={charLimit}
               className="qm-text-field-input field"
-              type={type || "text"}
-              placeholder={placeholder || ""}
               disabled={disabled || false}
+              hideCharLimitText={hideCharLimitText}
               onChange={this.handleChange.bind(this)}
               onKeyUp={this.handleKeyUp.bind(this)}
+              placeholder={placeholder || ""}
+              ref={refFn}
+              type={type || "text"}
               {...dynamicProps}
             />
           )}
-        </div>
 
-        {charLimit && (
-          <CharLimitCounter
-            limit={charLimit}
-            limitIsMinimum={!!limitIsMinimum}
-            count={this.state.valueLength}
-          />
-        )}
+          {charLimit && (
+            <CharLimitCounter
+              className="qm-text-field-limit-counter"
+              count={typeof value === "string" ? value.length : 0}
+              hideProgressBar={!!hideCharLimitProgress}
+              hideText={!!hideCharLimitText}
+              limit={charLimit}
+              limitIsMinimum={!!charLimitIsMinimum}
+            />
+          )}
+        </StyledInputWrapperDiv>
 
         {errorText && (
-          <span className="qm-text-field-error-msg">{errorText}</span>
+          <StyledTextAreaErr className="qm-text-field-error-msg">{errorText}</StyledTextAreaErr>
         )}
 
         {children}

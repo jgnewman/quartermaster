@@ -62,15 +62,32 @@ class App extends React.Component {
         </QM.Modal>
 
         <QM.TextField
-          label="My Label"
+          label="My Input"
           type="text"
           disabled={false}
           placeholder="Say something here"
-          charLimit={25}
+          charLimit={150}
           preventInputAtLimit={true}
           value={this.state.fieldVal}
           changeHandler={this.setFieldVal.bind(this)}
           errorText=""
+        />
+
+        <QM.TextField
+          label="My Textarea"
+          type="textarea"
+          disabled={false}
+          placeholder="Say something here"
+          charLimit={150}
+          preventInputAtLimit={true}
+          value={this.state.fieldVal}
+          changeHandler={this.setFieldVal.bind(this)}
+          errorText=""
+        />
+
+        <QM.CharLimitCounter
+          limit={150}
+          count={this.state.fieldVal.length}
         />
 
         <div>

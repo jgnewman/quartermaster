@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 
-import { noopEvtHandler } from "../lib/noops"
+import { noopEvtHandler } from "../lib/helpers"
 
 import Button, { ButtonProps } from "../Button"
 import Modal from "../Modal"

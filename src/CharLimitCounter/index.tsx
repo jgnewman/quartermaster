@@ -1,20 +1,27 @@
 import React from "react"
 
+import {
+  StyledCounterBarSpan,
+  StyledFillBarSpan,
+} from "./styles"
+
 export interface CharLimitCounterProps {
   className?: string
-  limit: number
   count: number
-  limitIsMinimum?: boolean
+  hideProgressBar?: boolean
   hideText?: boolean
+  limit: number
+  limitIsMinimum?: boolean
   suffix?: string
 }
 
 const CharLimitCounter = ({
   className,
-  limit,
   count,
-  limitIsMinimum,
+  hideProgressBar,
   hideText,
+  limit,
+  limitIsMinimum,
   suffix,
 }: CharLimitCounterProps) => {
 
@@ -59,23 +66,26 @@ const CharLimitCounter = ({
   }
 
   const fillWidth = (count / limit) * 100
-  const style = {
-    width: fillWidth > 100 ? "100%" : `${fillWidth}%`,
-  }
+  const styleWidth = fillWidth > 100 ? "100%" : `${fillWidth}%`
 
   return (
     <div className={`qm-char-limit-counter ${colorClass} ${className || ""}`}>
       {!hideText && (
         <span className="qm-char-limit-counter-text">
-          <span className="qm-char-limit-current-count">{count || "0"}</span> / {limit} {suffix || ""}
+          <span className="qm-char-limit-count">
+            {count || "0"}
+          </span>
+          <span className="qm-char-limit-divider"> / </span>
+          <span className="qm-char-limit-total">
+            {limit}{suffix || ""}
+          </span>
         </span>
       )}
-      <span className="qm-char-limit-counter-bar">
-        <span
-          className="qm-char-limit-counter-bar-fill"
-          style={style}>
-        </span>
-      </span>
+      {!hideProgressBar && (
+        <StyledCounterBarSpan className="qm-char-limit-counter-bar">
+          <StyledFillBarSpan className={`qm-char-limit-counter-bar-fill ${colorClass}`} width={styleWidth} />
+        </StyledCounterBarSpan>
+      )}
     </div>
   )
 }
