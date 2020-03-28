@@ -88,4 +88,5 @@ interface ModalProps {
 ## General Todos
 - Create some default CSS values for styled-components
 - Create new components (forms and fields)
+  - Do any necessary styled-component stuff for charlimitcounter and text field
 - Pick correct real deps and peer deps (ex: react, styled-components)

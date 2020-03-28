@@ -10,6 +10,7 @@ class App extends React.Component {
   public state = {
     modalOpen: false,
     counter: 0,
+    fieldVal: "",
   }
 
   openModal() {
@@ -26,6 +27,10 @@ class App extends React.Component {
 
   decrementCounter() {
     this.setState({ counter: this.state.counter - 1 })
+  }
+
+  setFieldVal(evt: React.ChangeEvent) {
+    this.setState({ fieldVal: (evt.target as HTMLInputElement).value })
   }
 
   render() {
@@ -55,6 +60,22 @@ class App extends React.Component {
           closeHandler={this.closeModal.bind(this)}>
           This is a modal
         </QM.Modal>
+
+        <QM.TextField
+          label="My Label"
+          type="text"
+          disabled={false}
+          placeholder="Say something here"
+          charLimit={25}
+          preventInputAtLimit={true}
+          value={this.state.fieldVal}
+          changeHandler={this.setFieldVal.bind(this)}
+          errorText=""
+        />
+
+        <div>
+          This is the field value: {this.state.fieldVal}
+        </div>
 
         <div>
           Here is a counter: {this.state.counter}
