@@ -1,16 +1,39 @@
+import {
+  DynamicProps,
+  InputElem,
+} from "./helperTypes"
+
 export function noopEvtHandler() { return }
 
-interface DynamicProps {
-  [key: string]: unknown
+type VoidStringFn = (s: string) => void
+type ElemTypeString = "HTMLInputElement" | "HTMLTextAreaElement"
+
+function getInputSetter(elemType: ElemTypeString, propName: string) {
+  const proto = window[elemType].prototype
+  return (Object.getOwnPropertyDescriptor(proto, propName) as DynamicProps).set as VoidStringFn
 }
 
-type InputElem = HTMLInputElement | HTMLTextAreaElement
-type StringFn = (s: string) => void
-
-export function manuallySetFieldValue(ref: InputElem, value: string, isTextArea: boolean, events: string[] = []) {
-  const proto = window[isTextArea ? "HTMLTextAreaElement" : "HTMLInputElement"].prototype
-  const inputSetter = (Object.getOwnPropertyDescriptor(proto, "value") as DynamicProps).set as StringFn
-
+export function manuallySetFieldValue(
+  ref: InputElem,
+  value: string,
+  isTextArea: boolean,
+  events: string[] = [],
+) {
+  const inputSetter = getInputSetter(isTextArea ? "HTMLTextAreaElement" : "HTMLInputElement", "value")
   inputSetter.call(ref, value)
-  events.forEach(evtName => ref.dispatchEvent(new Event(evtName, { bubbles: true })))
+  events.forEach(evtName => ref.dispatchEvent(new Event(evtName, { bubbles: true, cancelable: true })))
+}
+
+declare global {
+  interface Window {
+    [key: string]: unknown
+  }
+}
+
+export function manuallyTickCheckbox(ref: HTMLInputElement) {
+  ref.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true }))
+}
+
+export function manuallyTickRadioButton(ref: HTMLInputElement) {
+  ref.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true }))
 }

@@ -1,5 +1,5 @@
 import React, {
-  Component,
+  PureComponent,
   ReactNode,
   ReactNodeArray,
 } from "react"
@@ -11,6 +11,13 @@ import {
   StyledTextAreaLabel,
   StyledTextAreaErr,
 } from "./styles"
+
+import {
+  DynamicProps,
+  InputElem,
+  NullableInputElem,
+  RefFunction,
+} from "../lib/helperTypes"
 
 import { manuallySetFieldValue } from "../lib/helpers"
 import CharLimitCounter from "../CharLimitCounter"
@@ -26,7 +33,7 @@ export interface TextFieldProps {
   disabled?: boolean
   enableTextAreaResize?: boolean
   errorText?: string
-  fieldRef?: (elem: HTMLElement | null) => void // function like (elem => this.myRef = elem)
+  fieldRef?: RefFunction // function like (elem => this.myRef = elem)
   hideCharLimitProgress?: boolean
   hideCharLimitText?: boolean
   id?: string
@@ -40,14 +47,7 @@ export interface TextFieldProps {
   value?: string
 }
 
-interface DynamicProps {
-  [key: string]: unknown
-}
-
-type InputElem = HTMLInputElement | HTMLTextAreaElement
-type NullableInputElem = InputElem | null
-
-class TextField extends Component<TextFieldProps> {
+class TextField extends PureComponent<TextFieldProps> {
   public displayName = "TextField"
   private inputRef: NullableInputElem
 
@@ -120,13 +120,25 @@ class TextField extends Component<TextFieldProps> {
     // we want to trigger a keyup/change event with a truncated value.
     if (inputRef && shouldAutoTrunc) {
       const newValue = value.slice(0, charLimit)
-      const isTextArea = type === "textArea"
+      const isTextArea = type === "textarea"
       manuallySetFieldValue(inputRef, newValue, isTextArea, ["keyup", "change"])
     }
   }
 
-  componentDidUpdate() {
+  scrollToBottom() {
+    const { inputRef } = this
+    const { type } = this.props
+
+    if (inputRef && type === "textarea") {
+      inputRef.scrollTop = inputRef.scrollHeight
+    }
+  }
+
+  componentDidUpdate(prevProps: TextFieldProps) {
+    const { value } = this.props
+
     this.maybeTruncateValue()
+    prevProps.value !== value && this.scrollToBottom()
   }
 
   componentDidMount() {
@@ -195,11 +207,19 @@ class TextField extends Component<TextFieldProps> {
       classNames.push("is-disabled")
     }
 
+    const labelProps: DynamicProps = {
+      className: "qm-text-field-label",
+    }
+
+    if (id) {
+      labelProps.htmlFor = id
+    }
+
     return (
       <div className={`${classNames.join(" ")} ${className || ""}`}>
 
         {label && (
-          <StyledTextAreaLabel className="qm-text-field-label">
+          <StyledTextAreaLabel {...labelProps}>
             {label}
           </StyledTextAreaLabel>
         )}

@@ -1,7 +1,6 @@
 import styled, { css } from "styled-components"
 
 export interface SyledModalDivProps {
-  className: string
   isOpen: boolean
 }
 
@@ -18,7 +17,7 @@ export const StyledModalDiv = styled.div`
   opacity: 0;
   transition: opacity .3s ease, transform 1s ease;
 
-  ${(props: SyledModalDivProps) => props.isOpen && css`
+  ${({ isOpen }: SyledModalDivProps) => isOpen && css`
     transition: transform .3s ease, opacity .5s ease;
     transform: scale(1);
     opacity: 1;

@@ -5,7 +5,7 @@ import React, {
 } from "react"
 
 import { noopEvtHandler } from "../lib/helpers"
-
+import { DynamicProps } from "../lib/helperTypes"
 import { StyledAnchor, StyledButton } from "./styles"
 
 export interface ButtonProps {
@@ -16,10 +16,6 @@ export interface ButtonProps {
   isProcessing?: boolean
   tag?: "a" | "button"
   text?: string
-}
-
-interface DynamicProps {
-  [key: string]: unknown
 }
 
 class Button extends PureComponent<ButtonProps> {

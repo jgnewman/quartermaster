@@ -11,6 +11,8 @@ class App extends React.Component {
     modalOpen: false,
     counter: 0,
     fieldVal: "",
+    boxChecked: false,
+    radioVal: "foo",
   }
 
   openModal() {
@@ -31,6 +33,15 @@ class App extends React.Component {
 
   setFieldVal(evt: React.ChangeEvent) {
     this.setState({ fieldVal: (evt.target as HTMLInputElement).value })
+  }
+
+  toggleCheckbox(evt: React.ChangeEvent) {
+    this.setState({ boxChecked: !this.state.boxChecked })
+    console.log("Toggled checkbox with value", (evt.target as HTMLInputElement).value)
+  }
+
+  setRadioVal(evt: React.ChangeEvent) {
+    this.setState({ radioVal: (evt.target as HTMLInputElement).value })
   }
 
   render() {
@@ -97,6 +108,33 @@ class App extends React.Component {
         <div>
           Here is a counter: {this.state.counter}
         </div>
+
+        <div>
+          Rendering checked state as {String(this.state.boxChecked)}
+        </div>
+
+        <QM.Checkbox
+          checked={this.state.boxChecked}
+          changeHandler={this.toggleCheckbox.bind(this)}
+          value="My Checkbox"
+          label="Check me"
+        />
+
+        <QM.RadioButton
+          checked={this.state.radioVal === "foo"}
+          changeHandler={this.setRadioVal.bind(this)}
+          value="foo"
+          label="Foo"
+          groupName="my-radio-group"
+        />
+
+        <QM.RadioButton
+          checked={this.state.radioVal === "bar"}
+          changeHandler={this.setRadioVal.bind(this)}
+          value="bar"
+          label="Bar"
+          groupName="my-radio-group"
+        />
 
       </div>
     )

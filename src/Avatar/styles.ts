@@ -33,7 +33,6 @@ export const StyledAvatarContentSpan = styled.span`
 `
 
 export interface StyledActivitySpanProps {
-  className: string
   isActive: boolean
 }
 
@@ -50,7 +49,7 @@ export const StyledActivitySpan = styled.span`
   background: gray;
   border-radius: 50%;
 
-  ${(props: StyledActivitySpanProps) => props.isActive && css`
+  ${({ isActive }: StyledActivitySpanProps) => isActive && css`
     background: green;
   `}
 `

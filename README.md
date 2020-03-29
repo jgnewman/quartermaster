@@ -72,6 +72,24 @@ interface CharLimitCounterProps {
 }
 ```
 
+### Checkbox
+Creates a stylable checkbox element wrapped around native checkbox input for optimized accessibility. Allows specifying a label, a `checked` state, and a `value` among other features. Allows capturing the checkbox ref via a function such as `elem => this.myRef = elem`.
+
+```typescript
+interface CheckboxProps {
+  changeHandler?: React.ChangeEventHandler
+  checkboxRef?: (elem: HTMLElement | null) => void
+  checked: boolean
+  className?: string
+  disabled?: boolean
+  groupName?: string
+  id?: string
+  label?: string
+  tabIndex?: number
+  value?: string
+}
+```
+
 ### ConfirmButton
 Behaves similarly to `Button` but intercepts the click handler with a confirmation modal allowing the user to confirm or cancel the action taken before firing the initial click handler. If the action is canceled, the click handler is not fired and the modal is closed. You can specify the confirmation text as well as the text on both the confirm or cancel buttons, all of which have defaults.
 
@@ -97,6 +115,24 @@ interface ModalProps {
   closeHandler?: React.MouseEventHandler
   hideCloseButton?: boolean // defaults to false
   isOpen: boolean
+}
+```
+
+### RadioButton
+Creates a stylable radio button element wrapped around native radio input for optimized accessibility. Allows specifying a label, a `checked` state, a `value`, and a radio group name among other features. Allows capturing the radio ref via a function such as `elem => this.myRef = elem`.
+
+```typescript
+interface RadioButtonProps {
+  changeHandler?: React.ChangeEventHandler
+  checkboxRef?: (elem: HTMLElement | null) => void
+  checked: boolean
+  className?: string
+  disabled?: boolean
+  groupName?: string
+  id?: string
+  label?: string
+  tabIndex?: number
+  value?: string
 }
 ```
 

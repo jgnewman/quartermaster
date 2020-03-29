@@ -1,8 +1,6 @@
-import React from "react"
 import styled, { css } from "styled-components"
 
 export interface StyledInputWrapperDivProps {
-  className: string
   isTextArea: boolean
 }
 
@@ -10,27 +8,15 @@ export const StyledInputWrapperDiv = styled.div`
   display: inline-block;
   position: relative;
 
-  ${({ isTextArea }: StyledInputWrapperDivProps) => {
-    if (isTextArea) {
-      return css`
-        .qm-text-field-limit-counter .qm-char-limit-counter-text {
-          position: absolute;
-          bottom: 0;
-          right: 0;
-          transform: translateY(-0.33em) translateX(-0.33em);
-        }
-      `
-    } else {
-      return css`
-        .qm-text-field-limit-counter .qm-char-limit-counter-text {
-          position: absolute;
-          top: 50%;
-          right: 0;
-          transform: translateY(-50%) translateX(-0.33em);
-        }
-      `
+  ${({ isTextArea }: StyledInputWrapperDivProps) => css`
+    .qm-text-field-limit-counter .qm-char-limit-counter-text {
+      position: absolute;
+      top: ${isTextArea ? "auto" : "50%"};
+      bottom: ${isTextArea ? "0" : "auto"};
+      right: 0;
+      transform: translateY(${isTextArea ? "-0.33em" : "-50%"}) translateX(-0.33em);
     }
-  }}
+  `}
 
   .qm-text-field-limit-counter .qm-char-limit-counter-bar {
     position: absolute;
@@ -50,12 +36,7 @@ export const StyledTextAreaErr = styled.label`
 
 interface CommonInputProps {
   charLimit?: number
-  className: string
-  disabled: boolean
   hideCharLimitText?: boolean
-  onChange: React.ChangeEventHandler
-  onKeyUp: number
-  placeholder: string
   ref: (elem: HTMLElement | null) => void
 }
 
@@ -70,15 +51,11 @@ export const StyledTextArea = styled.textarea`
     resize: ${enableTextAreaResize ? "auto" : "none"};
   `}
 
-  ${({ charLimit = 0, hideCharLimitText }: StyledTextAreaProps) => {
-    if (!charLimit || hideCharLimitText) {
-      return ""
-    }
-
-    return css`
+  ${({ charLimit = 0, hideCharLimitText }: StyledTextAreaProps) =>
+    charLimit && !hideCharLimitText && css`
       padding-bottom: 1.5em;
     `
-  }}
+  }
 `
 
 export interface StyledInputProps extends CommonInputProps {

@@ -1,6 +1,8 @@
 import React from "react"
 
 import SmileIcon from "../icons/SmileIcon"
+import { DynamicProps } from "../lib/helperTypes"
+
 import {
   StyledAvatarSpan,
   StyledActivitySpan,
@@ -12,10 +14,6 @@ export interface AvatarProps {
   isActive?: boolean
   showActivity?: boolean
   url?: string
-}
-
-interface DynamicProps {
-  [key: string]: unknown
 }
 
 function Avatar({

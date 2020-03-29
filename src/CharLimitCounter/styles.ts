@@ -8,7 +8,6 @@ export const StyledCounterBarSpan = styled.span`
 `
 
 export interface StyledFillBarSpanProps {
-  className: string
   width: string
 }
 
@@ -20,8 +19,8 @@ export const StyledFillBarSpan = styled.span`
   height: 100%;
   transition: background .3s ease, width .1s ease;
 
-  ${(props: StyledFillBarSpanProps) => css`
-    width: ${props.width};
+  ${({ width }: StyledFillBarSpanProps) => css`
+    width: ${width};
   `}
 
   &.empty {
