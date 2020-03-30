@@ -19,11 +19,11 @@ import {
 export interface CheckboxProps {
   changeHandler?: React.ChangeEventHandler
   checkboxRef?: RefFunction
-  checked: boolean
   className?: string
-  disabled?: boolean
   groupName?: string
   id?: string
+  isChecked: boolean
+  isDisabled?: boolean
   label?: string
   tabIndex?: number
   value?: string
@@ -45,11 +45,11 @@ class Checkbox extends PureComponent<CheckboxProps> {
     const {
       changeHandler,
       checkboxRef,
-      checked,
       className,
-      disabled,
       groupName,
       id,
+      isChecked,
+      isDisabled,
       label,
       tabIndex,
       value,
@@ -66,13 +66,10 @@ class Checkbox extends PureComponent<CheckboxProps> {
       className: "qm-checkbox-label",
     }
 
-    if (id) {
-      labelProps.htmlFor = id
-    }
-
     const boxProps: DynamicProps = {}
 
     if (id) {
+      labelProps.htmlFor = id
       boxProps.id = id
     }
 
@@ -92,7 +89,7 @@ class Checkbox extends PureComponent<CheckboxProps> {
       boxProps.value = value
     }
 
-    const checkedClass = checked ? "is-checked" : ""
+    const checkedClass = isChecked ? "is-checked" : ""
 
     return (
       <div className={`qm-checkbox ${checkedClass} ${className || ""}`}>
@@ -101,15 +98,15 @@ class Checkbox extends PureComponent<CheckboxProps> {
 
           <StyledCheckbox
             ref={refFn}
-            checked={checked}
+            checked={isChecked}
             className="qm-checkbox-native"
-            disabled={!!disabled}
+            disabled={!!isDisabled}
             type="checkbox"
             {...boxProps}
           />
 
           <StyledCheckboxOverlaySpan
-            checked={!!checked}
+            isChecked={!!isChecked}
             className={`qm-checkbox-overlay ${checkedClass}`}
             onClick={this.handleOverlayClick.bind(this)}
           />

@@ -25,7 +25,7 @@ export const StyledCheckbox = styled.input`
 `
 
 export interface StyledCheckboxOverlaySpanProps {
-  checked: boolean
+  isChecked: boolean
 }
 
 export const StyledCheckboxOverlaySpan = styled.span`
@@ -35,7 +35,7 @@ export const StyledCheckboxOverlaySpan = styled.span`
   border-radius: 3px;
   box-sizing: border-box;
 
-  ${({ checked }: StyledCheckboxOverlaySpanProps) => checked && css`
+  ${({ isChecked }: StyledCheckboxOverlaySpanProps) => isChecked && css`
     &::after {
       ${absoluteFill}
       content: "✔";

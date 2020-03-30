@@ -75,7 +75,7 @@ class App extends React.Component {
         <QM.TextField
           label="My Input"
           type="text"
-          disabled={false}
+          isDisabled={false}
           placeholder="Say something here"
           charLimit={150}
           preventInputAtLimit={true}
@@ -87,7 +87,7 @@ class App extends React.Component {
         <QM.TextField
           label="My Textarea"
           type="textarea"
-          disabled={false}
+          isDisabled={false}
           placeholder="Say something here"
           charLimit={150}
           preventInputAtLimit={true}
@@ -114,14 +114,14 @@ class App extends React.Component {
         </div>
 
         <QM.Checkbox
-          checked={this.state.boxChecked}
+          isChecked={this.state.boxChecked}
           changeHandler={this.toggleCheckbox.bind(this)}
           value="My Checkbox"
           label="Check me"
         />
 
         <QM.RadioButton
-          checked={this.state.radioVal === "foo"}
+          isChecked={this.state.radioVal === "foo"}
           changeHandler={this.setRadioVal.bind(this)}
           value="foo"
           label="Foo"
@@ -129,12 +129,36 @@ class App extends React.Component {
         />
 
         <QM.RadioButton
-          checked={this.state.radioVal === "bar"}
+          isChecked={this.state.radioVal === "bar"}
           changeHandler={this.setRadioVal.bind(this)}
           value="bar"
           label="Bar"
           groupName="my-radio-group"
         />
+
+        <QM.Form initialState={{ mytext: "", mybox: false }}>
+          {({ getFormState, updateValueFor, toggleCheckedFor }) => (
+            <>
+              <QM.TextField
+                label="Form Text field"
+                type="text"
+                placeholder="Say something here"
+                value={getFormState().mytext}
+                changeHandler={updateValueFor("mytext")}
+              />
+              <QM.Checkbox
+                isChecked={getFormState().mybox}
+                changeHandler={toggleCheckedFor("mybox")}
+                value="My Checkbox"
+                label="Check me"
+              />
+              <QM.Button
+                clickHandler={() => console.log(getFormState())}>
+                Log form data
+              </QM.Button>
+            </>
+          )}
+        </QM.Form>
 
       </div>
     )

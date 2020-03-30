@@ -25,7 +25,7 @@ export const StyledRadioButton = styled.input`
 `
 
 export interface StyledRadioButtonOverlaySpanProps {
-  checked: boolean
+  isChecked: boolean
 }
 
 export const StyledRadioButtonOverlaySpan = styled.span`
@@ -35,7 +35,7 @@ export const StyledRadioButtonOverlaySpan = styled.span`
   border-radius: 50%;
   box-sizing: border-box;
 
-  ${({ checked }: StyledRadioButtonOverlaySpanProps) => checked && css`
+  ${({ isChecked }: StyledRadioButtonOverlaySpanProps) => isChecked && css`
     &::after {
       ${absoluteFill}
       content: "";

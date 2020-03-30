@@ -18,13 +18,13 @@ import {
 
 export interface RadioButtonProps {
   changeHandler?: React.ChangeEventHandler
-  radioButtonRef?: RefFunction
-  checked: boolean
   className?: string
-  disabled?: boolean
   groupName?: string
   id?: string
+  isChecked: boolean
+  isDisabled?: boolean
   label?: string
+  radioButtonRef?: RefFunction
   tabIndex?: number
   value?: string
 }
@@ -44,13 +44,13 @@ class RadioButton extends PureComponent<RadioButtonProps> {
   render() {
     const {
       changeHandler,
-      radioButtonRef,
-      checked,
       className,
-      disabled,
       groupName,
       id,
+      isChecked,
+      isDisabled,
       label,
+      radioButtonRef,
       tabIndex,
       value,
     } = this.props
@@ -66,13 +66,10 @@ class RadioButton extends PureComponent<RadioButtonProps> {
       className: "qm-radio-button-label",
     }
 
-    if (id) {
-      labelProps.htmlFor = id
-    }
-
     const boxProps: DynamicProps = {}
 
     if (id) {
+      labelProps.htmlFor = id
       boxProps.id = id
     }
 
@@ -92,7 +89,7 @@ class RadioButton extends PureComponent<RadioButtonProps> {
       boxProps.value = value
     }
 
-    const checkedClass = checked ? "is-checked" : ""
+    const checkedClass = isChecked ? "is-checked" : ""
 
     return (
       <div className={`qm-radio-button ${checkedClass} ${className || ""}`}>
@@ -101,15 +98,15 @@ class RadioButton extends PureComponent<RadioButtonProps> {
 
           <StyledRadioButton
             ref={refFn}
-            checked={checked}
+            checked={isChecked}
             className="qm-radio-button-native"
-            disabled={!!disabled}
+            disabled={!!isDisabled}
             type="radio"
             {...boxProps}
           />
 
           <StyledRadioButtonOverlaySpan
-            checked={!!checked}
+            isChecked={!!isChecked}
             className={`qm-radio-button-overlay ${checkedClass}`}
             onClick={this.handleOverlayClick.bind(this)}
           />

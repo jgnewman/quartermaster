@@ -30,7 +30,6 @@ export interface TextFieldProps {
   className?: string
   dangerouslyAutoTruncateLimitBreakingValues?: boolean // almost never necessary
   defaultValue?: string
-  disabled?: boolean
   enableTextAreaResize?: boolean
   errorText?: string
   fieldRef?: RefFunction // function like (elem => this.myRef = elem)
@@ -38,6 +37,7 @@ export interface TextFieldProps {
   hideCharLimitText?: boolean
   id?: string
   ignoreLastPass?: boolean
+  isDisabled?: boolean
   keyUpHandler?: React.KeyboardEventHandler
   label?: string
   placeholder?: string
@@ -148,10 +148,10 @@ class TextField extends PureComponent<TextFieldProps> {
   render() {
     const {
       charLimit,
+      charLimitIsMinimum,
       children,
       className,
       defaultValue,
-      disabled,
       enableTextAreaResize,
       errorText,
       fieldRef,
@@ -159,8 +159,8 @@ class TextField extends PureComponent<TextFieldProps> {
       hideCharLimitText,
       id,
       ignoreLastPass,
+      isDisabled,
       label,
-      charLimitIsMinimum,
       placeholder,
       tabIndex,
       type,
@@ -203,7 +203,7 @@ class TextField extends PureComponent<TextFieldProps> {
       classNames.push("has-char-limit")
     }
 
-    if (disabled) {
+    if (isDisabled) {
       classNames.push("is-disabled")
     }
 
@@ -232,7 +232,7 @@ class TextField extends PureComponent<TextFieldProps> {
             <StyledTextArea
               charLimit={charLimit}
               className="qm-text-field-input textarea"
-              disabled={disabled || false}
+              disabled={!!isDisabled}
               enableTextAreaResize={!!enableTextAreaResize}
               hideCharLimitText={hideCharLimitText}
               onChange={this.handleChange.bind(this)}
@@ -247,7 +247,7 @@ class TextField extends PureComponent<TextFieldProps> {
             <StyledInput
               charLimit={charLimit}
               className="qm-text-field-input field"
-              disabled={disabled || false}
+              disabled={!!isDisabled}
               hideCharLimitText={hideCharLimitText}
               onChange={this.handleChange.bind(this)}
               onKeyUp={this.handleKeyUp.bind(this)}

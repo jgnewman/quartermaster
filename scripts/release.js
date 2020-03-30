@@ -142,8 +142,8 @@ async function release() {
     log(`Building library...`)
     await execPromise(`npm run build`)
 
-    log(`Copying files...`)
-    await execPromise(`mkdir ./lib && cp -R ./dist/* ./lib`)
+    log(`Copying files and removing raw build...`)
+    await execPromise(`mkdir ./lib && cp -R ./dist/* ./ && rm -rf ./dist`)
 
     log("Committing and pushing new release...")
     await execPromise(`git add . && git commit -m "Create release ${newVersion}" && git push origin ${newVersion}`)

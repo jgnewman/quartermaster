@@ -16,7 +16,7 @@ import { Avatar } from "quartermaster"
 ...or import individual components as needed...
 
 ```javascript
-import Avatar from "quartermaster/lib/Avatar"
+import Avatar from "quartermaster/Avatar"
 ```
 
 The benefit of the second approach is that unused components will always be excluded from your bundle without having to enable any kind of unused-code stripping.
@@ -73,17 +73,17 @@ interface CharLimitCounterProps {
 ```
 
 ### Checkbox
-Creates a stylable checkbox element wrapped around native checkbox input for optimized accessibility. Allows specifying a label, a `checked` state, and a `value` among other features. Allows capturing the checkbox ref via a function such as `elem => this.myRef = elem`.
+Creates a stylable checkbox element wrapped around native checkbox input for optimized accessibility. Allows specifying a label, a `isChecked` state, and a `value` among other features. Allows capturing the checkbox ref via a function such as `elem => this.myRef = elem`.
 
 ```typescript
 interface CheckboxProps {
   changeHandler?: React.ChangeEventHandler
   checkboxRef?: (elem: HTMLElement | null) => void
-  checked: boolean
   className?: string
-  disabled?: boolean
   groupName?: string
   id?: string
+  isChecked: boolean
+  isDisabled?: boolean
   label?: string
   tabIndex?: number
   value?: string
@@ -105,6 +105,59 @@ interface ConfirmButtonProps extends ButtonProps {
 #### Todo
 - Bypass displaying confirmation
 
+### Form
+Used for wrapping a group of form-related components and collecting their values into a localized state that can be quickly and easily managed. Takes an `initialState` object specifying each form element's default value and a function as a child component that returns your form elements.
+
+```typescript
+interface FormProps {
+  children: (utils: FormUtils) => ReactNode | ReactNodeArray
+  initialState: SimpleObject
+}
+
+// where...
+
+interface FormUtils {
+  getFormState: GetFormState
+  setFormState: SetFormState
+  updateValueFor: UpdateValueFor
+  toggleCheckedFor: ToggleCheckedFor
+}
+
+interface SimpleObject {
+  [key: string]: string | number | boolean
+}
+```
+
+Here is an example:
+
+```jsx
+<Form initialState={{ myText: "", myBox: false }}>
+  {({ getFormState, updateValueFor, toggleCheckedFor }) => (
+    <>
+      <TextField
+        type="text"
+        value={getFormState().myText}
+        changeHandler={updateValueFor("myText")}
+      />
+      <Checkbox
+        label="Check me"
+        isChecked={getFormState().myBox}
+        changeHandler={toggleCheckedFor("myBox")}
+      />
+      <Button clickHandler={() => console.log(getFormState())}>
+        Log form data
+      </Button>
+    </>
+  )}
+</Form>
+```
+
+In addition to the `FormUtils` functions illustrated above, you also have access to a `setFormState` function that you can use to manually update the form state.
+
+```typescript
+setFormState({ myText: "some value" })
+```
+
 ### Modal
 Takes an `isOpen` prop that determines whether or not the modal should be open. Also takes a `closeHandler` function that fires when the modal's close button is clicked. Note that the modal does not close itself. You must determine when to change the `isOpen` after the close handler is fired. Nested content will appear inside the modal.
 
@@ -119,17 +172,17 @@ interface ModalProps {
 ```
 
 ### RadioButton
-Creates a stylable radio button element wrapped around native radio input for optimized accessibility. Allows specifying a label, a `checked` state, a `value`, and a radio group name among other features. Allows capturing the radio ref via a function such as `elem => this.myRef = elem`.
+Creates a stylable radio button element wrapped around native radio input for optimized accessibility. Allows specifying a label, a `isChecked` state, a `value`, and a radio group name among other features. Allows capturing the radio ref via a function such as `elem => this.myRef = elem`.
 
 ```typescript
 interface RadioButtonProps {
   changeHandler?: React.ChangeEventHandler
   checkboxRef?: (elem: HTMLElement | null) => void
-  checked: boolean
   className?: string
-  disabled?: boolean
   groupName?: string
   id?: string
+  isChecked: boolean
+  isDisabled?: boolean
   label?: string
   tabIndex?: number
   value?: string
@@ -148,7 +201,6 @@ interface TextFieldProps {
   className?: string
   dangerouslyAutoTruncateLimitBreakingValues?: boolean
   defaultValue?: string
-  disabled?: boolean
   enableTextAreaResize?: boolean
   errorText?: string
   fieldRef?: (elem: HTMLElement | null) => void
@@ -156,6 +208,7 @@ interface TextFieldProps {
   hideCharLimitText?: boolean
   id?: string
   ignoreLastPass?: boolean
+  isDisabled?: boolean
   keyUpHandler?: React.KeyboardEventHandler
   label?: string
   placeholder?: string
@@ -167,8 +220,3 @@ interface TextFieldProps {
 ```
 
 With regard to `dangerouslyAutoTruncateLimitBreakingValues`, this prop is rarely ever needed but is applicable in any case where you might attempt to pass a value to the text field that is greater than a provided char limit, assuming the character count is not expected to be greater than the limit. With this prop set to true, the component will automatically truncate the provided value and fire both a `change` and `keyUp` event with the new value. The prop is labeled as dangerous because if you are not handling these events in such a way that the component re-renders with the new, truncated value, you will trigger an infinitely recursive loop.
-
-## General Todos
-- Create some default CSS values for styled-components
-- Create new components (forms and fields)
-- Pick correct real deps and peer deps (ex: react, styled-components)

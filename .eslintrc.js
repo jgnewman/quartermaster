@@ -64,6 +64,7 @@ module.exports = {
         '@typescript-eslint/explicit-function-return-type': ['off'],
         '@typescript-eslint/explicit-member-accessibility': ['off'],
         '@typescript-eslint/no-empty-interface': ['warn'],
+        '@typescript-eslint/no-explicit-any': ['off'],
         '@typescript-eslint/member-delimiter-style': ['error', {
           multiline: {
             delimiter: 'none',
