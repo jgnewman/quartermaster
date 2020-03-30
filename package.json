@@ -8,7 +8,8 @@
   "scripts": {
     "start": "NODE_ENV=development webpack-dev-server --http --color --progress --inline --mode development --offline",
     "build": "NODE_ENV=production rm -rf dist && tsc --rootDir src --outDir dist --declaration",
-    "release": ". ./.env && node scripts/release"
+    "release": ". ./.env && node scripts/release",
+    "component": "node scripts/create-component"
   },
   "repository": {
     "type": "git",

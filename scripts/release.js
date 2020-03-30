@@ -62,7 +62,7 @@ async function createRelease(version, description) {
       name: version,
       body: description,
       draft: false,
-      prerelease: false
+      prerelease: false,
     }),
   })
   return result.json()

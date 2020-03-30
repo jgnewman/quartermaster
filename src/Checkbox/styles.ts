@@ -1,10 +1,18 @@
-import styled, { css } from "styled-components"
+import styled from "styled-components"
 
-const absoluteFill = `
+const blockAbs = `
   display: block;
   position: absolute;
+`
+
+const absoluteTL = `
+  ${blockAbs}
   top: 0;
   left: 0;
+`
+
+const absoluteFill = `
+  ${absoluteTL}
   width: 100%;
   height: 100%;
 `
@@ -24,25 +32,19 @@ export const StyledCheckbox = styled.input`
   border: 0;
 `
 
-export interface StyledCheckboxOverlaySpanProps {
-  isChecked: boolean
-}
-
 export const StyledCheckboxOverlaySpan = styled.span`
   ${absoluteFill}
   background: white;
   border: 1px solid black;
   border-radius: 3px;
   box-sizing: border-box;
+  font-size: 0.66em;
 
-  ${({ isChecked }: StyledCheckboxOverlaySpanProps) => isChecked && css`
-    &::after {
-      ${absoluteFill}
-      content: "✔";
-      text-align: center;
-      line-height: 100%;
-    }
-  `}
+  .qm-checkbox-checkmark {
+    ${blockAbs}
+    top: -0.1em;
+    left: 0;
+  }
 `
 
 export const StyledCheckboxLabel = styled.label`

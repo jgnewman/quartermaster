@@ -1,5 +1,7 @@
 import React, { PureComponent } from "react"
 
+import Checkmark from "../Checkmark"
+
 import {
   DynamicProps,
   RefFunction,
@@ -106,10 +108,10 @@ class Checkbox extends PureComponent<CheckboxProps> {
           />
 
           <StyledCheckboxOverlaySpan
-            isChecked={!!isChecked}
             className={`qm-checkbox-overlay ${checkedClass}`}
-            onClick={this.handleOverlayClick.bind(this)}
-          />
+            onClick={this.handleOverlayClick.bind(this)}>
+            {isChecked && <Checkmark className="qm-checkbox-checkmark" />}
+          </StyledCheckboxOverlaySpan>
 
         </StyledCheckboxWrapperSpan>
 
