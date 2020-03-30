@@ -68,18 +68,3 @@ class RadioGroup extends PureComponent<RadioGroupProps> {
 }
 
 export default RadioGroup
-
-// The point of this thing is to turn a radio group into a single value
-/*
-<RadioGroup
-  options={[
-    { label: "foo", value: "foo" }, optional: id, ref, tabIndex
-    { label: "bar", value: "bar" },
-    { label: "baz", value: "baz" },
-  ]}
-  changeHandler={changeHandler}
-  isDisabled={isDisabled}
-  name="my-group"
-  value={selectedValue}
-/>
-*/
