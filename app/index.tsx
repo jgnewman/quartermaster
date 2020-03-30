@@ -136,8 +136,8 @@ class App extends React.Component {
           groupName="my-radio-group"
         />
 
-        <QM.Form initialState={{ mytext: "", mybox: false }}>
-          {({ getFormState, updateValueFor, toggleCheckedFor }) => (
+        <QM.Form initialState={{ mytext: "", mygroup: "foo" }}>
+          {({ getFormState, updateValueFor }) => (
             <>
               <QM.TextField
                 label="Form Text field"
@@ -146,11 +146,15 @@ class App extends React.Component {
                 value={getFormState().mytext}
                 changeHandler={updateValueFor("mytext")}
               />
-              <QM.Checkbox
-                isChecked={getFormState().mybox}
-                changeHandler={toggleCheckedFor("mybox")}
-                value="My Checkbox"
-                label="Check me"
+              <QM.RadioGroup
+                name="mygroup"
+                changeHandler={updateValueFor("mygroup")}
+                value={getFormState().mygroup}
+                options={[
+                  { label: "Foo", value: "foo" },
+                  { label: "Bar", value: "bar" },
+                  { label: "Baz", value: "baz" },
+                ]}
               />
               <QM.Button
                 clickHandler={() => console.log(getFormState())}>

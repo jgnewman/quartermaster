@@ -189,6 +189,30 @@ interface RadioButtonProps {
 }
 ```
 
+### RadioGroup
+Creates a group of radio buttons that can be treated as a single value. Requires a `name` prop for specifying the group name and an array of `options` specifying the label and value for each radio option. It then takes a single `changeHandler` providing access to the event created by the radio button that triggered the change, and is controlled by a single `value` prop.
+
+```typescript
+interface RadioGroupProps {
+  changeHandler?: React.ChangeEventHandler
+  className?: string
+  isDisabled?: boolean
+  name: string
+  options: RadioOption[]
+  value: string
+}
+
+// where...
+
+interface RadioOption {
+  label: string
+  value: string
+  id?: string
+  ref?: RefFunction
+  tabIndex?: number
+}
+```
+
 ### TextField
 Generates an input field or textarea as specified by props. Allows capturing the field ref via a function such as `elem => this.myRef = elem`. Takes both a `changeHandler` and a `keyUpHandler` that you can use to capture new values and capture things like enter key presses. Allows enabling character limits, setting a label and placeholder, marking the field as disabled, and displaying error text.
 
