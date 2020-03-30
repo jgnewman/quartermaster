@@ -38,12 +38,9 @@ export const StyledCheckboxOverlaySpan = styled.span`
   border: 1px solid black;
   border-radius: 3px;
   box-sizing: border-box;
-  font-size: 0.66em;
 
   .qm-checkbox-checkmark {
-    ${blockAbs}
-    top: -0.1em;
-    left: 0;
+    ${absoluteFill}
   }
 `
 

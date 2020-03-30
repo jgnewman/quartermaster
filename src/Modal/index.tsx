@@ -6,7 +6,12 @@ import React, {
 
 import { noopEvtHandler } from "../lib/helpers"
 import CloseIcon from "../icons/CloseIcon"
-import { StyledModalDiv, StyledModalContentDiv, StyledCloseButton } from "./styles"
+
+import {
+  StyledModalDiv,
+  StyledModalContentDiv,
+  StyledCloseButton,
+} from "./styles"
 
 export interface ModalProps {
   children?: ReactNode | ReactNodeArray

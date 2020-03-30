@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components"
+import styled from "styled-components"
 
 const absoluteFill = `
   display: block;
@@ -24,10 +24,6 @@ export const StyledRadioButton = styled.input`
   border: 0;
 `
 
-export interface StyledRadioButtonOverlaySpanProps {
-  isChecked: boolean
-}
-
 export const StyledRadioButtonOverlaySpan = styled.span`
   ${absoluteFill}
   background: white;
@@ -35,17 +31,9 @@ export const StyledRadioButtonOverlaySpan = styled.span`
   border-radius: 50%;
   box-sizing: border-box;
 
-  ${({ isChecked }: StyledRadioButtonOverlaySpanProps) => isChecked && css`
-    &::after {
-      ${absoluteFill}
-      content: "";
-      background: black;
-      border-radius: 50%;
-      transform: scale(0.50);
-      transform-origin: center;
-      box-sizing: border-box;
-    }
-  `}
+  .qm-checkbox-checkmark {
+    ${absoluteFill}
+  }
 `
 
 export const StyledRadioButtonLabel = styled.label`

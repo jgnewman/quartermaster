@@ -1,5 +1,7 @@
 import React, { PureComponent } from "react"
 
+import DotIcon from "../icons/DotIcon"
+
 import {
   DynamicProps,
   RefFunction,
@@ -106,10 +108,10 @@ class RadioButton extends PureComponent<RadioButtonProps> {
           />
 
           <StyledRadioButtonOverlaySpan
-            isChecked={!!isChecked}
             className={`qm-radio-button-overlay ${checkedClass}`}
-            onClick={this.handleOverlayClick.bind(this)}
-          />
+            onClick={this.handleOverlayClick.bind(this)}>
+            {isChecked && <DotIcon className="qm-radio-button-dot" title="Checked" size="100%"/>}
+          </StyledRadioButtonOverlaySpan>
 
         </StyledRadioButtonWrapperSpan>
 

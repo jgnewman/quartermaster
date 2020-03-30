@@ -47,9 +47,6 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <QM.Checkmark/>
-        <QM.Plus/>
-        <QM.Caret/>
 
         <QM.Avatar
           showActivity
