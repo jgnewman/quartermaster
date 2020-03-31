@@ -1,9 +1,20 @@
-import styled, { css } from "styled-components"
+import styled from "styled-components"
+
+import {
+  absLT,
+  size,
+} from "../lib/baseStyles"
+
+export const StyledWrapperDiv = styled.div`
+  &.worst, &.error {
+    color: red;
+  }
+`
 
 export const StyledCounterBarSpan = styled.span`
+  ${size("auto", "0.33em")}
   display: block;
   position: relative;
-  height: 0.33em;
   background: rgba(0,0,0,0.1);
 `
 
@@ -12,16 +23,11 @@ export interface StyledFillBarSpanProps {
 }
 
 export const StyledFillBarSpan = styled.span`
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  transition: background .3s ease, width .1s ease;
+  ${absLT()}
 
-  ${({ width }: StyledFillBarSpanProps) => css`
-    width: ${width};
-  `}
+  ${({ width }: StyledFillBarSpanProps) => size(width, "100%")}
+
+  transition: background .3s ease, width .1s ease;
 
   &.empty {
     background: transparent;

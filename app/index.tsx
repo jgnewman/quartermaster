@@ -46,7 +46,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div style={{ padding: "1em" }}>
+      <div style={{ padding: "1em", maxWidth: "500px" }}>
 
         <QM.Avatar
           showActivity
@@ -66,6 +66,10 @@ class App extends React.Component {
           Click me to increment counter
         </QM.ConfirmButton>
 
+        <div>
+          Here is a counter: {this.state.counter}
+        </div>
+
         <QM.Modal
           isOpen={this.state.modalOpen}
           closeHandler={this.closeModal.bind(this)}>
@@ -77,8 +81,8 @@ class App extends React.Component {
           type="text"
           isDisabled={false}
           placeholder="Say something here"
-          charLimit={150}
-          preventInputAtLimit={true}
+          charLimit={25}
+          preventInputAtLimit={false}
           value={this.state.fieldVal}
           changeHandler={this.setFieldVal.bind(this)}
           errorText=""
@@ -103,10 +107,6 @@ class App extends React.Component {
 
         <div>
           This is the field value: {this.state.fieldVal}
-        </div>
-
-        <div>
-          Here is a counter: {this.state.counter}
         </div>
 
         <div>

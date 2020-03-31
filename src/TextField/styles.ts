@@ -1,27 +1,30 @@
-import styled, { css } from "styled-components"
+import styled from "styled-components"
+
+import {
+  absLB,
+  absRB,
+  absRT,
+  borders,
+  size,
+} from "../lib/baseStyles"
 
 export interface StyledInputWrapperDivProps {
   isTextArea: boolean
 }
 
 export const StyledInputWrapperDiv = styled.div`
-  display: inline-block;
+  display: block;
   position: relative;
 
-  ${({ isTextArea }: StyledInputWrapperDivProps) => css`
+  ${({ isTextArea }: StyledInputWrapperDivProps) => `
     .qm-text-field-limit-counter .qm-char-limit-counter-text {
-      position: absolute;
-      top: ${isTextArea ? "auto" : "50%"};
-      bottom: ${isTextArea ? "0" : "auto"};
-      right: 0;
-      transform: translateY(${isTextArea ? "-0.33em" : "-50%"}) translateX(-0.33em);
+      ${isTextArea ? absRB(0, 0) : absRT(0, "50%")}
+      transform: translateY(${isTextArea ? "-0.33em" : "-60%"}) translateX(-0.33em);
     }
   `}
 
   .qm-text-field-limit-counter .qm-char-limit-counter-bar {
-    position: absolute;
-    left: 0;
-    bottom: 0;
+    ${absLB()}
     width: 100%;
   }
 `
@@ -44,18 +47,26 @@ export interface StyledTextAreaProps extends CommonInputProps {
   enableTextAreaResize: boolean
 }
 
-export const StyledTextArea = styled.textarea`
+const commonFieldProps = `
   display: block;
+  padding-top: 3px;
+  margin: 0;
+`
 
-  ${({ enableTextAreaResize }: StyledTextAreaProps) => css`
-    resize: ${enableTextAreaResize ? "auto" : "none"};
-  `}
+export const StyledTextArea = styled.textarea`
+  ${borders()}
+  ${size("100%", "auto")}
+  ${commonFieldProps}
+  padding-right: 0;
+  padding-left: 0;
 
-  ${({ charLimit = 0, hideCharLimitText }: StyledTextAreaProps) =>
-    charLimit && !hideCharLimitText && css`
-      padding-bottom: 1.5em;
-    `
-  }
+  ${({ enableTextAreaResize }: StyledTextAreaProps) => {
+    return `resize: ${enableTextAreaResize ? "auto" : "none"};`
+  }}
+
+  ${({ charLimit = 0, hideCharLimitText }: StyledTextAreaProps) => {
+    return charLimit && !hideCharLimitText ? "padding-bottom: 1.5em;" : "padding-bottom: 3px;"
+  }}
 `
 
 export interface StyledInputProps extends CommonInputProps {
@@ -63,18 +74,20 @@ export interface StyledInputProps extends CommonInputProps {
 }
 
 export const StyledInput = styled.input`
-  display: block;
+  ${borders()}
+  ${size("100%", "auto")}
+  ${commonFieldProps}
+  padding-bottom: 3px;
+  padding-left: 0;
 
   ${({ charLimit = 0, hideCharLimitText }: StyledInputProps) => {
     if (!charLimit || hideCharLimitText) {
-      return ""
+      return "padding-right: 0;"
     }
 
     // We want to display a char count that looks something like "22 / 25".
     // The padding we need is calculated as twice the charlimit + 3 chars for the separator
     // all divided by 2 since the width of a character is about half an em.
-    return css`
-      padding-right: ${(charLimit.toString().length * 2 + 3)/2}em;
-    `
+    return `padding-right: ${(charLimit.toString().length * 2 + 3)/2}em;`
   }}
 `

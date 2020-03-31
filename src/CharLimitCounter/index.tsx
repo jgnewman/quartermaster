@@ -1,6 +1,7 @@
 import React from "react"
 
 import {
+  StyledWrapperDiv,
   StyledCounterBarSpan,
   StyledFillBarSpan,
 } from "./styles"
@@ -69,7 +70,7 @@ const CharLimitCounter = ({
   const styleWidth = fillWidth > 100 ? "100%" : `${fillWidth}%`
 
   return (
-    <div className={`qm-char-limit-counter ${colorClass} ${className || ""}`}>
+    <StyledWrapperDiv className={`qm-char-limit-counter ${colorClass} ${className || ""}`}>
       {!hideText && (
         <span className="qm-char-limit-counter-text">
           <span className="qm-char-limit-count">
@@ -86,7 +87,7 @@ const CharLimitCounter = ({
           <StyledFillBarSpan className={`qm-char-limit-counter-bar-fill ${colorClass}`} width={styleWidth} />
         </StyledCounterBarSpan>
       )}
-    </div>
+    </StyledWrapperDiv>
   )
 }
 

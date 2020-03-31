@@ -1,9 +1,10 @@
 import React, { Component } from "react"
 
 import { noopEvtHandler } from "../lib/helpers"
-
 import Button, { ButtonProps } from "../Button"
 import Modal from "../Modal"
+
+import { StyledTitleH2 } from "./styles"
 
 export interface ConfirmButtonProps extends ButtonProps {
   cancelText?: string
@@ -73,9 +74,9 @@ class ConfirmButton extends Component<ConfirmButtonProps, ConfirmButtonState> {
           hideCloseButton={true}
           isOpen={this.state.open}>
 
-          <h2 className="qm-confirm-button-title">
+          <StyledTitleH2 className="qm-confirm-button-title">
             {confirmationText || "Are you sure?"}
-          </h2>
+          </StyledTitleH2>
 
           <div className="qm-confirm-button-options">
             <Button className="qm-confirm-button-continue" clickHandler={confirmationContinueHandler}>

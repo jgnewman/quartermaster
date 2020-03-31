@@ -1,41 +1,38 @@
 import styled from "styled-components"
 
-const absoluteFill = `
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-`
+import {
+  absCenter,
+  absFill,
+  borders,
+  size,
+  vertMiddle,
+  vertMiddleInner,
+} from "../lib/baseStyles"
 
 export const StyledRadioButtonWrapperSpan = styled.span`
-  position: relative;
-  width: 1em;
-  height: 1em;
+  ${size("1em")}
+  ${vertMiddle()}
 
-  display: inline-block;
-  vertical-align: middle;
+  position: relative;
   margin-right: .33em;
 `
 
 export const StyledRadioButton = styled.input`
-  ${absoluteFill}
+  ${absFill()}
   border: 0;
 `
 
 export const StyledRadioButtonOverlaySpan = styled.span`
-  ${absoluteFill}
+  ${absFill()}
+  ${borders("50%")}
   background: white;
-  border: 1px solid black;
-  border-radius: 50%;
-  box-sizing: border-box;
 
-  .qm-checkbox-checkmark {
-    ${absoluteFill}
+  .qm-radio-button-dot {
+    ${absCenter()}
+    ${size("85%")}
   }
 `
 
 export const StyledRadioButtonLabel = styled.label`
-  vertical-align: middle;
+  ${vertMiddleInner()}
 `
