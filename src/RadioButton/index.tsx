@@ -108,6 +108,7 @@ class RadioButton extends PureComponent<RadioButtonProps> {
           />
 
           <StyledRadioButtonOverlaySpan
+            aria-hidden={true}
             className={`qm-radio-button-overlay ${checkedClass}`}
             onClick={this.handleOverlayClick.bind(this)}>
             {isChecked && <DotIcon className="qm-radio-button-dot" title="Checked" size="100%"/>}

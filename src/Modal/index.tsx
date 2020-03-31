@@ -1,8 +1,4 @@
-import React, {
-  PureComponent,
-  ReactNode,
-  ReactNodeArray,
-} from "react"
+import React, { PureComponent } from "react"
 
 import { noopEvtHandler } from "../lib/helpers"
 import CloseIcon from "../icons/CloseIcon"
@@ -14,7 +10,6 @@ import {
 } from "./styles"
 
 export interface ModalProps {
-  children?: ReactNode | ReactNodeArray
   className?: string
   closeHandler?: React.MouseEventHandler
   hideCloseButton?: boolean

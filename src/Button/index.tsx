@@ -1,15 +1,15 @@
-import React, {
-  PureComponent,
-  ReactNode,
-  ReactNodeArray,
-} from "react"
+import React, { PureComponent } from "react"
 
 import { noopEvtHandler } from "../lib/helpers"
 import { DynamicProps } from "../lib/helperTypes"
-import { StyledAnchor, StyledButton } from "./styles"
+
+import {
+  StyledButtonContentSpan,
+  StyledAnchor,
+  StyledButton,
+ } from "./styles"
 
 export interface ButtonProps {
-  children?: ReactNode | ReactNodeArray
   className?: string
   clickHandler?: React.MouseEventHandler
   isDisabled?: boolean
@@ -48,10 +48,10 @@ class Button extends PureComponent<ButtonProps> {
       `qm-button ${isDisabled ? "is-disabled" : ""} ${isProcessing ? "is-processing" : ""} ${className || ""}`
 
     const content = (
-      <span className={`qm-button-content`}>
+      <StyledButtonContentSpan className={`qm-button-content`}>
         {text}
         {children}
-      </span>
+      </StyledButtonContentSpan>
     )
 
     switch (tag) {

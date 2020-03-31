@@ -1,8 +1,4 @@
-import React, {
-  PureComponent,
-  ReactNode,
-  ReactNodeArray,
-} from "react"
+import React, { PureComponent } from "react"
 
 import {
   StyledInputWrapperDiv,
@@ -26,7 +22,6 @@ export interface TextFieldProps {
   changeHandler?: React.ChangeEventHandler
   charLimit?: number
   charLimitIsMinimum?: boolean
-  children?: ReactNode | ReactNodeArray
   className?: string
   dangerouslyAutoTruncateLimitBreakingValues?: boolean // almost never necessary
   defaultValue?: string

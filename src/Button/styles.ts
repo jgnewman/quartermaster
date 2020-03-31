@@ -4,6 +4,11 @@ const commonStyles = `
   display: inline-block;
   border: 0;
   background: #efefef;
+  padding: 0;
+`
+
+export const StyledButtonContentSpan = styled.span`
+  vertical-align: middle;
 `
 
 export const StyledAnchor = styled.a`

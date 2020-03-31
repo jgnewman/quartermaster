@@ -46,7 +46,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{ padding: "1em" }}>
 
         <QM.Avatar
           showActivity
@@ -136,7 +136,7 @@ class App extends React.Component {
           groupName="my-radio-group"
         />
 
-        <QM.Form initialState={{ mytext: "", mygroup: "foo" }}>
+        <QM.Form initialState={{ mytext: "", mygroup: "foo", myselect: null }}>
           {({ getFormState, updateValueFor }) => (
             <>
               <QM.TextField
@@ -155,6 +155,16 @@ class App extends React.Component {
                   { label: "Bar", value: "bar" },
                   { label: "Baz", value: "baz" },
                 ]}
+              />
+              <QM.Select
+                label="My select menu"
+                options={[
+                  { label: "Foo", value: "foo" },
+                  { label: "Bar", value: "bar" },
+                  { label: "Baz", value: "baz" },
+                ]}
+                value={getFormState().myselect}
+                changeHandler={updateValueFor("myselect")}
               />
               <QM.Button
                 clickHandler={() => console.log(getFormState())}>

@@ -43,7 +43,6 @@ Creates a button from either an `a` tag or a `button` tag as specified, defaulti
 
 ```typescript
 interface ButtonProps {
-  children?: ReactNode | ReactNodeArray
   className?: string
   clickHandler?: React.MouseEventHandler
   isDisabled?: boolean
@@ -117,14 +116,14 @@ interface FormProps {
 // where...
 
 interface FormUtils {
-  getFormState: GetFormState
-  setFormState: SetFormState
-  updateValueFor: UpdateValueFor
-  toggleCheckedFor: ToggleCheckedFor
+  getFormState: () => any
+  setFormState: (vals: SimpleObject) => void
+  updateValueFor: (name: string) => (evt: React.ChangeEvent | string | null) => void
+  toggleCheckedFor: (name: string) => () => void
 }
 
 interface SimpleObject {
-  [key: string]: string | number | boolean
+  [key: string]: string | number | boolean | null
 }
 ```
 
@@ -163,7 +162,6 @@ Takes an `isOpen` prop that determines whether or not the modal should be open. 
 
 ```typescript
 interface ModalProps {
-  children?: ReactNode | ReactNodeArray
   className?: string
   closeHandler?: React.MouseEventHandler
   hideCloseButton?: boolean // defaults to false
@@ -213,6 +211,29 @@ interface RadioOption {
 }
 ```
 
+### Select
+Generates a stylable select menu built on top of a raw `select` element for accessibility. Is controlled by a `value`, and takes an array of `options` objects and a `changeHandler` for capturing value updates.
+
+```typescript
+interface SelectProps {
+  changeHandler?: (value: string | null) => void
+  className?: string
+  id?: string
+  isDisabled?: boolean
+  label?: string
+  options: SelectOption[]
+  placeholder?: string
+  value: string | null
+}
+
+// Where...
+
+interface SelectOption {
+  label: string
+  value: string
+}
+```
+
 ### TextField
 Generates an input field or textarea as specified by props. Allows capturing the field ref via a function such as `elem => this.myRef = elem`. Takes both a `changeHandler` and a `keyUpHandler` that you can use to capture new values and capture things like enter key presses. Allows enabling character limits, setting a label and placeholder, marking the field as disabled, and displaying error text.
 
@@ -221,7 +242,6 @@ interface TextFieldProps {
   changeHandler?: React.ChangeEventHandler
   charLimit?: number // Enables a CharLimitCounter component on the field
   charLimitIsMinimum?: boolean
-  children?: ReactNode | ReactNodeArray
   className?: string
   dangerouslyAutoTruncateLimitBreakingValues?: boolean
   defaultValue?: string

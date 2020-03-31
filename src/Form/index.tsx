@@ -7,12 +7,12 @@ import React, {
 import { InputElem } from "src/lib/helperTypes"
 
 interface SimpleObject {
-  [key: string]: string | number | boolean
+  [key: string]: string | number | boolean | null
 }
 
 type GetFormState = () => any
 type SetFormState = (vals: SimpleObject) => void
-type UpdateValueFor = (name: string) => (evt: React.ChangeEvent) => void
+type UpdateValueFor = (name: string) => (evt: React.ChangeEvent | string | null) => void
 type ToggleCheckedFor = (name: string) => () => void
 
 interface FormUtils {
@@ -41,7 +41,15 @@ class Form extends PureComponent<FormProps, SimpleObject> {
 
   public updateValueFor: UpdateValueFor = (name) => {
     return (evt) => {
-      this.setState({ [name]: (evt.target as InputElem).value })
+      let val;
+
+      if (typeof evt === "string" || evt === null) {
+        val = evt
+      } else {
+        val = (evt.target as InputElem).value
+      }
+
+      this.setState({ [name]: val })
     }
   }
 

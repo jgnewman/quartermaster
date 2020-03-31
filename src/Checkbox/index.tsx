@@ -108,6 +108,7 @@ class Checkbox extends PureComponent<CheckboxProps> {
           />
 
           <StyledCheckboxOverlaySpan
+            aria-hidden={true}
             className={`qm-checkbox-overlay ${checkedClass}`}
             onClick={this.handleOverlayClick.bind(this)}>
             {isChecked && <CheckmarkIcon className="qm-checkbox-checkmark" />}
