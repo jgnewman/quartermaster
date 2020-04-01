@@ -4,7 +4,10 @@ import { noopEvtHandler } from "../lib/helpers"
 import Button, { ButtonProps } from "../Button"
 import Modal from "../Modal"
 
-import { StyledTitleH2 } from "./styles"
+import {
+  StyledTitleH2,
+  StyledOptionsWrapper,
+} from "./styles"
 
 export interface ConfirmButtonProps extends ButtonProps {
   cancelText?: string
@@ -78,7 +81,7 @@ class ConfirmButton extends Component<ConfirmButtonProps, ConfirmButtonState> {
             {confirmationText || "Are you sure?"}
           </StyledTitleH2>
 
-          <div className="qm-confirm-button-options">
+          <StyledOptionsWrapper className="qm-confirm-button-options">
             <Button className="qm-confirm-button-continue" clickHandler={confirmationContinueHandler}>
               { continueText || "Yes" }
             </Button>
@@ -86,7 +89,7 @@ class ConfirmButton extends Component<ConfirmButtonProps, ConfirmButtonState> {
             <Button className="qm-confirm-button-cancel" clickHandler={confirmationCancelHandler}>
               { cancelText || "Nevermind" }
             </Button>
-          </div>
+          </StyledOptionsWrapper>
 
         </Modal>
 

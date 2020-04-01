@@ -1,28 +1,33 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
 import {
+  DEFAULT_BORDER,
   absFill,
   absRB,
   circle,
   coverBg,
   size,
-  vertMiddleInner,
+  theme,
+  vertMiddle,
 } from "../lib/baseStyles"
 
 export const StyledAvatarSpan = styled.span`
-  ${circle("inline-block")}
-  ${size("40px")}
-  ${vertMiddleInner()}
+  ${vertMiddle()}
+  width: ${theme("avatarWidth", "40px")};
+  height: ${theme("avatarHeight", "40px")};
+  border: ${theme("avatarBorder", DEFAULT_BORDER)};
+  box-sizing: border-box;
+  border-radius: ${theme("avatarRadius", "50%")};
 
   position: relative;
   overflow: visible;
+  ${theme("avatarCustom")}
 `
 
 export const StyledAvatarContentSpan = styled.span`
   ${absFill()}
-  ${circle()}
   ${coverBg()}
-
+  border-radius: ${theme("avatarRadius", "50%")};
   overflow: hidden;
 
   svg {
@@ -35,17 +40,16 @@ export interface StyledActivitySpanProps {
   isActive: boolean
 }
 
-export const StyledActivitySpan = styled.span`
+export const StyledActivitySpan = styled.span<StyledActivitySpanProps>`
   ${absRB("-1px", "-1px")}
   ${size("12px")}
   ${circle()}
 
   z-index: 2;
-  border: 2px solid white;
   box-sizing: border-box;
-  background: gray;
+  background: ${theme("avatarIndicatorOffColor", "gray")};
 
-  ${({ isActive }: StyledActivitySpanProps) => isActive && `
+  ${({ isActive }) => isActive && css`
     background: limegreen;
   `}
 `

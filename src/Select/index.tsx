@@ -7,14 +7,15 @@ import CaretIcon from "../icons/CaretIcon"
 import TimesIcon from "../icons/TimesIcon"
 
 import {
-  StyledSelectLabel,
-  StyledSelectWrapperDiv,
-  StyledInputWrapperDiv,
   StyledDisplayDiv,
   StyledDisplaySpan,
-  StyledSelect,
+  StyledInputWrapperDiv,
   StyledMenu,
   StyledMenuOption,
+  StyledSelect,
+  StyledSelectContainer,
+  StyledSelectLabel,
+  StyledSelectWrapperDiv,
 } from "./styles"
 
 interface SelectState {
@@ -163,7 +164,7 @@ class Select extends PureComponent<SelectProps, SelectState> {
     }
 
     return (
-      <div className={classes.join(" ")} ref={ elem => this.wrapperRef = elem }>
+      <StyledSelectContainer className={classes.join(" ")} ref={ elem => this.wrapperRef = elem }>
 
         {label && (
           <StyledSelectLabel {...labelProps}>
@@ -209,7 +210,7 @@ class Select extends PureComponent<SelectProps, SelectState> {
           )}
         </StyledSelectWrapperDiv>
 
-      </div>
+      </StyledSelectContainer>
     )
   }
 }

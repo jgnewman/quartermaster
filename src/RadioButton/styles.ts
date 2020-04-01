@@ -1,20 +1,24 @@
 import styled from "styled-components"
 
 import {
+  DEFAULT_BORDER,
   absCenter,
   absFill,
-  borders,
-  size,
+  circle,
+  theme,
   vertMiddle,
   vertMiddleInner,
 } from "../lib/baseStyles"
 
 export const StyledRadioButtonWrapperSpan = styled.span`
-  ${size("1em")}
   ${vertMiddle()}
+  width: ${theme("radioButtonSize", "1em")};
+  height: ${theme("radioButtonSize", "1em")};
 
   position: relative;
-  margin-right: .33em;
+  margin-right: ${theme("radioButtonLabelMargin", ".33em")};
+
+  ${theme("radioButtonCustom")}
 `
 
 export const StyledRadioButton = styled.input`
@@ -24,15 +28,31 @@ export const StyledRadioButton = styled.input`
 
 export const StyledRadioButtonOverlaySpan = styled.span`
   ${absFill()}
-  ${borders("50%")}
-  background: white;
+  ${circle()}
+  box-sizing: border-box;
+  border: ${theme("radioButtonBorder", DEFAULT_BORDER)};
+  background: ${theme("radioButtonBgColor", "white")};
+
+  &.is-checked {
+    background: ${theme("radioButtonCheckedBgColor", "white")};
+  }
 
   .qm-radio-button-dot {
     ${absCenter()}
-    ${size("85%")}
+    width: ${theme("radioButtonDotSize", "85%")};
+    height: ${theme("radioButtonDotSize", "85%")};
+  }
+
+  .qm-radio-button-dot circle {
+    fill: ${theme("radioButtonDotColor", "black")};
   }
 `
 
 export const StyledRadioButtonLabel = styled.label`
   ${vertMiddleInner()}
+  color: ${theme("radioButtonLabelColor", "black")};
+
+  &.is-checked {
+    color: ${theme("radioButtonCheckedLabelColor", "black")};
+  }
 `

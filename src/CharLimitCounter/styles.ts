@@ -3,57 +3,52 @@ import styled from "styled-components"
 import {
   absLT,
   size,
+  theme,
 } from "../lib/baseStyles"
 
 export const StyledWrapperDiv = styled.div`
   &.worst, &.error {
-    color: red;
+    color: ${theme("charLimitErrTextColor", "red")};
   }
+  ${theme("charLimitCustom")}
 `
 
 export const StyledCounterBarSpan = styled.span`
-  ${size("auto", "0.33em")}
+  width: "auto";
+  height: ${theme("charLimitBarHeight", "0.33em")};
   display: block;
   position: relative;
-  background: rgba(0,0,0,0.1);
+  background: ${theme("charLimitBarBgEmpty", "rgba(0,0,0,0.1)")};
+  overflow: hidden;
 `
 
 export interface StyledFillBarSpanProps {
   width: string
 }
 
-export const StyledFillBarSpan = styled.span`
+export const StyledFillBarSpan = styled.span<StyledFillBarSpanProps>`
   ${absLT()}
-
-  ${({ width }: StyledFillBarSpanProps) => size(width, "100%")}
-
+  ${({ width }) => size(width, "100%")}
   transition: background .3s ease, width .1s ease;
-
   &.empty {
     background: transparent;
   }
-
   &.worst {
-    background: red;
+    background: ${theme("charLimitBarBgWorst", "red")};
   }
-
   &.worse {
-    background: orange;
+    background: ${theme("charLimitBarBgWorse", "orange")};
   }
-
   &.decent {
-    background: gold;
+    background: ${theme("charLimitBarBgDecent", "gold")};
   }
-
   &.better {
-    background: yellowgreen;
+    background: ${theme("charLimitBarBgBetter", "yellowgreen")};
   }
-
   &.best {
-    background: limegreen;
+    background: ${theme("charLimitBarBgBest", "limegreen")};
   }
-
   &.error {
-    background: red;
+    background: ${theme("charLimitBarBgError", "red")};
   }
 `

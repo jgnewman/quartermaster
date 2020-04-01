@@ -1,17 +1,24 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
 import {
+  DEFAULT_BORDER,
   DEFAULT_BG,
+  DEFAULT_RADIUS,
   absLT,
-  borders,
   ellipsisText,
   fixRT,
   flex,
   size,
+  theme,
 } from "../lib/baseStyles"
+
+export const StyledSelectContainer = styled.div`
+  ${theme("selectCustom")}
+`
 
 export const StyledSelectLabel = styled.label`
   display: block;
+  color: ${theme("selectLabelColor")};
 `
 
 export const StyledSelectWrapperDiv = styled.div`
@@ -21,19 +28,30 @@ export const StyledSelectWrapperDiv = styled.div`
 `
 
 export const StyledInputWrapperDiv = styled.div`
-  ${borders()}
   ${flex()}
+  box-sizing: border-box;
+  border: ${theme("selectBorder", DEFAULT_BORDER)};
+  border-radius: ${theme("selectRadius", DEFAULT_RADIUS)};
 
   .qm-select-icon {
     display: block;
     align-self: center;
-    padding: 5px;
+    padding: ${theme("selectCaretPadding", "5px")};
+    background: ${theme("selectCaretBgColor", "transparent")};
+  }
+
+  .qm-select-icon path {
+    fill: ${theme("selectCaretIconColor")};
   }
 
   .qm-clear-button {
-    padding: 0;
+    padding: ${theme("selectClearPadding", 0)};
     border: 0;
-    background: transparent;
+    background: ${theme("selectClearBgColor", "transparent")};
+  }
+
+  .qm-clear-button path {
+    fill: ${theme("selectClearIconColor")};
   }
 `
 
@@ -42,18 +60,18 @@ interface StyledDisplayProps {
   isDisabled: boolean
 }
 
-export const StyledDisplayDiv = styled.div`
+export const StyledDisplayDiv = styled.div<StyledDisplayProps>`
   flex-grow: 1;
   position: relative;
   overflow: hidden;
 
-  ${({ isDisabled, isShowingPlaceholder }: StyledDisplayProps) => {
+  ${({ isDisabled, isShowingPlaceholder }) => {
     if (isDisabled && isShowingPlaceholder) {
-      return "color: #999999"
+      return css`color: ${theme("selectDisabledPlaceholderColor", "#999999")};`
     } else if (isDisabled || isShowingPlaceholder) {
-      return "color: #777777;"
+      return css`color: ${theme("selectPlaceholderColor", "#777777")};`
     } else {
-      return "color: inherit;"
+      return css`color: ${theme("selectColor")};`
     }
   }}
 `
@@ -74,15 +92,27 @@ export const StyledSelect = styled.select`
 export const StyledMenu = styled.div`
   ${absLT(0, "calc(100% + 0.25em)")}
   ${size("100%", "auto")}
-  ${borders()}
-  background: white;
-  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+  box-sizing: border-box;
+  border: ${theme("selectMenuBorder", DEFAULT_BORDER)};
+  border-radius: ${theme("selectMenuRadius", DEFAULT_RADIUS)};
+  background: ${theme("selectMenuBgColor", "white")};
+  box-shadow: ${theme("selectMenuShadow", "0 0 5px rgba(0,0,0,0.2)")};
 `
 
 export const StyledMenuOption = styled.span`
   display: block;
+  background: ${theme("selectOptionBgColor")};
+  color: ${theme("selectOptionColor")};
+  padding: ${theme("selectOptionPadding")};
+  transition: all .3s ease;
 
-  &:hover {
-    background: ${DEFAULT_BG};
+  &.is-selected {
+    background: ${theme("selectOptionSelectedBgColor")};
+    color: ${theme("selectOptionSelectedColor")};
+  }
+
+  &:hover, &.is-selected:hover {
+    background: ${theme("selectOptionHoverBgColor", DEFAULT_BG)};
+    color: ${theme("selectOptionHoverColor")};
   }
 `

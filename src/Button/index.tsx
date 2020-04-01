@@ -55,6 +55,7 @@ class Button extends PureComponent<ButtonProps> {
     )
 
     switch (tag) {
+
       case "a":
         return (
           <StyledAnchor {...dynamicProps}>
@@ -69,7 +70,9 @@ class Button extends PureComponent<ButtonProps> {
             {content}
           </StyledButton>
         )
+
     }
+
   }
 }
 

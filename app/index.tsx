@@ -3,6 +3,7 @@ import React from "react"
 import { render } from "react-dom"
 
 import * as QM from "../src/index"
+import DarkTheme from "../src/themes/DarkTheme"
 
 class App extends React.Component {
   public static displayName = "App"
@@ -85,7 +86,7 @@ class App extends React.Component {
           preventInputAtLimit={false}
           value={this.state.fieldVal}
           changeHandler={this.setFieldVal.bind(this)}
-          errorText=""
+          errorText="You have an error bro"
         />
 
         <QM.TextField
@@ -179,4 +180,8 @@ class App extends React.Component {
   }
 }
 
-render(<App/>, document.querySelector("#app"))
+render(
+  <QM.ThemeProvider theme={DarkTheme}>
+    <App/>
+  </QM.ThemeProvider>
+, document.querySelector("#app"))

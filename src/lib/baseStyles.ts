@@ -1,6 +1,18 @@
+import { ThemeProps } from "../ThemeProvider"
+
 type StrNum = string | number
 
 export const DEFAULT_BG = "#efefef"
+export const DEFAULT_RADIUS = "3px"
+export const DEFAULT_BORDER = "1px solid black"
+
+interface Themed {
+  theme: ThemeProps
+}
+
+export function theme(prop: keyof ThemeProps, fallback?: any) {
+  return ({ theme }: Themed) => theme[prop] || fallback
+}
 
 export function blockAbs() {
   return "display: block; position: absolute;"
@@ -58,8 +70,8 @@ export function circle(display?: string) {
   return `${display ? `display: ${display}; ` : ""}border-radius: 50%;`
 }
 
-export function borders(radius: StrNum = "3px") {
-  return `border: 1px solid black; box-sizing: border-box; border-radius: ${radius};`
+export function borders(style: StrNum = DEFAULT_BORDER, radius: StrNum = "3px") {
+  return `border: ${style}; box-sizing: border-box; border-radius: ${radius};`
 }
 
 export function bgImg(url: string) {

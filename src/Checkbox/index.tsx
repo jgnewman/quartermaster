@@ -65,7 +65,7 @@ class Checkbox extends PureComponent<CheckboxProps> {
     }
 
     const labelProps: DynamicProps = {
-      className: "qm-checkbox-label",
+      className: `qm-checkbox-label ${isChecked ? "is-checked" : ""}`,
     }
 
     const boxProps: DynamicProps = {}

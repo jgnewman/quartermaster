@@ -65,7 +65,7 @@ class RadioButton extends PureComponent<RadioButtonProps> {
     }
 
     const labelProps: DynamicProps = {
-      className: "qm-radio-button-label",
+      className: `qm-radio-button-label ${isChecked ? "is-checked" : ""}`,
     }
 
     const boxProps: DynamicProps = {}
