@@ -13,17 +13,19 @@ export const DivTextFieldContainer = styled.div`
   ${theme("textFieldCustom")}
 `
 
-export interface StyledInputWrapperDivProps {
+export interface DivInputWrapperProps {
   isTextArea: boolean
+  isDisabled: boolean
 }
 
-export const DivInputWrapper = styled.div<StyledInputWrapperDivProps>`
+export const DivInputWrapper = styled.div<DivInputWrapperProps>`
   display: block;
   position: relative;
 
   ${({ isTextArea, theme: themeVals }) => {
     const offset = themeVals.textFieldCLOffset
     const yTranslate = offset ? `calc(-1 * (0.75em + ${offset}))` : "-0.33em"
+
     return `
       .qm-text-field-limit-counter .qm-char-limit-counter-text {
         ${isTextArea ? absRB(0, 0) : absRT(0, "50%")}
@@ -40,6 +42,12 @@ export const DivInputWrapper = styled.div<StyledInputWrapperDivProps>`
     margin-right: ${theme("textFieldCLOffset", "1px")};
     margin-bottom: ${theme("textFieldCLOffset", "1px")};
   }
+
+  ${({ isDisabled }) => isDisabled && css`
+    .qm-text-field-limit-counter {
+      opacity: .25;
+    }
+  `}
 `
 
 export const LabelForTextField = styled.label`
@@ -62,7 +70,7 @@ interface CommonInputProps {
   ref: (elem: HTMLElement | null) => void
 }
 
-export interface StyledTextAreaProps extends CommonInputProps {
+export interface TextAreaNativeProps extends CommonInputProps {
   enableTextAreaResize: boolean
 }
 
@@ -80,9 +88,17 @@ const commonFieldProps = css`
 
   width: 100%;
   padding-left: ${theme("textFieldPaddingLeft", 0)};
+
+  &::placeholder {
+    color: ${theme("textFieldPlaceholderColor")};
+  }
+
+  &[disabled]::placeholder {
+    color: ${theme("textFieldDisabledPlaceholderColor")};
+  }
 `
 
-export const TextAreaNative = styled.textarea<StyledTextAreaProps>`
+export const TextAreaNative = styled.textarea<TextAreaNativeProps>`
   ${commonFieldProps}
   height: ${theme("textFieldTAHeight")};
   padding-right: ${theme("textFieldPaddingRight", "3px")};
@@ -99,11 +115,11 @@ export const TextAreaNative = styled.textarea<StyledTextAreaProps>`
   }}
 `
 
-export interface StyledInputProps extends CommonInputProps {
+export interface InputNativeProps extends CommonInputProps {
   type: string
 }
 
-export const InputNative = styled.input<StyledInputProps>`
+export const InputNative = styled.input<InputNativeProps>`
   ${commonFieldProps}
   padding-top: ${theme("textFieldPaddingTop", "3px")};
   height: ${theme("textFieldHeight")};

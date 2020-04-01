@@ -52,11 +52,11 @@ export const SpanRadioButtonOverlay = styled.span`
   }
 `
 
-interface StyledRadioButtonLabelProps {
+interface LabelForRadioButtonProps {
   isDisabled: boolean
 }
 
-export const LabelForRadioButton = styled.label<StyledRadioButtonLabelProps>`
+export const LabelForRadioButton = styled.label<LabelForRadioButtonProps>`
   ${vertMiddleInner()}
   ${({ isDisabled }) => isDisabled
     ? css`color: ${theme("radioButtonDisabledLabelColor", "#999999")};`

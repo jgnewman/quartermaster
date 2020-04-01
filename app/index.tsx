@@ -80,7 +80,7 @@ class App extends React.Component {
         <QM.TextField
           label="My Input"
           type="text"
-          isDisabled={false}
+          isDisabled={true}
           placeholder="Say something here"
           charLimit={25}
           preventInputAtLimit={false}

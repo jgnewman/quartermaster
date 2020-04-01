@@ -151,6 +151,7 @@ const Theme: ThemeProps = {
   textFieldBorder: "none",
   textFieldCLOffset: "3px", // should include a unit and is usually the same width as your border
   textFieldColor: COLORS.WHITE,
+  textFieldDisabledPlaceholderColor: COLORS.LIGHTER,
   textFieldErrColor: COLORS.DEEP_RED,
   textFieldErrFontSize: "75%",
   textFieldErrPadding: "0.15em 0 0.33em",
@@ -181,5 +182,5 @@ export default Theme
 
 // TODO
 // - Handle outlines
-// - Handle shadows
 // - Get placeholder and disabled colors on text fields
+// - Can we organize/modularize theme chunks?

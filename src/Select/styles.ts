@@ -39,11 +39,11 @@ export const DivFauxSelectWrapper = styled.div`
   overflow: hidden;
 `
 
-interface StyledClearButtonWrapperProps {
+interface DivClearButtonWrapperProps {
   isDisabled: boolean
 }
 
-export const DivClearButtonWrapper = styled.div<StyledClearButtonWrapperProps>`
+export const DivClearButtonWrapper = styled.div<DivClearButtonWrapperProps>`
   display: block;
   align-self: center;
   background: ${theme("selectClearBgColor", "transparent")};
@@ -67,11 +67,11 @@ export const DivClearButtonWrapper = styled.div<StyledClearButtonWrapperProps>`
   `}
 `
 
-interface StyledCaretWrapperProps {
+interface DivCaretWrapperProps {
   isDisabled: boolean
 }
 
-export const DivCaretWrapper = styled.div<StyledCaretWrapperProps>`
+export const DivCaretWrapper = styled.div<DivCaretWrapperProps>`
   display: block;
   align-self: center;
   padding: ${theme("selectCaretPadding", "5px")};
@@ -89,12 +89,12 @@ export const DivCaretWrapper = styled.div<StyledCaretWrapperProps>`
   `}
 `
 
-interface StyledDisplayProps {
+interface DivValueDisplayProps {
   isShowingPlaceholder: boolean
   isDisabled: boolean
 }
 
-export const DivValueDisplay = styled.div<StyledDisplayProps>`
+export const DivValueDisplay = styled.div<DivValueDisplayProps>`
   flex-grow: 1;
   position: relative;
   overflow: hidden;

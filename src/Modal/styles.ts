@@ -7,11 +7,11 @@ import {
   theme,
 } from "../lib/baseStyles"
 
-export interface SyledModalDivProps {
+export interface DivModalContainerProps {
   isOpen: boolean
 }
 
-export const DivModalContainer = styled.div<SyledModalDivProps>`
+export const DivModalContainer = styled.div<DivModalContainerProps>`
   ${fixFill()}
   z-index: 9999;
   background: ${theme("modalBgColor", "rgba(0,0,0,0.93)")};

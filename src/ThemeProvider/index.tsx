@@ -111,6 +111,7 @@ export interface ThemeProps {
   textFieldCLOffset?: string // should include a unit and is usually the same width as your border
   textFieldColor?: string
   textFieldCustom?: string
+  textFieldDisabledPlaceholderColor?: string
   textFieldErrColor?: string
   textFieldErrFontSize?: string
   textFieldErrPadding?: string
@@ -123,6 +124,7 @@ export interface ThemeProps {
   textFieldPaddingLeft?: string
   textFieldPaddingRight?: string
   textFieldPaddingTop?: string
+  textFieldPlaceholderColor?: string
   textFieldRadius?: string
   textFieldTAHeight?: string
   textFieldTAPaddingBottomCL?: string // text area with char limit

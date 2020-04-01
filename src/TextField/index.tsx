@@ -226,6 +226,7 @@ class TextField extends PureComponent<TextFieldProps> {
 
         <DivInputWrapper
           className={`qm-text-field-input-wrapper`}
+          isDisabled={!!isDisabled}
           isTextArea={isTextArea}>
 
           {isTextArea && (
