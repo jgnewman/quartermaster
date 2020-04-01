@@ -1,9 +1,9 @@
 import React from "react"
 
 import {
-  StyledWrapperDiv,
-  StyledCounterBarSpan,
-  StyledFillBarSpan,
+  DivCounterContainer,
+  SpanFillBarWrapper,
+  SpanFillBar,
 } from "./styles"
 
 export interface CharLimitCounterProps {
@@ -70,7 +70,7 @@ const CharLimitCounter = ({
   const styleWidth = fillWidth > 100 ? "100%" : `${fillWidth}%`
 
   return (
-    <StyledWrapperDiv className={`qm-char-limit-counter ${colorClass} ${className || ""}`}>
+    <DivCounterContainer className={`qm-char-limit-counter ${colorClass} ${className || ""}`}>
       {!hideText && (
         <span className="qm-char-limit-counter-text">
           <span className="qm-char-limit-count">
@@ -83,11 +83,11 @@ const CharLimitCounter = ({
         </span>
       )}
       {!hideProgressBar && (
-        <StyledCounterBarSpan className="qm-char-limit-counter-bar">
-          <StyledFillBarSpan className={`qm-char-limit-counter-bar-fill ${colorClass}`} width={styleWidth} />
-        </StyledCounterBarSpan>
+        <SpanFillBarWrapper className="qm-char-limit-counter-bar">
+          <SpanFillBar className={`qm-char-limit-counter-bar-fill ${colorClass}`} width={styleWidth} />
+        </SpanFillBarWrapper>
       )}
-    </StyledWrapperDiv>
+    </DivCounterContainer>
   )
 }
 

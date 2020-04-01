@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
 import {
   DEFAULT_BORDER,
@@ -12,11 +12,11 @@ import {
   vertMiddleInner,
 } from "../lib/baseStyles"
 
-export const StyledCheckboxContainer = styled.div`
+export const DivCheckboxContainer = styled.div`
   ${theme("checkboxCustom")}
 `
 
-export const StyledCheckboxWrapperSpan = styled.span`
+export const SpanCheckboxWrapper = styled.span`
   ${vertMiddle()}
   width: ${theme("checkboxSize", "1em")};
   height: ${theme("checkboxSize", "1em")};
@@ -26,12 +26,12 @@ export const StyledCheckboxWrapperSpan = styled.span`
   overflow: hidden;
 `
 
-export const StyledCheckbox = styled.input`
+export const CheckboxNative = styled.input`
   ${absLT("-200%", "-200%")}
   border: 0;
 `
 
-export const StyledCheckboxOverlaySpan = styled.span`
+export const SpanCheckboxOverlay = styled.span`
   ${absFill()}
   box-sizing: border-box;
   border: ${theme("checkboxBorder", DEFAULT_BORDER)};
@@ -52,9 +52,16 @@ export const StyledCheckboxOverlaySpan = styled.span`
   }
 `
 
-export const StyledCheckboxLabel = styled.label`
+interface LabelForCheckboxProps {
+  isDisabled: boolean
+}
+
+export const LabelForCheckbox = styled.label<LabelForCheckboxProps>`
   ${vertMiddleInner()}
-  color: ${theme("checkboxLabelColor", "black")};
+  ${({ isDisabled }) => isDisabled
+    ? css`color: ${theme("checkboxDisabledLabelColor", "#999999")};`
+    : css`color: ${theme("checkboxLabelColor", "black")};`
+  }
 
   &.is-checked {
     color: ${theme("checkboxCheckedLabelColor", "black")};

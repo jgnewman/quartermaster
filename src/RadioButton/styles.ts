@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
 import {
   DEFAULT_BORDER,
@@ -52,9 +52,16 @@ export const StyledRadioButtonOverlaySpan = styled.span`
   }
 `
 
-export const StyledRadioButtonLabel = styled.label`
+interface StyledRadioButtonLabelProps {
+  isDisabled: boolean
+}
+
+export const StyledRadioButtonLabel = styled.label<StyledRadioButtonLabelProps>`
   ${vertMiddleInner()}
-  color: ${theme("radioButtonLabelColor", "black")};
+  ${({ isDisabled }) => isDisabled
+    ? css`color: ${theme("radioButtonDisabledLabelColor", "#999999")};`
+    : css`color: ${theme("radioButtonLabelColor", "black")};`
+  }
 
   &.is-checked {
     color: ${theme("radioButtonCheckedLabelColor", "black")};

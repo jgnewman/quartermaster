@@ -8,15 +8,16 @@ import {
 } from "../lib/helperTypes"
 
 import {
+  noopEvtHandler,
   manuallyTickCheckbox,
 } from "../lib/helpers"
 
 import {
-  StyledCheckboxContainer,
-  StyledCheckboxWrapperSpan,
-  StyledCheckbox,
-  StyledCheckboxOverlaySpan,
-  StyledCheckboxLabel,
+  DivCheckboxContainer,
+  SpanCheckboxWrapper,
+  CheckboxNative,
+  SpanCheckboxOverlay,
+  LabelForCheckbox,
 } from "./styles"
 
 export interface CheckboxProps {
@@ -93,13 +94,16 @@ class Checkbox extends PureComponent<CheckboxProps> {
     }
 
     const checkedClass = isChecked ? "is-checked" : ""
+    const disabledClass = isDisabled ? "is-disabled" : ""
 
     return (
-      <StyledCheckboxContainer className={`qm-checkbox ${checkedClass} ${className || ""}`}>
+      <DivCheckboxContainer
+        className={`qm-checkbox ${checkedClass} ${disabledClass} ${className || ""}`}
+        onClick={isDisabled ? noopEvtHandler : this.handleOverlayClick.bind(this)}>
 
-        <StyledCheckboxWrapperSpan className="qm-checkbox-wrapper">
+        <SpanCheckboxWrapper className="qm-checkbox-wrapper">
 
-          <StyledCheckbox
+          <CheckboxNative
             ref={refFn}
             checked={isChecked}
             className="qm-checkbox-native"
@@ -108,22 +112,23 @@ class Checkbox extends PureComponent<CheckboxProps> {
             {...boxProps}
           />
 
-          <StyledCheckboxOverlaySpan
+          <SpanCheckboxOverlay
             aria-hidden={true}
-            className={`qm-checkbox-overlay ${checkedClass}`}
-            onClick={this.handleOverlayClick.bind(this)}>
+            className={`qm-checkbox-overlay ${checkedClass}`}>
             {isChecked && <CheckmarkIcon className="qm-checkbox-checkmark" />}
-          </StyledCheckboxOverlaySpan>
+          </SpanCheckboxOverlay>
 
-        </StyledCheckboxWrapperSpan>
+        </SpanCheckboxWrapper>
 
         {label && (
-          <StyledCheckboxLabel {...labelProps}>
+          <LabelForCheckbox
+            isDisabled={!!isDisabled}
+            {...labelProps}>
             {label}
-          </StyledCheckboxLabel>
+          </LabelForCheckbox>
         )}
 
-      </StyledCheckboxContainer>
+      </DivCheckboxContainer>
     )
   }
 }

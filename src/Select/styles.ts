@@ -19,40 +19,74 @@ export const StyledSelectContainer = styled.div`
 export const StyledSelectLabel = styled.label`
   display: block;
   color: ${theme("selectLabelColor")};
+  font-size: ${theme("selectLabelFontSize")};
+  padding: ${theme("selectLabelPadding")};
 `
 
 export const StyledSelectWrapperDiv = styled.div`
   display: block;
   position: relative;
   overflow: visible;
+  line-height: 1;
 `
 
 export const StyledInputWrapperDiv = styled.div`
   ${flex()}
+  background: ${theme("selectBgColor", "white")};
   box-sizing: border-box;
   border: ${theme("selectBorder", DEFAULT_BORDER)};
   border-radius: ${theme("selectRadius", DEFAULT_RADIUS)};
+  overflow: hidden;
+`
 
-  .qm-select-icon {
-    display: block;
-    align-self: center;
-    padding: ${theme("selectCaretPadding", "5px")};
-    background: ${theme("selectCaretBgColor", "transparent")};
-  }
+interface StyledClearButtonWrapperProps {
+  isDisabled: boolean
+}
 
-  .qm-select-icon path {
-    fill: ${theme("selectCaretIconColor")};
-  }
+export const StyledClearButtonWrapper = styled.div<StyledClearButtonWrapperProps>`
+  display: block;
+  align-self: center;
+  background: ${theme("selectClearBgColor", "transparent")};
 
   .qm-clear-button {
-    padding: ${theme("selectClearPadding", 0)};
+    display: block;
     border: 0;
+    padding: ${theme("selectClearPadding", "5px")};
     background: ${theme("selectClearBgColor", "transparent")};
   }
 
   .qm-clear-button path {
     fill: ${theme("selectClearIconColor")};
+    transition: all .3s ease;
   }
+
+  ${({ isDisabled }) => !isDisabled && css`
+    .qm-clear-button:hover path {
+      fill: ${theme("selectClearIconHoverColor")};
+    }
+  `}
+`
+
+interface StyledCaretWrapperProps {
+  isDisabled: boolean
+}
+
+export const StyledCaretWrapper = styled.div<StyledCaretWrapperProps>`
+  display: block;
+  align-self: center;
+  padding: ${theme("selectCaretPadding", "5px")};
+  background: ${theme("selectCaretBgColor", "transparent")};
+
+  .qm-select-icon path {
+    fill: ${theme("selectCaretIconColor")};
+    transition: all .3s ease;
+  }
+
+  ${({ isDisabled }) => !isDisabled && css`
+    &:hover .qm-select-icon path {
+      fill: ${theme("selectCaretIconHoverColor")};
+    }
+  `}
 `
 
 interface StyledDisplayProps {
@@ -81,6 +115,7 @@ export const StyledDisplaySpan = styled.span`
   ${ellipsisText()}
   transform: translateY(-50%);
   max-width: 100%;
+  padding: ${theme("selectFieldPadding")};
 `
 
 export const StyledSelect = styled.select`
@@ -92,6 +127,7 @@ export const StyledSelect = styled.select`
 export const StyledMenu = styled.div`
   ${absLT(0, "calc(100% + 0.25em)")}
   ${size("100%", "auto")}
+  overflow: hidden;
   box-sizing: border-box;
   border: ${theme("selectMenuBorder", DEFAULT_BORDER)};
   border-radius: ${theme("selectMenuRadius", DEFAULT_RADIUS)};

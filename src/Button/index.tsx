@@ -4,9 +4,9 @@ import { noopEvtHandler } from "../lib/helpers"
 import { DynamicProps } from "../lib/helperTypes"
 
 import {
-  StyledButtonContentSpan,
-  StyledAnchor,
-  StyledButton,
+  AnchorContainer,
+  ButtonContainer,
+  SpanButtonContent,
  } from "./styles"
 
 export interface ButtonProps {
@@ -48,27 +48,27 @@ class Button extends PureComponent<ButtonProps> {
       `qm-button ${isDisabled ? "is-disabled" : ""} ${isProcessing ? "is-processing" : ""} ${className || ""}`
 
     const content = (
-      <StyledButtonContentSpan className={`qm-button-content`}>
+      <SpanButtonContent className={`qm-button-content`}>
         {text}
         {children}
-      </StyledButtonContentSpan>
+      </SpanButtonContent>
     )
 
     switch (tag) {
 
       case "a":
         return (
-          <StyledAnchor {...dynamicProps}>
+          <AnchorContainer {...dynamicProps}>
             {content}
-          </StyledAnchor>
+          </AnchorContainer>
         )
 
       case "button":
       default:
         return (
-          <StyledButton {...dynamicProps}>
+          <ButtonContainer {...dynamicProps}>
             {content}
-          </StyledButton>
+          </ButtonContainer>
         )
 
     }

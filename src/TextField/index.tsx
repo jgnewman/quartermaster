@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react"
 
 import {
+  StyledTextFieldContainer,
   StyledInputWrapperDiv,
   StyledInput,
   StyledTextArea,
@@ -124,8 +125,12 @@ class TextField extends PureComponent<TextFieldProps> {
     const { inputRef } = this
     const { type } = this.props
 
-    if (inputRef && type === "textarea") {
-      inputRef.scrollTop = inputRef.scrollHeight
+    if (inputRef) {
+      if (type === "textarea") {
+        inputRef.scrollTop = inputRef.scrollHeight
+      } else {
+        inputRef.scrollLeft = inputRef.scrollWidth
+      }
     }
   }
 
@@ -211,7 +216,7 @@ class TextField extends PureComponent<TextFieldProps> {
     }
 
     return (
-      <div className={`${classNames.join(" ")} ${className || ""}`}>
+      <StyledTextFieldContainer className={`${classNames.join(" ")} ${className || ""}`}>
 
         {label && (
           <StyledTextAreaLabel {...labelProps}>
@@ -270,7 +275,7 @@ class TextField extends PureComponent<TextFieldProps> {
         )}
 
         {children}
-      </div>
+      </StyledTextFieldContainer>
     )
   }
 }

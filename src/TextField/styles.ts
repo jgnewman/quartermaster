@@ -9,6 +9,10 @@ import {
   theme,
 } from "../lib/baseStyles"
 
+export const StyledTextFieldContainer = styled.div`
+  ${theme("textFieldCustom")}
+`
+
 export interface StyledInputWrapperDivProps {
   isTextArea: boolean
 }
@@ -17,12 +21,16 @@ export const StyledInputWrapperDiv = styled.div<StyledInputWrapperDivProps>`
   display: block;
   position: relative;
 
-  ${({ isTextArea }) => `
-    .qm-text-field-limit-counter .qm-char-limit-counter-text {
-      ${isTextArea ? absRB(0, 0) : absRT(0, "50%")}
-      transform: translateY(${isTextArea ? "-0.33em" : "-60%"}) translateX(-0.33em);
-    }
-  `}
+  ${({ isTextArea, theme: themeVals }) => {
+    const offset = themeVals.textFieldCLOffset
+    const yTranslate = offset ? `calc(-1 * (0.75em + ${offset}))` : "-0.33em"
+    return `
+      .qm-text-field-limit-counter .qm-char-limit-counter-text {
+        ${isTextArea ? absRB(0, 0) : absRT(0, "50%")}
+        transform: translateY(${isTextArea ? yTranslate : "-60%"}) translateX(-0.33em);
+      }
+    `
+  }}
 
   .qm-text-field-limit-counter .qm-char-limit-counter-bar {
     ${absLB()}
@@ -32,18 +40,20 @@ export const StyledInputWrapperDiv = styled.div<StyledInputWrapperDivProps>`
     margin-right: ${theme("textFieldCLOffset", "1px")};
     margin-bottom: ${theme("textFieldCLOffset", "1px")};
   }
-
-  ${theme("textFieldCustom")}
 `
 
 export const StyledTextAreaLabel = styled.label`
   display: block;
-  color: ${theme("textFieldColor")};
+  color: ${theme("textFieldLabelColor")};
+  font-size: ${theme("textFieldLabelFontSize")};
+  padding: ${theme("textFieldLabelPadding")};
 `
 
 export const StyledTextAreaErr = styled.label`
   display: block;
   color: ${theme("textFieldErrColor", "red")};
+  font-size: ${theme("textFieldErrFontSize")};
+  padding: ${theme("textFieldErrPadding")};
 `
 
 interface CommonInputProps {
@@ -59,18 +69,24 @@ export interface StyledTextAreaProps extends CommonInputProps {
 const commonFieldProps = css`
   display: block;
   margin: 0;
+
   box-sizing: border-box;
   border: ${theme("textFieldBorder", DEFAULT_BORDER)};
   border-radius: ${theme("textFieldRadius", DEFAULT_RADIUS)};
+
+  color: ${theme("textFieldColor")};
+  background: ${theme("textFieldBgColor")};
+  line-height: 1;
+
   width: 100%;
   padding-left: ${theme("textFieldPaddingLeft", 0)};
-  padding-top: ${theme("textFieldPaddingTop", "3px")};
 `
 
 export const StyledTextArea = styled.textarea<StyledTextAreaProps>`
   ${commonFieldProps}
-  height: ${theme("textFieldHeight")};
+  height: ${theme("textFieldTAHeight")};
   padding-right: ${theme("textFieldPaddingRight", "3px")};
+  padding-top: ${theme("textFieldTAPaddingTop", "3px")};
 
   ${({ enableTextAreaResize }) => {
     return `resize: ${enableTextAreaResize ? "auto" : "none"};`
@@ -78,7 +94,7 @@ export const StyledTextArea = styled.textarea<StyledTextAreaProps>`
 
   ${({ charLimit = 0, hideCharLimitText }) => {
     return charLimit && !hideCharLimitText
-      ? css`padding-bottom: ${theme("textFieldPaddingBottomTACL", "1.5em")};`
+      ? css`padding-bottom: ${theme("textFieldTAPaddingBottomCL", "1.5em")};`
       : css`padding-bottom: ${theme("textFieldPaddingBottom", "3px")};`
   }}
 `
@@ -89,6 +105,8 @@ export interface StyledInputProps extends CommonInputProps {
 
 export const StyledInput = styled.input<StyledInputProps>`
   ${commonFieldProps}
+  padding-top: ${theme("textFieldPaddingTop", "3px")};
+  height: ${theme("textFieldHeight")};
 
   ${({ charLimit = 0, hideCharLimitText }) => {
     if (!charLimit) {

@@ -7,6 +7,8 @@ import CaretIcon from "../icons/CaretIcon"
 import TimesIcon from "../icons/TimesIcon"
 
 import {
+  StyledCaretWrapper,
+  StyledClearButtonWrapper,
   StyledDisplayDiv,
   StyledDisplaySpan,
   StyledInputWrapperDiv,
@@ -192,14 +194,22 @@ class Select extends PureComponent<SelectProps, SelectState> {
             </StyledDisplayDiv>
 
             {hasSelectedValue && (
-              <Button
-                className="qm-clear-button"
-                clickHandler={isDisabled ? noopEvtHandler : this.clearValueOnClick}>
-                <TimesIcon className="qm-select-icon qm-clear-icon" title="Clear Selection" />
-              </Button>
+              <StyledClearButtonWrapper
+                isDisabled={!!isDisabled}
+                className="qm-clear-button-wrapper">
+                <Button
+                  className="qm-clear-button"
+                  clickHandler={isDisabled ? noopEvtHandler : this.clearValueOnClick}>
+                  <TimesIcon className="qm-select-icon qm-clear-icon" title="Clear Selection" />
+                </Button>
+              </StyledClearButtonWrapper>
             )}
 
-            <CaretIcon className="qm-select-icon qm-open-icon" title="Open" />
+            <StyledCaretWrapper
+              isDisabled={!!isDisabled}
+              className="qm-open-icon-wrapper">
+              <CaretIcon className="qm-select-icon qm-open-icon" title="Open" />
+            </StyledCaretWrapper>
 
           </StyledInputWrapperDiv>
 

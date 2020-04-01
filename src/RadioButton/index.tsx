@@ -8,6 +8,7 @@ import {
 } from "../lib/helperTypes"
 
 import {
+  noopEvtHandler,
   manuallyTickRadioButton,
 } from "../lib/helpers"
 
@@ -93,9 +94,12 @@ class RadioButton extends PureComponent<RadioButtonProps> {
     }
 
     const checkedClass = isChecked ? "is-checked" : ""
+    const disabledClass = isDisabled ? "is-disabled": ""
 
     return (
-      <StyledRadioButtonContainer className={`qm-radio-button ${checkedClass} ${className || ""}`}>
+      <StyledRadioButtonContainer
+        className={`qm-radio-button ${checkedClass} ${disabledClass} ${className || ""}`}
+        onClick={isDisabled ? noopEvtHandler : this.handleOverlayClick.bind(this)}>
 
         <StyledRadioButtonWrapperSpan className="qm-radio-button-wrapper">
 
@@ -110,15 +114,16 @@ class RadioButton extends PureComponent<RadioButtonProps> {
 
           <StyledRadioButtonOverlaySpan
             aria-hidden={true}
-            className={`qm-radio-button-overlay ${checkedClass}`}
-            onClick={this.handleOverlayClick.bind(this)}>
+            className={`qm-radio-button-overlay ${checkedClass}`}>
             {isChecked && <DotIcon className="qm-radio-button-dot" title="Checked" size="100%"/>}
           </StyledRadioButtonOverlaySpan>
 
         </StyledRadioButtonWrapperSpan>
 
         {label && (
-          <StyledRadioButtonLabel {...labelProps}>
+          <StyledRadioButtonLabel
+            isDisabled={!!isDisabled}
+            {...labelProps}>
             {label}
           </StyledRadioButtonLabel>
         )}

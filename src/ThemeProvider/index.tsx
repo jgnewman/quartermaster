@@ -6,6 +6,7 @@ export interface ThemeProps {
   avatarBorder?: string
   avatarCustom?: string
   avatarHeight?: string
+  avatarIndicatorBorder?: string
   avatarIndicatorOffColor?: string
   avatarIndicatorOnColor?: string
   avatarRadius?: string
@@ -16,6 +17,11 @@ export interface ThemeProps {
   buttonBorder?: string
   buttonContentColor?: string
   buttonCustom?: string
+  buttonFontWeight?: string
+  buttonFontSize?: string
+  buttonFontFamily?: string
+  buttonFontStyle?: string
+  buttonHoverBgColor?: string
   buttonPadding?: string
   buttonRadius?: string
 
@@ -30,6 +36,7 @@ export interface ThemeProps {
   charLimitBarHeight?: string
   charLimitCustom?: string
   charLimitErrTextColor?: string
+  charLimitFontSize?: string
 
   // Checkbox
   checkboxBgColor?: string
@@ -38,6 +45,7 @@ export interface ThemeProps {
   checkboxCheckedLabelColor?: string
   checkboxCheckedBgColor?: string
   checkboxCustom?: string
+  checkboxDisabledLabelColor?: string
   checkboxLabelColor?: string
   checkboxLabelMargin?: string
   checkboxRadius?: string
@@ -58,6 +66,7 @@ export interface ThemeProps {
   radioButtonCheckedBgColor?: string
   radioButtonCheckedLabelColor?: string
   radioButtonCustom?: string
+  radioButtonDisabledLabelColor?: string
   radioButtonDotColor?: string
   radioButtonDotSize?: string
   radioButtonLabelColor?: string
@@ -65,17 +74,23 @@ export interface ThemeProps {
   radioButtonSize?: string
 
   // Select
+  selectBgColor?: string
   selectBorder?: string
   selectCaretBgColor?: string
   selectCaretIconColor?: string
+  selectCaretIconHoverColor?: string
   selectCaretPadding?: string
   selectClearBgColor?: string
   selectClearIconColor?: string
+  selectClearIconHoverColor?: string
   selectClearPadding?: string
   selectColor?: string
   selectCustom?: string
   selectDisabledPlaceholderColor?: string
+  selectFieldPadding?: string
   selectLabelColor?: string
+  selectLabelFontSize?: string
+  selectLabelPadding?: string
   selectMenuBgColor?: string
   selectMenuBorder?: string
   selectMenuRadius?: string
@@ -91,17 +106,25 @@ export interface ThemeProps {
   selectRadius?: string
 
   // TextField
+  textFieldBgColor?: string
   textFieldBorder?: string
-  textFieldCLOffset?: string // should be the same width as your border
+  textFieldCLOffset?: string // should include a unit and is usually the same width as your border
   textFieldColor?: string
   textFieldCustom?: string
   textFieldErrColor?: string
+  textFieldErrFontSize?: string
+  textFieldErrPadding?: string
   textFieldHeight?: string
+  textFieldLabelColor?: string
+  textFieldLabelFontSize?: string
+  textFieldLabelPadding?: string
   textFieldPaddingBottom?: string
   textFieldPaddingBottomCL?: string // text field with char limit
-  textFieldPaddingBottomTACL?: string // text area with char limit
   textFieldPaddingLeft?: string
   textFieldPaddingRight?: string
   textFieldPaddingTop?: string
   textFieldRadius?: string
+  textFieldTAHeight?: string
+  textFieldTAPaddingBottomCL?: string // text area with char limit
+  textFieldTAPaddingTop?: string
 }

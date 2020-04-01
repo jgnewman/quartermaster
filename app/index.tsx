@@ -51,20 +51,20 @@ class App extends React.Component {
 
         <QM.Avatar
           showActivity
-          isActive
+          isActive={false}
           url="https://s.gravatar.com/avatar/cee1d21082337cc54cf9cf07339411e1?size=50&default=retro"
         />
 
         <QM.Button
           clickHandler={this.openModal.bind(this)}>
-          Click me to open modal
+          Open modal
         </QM.Button>
 
         <QM.ConfirmButton
           cancelText="No, decrement it!"
           clickHandler={this.incrementCounter.bind(this)}
           postCancelHook={this.decrementCounter.bind(this)}>
-          Click me to increment counter
+          Increment counter
         </QM.ConfirmButton>
 
         <div>
@@ -100,15 +100,6 @@ class App extends React.Component {
           changeHandler={this.setFieldVal.bind(this)}
           errorText=""
         />
-
-        <QM.CharLimitCounter
-          limit={150}
-          count={this.state.fieldVal.length}
-        />
-
-        <div>
-          This is the field value: {this.state.fieldVal}
-        </div>
 
         <div>
           Rendering checked state as {String(this.state.boxChecked)}
@@ -164,6 +155,7 @@ class App extends React.Component {
                   { label: "Bar", value: "bar" },
                   { label: "Baz", value: "baz" },
                 ]}
+                isDisabled={false}
                 value={getFormState().myselect}
                 changeHandler={updateValueFor("myselect")}
               />

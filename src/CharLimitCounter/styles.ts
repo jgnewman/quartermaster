@@ -6,14 +6,15 @@ import {
   theme,
 } from "../lib/baseStyles"
 
-export const StyledWrapperDiv = styled.div`
+export const DivCounterContainer = styled.div`
+  font-size: ${theme("charLimitFontSize")};
   &.worst, &.error {
     color: ${theme("charLimitErrTextColor", "red")};
   }
   ${theme("charLimitCustom")}
 `
 
-export const StyledCounterBarSpan = styled.span`
+export const SpanFillBarWrapper = styled.span`
   width: "auto";
   height: ${theme("charLimitBarHeight", "0.33em")};
   display: block;
@@ -22,11 +23,11 @@ export const StyledCounterBarSpan = styled.span`
   overflow: hidden;
 `
 
-export interface StyledFillBarSpanProps {
+export interface SpanFillBarProps {
   width: string
 }
 
-export const StyledFillBarSpan = styled.span<StyledFillBarSpanProps>`
+export const SpanFillBar = styled.span<SpanFillBarProps>`
   ${absLT()}
   ${({ width }) => size(width, "100%")}
   transition: background .3s ease, width .1s ease;
