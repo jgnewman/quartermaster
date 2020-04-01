@@ -12,6 +12,7 @@ import {
 } from "../lib/helpers"
 
 import {
+  StyledCheckboxContainer,
   StyledCheckboxWrapperSpan,
   StyledCheckbox,
   StyledCheckboxOverlaySpan,
@@ -94,7 +95,7 @@ class Checkbox extends PureComponent<CheckboxProps> {
     const checkedClass = isChecked ? "is-checked" : ""
 
     return (
-      <div className={`qm-checkbox ${checkedClass} ${className || ""}`}>
+      <StyledCheckboxContainer className={`qm-checkbox ${checkedClass} ${className || ""}`}>
 
         <StyledCheckboxWrapperSpan className="qm-checkbox-wrapper">
 
@@ -122,7 +123,7 @@ class Checkbox extends PureComponent<CheckboxProps> {
           </StyledCheckboxLabel>
         )}
 
-      </div>
+      </StyledCheckboxContainer>
     )
   }
 }

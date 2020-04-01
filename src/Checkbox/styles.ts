@@ -5,11 +5,16 @@ import {
   DEFAULT_RADIUS,
   absCenter,
   absFill,
+  absLT,
   size,
   theme,
   vertMiddle,
   vertMiddleInner,
 } from "../lib/baseStyles"
+
+export const StyledCheckboxContainer = styled.div`
+  ${theme("checkboxCustom")}
+`
 
 export const StyledCheckboxWrapperSpan = styled.span`
   ${vertMiddle()}
@@ -18,12 +23,11 @@ export const StyledCheckboxWrapperSpan = styled.span`
 
   position: relative;
   margin-right: ${theme("checkboxLabelMargin", ".33em")};
-
-  ${theme("checkboxCustom")}
+  overflow: hidden;
 `
 
 export const StyledCheckbox = styled.input`
-  ${absFill()}
+  ${absLT("-200%", "-200%")}
   border: 0;
 `
 

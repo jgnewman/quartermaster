@@ -12,6 +12,7 @@ import {
 } from "../lib/helpers"
 
 import {
+  StyledRadioButtonContainer,
   StyledRadioButtonWrapperSpan,
   StyledRadioButton,
   StyledRadioButtonOverlaySpan,
@@ -94,7 +95,7 @@ class RadioButton extends PureComponent<RadioButtonProps> {
     const checkedClass = isChecked ? "is-checked" : ""
 
     return (
-      <div className={`qm-radio-button ${checkedClass} ${className || ""}`}>
+      <StyledRadioButtonContainer className={`qm-radio-button ${checkedClass} ${className || ""}`}>
 
         <StyledRadioButtonWrapperSpan className="qm-radio-button-wrapper">
 
@@ -122,7 +123,7 @@ class RadioButton extends PureComponent<RadioButtonProps> {
           </StyledRadioButtonLabel>
         )}
 
-      </div>
+      </StyledRadioButtonContainer>
     )
   }
 }

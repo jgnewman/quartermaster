@@ -4,11 +4,16 @@ import {
   DEFAULT_BORDER,
   absCenter,
   absFill,
+  absLT,
   circle,
   theme,
   vertMiddle,
   vertMiddleInner,
 } from "../lib/baseStyles"
+
+export const StyledRadioButtonContainer = styled.div`
+  ${theme("radioButtonCustom")}
+`
 
 export const StyledRadioButtonWrapperSpan = styled.span`
   ${vertMiddle()}
@@ -17,12 +22,11 @@ export const StyledRadioButtonWrapperSpan = styled.span`
 
   position: relative;
   margin-right: ${theme("radioButtonLabelMargin", ".33em")};
-
-  ${theme("radioButtonCustom")}
+  overlay: hidden;
 `
 
 export const StyledRadioButton = styled.input`
-  ${absFill()}
+  ${absLT("-200%", "-200%")}
   border: 0;
 `
 
