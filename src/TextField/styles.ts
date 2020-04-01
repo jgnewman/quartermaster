@@ -9,7 +9,7 @@ import {
   theme,
 } from "../lib/baseStyles"
 
-export const StyledTextFieldContainer = styled.div`
+export const DivTextFieldContainer = styled.div`
   ${theme("textFieldCustom")}
 `
 
@@ -17,7 +17,7 @@ export interface StyledInputWrapperDivProps {
   isTextArea: boolean
 }
 
-export const StyledInputWrapperDiv = styled.div<StyledInputWrapperDivProps>`
+export const DivInputWrapper = styled.div<StyledInputWrapperDivProps>`
   display: block;
   position: relative;
 
@@ -42,14 +42,14 @@ export const StyledInputWrapperDiv = styled.div<StyledInputWrapperDivProps>`
   }
 `
 
-export const StyledTextAreaLabel = styled.label`
+export const LabelForTextField = styled.label`
   display: block;
   color: ${theme("textFieldLabelColor")};
   font-size: ${theme("textFieldLabelFontSize")};
   padding: ${theme("textFieldLabelPadding")};
 `
 
-export const StyledTextAreaErr = styled.label`
+export const SpanErrorText = styled.span`
   display: block;
   color: ${theme("textFieldErrColor", "red")};
   font-size: ${theme("textFieldErrFontSize")};
@@ -82,7 +82,7 @@ const commonFieldProps = css`
   padding-left: ${theme("textFieldPaddingLeft", 0)};
 `
 
-export const StyledTextArea = styled.textarea<StyledTextAreaProps>`
+export const TextAreaNative = styled.textarea<StyledTextAreaProps>`
   ${commonFieldProps}
   height: ${theme("textFieldTAHeight")};
   padding-right: ${theme("textFieldPaddingRight", "3px")};
@@ -103,7 +103,7 @@ export interface StyledInputProps extends CommonInputProps {
   type: string
 }
 
-export const StyledInput = styled.input<StyledInputProps>`
+export const InputNative = styled.input<StyledInputProps>`
   ${commonFieldProps}
   padding-top: ${theme("textFieldPaddingTop", "3px")};
   height: ${theme("textFieldHeight")};

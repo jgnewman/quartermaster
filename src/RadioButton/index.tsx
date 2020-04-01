@@ -13,11 +13,11 @@ import {
 } from "../lib/helpers"
 
 import {
-  StyledRadioButtonContainer,
-  StyledRadioButtonWrapperSpan,
-  StyledRadioButton,
-  StyledRadioButtonOverlaySpan,
-  StyledRadioButtonLabel,
+  DivRadioButtonContainer,
+  SpanRadioButtonWrapper,
+  RadioButtonNative,
+  SpanRadioButtonOverlay,
+  LabelForRadioButton,
 } from "./styles"
 
 export interface RadioButtonProps {
@@ -97,13 +97,13 @@ class RadioButton extends PureComponent<RadioButtonProps> {
     const disabledClass = isDisabled ? "is-disabled": ""
 
     return (
-      <StyledRadioButtonContainer
+      <DivRadioButtonContainer
         className={`qm-radio-button ${checkedClass} ${disabledClass} ${className || ""}`}
         onClick={isDisabled ? noopEvtHandler : this.handleOverlayClick.bind(this)}>
 
-        <StyledRadioButtonWrapperSpan className="qm-radio-button-wrapper">
+        <SpanRadioButtonWrapper className="qm-radio-button-wrapper">
 
-          <StyledRadioButton
+          <RadioButtonNative
             ref={refFn}
             checked={isChecked}
             className="qm-radio-button-native"
@@ -112,23 +112,23 @@ class RadioButton extends PureComponent<RadioButtonProps> {
             {...boxProps}
           />
 
-          <StyledRadioButtonOverlaySpan
+          <SpanRadioButtonOverlay
             aria-hidden={true}
             className={`qm-radio-button-overlay ${checkedClass}`}>
             {isChecked && <DotIcon className="qm-radio-button-dot" title="Checked" size="100%"/>}
-          </StyledRadioButtonOverlaySpan>
+          </SpanRadioButtonOverlay>
 
-        </StyledRadioButtonWrapperSpan>
+        </SpanRadioButtonWrapper>
 
         {label && (
-          <StyledRadioButtonLabel
+          <LabelForRadioButton
             isDisabled={!!isDisabled}
             {...labelProps}>
             {label}
-          </StyledRadioButtonLabel>
+          </LabelForRadioButton>
         )}
 
-      </StyledRadioButtonContainer>
+      </DivRadioButtonContainer>
     )
   }
 }

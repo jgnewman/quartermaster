@@ -5,8 +5,8 @@ import Button, { ButtonProps } from "../Button"
 import Modal from "../Modal"
 
 import {
-  StyledTitleH2,
-  StyledOptionsWrapper,
+  DivOptionsWrapper,
+  H2Title,
 } from "./styles"
 
 export interface ConfirmButtonProps extends ButtonProps {
@@ -77,11 +77,11 @@ class ConfirmButton extends Component<ConfirmButtonProps, ConfirmButtonState> {
           hideCloseButton={true}
           isOpen={this.state.open}>
 
-          <StyledTitleH2 className="qm-confirm-button-title">
+          <H2Title className="qm-confirm-button-title">
             {confirmationText || "Are you sure?"}
-          </StyledTitleH2>
+          </H2Title>
 
-          <StyledOptionsWrapper className="qm-confirm-button-options">
+          <DivOptionsWrapper className="qm-confirm-button-options">
             <Button className="qm-confirm-button-continue" clickHandler={confirmationContinueHandler}>
               { continueText || "Yes" }
             </Button>
@@ -89,7 +89,7 @@ class ConfirmButton extends Component<ConfirmButtonProps, ConfirmButtonState> {
             <Button className="qm-confirm-button-cancel" clickHandler={confirmationCancelHandler}>
               { cancelText || "Nevermind" }
             </Button>
-          </StyledOptionsWrapper>
+          </DivOptionsWrapper>
 
         </Modal>
 

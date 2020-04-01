@@ -4,9 +4,9 @@ import { noopEvtHandler } from "../lib/helpers"
 import CloseIcon from "../icons/CloseIcon"
 
 import {
-  StyledModalDiv,
-  StyledModalContentDiv,
-  StyledCloseButton,
+  DivModalContainer,
+  DivModalContent,
+  ButtonClose,
 } from "./styles"
 
 export interface ModalProps {
@@ -63,23 +63,23 @@ class Modal extends PureComponent<ModalProps> {
     } = this.props
 
     return (
-      <StyledModalDiv
+      <DivModalContainer
         className={`qm-modal ${isOpen ? "is-open" : "is-closed"} ${className || ""}`}
         isOpen={isOpen}>
 
         {!hideCloseButton && (
-          <StyledCloseButton
+          <ButtonClose
             className="qm-modal-close-button"
             onClick={closeHandler || noopEvtHandler}>
             <CloseIcon />
-          </StyledCloseButton>
+          </ButtonClose>
         )}
 
-        <StyledModalContentDiv>
+        <DivModalContent>
           {children}
-        </StyledModalContentDiv>
+        </DivModalContent>
 
-      </StyledModalDiv>
+      </DivModalContainer>
     )
   }
 }

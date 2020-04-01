@@ -11,11 +11,11 @@ import {
   vertMiddleInner,
 } from "../lib/baseStyles"
 
-export const StyledRadioButtonContainer = styled.div`
+export const DivRadioButtonContainer = styled.div`
   ${theme("radioButtonCustom")}
 `
 
-export const StyledRadioButtonWrapperSpan = styled.span`
+export const SpanRadioButtonWrapper = styled.span`
   ${vertMiddle()}
   width: ${theme("radioButtonSize", "1em")};
   height: ${theme("radioButtonSize", "1em")};
@@ -25,12 +25,12 @@ export const StyledRadioButtonWrapperSpan = styled.span`
   overlay: hidden;
 `
 
-export const StyledRadioButton = styled.input`
+export const RadioButtonNative = styled.input`
   ${absLT("-200%", "-200%")}
   border: 0;
 `
 
-export const StyledRadioButtonOverlaySpan = styled.span`
+export const SpanRadioButtonOverlay = styled.span`
   ${absFill()}
   ${circle()}
   box-sizing: border-box;
@@ -56,7 +56,7 @@ interface StyledRadioButtonLabelProps {
   isDisabled: boolean
 }
 
-export const StyledRadioButtonLabel = styled.label<StyledRadioButtonLabelProps>`
+export const LabelForRadioButton = styled.label<StyledRadioButtonLabelProps>`
   ${vertMiddleInner()}
   ${({ isDisabled }) => isDisabled
     ? css`color: ${theme("radioButtonDisabledLabelColor", "#999999")};`

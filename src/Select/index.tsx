@@ -7,17 +7,17 @@ import CaretIcon from "../icons/CaretIcon"
 import TimesIcon from "../icons/TimesIcon"
 
 import {
-  StyledCaretWrapper,
-  StyledClearButtonWrapper,
-  StyledDisplayDiv,
-  StyledDisplaySpan,
-  StyledInputWrapperDiv,
-  StyledMenu,
-  StyledMenuOption,
-  StyledSelect,
-  StyledSelectContainer,
-  StyledSelectLabel,
-  StyledSelectWrapperDiv,
+  DivCaretWrapper,
+  DivClearButtonWrapper,
+  DivValueDisplay,
+  SpanValueField,
+  DivFauxSelectWrapper,
+  DivOptionsMenu,
+  SpanMenuOption,
+  SelectNative,
+  DivSelectContainer,
+  LabelForSelect,
+  DivSelectContentWrapper,
 } from "./styles"
 
 interface SelectState {
@@ -107,13 +107,13 @@ class Select extends PureComponent<SelectProps, SelectState> {
 
       optionsArray.push(<option key={optValue} value={optValue}>{label}</option>)
       menuOptionsArray.push(
-        <StyledMenuOption
+        <SpanMenuOption
           key={optValue}
           className={`qm-select-menu-option ${isSelected ? "is-selected" : ""}`}
           data-value={optValue}
           onClick={this.handleClickOption}>
           {label}
-        </StyledMenuOption>,
+        </SpanMenuOption>,
       )
     })
 
@@ -166,35 +166,35 @@ class Select extends PureComponent<SelectProps, SelectState> {
     }
 
     return (
-      <StyledSelectContainer className={classes.join(" ")} ref={ elem => this.wrapperRef = elem }>
+      <DivSelectContainer className={classes.join(" ")} ref={ elem => this.wrapperRef = elem }>
 
         {label && (
-          <StyledSelectLabel {...labelProps}>
+          <LabelForSelect {...labelProps}>
             {label}
-          </StyledSelectLabel>
+          </LabelForSelect>
         )}
 
-        <StyledSelectWrapperDiv className="qm-select-input-wrapper">
-          <StyledSelect
+        <DivSelectContentWrapper className="qm-select-input-wrapper">
+          <SelectNative
             disabled={!!isDisabled}
             onChange={this.updateValueOnRawChange}>
             {optionsArray}
-          </StyledSelect>
+          </SelectNative>
 
-          <StyledInputWrapperDiv
+          <DivFauxSelectWrapper
             className="qm-select-field-wrapper"
             onClick={isDisabled ? noopEvtHandler : this.openSelect}
             aria-hidden={true}>
 
-            <StyledDisplayDiv
+            <DivValueDisplay
               isDisabled={!!isDisabled}
               isShowingPlaceholder={!hasSelectedValue}
               className={`qm-select-display ${!hasSelectedValue ? "is-placeholder" : ""}`}>
-              <StyledDisplaySpan>{textValue}</StyledDisplaySpan>
-            </StyledDisplayDiv>
+              <SpanValueField>{textValue}</SpanValueField>
+            </DivValueDisplay>
 
             {hasSelectedValue && (
-              <StyledClearButtonWrapper
+              <DivClearButtonWrapper
                 isDisabled={!!isDisabled}
                 className="qm-clear-button-wrapper">
                 <Button
@@ -202,25 +202,25 @@ class Select extends PureComponent<SelectProps, SelectState> {
                   clickHandler={isDisabled ? noopEvtHandler : this.clearValueOnClick}>
                   <TimesIcon className="qm-select-icon qm-clear-icon" title="Clear Selection" />
                 </Button>
-              </StyledClearButtonWrapper>
+              </DivClearButtonWrapper>
             )}
 
-            <StyledCaretWrapper
+            <DivCaretWrapper
               isDisabled={!!isDisabled}
               className="qm-open-icon-wrapper">
               <CaretIcon className="qm-select-icon qm-open-icon" title="Open" />
-            </StyledCaretWrapper>
+            </DivCaretWrapper>
 
-          </StyledInputWrapperDiv>
+          </DivFauxSelectWrapper>
 
           {isOpen && (
-            <StyledMenu className="qm-select-menu" aria-hidden={true}>
+            <DivOptionsMenu className="qm-select-menu" aria-hidden={true}>
               {menuOptionsArray}
-            </StyledMenu>
+            </DivOptionsMenu>
           )}
-        </StyledSelectWrapperDiv>
+        </DivSelectContentWrapper>
 
-      </StyledSelectContainer>
+      </DivSelectContainer>
     )
   }
 }

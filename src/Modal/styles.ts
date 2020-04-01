@@ -11,7 +11,7 @@ export interface SyledModalDivProps {
   isOpen: boolean
 }
 
-export const StyledModalDiv = styled.div<SyledModalDivProps>`
+export const DivModalContainer = styled.div<SyledModalDivProps>`
   ${fixFill()}
   z-index: 9999;
   background: ${theme("modalBgColor", "rgba(0,0,0,0.93)")};
@@ -28,7 +28,7 @@ export const StyledModalDiv = styled.div<SyledModalDivProps>`
   ${theme("modalCustom")};
 `
 
-export const StyledModalContentDiv = styled.div`
+export const DivModalContent = styled.div`
   ${absLT("50%", "40%")}
   transform: translateX(-50%) translateY(-50%);
   max-width: 100%;
@@ -38,7 +38,7 @@ export const StyledModalContentDiv = styled.div`
   letter-spacing: 0;
 `
 
-export const StyledCloseButton = styled.button`
+export const ButtonClose = styled.button`
   ${fixRT()}
   z-index: 9999;
   padding: 1em 1.25em;

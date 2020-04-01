@@ -183,5 +183,3 @@ export default Theme
 // - Handle outlines
 // - Handle shadows
 // - Get placeholder and disabled colors on text fields
-// - Cleanup styled names
-//    - partially done. start from confirmbutton

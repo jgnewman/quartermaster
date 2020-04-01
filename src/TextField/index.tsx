@@ -1,12 +1,12 @@
 import React, { PureComponent } from "react"
 
 import {
-  StyledTextFieldContainer,
-  StyledInputWrapperDiv,
-  StyledInput,
-  StyledTextArea,
-  StyledTextAreaLabel,
-  StyledTextAreaErr,
+  DivTextFieldContainer,
+  DivInputWrapper,
+  InputNative,
+  TextAreaNative,
+  LabelForTextField,
+  SpanErrorText,
 } from "./styles"
 
 import {
@@ -216,20 +216,20 @@ class TextField extends PureComponent<TextFieldProps> {
     }
 
     return (
-      <StyledTextFieldContainer className={`${classNames.join(" ")} ${className || ""}`}>
+      <DivTextFieldContainer className={`${classNames.join(" ")} ${className || ""}`}>
 
         {label && (
-          <StyledTextAreaLabel {...labelProps}>
+          <LabelForTextField {...labelProps}>
             {label}
-          </StyledTextAreaLabel>
+          </LabelForTextField>
         )}
 
-        <StyledInputWrapperDiv
+        <DivInputWrapper
           className={`qm-text-field-input-wrapper`}
           isTextArea={isTextArea}>
 
           {isTextArea && (
-            <StyledTextArea
+            <TextAreaNative
               charLimit={charLimit}
               className="qm-text-field-input textarea"
               disabled={!!isDisabled}
@@ -244,7 +244,7 @@ class TextField extends PureComponent<TextFieldProps> {
           )}
 
           {!isTextArea && (
-            <StyledInput
+            <InputNative
               charLimit={charLimit}
               className="qm-text-field-input field"
               disabled={!!isDisabled}
@@ -268,14 +268,14 @@ class TextField extends PureComponent<TextFieldProps> {
               limitIsMinimum={!!charLimitIsMinimum}
             />
           )}
-        </StyledInputWrapperDiv>
+        </DivInputWrapper>
 
         {errorText && (
-          <StyledTextAreaErr className="qm-text-field-error-msg">{errorText}</StyledTextAreaErr>
+          <SpanErrorText className="qm-text-field-error-msg">{errorText}</SpanErrorText>
         )}
 
         {children}
-      </StyledTextFieldContainer>
+      </DivTextFieldContainer>
     )
   }
 }

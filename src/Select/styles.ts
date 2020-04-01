@@ -12,25 +12,25 @@ import {
   theme,
 } from "../lib/baseStyles"
 
-export const StyledSelectContainer = styled.div`
+export const DivSelectContainer = styled.div`
   ${theme("selectCustom")}
 `
 
-export const StyledSelectLabel = styled.label`
+export const LabelForSelect = styled.label`
   display: block;
   color: ${theme("selectLabelColor")};
   font-size: ${theme("selectLabelFontSize")};
   padding: ${theme("selectLabelPadding")};
 `
 
-export const StyledSelectWrapperDiv = styled.div`
+export const DivSelectContentWrapper = styled.div`
   display: block;
   position: relative;
   overflow: visible;
   line-height: 1;
 `
 
-export const StyledInputWrapperDiv = styled.div`
+export const DivFauxSelectWrapper = styled.div`
   ${flex()}
   background: ${theme("selectBgColor", "white")};
   box-sizing: border-box;
@@ -43,7 +43,7 @@ interface StyledClearButtonWrapperProps {
   isDisabled: boolean
 }
 
-export const StyledClearButtonWrapper = styled.div<StyledClearButtonWrapperProps>`
+export const DivClearButtonWrapper = styled.div<StyledClearButtonWrapperProps>`
   display: block;
   align-self: center;
   background: ${theme("selectClearBgColor", "transparent")};
@@ -71,7 +71,7 @@ interface StyledCaretWrapperProps {
   isDisabled: boolean
 }
 
-export const StyledCaretWrapper = styled.div<StyledCaretWrapperProps>`
+export const DivCaretWrapper = styled.div<StyledCaretWrapperProps>`
   display: block;
   align-self: center;
   padding: ${theme("selectCaretPadding", "5px")};
@@ -94,7 +94,7 @@ interface StyledDisplayProps {
   isDisabled: boolean
 }
 
-export const StyledDisplayDiv = styled.div<StyledDisplayProps>`
+export const DivValueDisplay = styled.div<StyledDisplayProps>`
   flex-grow: 1;
   position: relative;
   overflow: hidden;
@@ -110,7 +110,7 @@ export const StyledDisplayDiv = styled.div<StyledDisplayProps>`
   }}
 `
 
-export const StyledDisplaySpan = styled.span`
+export const SpanValueField = styled.span`
   ${absLT("auto", "50%")}
   ${ellipsisText()}
   transform: translateY(-50%);
@@ -118,13 +118,13 @@ export const StyledDisplaySpan = styled.span`
   padding: ${theme("selectFieldPadding")};
 `
 
-export const StyledSelect = styled.select`
+export const SelectNative = styled.select`
   ${fixRT("-1000vw", "auto")}
   ${size("1px")}
   overflow: hidden;
 `
 
-export const StyledMenu = styled.div`
+export const DivOptionsMenu = styled.div`
   ${absLT(0, "calc(100% + 0.25em)")}
   ${size("100%", "auto")}
   overflow: hidden;
@@ -135,7 +135,7 @@ export const StyledMenu = styled.div`
   box-shadow: ${theme("selectMenuShadow", "0 0 5px rgba(0,0,0,0.2)")};
 `
 
-export const StyledMenuOption = styled.span`
+export const SpanMenuOption = styled.span`
   display: block;
   background: ${theme("selectOptionBgColor")};
   color: ${theme("selectOptionColor")};
