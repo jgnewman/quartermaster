@@ -4,6 +4,7 @@ import {
   DEFAULT_BORDER,
   DEFAULT_BG,
   DEFAULT_RADIUS,
+  DEFAULT_OUTLINE,
   absLT,
   ellipsisText,
   fixRT,
@@ -30,13 +31,21 @@ export const DivSelectContentWrapper = styled.div`
   line-height: 1;
 `
 
-export const DivFauxSelectWrapper = styled.div`
+interface DivFauxSelectWrapperProps {
+  isFocused: boolean
+}
+
+export const DivFauxSelectWrapper = styled.div<DivFauxSelectWrapperProps>`
   ${flex()}
   background: ${theme("selectBgColor", "white")};
   box-sizing: border-box;
   border: ${theme("selectBorder", DEFAULT_BORDER)};
   border-radius: ${theme("selectRadius", DEFAULT_RADIUS)};
   overflow: hidden;
+
+  ${({ isFocused }) => isFocused && css`
+    box-shadow: ${theme("selectOutlineShadow", DEFAULT_OUTLINE)};
+  `}
 `
 
 interface DivClearButtonWrapperProps {
@@ -122,6 +131,7 @@ export const SelectNative = styled.select`
   ${fixRT("-1000vw", "auto")}
   ${size("1px")}
   overflow: hidden;
+  outline: none !important;
 `
 
 export const DivOptionsMenu = styled.div`

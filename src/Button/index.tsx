@@ -12,6 +12,7 @@ import {
 export interface ButtonProps {
   className?: string
   clickHandler?: React.MouseEventHandler
+  highlight?: "positive" | "negative"
   isDisabled?: boolean
   isProcessing?: boolean
   tag?: "a" | "button"
@@ -20,18 +21,24 @@ export interface ButtonProps {
 
 class Button extends PureComponent<ButtonProps> {
   public static displayName = "Button"
+  public state = { isFocused: false }
+
+  handleFocus = () => this.setState({ isFocused: true })
+  handleBlur = () => this.setState({ isFocused: false })
 
   render() {
     const {
       children,
       className,
       clickHandler,
+      highlight,
       isDisabled,
       isProcessing,
       tag,
       text,
     } = this.props
 
+    const { isFocused } = this.state
     const buttonClickHandler = clickHandler || noopEvtHandler
     const shouldApplyClickHandler = !!clickHandler && !isDisabled && !isProcessing
     const dynamicProps: DynamicProps = {}
@@ -44,8 +51,25 @@ class Button extends PureComponent<ButtonProps> {
       dynamicProps.disabled = true
     }
 
-    dynamicProps.className =
-      `qm-button ${isDisabled ? "is-disabled" : ""} ${isProcessing ? "is-processing" : ""} ${className || ""}`
+    const classes = ["qm-button"]
+
+    if (isDisabled) {
+      classes.push("is-disabled")
+    }
+
+    if (isProcessing) {
+      classes.push("is-processing")
+    }
+
+    if (highlight) {
+      classes.push("is-" + highlight)
+    }
+
+    if (className) {
+      classes.push(className)
+    }
+
+    dynamicProps.className = classes.join(" ")
 
     const content = (
       <SpanButtonContent className={`qm-button-content`}>
@@ -58,7 +82,11 @@ class Button extends PureComponent<ButtonProps> {
 
       case "a":
         return (
-          <AnchorContainer {...dynamicProps}>
+          <AnchorContainer
+            isFocused={isFocused}
+            onFocus={this.handleFocus}
+            onBlur={this.handleBlur}
+            {...dynamicProps}>
             {content}
           </AnchorContainer>
         )
@@ -66,7 +94,11 @@ class Button extends PureComponent<ButtonProps> {
       case "button":
       default:
         return (
-          <ButtonContainer {...dynamicProps}>
+          <ButtonContainer
+            isFocused={isFocused}
+            onFocus={this.handleFocus}
+            onBlur={this.handleBlur}
+            {...dynamicProps}>
             {content}
           </ButtonContainer>
         )

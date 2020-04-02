@@ -10,10 +10,13 @@ const COLORS = {
   DARKER: "#111111",
   DARKEST: "#000000",
   DEEP_RED: "#f7364c", // for errors
-  GREEN: "#5dda34",
+  GREEN: "#47ae26",
+  GREEN_HOVER: "#55cb2f",
   LIME: "#BEE371",
   ORANGE: "#FDAB64",
-  RED: "#FD6476",
+  OUTLINE: "#1657a0",
+  RED: "#cf2e41",
+  RED_HOVER: "#f2384e",
   TRANSPARENT: "transparent",
   WHITE: "#ffffff",
   YELLOW: "#FEED78",
@@ -31,10 +34,16 @@ const Theme: ThemeProps = {
   // Button
   buttonBgColor: COLORS.LIGHTER,
   buttonHoverBgColor: COLORS.LIGHTEST,
+  buttonHoverContentColor: COLORS.WHITE,
+  buttonHoverNegativeBgColor: COLORS.RED_HOVER,
+  buttonHoverPositiveBgColor: COLORS.GREEN_HOVER,
   buttonBorder: "none",
   buttonContentColor: COLORS.WHITE,
   buttonFontSize: "75%",
+  buttonNegativeBgColor: COLORS.RED,
+  buttonOutlineShadow: `0 0 0 2px ${COLORS.BLUE}`,
   buttonPadding: "0.85em 2em 0.95em",
+  buttonPositiveBgColor: COLORS.GREEN,
   buttonRadius: "10em",
   buttonCustom: `
     letter-spacing: 3px;
@@ -62,6 +71,7 @@ const Theme: ThemeProps = {
   checkboxCheckedBgColor: COLORS.LIGHTEST,
   checkboxDisabledLabelColor: COLORS.LIGHTEST,
   checkboxLabelColor: COLORS.BASE_FONT,
+  checkboxOutlineShadow: `0 0 0 2px ${COLORS.BLUE}`,
   checkboxCustom: `
     .qm-checkbox-label {
       transition: all .3s ease;
@@ -86,6 +96,7 @@ const Theme: ThemeProps = {
   radioButtonDisabledLabelColor: COLORS.LIGHTEST,
   radioButtonDotColor: COLORS.BLUE,
   radioButtonLabelColor: COLORS.BASE_FONT,
+  radioButtonOutlineShadow: `0 0 0 2px ${COLORS.BLUE}`,
   radioButtonCustom: `
     .qm-radio-button-label {
       transition: all .3s ease;
@@ -105,7 +116,7 @@ const Theme: ThemeProps = {
   selectClearBgColor: COLORS.TRANSPARENT,
   selectClearIconColor: COLORS.LIGHTEST,
   selectClearIconHoverColor: COLORS.RED,
-  selectClearPadding: "0.5em 1em",
+  selectClearPadding: "0.5em 0.75em",
   selectColor: COLORS.WHITE,
   selectDisabledPlaceholderColor: COLORS.LIGHTER,
   selectFieldPadding: "0 0 0 0.75em",
@@ -122,11 +133,16 @@ const Theme: ThemeProps = {
   selectOptionPadding: "0.25em 0.75em 0.5em",
   selectOptionSelectedBgColor: COLORS.BLUE,
   selectOptionSelectedColor: COLORS.WHITE,
+  selectOutlineShadow: `0 0 0 2px ${COLORS.BLUE}`,
   selectRadius: "0.25em",
   selectCustom: `
     .qm-select-label {
       letter-spacing: 3px;
       text-transform: uppercase;
+    }
+
+    .qm-clear-button {
+      transform: translateX(-0.25em);
     }
 
     .qm-open-icon-wrapper {
@@ -159,6 +175,7 @@ const Theme: ThemeProps = {
   textFieldLabelColor: COLORS.WHITE,
   textFieldLabelFontSize: "75%",
   textFieldLabelPadding: "0 0 .33em 0",
+  textFieldOutlineShadow: `0 0 0 2px ${COLORS.BLUE}`,
   textFieldPaddingBottom: "",
   textFieldPaddingBottomCL: "", // text field with char limit
   textFieldPaddingLeft: "0.75em",
@@ -181,6 +198,4 @@ const Theme: ThemeProps = {
 export default Theme
 
 // TODO
-// - Handle outlines
-// - Get placeholder and disabled colors on text fields
 // - Can we organize/modularize theme chunks?

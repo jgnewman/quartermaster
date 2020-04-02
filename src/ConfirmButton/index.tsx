@@ -8,12 +8,14 @@ import {
   DivOptionsWrapper,
   H2Title,
 } from "./styles"
+import { DynamicProps } from "src/lib/helperTypes"
 
-export interface ConfirmButtonProps extends ButtonProps {
+export interface ConfirmButtonProps extends Exclude<ButtonProps, "highlight"> {
   cancelText?: string
   confirmationText?: string
   continueText?: string
   postCancelHook?: React.MouseEventHandler
+  useHighlights?: boolean
 }
 
 interface ConfirmButtonState {
@@ -39,6 +41,7 @@ class ConfirmButton extends Component<ConfirmButtonProps, ConfirmButtonState> {
       cancelText,
       continueText,
       confirmationText,
+      useHighlights,
       postCancelHook,
       ...rest
     } = this.props
@@ -65,6 +68,16 @@ class ConfirmButton extends Component<ConfirmButtonProps, ConfirmButtonState> {
       clickHandler: buttonClickHandler,
     }
 
+    const positiveProps: DynamicProps = {}
+    if (useHighlights) {
+      positiveProps.highlight = "positive"
+    }
+
+    const negativeProps: DynamicProps = {}
+    if (useHighlights) {
+      negativeProps.highlight = "negative"
+    }
+
     return (
       <>
 
@@ -82,11 +95,17 @@ class ConfirmButton extends Component<ConfirmButtonProps, ConfirmButtonState> {
           </H2Title>
 
           <DivOptionsWrapper className="qm-confirm-button-options">
-            <Button className="qm-confirm-button-continue" clickHandler={confirmationContinueHandler}>
+            <Button
+              className="qm-confirm-button-continue"
+              clickHandler={confirmationContinueHandler}
+              {...positiveProps}>
               { continueText || "Yes" }
             </Button>
 
-            <Button className="qm-confirm-button-cancel" clickHandler={confirmationCancelHandler}>
+            <Button
+              className="qm-confirm-button-cancel"
+              clickHandler={confirmationCancelHandler}
+              {...negativeProps}>
               { cancelText || "Nevermind" }
             </Button>
           </DivOptionsWrapper>

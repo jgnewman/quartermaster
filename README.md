@@ -45,6 +45,7 @@ Creates a button from either an `a` tag or a `button` tag as specified, defaulti
 interface ButtonProps {
   className?: string
   clickHandler?: React.MouseEventHandler
+  highlight?: "positive" | "negative" // applies additional green or red color stylings
   isDisabled?: boolean
   isProcessing?: boolean
   tag?: "a" | "button" // defaults to button
@@ -93,11 +94,12 @@ interface CheckboxProps {
 Behaves similarly to `Button` but intercepts the click handler with a confirmation modal allowing the user to confirm or cancel the action taken before firing the initial click handler. If the action is canceled, the click handler is not fired and the modal is closed. You can specify the confirmation text as well as the text on both the confirm or cancel buttons, all of which have defaults.
 
 ```typescript
-interface ConfirmButtonProps extends ButtonProps {
+export interface ConfirmButtonProps extends Exclude<ButtonProps, "highlight"> {
   cancelText?: string
   confirmationText?: string
   continueText?: string
   postCancelHook?: React.MouseEventHandler
+  useHighlights?: boolean // automatically applies highlights to buttons
 }
 ```
 
@@ -212,12 +214,13 @@ interface RadioOption {
 ```
 
 ### Select
-Generates a stylable select menu built on top of a raw `select` element for accessibility. Is controlled by a `value`, and takes an array of `options` objects and a `changeHandler` for capturing value updates.
+Generates a stylable select menu built on top of a raw `select` element for accessibility. Allows capturing the field ref via a function such as `elem => this.myRef = elem`. Is controlled by a `value`, and takes an array of `options` objects and a `changeHandler` for capturing value updates.
 
 ```typescript
 interface SelectProps {
   changeHandler?: (value: string | null) => void
   className?: string
+  fieldRef?: (elem: HTMLElement | null) => void
   id?: string
   isDisabled?: boolean
   label?: string

@@ -1,7 +1,7 @@
 import React, { PureComponent, ReactNodeArray } from "react"
 
 import { noopEvtHandler } from "../lib/helpers"
-import { DynamicProps } from "../lib/helperTypes"
+import { DynamicProps, RefFunction } from "../lib/helperTypes"
 import Button from "../Button"
 import CaretIcon from "../icons/CaretIcon"
 import TimesIcon from "../icons/TimesIcon"
@@ -22,6 +22,7 @@ import {
 
 interface SelectState {
   isOpen: boolean
+  isFocused: boolean
 }
 
 interface SelectOption {
@@ -33,6 +34,7 @@ export interface SelectProps {
   changeHandler?: (value: string | null) => void
   className?: string
   id?: string
+  fieldRef?: RefFunction // function like (elem => this.myRef = elem)
   isDisabled?: boolean
   label?: string
   options: SelectOption[]
@@ -44,17 +46,25 @@ class Select extends PureComponent<SelectProps, SelectState> {
   public displayName = "Select"
   public state: SelectState
   private wrapperRef: HTMLDivElement | null
+  private selectRef: HTMLSelectElement | null
 
   constructor(props: SelectProps) {
     super(props)
 
     this.state = {
       isOpen: false,
+      isFocused: false,
     }
   }
 
-  openSelect = () => {
+  handleFocus = () => this.setState({ isFocused: true, isOpen: true })
+  handleBlur = () => this.setState({ isFocused: false })
+
+  handleClickToOpenSelect = () => {
     this.setState({ isOpen: true })
+    if (this.selectRef) {
+      this.selectRef.focus()
+    }
   }
 
   closeSelect = () => {
@@ -131,6 +141,7 @@ class Select extends PureComponent<SelectProps, SelectState> {
   render() {
     const {
       className,
+      fieldRef,
       id,
       isDisabled,
       label,
@@ -138,10 +149,21 @@ class Select extends PureComponent<SelectProps, SelectState> {
       value,
     } = this.props
 
-    const { isOpen } = this.state
+    const { isOpen, isFocused } = this.state
     const { optionsArray, menuOptionsArray, selectedLabel } = this.buildOptionArrays()
     const textValue = value ? selectedLabel : placeholder
     const hasSelectedValue = !!value
+
+    const wrapperRefFn = (elem: HTMLDivElement | null) => {
+      this.wrapperRef = elem
+    }
+
+    const selectRefFn = (elem: HTMLSelectElement | null) => {
+      this.selectRef = elem
+      if (fieldRef) {
+        fieldRef(elem)
+      }
+    }
 
     const labelProps: DynamicProps = {
       className: "qm-select-label",
@@ -166,7 +188,7 @@ class Select extends PureComponent<SelectProps, SelectState> {
     }
 
     return (
-      <DivSelectContainer className={classes.join(" ")} ref={ elem => this.wrapperRef = elem }>
+      <DivSelectContainer className={classes.join(" ")} ref={wrapperRefFn}>
 
         {label && (
           <LabelForSelect {...labelProps}>
@@ -176,14 +198,18 @@ class Select extends PureComponent<SelectProps, SelectState> {
 
         <DivSelectContentWrapper className="qm-select-input-wrapper">
           <SelectNative
+            ref={selectRefFn}
             disabled={!!isDisabled}
+            onFocus={this.handleFocus}
+            onBlur={this.handleBlur}
             onChange={this.updateValueOnRawChange}>
             {optionsArray}
           </SelectNative>
 
           <DivFauxSelectWrapper
             className="qm-select-field-wrapper"
-            onClick={isDisabled ? noopEvtHandler : this.openSelect}
+            isFocused={isFocused}
+            onClick={isDisabled ? noopEvtHandler : this.handleClickToOpenSelect}
             aria-hidden={true}>
 
             <DivValueDisplay

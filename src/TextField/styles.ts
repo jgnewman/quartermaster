@@ -3,6 +3,7 @@ import styled, { css } from "styled-components"
 import {
   DEFAULT_BORDER,
   DEFAULT_RADIUS,
+  DEFAULT_OUTLINE,
   absLB,
   absRB,
   absRT,
@@ -65,22 +66,23 @@ export const SpanErrorText = styled.span`
 `
 
 interface CommonInputProps {
+  isFocused: boolean
   charLimit?: number
   hideCharLimitText?: boolean
   ref: (elem: HTMLElement | null) => void
 }
 
-export interface TextAreaNativeProps extends CommonInputProps {
-  enableTextAreaResize: boolean
-}
-
-const commonFieldProps = css`
+const commonFieldProps = css<CommonInputProps>`
   display: block;
   margin: 0;
 
   box-sizing: border-box;
   border: ${theme("textFieldBorder", DEFAULT_BORDER)};
   border-radius: ${theme("textFieldRadius", DEFAULT_RADIUS)};
+
+  ${({ isFocused }) => isFocused && css`
+    box-shadow: ${theme("textFieldOutlineShadow", DEFAULT_OUTLINE)};
+  `}
 
   color: ${theme("textFieldColor")};
   background: ${theme("textFieldBgColor")};
@@ -96,7 +98,13 @@ const commonFieldProps = css`
   &[disabled]::placeholder {
     color: ${theme("textFieldDisabledPlaceholderColor")};
   }
+
+  outline: none !important;
 `
+
+export interface TextAreaNativeProps extends CommonInputProps {
+  enableTextAreaResize: boolean
+}
 
 export const TextAreaNative = styled.textarea<TextAreaNativeProps>`
   ${commonFieldProps}

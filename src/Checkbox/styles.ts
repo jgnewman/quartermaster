@@ -3,6 +3,7 @@ import styled, { css } from "styled-components"
 import {
   DEFAULT_BORDER,
   DEFAULT_RADIUS,
+  DEFAULT_OUTLINE,
   absCenter,
   absFill,
   absLT,
@@ -23,20 +24,29 @@ export const SpanCheckboxWrapper = styled.span`
 
   position: relative;
   margin-right: ${theme("checkboxLabelMargin", ".33em")};
-  overflow: hidden;
 `
 
 export const CheckboxNative = styled.input`
-  ${absLT("-200%", "-200%")}
+  ${absLT("-1000vw", 0)}
   border: 0;
 `
 
-export const SpanCheckboxOverlay = styled.span`
+interface SpanCheckboxOverlayProps {
+  isFocused: boolean
+}
+
+export const SpanCheckboxOverlay = styled.span<SpanCheckboxOverlayProps>`
   ${absFill()}
   box-sizing: border-box;
   border: ${theme("checkboxBorder", DEFAULT_BORDER)};
   border-radius: ${theme("checkboxRadius", DEFAULT_RADIUS)};
   background: ${theme("checkboxBgColor", "white")};
+
+  ${({ isFocused }) => isFocused && css`
+    box-shadow: ${theme("checkboxOutlineShadow", DEFAULT_OUTLINE)};
+  `}
+
+  outline: none !important;
 
   &.is-checked {
     background: ${theme("checkboxCheckedBgColor", "white")};

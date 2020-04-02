@@ -45,26 +45,13 @@ export interface TextFieldProps {
 
 class TextField extends PureComponent<TextFieldProps> {
   public displayName = "TextField"
+  public state = { isFocused: false }
   private inputRef: NullableInputElem
 
-  shouldPreventInput(evtTarget: InputElem) {
-    const {
-      charLimit,
-      charLimitIsMinimum,
-      preventInputAtLimit,
-      value="",
-    } = this.props
+  handleFocus = () => this.setState({ isFocused: true })
+  handleBlur = () => this.setState({ isFocused: false })
 
-    const newValue = evtTarget.value
-
-    return typeof charLimit !== "undefined"
-      && !charLimitIsMinimum
-      && preventInputAtLimit
-      && value.length >= charLimit
-      && newValue.length > value.length
-  }
-
-  handleChange(evt: React.ChangeEvent) {
+  handleChange = (evt: React.ChangeEvent) => {
     const { changeHandler, type } = this.props
 
     const target = evt.target as InputElem
@@ -83,7 +70,7 @@ class TextField extends PureComponent<TextFieldProps> {
     }
   }
 
-  handleKeyUp(evt: React.KeyboardEvent) {
+  handleKeyUp = (evt: React.KeyboardEvent) => {
     const { keyUpHandler } = this.props
 
     if (keyUpHandler) {
@@ -93,6 +80,23 @@ class TextField extends PureComponent<TextFieldProps> {
 
       keyUpHandler(evt)
     }
+  }
+
+  shouldPreventInput(evtTarget: InputElem) {
+    const {
+      charLimit,
+      charLimitIsMinimum,
+      preventInputAtLimit,
+      value="",
+    } = this.props
+
+    const newValue = evtTarget.value
+
+    return typeof charLimit !== "undefined"
+      && !charLimitIsMinimum
+      && preventInputAtLimit
+      && value.length >= charLimit
+      && newValue.length > value.length
   }
 
   maybeTruncateValue() {
@@ -167,6 +171,7 @@ class TextField extends PureComponent<TextFieldProps> {
       value,
     } = this.props
 
+    const { isFocused } = this.state
     const isTextArea = type === "textarea"
     const dynamicProps: DynamicProps = {}
 
@@ -231,13 +236,16 @@ class TextField extends PureComponent<TextFieldProps> {
 
           {isTextArea && (
             <TextAreaNative
+              isFocused={isFocused}
               charLimit={charLimit}
               className="qm-text-field-input textarea"
               disabled={!!isDisabled}
               enableTextAreaResize={!!enableTextAreaResize}
               hideCharLimitText={hideCharLimitText}
-              onChange={this.handleChange.bind(this)}
-              onKeyUp={this.handleKeyUp.bind(this)}
+              onChange={this.handleChange}
+              onKeyUp={this.handleKeyUp}
+              onFocus={this.handleFocus}
+              onBlur={this.handleBlur}
               placeholder={placeholder || ""}
               ref={refFn}
               {...dynamicProps}
@@ -246,12 +254,15 @@ class TextField extends PureComponent<TextFieldProps> {
 
           {!isTextArea && (
             <InputNative
+              isFocused={isFocused}
               charLimit={charLimit}
               className="qm-text-field-input field"
               disabled={!!isDisabled}
               hideCharLimitText={hideCharLimitText}
-              onChange={this.handleChange.bind(this)}
-              onKeyUp={this.handleKeyUp.bind(this)}
+              onChange={this.handleChange}
+              onKeyUp={this.handleKeyUp}
+              onFocus={this.handleFocus}
+              onBlur={this.handleBlur}
               placeholder={placeholder || ""}
               ref={refFn}
               type={type || "text"}

@@ -5,6 +5,7 @@ type StrNum = string | number
 export const DEFAULT_BG = "#efefef"
 export const DEFAULT_RADIUS = "3px"
 export const DEFAULT_BORDER = "1px solid black"
+export const DEFAULT_OUTLINE = "0 0 0 1px blue"
 
 interface Themed {
   theme: ThemeProps

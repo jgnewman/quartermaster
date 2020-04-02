@@ -21,8 +21,23 @@ export interface ThemeProps {
   buttonFontSize?: string
   buttonFontFamily?: string
   buttonFontStyle?: string
+  buttonHoverBorder?: string
   buttonHoverBgColor?: string
+  buttonHoverContentColor?: string
+  buttonHoverNegativeBorder?: string
+  buttonHoverNegativeBgColor?: string
+  buttonHoverNegativeContentColor?: string
+  buttonHoverPositiveBorder?: string
+  buttonHoverPositiveBgColor?: string
+  buttonHoverPositiveContentColor?: string
+  buttonNegativeBorder?: string
+  buttonNegativeBgColor?: string
+  buttonNegativeContentColor?: string
+  buttonOutlineShadow?: string
   buttonPadding?: string
+  buttonPositiveBorder?: string
+  buttonPositiveBgColor?: string
+  buttonPositiveContentColor?: string
   buttonRadius?: string
 
   // CharLimitCounter
@@ -48,6 +63,7 @@ export interface ThemeProps {
   checkboxDisabledLabelColor?: string
   checkboxLabelColor?: string
   checkboxLabelMargin?: string
+  checkboxOutlineShadow?: string
   checkboxRadius?: string
   checkboxSize?: string
 
@@ -71,6 +87,7 @@ export interface ThemeProps {
   radioButtonDotSize?: string
   radioButtonLabelColor?: string
   radioButtonLabelMargin?: string
+  radioButtonOutlineShadow?: string
   radioButtonSize?: string
 
   // Select
@@ -102,6 +119,7 @@ export interface ThemeProps {
   selectOptionPadding?: string
   selectOptionSelectedBgColor?: string
   selectOptionSelectedColor?: string
+  selectOutlineShadow?: string
   selectPlaceholderColor?: string
   selectRadius?: string
 
@@ -119,6 +137,7 @@ export interface ThemeProps {
   textFieldLabelColor?: string
   textFieldLabelFontSize?: string
   textFieldLabelPadding?: string
+  textFieldOutlineShadow?: string
   textFieldPaddingBottom?: string
   textFieldPaddingBottomCL?: string // text field with char limit
   textFieldPaddingLeft?: string

@@ -2,6 +2,7 @@ import styled, { css } from "styled-components"
 
 import {
   DEFAULT_BORDER,
+  DEFAULT_OUTLINE,
   absCenter,
   absFill,
   absLT,
@@ -22,20 +23,29 @@ export const SpanRadioButtonWrapper = styled.span`
 
   position: relative;
   margin-right: ${theme("radioButtonLabelMargin", ".33em")};
-  overlay: hidden;
 `
 
 export const RadioButtonNative = styled.input`
-  ${absLT("-200%", "-200%")}
+  ${absLT("-1000vw", 0)}
   border: 0;
 `
 
-export const SpanRadioButtonOverlay = styled.span`
+interface SpanRadioButtonOverlayProps {
+  isFocused: boolean
+}
+
+export const SpanRadioButtonOverlay = styled.span<SpanRadioButtonOverlayProps>`
   ${absFill()}
   ${circle()}
   box-sizing: border-box;
   border: ${theme("radioButtonBorder", DEFAULT_BORDER)};
   background: ${theme("radioButtonBgColor", "white")};
+
+  ${({ isFocused }) => isFocused && css`
+    box-shadow: ${theme("radioButtonOutlineShadow", DEFAULT_OUTLINE)};
+  `}
+
+  outline: none !important;
 
   &.is-checked {
     background: ${theme("radioButtonCheckedBgColor", "white")};
