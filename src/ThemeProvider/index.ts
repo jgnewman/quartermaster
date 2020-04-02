@@ -159,3 +159,33 @@ export interface ThemeProps {
   }
 
 }
+
+export const DefaultTheme: ThemeProps = {
+  avatar: {},
+  button: {},
+  charLimitCounter: {},
+  checkbox: {},
+  confirmButton: {},
+  modal: {},
+  radioButton: {},
+  select: {},
+  textField: {},
+}
+
+export function extendTheme(theme: ThemeProps, config: Partial<ThemeProps>): ThemeProps {
+  return Object.keys(theme).reduce((accum: any, componentName) => {
+    const baseProps = theme[componentName]
+    const configProps = config[componentName] || {}
+    const component = accum[componentName] = { ...baseProps }
+
+    Object.keys(configProps).forEach(propName => {
+      if (propName === "custom") {
+        component[propName] = (component[propName] || "") + ";\n" + configProps[propName]
+      } else {
+        component[propName] = configProps[propName]
+      }
+    })
+
+    return accum
+  }, {})
+}

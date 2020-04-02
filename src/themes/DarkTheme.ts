@@ -1,4 +1,8 @@
-import type { ThemeProps } from "../ThemeProvider"
+import {
+  ThemeProps,
+  DefaultTheme,
+  extendTheme,
+} from "../ThemeProvider"
 
 export const COLORS = {
   BASE_FONT: "#aaaaaa",
@@ -24,7 +28,7 @@ export const COLORS = {
   TRANSPARENCY: "transparent",
 }
 
-const Theme: ThemeProps = {
+const Theme: ThemeProps = extendTheme(DefaultTheme, {
 
   avatar: {
     height: "40px",
@@ -88,8 +92,6 @@ const Theme: ThemeProps = {
       }
     `,
   },
-
-  confirmButton: {},
 
   modal: {
     bgColor: COLORS.DARKER,
@@ -204,7 +206,7 @@ const Theme: ThemeProps = {
     `,
   },
 
-}
+})
 
 export default Theme
 
