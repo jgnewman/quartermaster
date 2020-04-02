@@ -5,28 +5,30 @@ import {
   absRB,
   circle,
   coverBg,
+  createThemer,
   size,
-  theme,
   vertMiddle,
 } from "../lib/baseStyles"
 
+const theme = createThemer("avatar")
+
 export const SpanAvatarContainer = styled.span`
   ${vertMiddle()}
-  width: ${theme("avatarWidth", "40px")};
-  height: ${theme("avatarHeight", "40px")};
-  border: ${theme("avatarBorder")};
+  width: ${theme("width", "40px")};
+  height: ${theme("height", "40px")};
+  border: ${theme("border")};
   box-sizing: border-box;
-  border-radius: ${theme("avatarRadius", "50%")};
+  border-radius: ${theme("radius", "50%")};
 
   position: relative;
   overflow: visible;
-  ${theme("avatarCustom")}
+  ${theme("custom")}
 `
 
 export const SpanAvatarContent = styled.span`
   ${absFill()}
   ${coverBg()}
-  border-radius: ${theme("avatarRadius", "50%")};
+  border-radius: ${theme("radius", "50%")};
   overflow: hidden;
 
   svg {
@@ -46,10 +48,10 @@ export const SpanActivityIndicator = styled.span<SpanActivityIndicatorProps>`
 
   z-index: 2;
   box-sizing: border-box;
-  background: ${theme("avatarIndicatorOffColor", "gray")};
-  border: ${theme("avatarIndicatorBorder")};
+  background: ${theme("indicatorOffColor", "gray")};
+  border: ${theme("indicatorBorder")};
 
   ${({ isActive }) => isActive && css`
-    background: ${theme("avatarIndicatorOnColor", "limegreen")};
+    background: ${theme("indicatorOnColor", "limegreen")};
   `}
 `

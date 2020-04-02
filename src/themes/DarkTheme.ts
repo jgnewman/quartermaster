@@ -1,201 +1,210 @@
 import type { ThemeProps } from "../ThemeProvider"
 
-const COLORS = {
-  AQUAMARINE: "#4BE3A2",
+export const COLORS = {
   BASE_FONT: "#aaaaaa",
-  BLUE: "#3c97ff",
-  LIGHTEST: "#444444",
-  LIGHTER: "#333333",
+  BRIGHT_FONT: "#ffffff",
+  CHAR_BEST: "#47ae26",
+  CHAR_BETTER: "#BEE371",
+  CHAR_DECENT: "#FEED78",
+  CHAR_WORSE: "#FDAB64",
+  CHAR_WORST: "#cf2e41",
   DARK: "#222222",
   DARKER: "#111111",
   DARKEST: "#000000",
-  DEEP_RED: "#f7364c", // for errors
-  GREEN: "#47ae26",
-  GREEN_HOVER: "#55cb2f",
-  LIME: "#BEE371",
-  ORANGE: "#FDAB64",
-  OUTLINE: "#1657a0",
-  RED: "#cf2e41",
-  RED_HOVER: "#f2384e",
-  TRANSPARENT: "transparent",
-  WHITE: "#ffffff",
-  YELLOW: "#FEED78",
+  ERRORS: "#f7364c", // for errors
+  LIGHTER: "#333333",
+  LIGHTEST: "#444444",
+  NEGATIVE_HOVER: "#f2384e",
+  NEGATIVE: "#cf2e41",
+  ON_INDICATORS: "#47ae26",
+  OUTLINES: "#3c97ff",
+  POSITIVE_HOVER: "#55cb2f",
+  POSITIVE: "#47ae26",
+  SELECTIONS: "#3c97ff",
+  TRANSPARENCY: "transparent",
 }
 
 const Theme: ThemeProps = {
-  // Avatar
-  avatarHeight: "40px",
-  avatarIndicatorBorder: `2px solid ${COLORS.DARK}`,
-  avatarIndicatorOffColor: COLORS.BASE_FONT,
-  avatarIndicatorOnColor: COLORS.GREEN,
-  avatarRadius: "50%",
-  avatarWidth: "40px",
 
-  // Button
-  buttonBgColor: COLORS.LIGHTER,
-  buttonHoverBgColor: COLORS.LIGHTEST,
-  buttonHoverContentColor: COLORS.WHITE,
-  buttonHoverNegativeBgColor: COLORS.RED_HOVER,
-  buttonHoverPositiveBgColor: COLORS.GREEN_HOVER,
-  buttonBorder: "none",
-  buttonContentColor: COLORS.WHITE,
-  buttonFontSize: "75%",
-  buttonNegativeBgColor: COLORS.RED,
-  buttonOutlineShadow: `0 0 0 2px ${COLORS.BLUE}`,
-  buttonPadding: "0.85em 2em 0.95em",
-  buttonPositiveBgColor: COLORS.GREEN,
-  buttonRadius: "10em",
-  buttonCustom: `
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    transition: all .3s ease;
-  `,
+  avatar: {
+    height: "40px",
+    indicatorBorder: `2px solid ${COLORS.DARK}`,
+    indicatorOffColor: COLORS.BASE_FONT,
+    indicatorOnColor: COLORS.ON_INDICATORS,
+    radius: "50%",
+    width: "40px",
+  },
 
-  // CharLimitCounter
-  charLimitBarBgBest: COLORS.GREEN,
-  charLimitBarBgBetter: COLORS.LIME,
-  charLimitBarBgDecent: COLORS.YELLOW,
-  charLimitBarBgEmpty: COLORS.LIGHTER,
-  charLimitBarBgError: COLORS.DEEP_RED,
-  charLimitBarBgWorse: COLORS.ORANGE,
-  charLimitBarBgWorst: COLORS.RED,
-  charLimitBarHeight: "2px",
-  charLimitErrTextColor: COLORS.DEEP_RED,
-  charLimitFontSize: "75%",
-
-  // Checkbox
-  checkboxBgColor: COLORS.LIGHTEST,
-  checkboxBorder: "none",
-  checkboxCheckColor: COLORS.GREEN,
-  checkboxCheckedLabelColor: COLORS.WHITE,
-  checkboxCheckedBgColor: COLORS.LIGHTEST,
-  checkboxDisabledLabelColor: COLORS.LIGHTEST,
-  checkboxLabelColor: COLORS.BASE_FONT,
-  checkboxOutlineShadow: `0 0 0 2px ${COLORS.BLUE}`,
-  checkboxCustom: `
-    .qm-checkbox-label {
-      transition: all .3s ease;
-    }
-
-    &:not(.is-disabled):hover .qm-checkbox-label {
-      color: ${COLORS.WHITE};
-    }
-  `,
-
-  // ConfirmButton
-
-
-  // Modal
-  modalBgColor: COLORS.DARKER,
-
-  // RadioButton
-  radioButtonBgColor: COLORS.LIGHTEST,
-  radioButtonBorder: "none",
-  radioButtonCheckedBgColor: COLORS.LIGHTEST,
-  radioButtonCheckedLabelColor: COLORS.WHITE,
-  radioButtonDisabledLabelColor: COLORS.LIGHTEST,
-  radioButtonDotColor: COLORS.BLUE,
-  radioButtonLabelColor: COLORS.BASE_FONT,
-  radioButtonOutlineShadow: `0 0 0 2px ${COLORS.BLUE}`,
-  radioButtonCustom: `
-    .qm-radio-button-label {
-      transition: all .3s ease;
-    }
-
-    &:not(.is-disabled):hover .qm-radio-button-label {
-      color: ${COLORS.WHITE};
-    }
-  `,
-
-  // Select
-  selectBgColor: COLORS.DARKER,
-  selectBorder: "none",
-  selectCaretIconColor: COLORS.LIGHTEST,
-  selectCaretIconHoverColor: COLORS.WHITE,
-  selectCaretPadding: ".657em",
-  selectClearBgColor: COLORS.TRANSPARENT,
-  selectClearIconColor: COLORS.LIGHTEST,
-  selectClearIconHoverColor: COLORS.RED,
-  selectClearPadding: "0.5em 0.75em",
-  selectColor: COLORS.WHITE,
-  selectDisabledPlaceholderColor: COLORS.LIGHTER,
-  selectFieldPadding: "0 0 0 0.75em",
-  selectLabelColor: COLORS.WHITE,
-  selectLabelFontSize: "75%",
-  selectLabelPadding: "0 0 .33em 0",
-  selectMenuBgColor: COLORS.LIGHTER,
-  selectMenuBorder: "none",
-  selectMenuRadius: "0.25em",
-  selectMenuShadow: "0 2px 15px rgba(0,0,0,0.2)",
-  selectOptionColor: COLORS.BASE_FONT,
-  selectOptionHoverBgColor: COLORS.LIGHTEST,
-  selectOptionHoverColor: COLORS.WHITE,
-  selectOptionPadding: "0.25em 0.75em 0.5em",
-  selectOptionSelectedBgColor: COLORS.BLUE,
-  selectOptionSelectedColor: COLORS.WHITE,
-  selectOutlineShadow: `0 0 0 2px ${COLORS.BLUE}`,
-  selectRadius: "0.25em",
-  selectCustom: `
-    .qm-select-label {
+  button: {
+    bgColor: COLORS.LIGHTER,
+    hoverBgColor: COLORS.LIGHTEST,
+    hoverContentColor: COLORS.BRIGHT_FONT,
+    hoverNegativeBgColor: COLORS.NEGATIVE_HOVER,
+    hoverPositiveBgColor: COLORS.POSITIVE_HOVER,
+    border: "none",
+    contentColor: COLORS.BRIGHT_FONT,
+    fontSize: "75%",
+    negativeBgColor: COLORS.NEGATIVE,
+    outlineShadow: `0 0 0 2px ${COLORS.OUTLINES}`,
+    padding: "0.85em 2em 0.95em",
+    positiveBgColor: COLORS.POSITIVE,
+    radius: "10em",
+    custom: `
       letter-spacing: 3px;
       text-transform: uppercase;
-    }
+      transition: all .3s ease;
+    `,
+  },
 
-    .qm-clear-button {
-      transform: translateX(-0.25em);
-    }
+  charLimitCounter: {
+    barBgBest: COLORS.CHAR_BEST,
+    barBgBetter: COLORS.CHAR_BETTER,
+    barBgDecent: COLORS.CHAR_DECENT,
+    barBgEmpty: COLORS.LIGHTER,
+    barBgError: COLORS.ERRORS,
+    barBgWorse: COLORS.CHAR_WORSE,
+    barBgWorst: COLORS.CHAR_WORST,
+    barHeight: "2px",
+    errTextColor: COLORS.ERRORS,
+    fontSize: "75%",
+  },
 
-    .qm-open-icon-wrapper {
-      position: relative;
-    }
+  checkbox: {
+    bgColor: COLORS.LIGHTEST,
+    border: "none",
+    checkColor: COLORS.ON_INDICATORS,
+    checkedLabelColor: COLORS.BRIGHT_FONT,
+    checkedBgColor: COLORS.LIGHTEST,
+    disabledLabelColor: COLORS.LIGHTEST,
+    labelColor: COLORS.BASE_FONT,
+    outlineShadow: `0 0 0 2px ${COLORS.OUTLINES}`,
+    custom: `
+      .qm-checkbox-label {
+        transition: all .3s ease;
+      }
 
-    .qm-open-icon-wrapper::before {
-      content: "";
-      display: block;
-      position: absolute;
-      left: 0;
-      top: 50%;
-      width: 1px;
-      height: 50%;
-      transform: translateY(-50%);
-      background: ${COLORS.LIGHTER};
-    }
-  `,
+      &:not(.is-disabled):hover .qm-checkbox-label {
+        color: ${COLORS.BRIGHT_FONT};
+      }
+    `,
+  },
 
-  // TextField
-  textFieldBgColor: COLORS.DARKER,
-  textFieldBorder: "none",
-  textFieldCLOffset: "3px", // should include a unit and is usually the same width as your border
-  textFieldColor: COLORS.WHITE,
-  textFieldDisabledPlaceholderColor: COLORS.LIGHTER,
-  textFieldErrColor: COLORS.DEEP_RED,
-  textFieldErrFontSize: "75%",
-  textFieldErrPadding: "0.15em 0 0.33em",
-  textFieldHeight: "35px",
-  textFieldLabelColor: COLORS.WHITE,
-  textFieldLabelFontSize: "75%",
-  textFieldLabelPadding: "0 0 .33em 0",
-  textFieldOutlineShadow: `0 0 0 2px ${COLORS.BLUE}`,
-  textFieldPaddingBottom: "",
-  textFieldPaddingBottomCL: "", // text field with char limit
-  textFieldPaddingLeft: "0.75em",
-  textFieldRadius: "0.25em",
-  textFieldTAHeight: "100px",
-  textFieldTAPaddingBottomCL: "1.25em", // text area with char limit
-  textFieldTAPaddingTop: "0.5em",
-  textFieldCustom: `
-    .qm-text-field-label {
-      letter-spacing: 3px;
-      text-transform: uppercase;
-    }
+  confirmButton: {},
 
-    .qm-char-limit-counter-text {
-      padding-right: 0.5em;
-    }
-  `,
+  modal: {
+    bgColor: COLORS.DARKER,
+  },
+
+  radioButton: {
+    bgColor: COLORS.LIGHTEST,
+    border: "none",
+    checkedBgColor: COLORS.LIGHTEST,
+    checkedLabelColor: COLORS.BRIGHT_FONT,
+    disabledLabelColor: COLORS.LIGHTEST,
+    dotColor: COLORS.SELECTIONS,
+    labelColor: COLORS.BASE_FONT,
+    outlineShadow: `0 0 0 2px ${COLORS.OUTLINES}`,
+    custom: `
+      .qm-radio-button-label {
+        transition: all .3s ease;
+      }
+
+      &:not(.is-disabled):hover .qm-radio-button-label {
+        color: ${COLORS.BRIGHT_FONT};
+      }
+    `,
+  },
+
+  select: {
+    bgColor: COLORS.DARKER,
+    border: "none",
+    caretIconColor: COLORS.LIGHTEST,
+    caretIconHoverColor: COLORS.BRIGHT_FONT,
+    caretPadding: ".657em",
+    clearBgColor: COLORS.TRANSPARENCY,
+    clearIconColor: COLORS.LIGHTEST,
+    clearIconHoverColor: COLORS.NEGATIVE,
+    clearPadding: "0.5em 0.75em",
+    color: COLORS.BRIGHT_FONT,
+    disabledPlaceholderColor: COLORS.LIGHTER,
+    fieldPadding: "0 0 0 0.75em",
+    labelColor: COLORS.BRIGHT_FONT,
+    labelFontSize: "75%",
+    labelPadding: "0 0 .33em 0",
+    menuBgColor: COLORS.LIGHTER,
+    menuBorder: "none",
+    menuRadius: "0.25em",
+    menuShadow: "0 2px 15px rgba(0,0,0,0.2)",
+    optionColor: COLORS.BASE_FONT,
+    optionHoverBgColor: COLORS.LIGHTEST,
+    optionHoverColor: COLORS.BRIGHT_FONT,
+    optionPadding: "0.25em 0.75em 0.5em",
+    optionSelectedBgColor: COLORS.SELECTIONS,
+    optionSelectedColor: COLORS.BRIGHT_FONT,
+    outlineShadow: `0 0 0 2px ${COLORS.OUTLINES}`,
+    radius: "0.25em",
+    custom: `
+      .qm-select-label {
+        letter-spacing: 3px;
+        text-transform: uppercase;
+      }
+
+      .qm-clear-button {
+        transform: translateX(-0.25em);
+      }
+
+      .qm-open-icon-wrapper {
+        position: relative;
+      }
+
+      .qm-open-icon-wrapper::before {
+        content: "";
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        width: 1px;
+        height: 50%;
+        transform: translateY(-50%);
+        background: ${COLORS.LIGHTER};
+      }
+    `,
+  },
+
+  textField: {
+    bgColor: COLORS.DARKER,
+    border: "none",
+    clOffset: "3px", // should include a unit and is usually the same width as your border
+    color: COLORS.BRIGHT_FONT,
+    disabledPlaceholderColor: COLORS.LIGHTER,
+    errColor: COLORS.ERRORS,
+    errFontSize: "75%",
+    errPadding: "0.15em 0 0.33em",
+    height: "35px",
+    labelColor: COLORS.BRIGHT_FONT,
+    labelFontSize: "75%",
+    labelPadding: "0 0 .33em 0",
+    outlineShadow: `0 0 0 2px ${COLORS.OUTLINES}`,
+    paddingBottom: "",
+    paddingBottomCL: "", // text field with char limit
+    paddingLeft: "0.75em",
+    radius: "0.25em",
+    taHeight: "100px",
+    taPaddingBottomCL: "1.25em", // text area with char limit
+    taPaddingTop: "0.5em",
+    custom: `
+      .qm-text-field-label {
+        letter-spacing: 3px;
+        text-transform: uppercase;
+      }
+
+      .qm-char-limit-counter-text {
+        padding-right: 0.5em;
+      }
+    `,
+  },
+
 }
 
 export default Theme
 
-// TODO
-// - Can we organize/modularize theme chunks?

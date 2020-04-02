@@ -7,23 +7,25 @@ import {
   absCenter,
   absFill,
   absLT,
+  createThemer,
   size,
-  theme,
   vertMiddle,
   vertMiddleInner,
 } from "../lib/baseStyles"
 
+const theme = createThemer("checkbox")
+
 export const DivCheckboxContainer = styled.div`
-  ${theme("checkboxCustom")}
+  ${theme("custom")}
 `
 
 export const SpanCheckboxWrapper = styled.span`
   ${vertMiddle()}
-  width: ${theme("checkboxSize", "1em")};
-  height: ${theme("checkboxSize", "1em")};
+  width: ${theme("size", "1em")};
+  height: ${theme("size", "1em")};
 
   position: relative;
-  margin-right: ${theme("checkboxLabelMargin", ".33em")};
+  margin-right: ${theme("labelMargin", ".33em")};
 `
 
 export const CheckboxNative = styled.input`
@@ -38,18 +40,18 @@ interface SpanCheckboxOverlayProps {
 export const SpanCheckboxOverlay = styled.span<SpanCheckboxOverlayProps>`
   ${absFill()}
   box-sizing: border-box;
-  border: ${theme("checkboxBorder", DEFAULT_BORDER)};
-  border-radius: ${theme("checkboxRadius", DEFAULT_RADIUS)};
-  background: ${theme("checkboxBgColor", "white")};
+  border: ${theme("border", DEFAULT_BORDER)};
+  border-radius: ${theme("radius", DEFAULT_RADIUS)};
+  background: ${theme("bgColor", "white")};
 
   ${({ isFocused }) => isFocused && css`
-    box-shadow: ${theme("checkboxOutlineShadow", DEFAULT_OUTLINE)};
+    box-shadow: ${theme("outlineShadow", DEFAULT_OUTLINE)};
   `}
 
   outline: none !important;
 
   &.is-checked {
-    background: ${theme("checkboxCheckedBgColor", "white")};
+    background: ${theme("checkedBgColor", "white")};
   }
 
   .qm-checkbox-checkmark {
@@ -58,7 +60,7 @@ export const SpanCheckboxOverlay = styled.span<SpanCheckboxOverlayProps>`
   }
 
   .qm-checkbox-checkmark path {
-    fill: ${theme("checkboxCheckColor", "black")};
+    fill: ${theme("checkColor", "black")};
   }
 `
 
@@ -69,11 +71,11 @@ interface LabelForCheckboxProps {
 export const LabelForCheckbox = styled.label<LabelForCheckboxProps>`
   ${vertMiddleInner()}
   ${({ isDisabled }) => isDisabled
-    ? css`color: ${theme("checkboxDisabledLabelColor", "#999999")};`
-    : css`color: ${theme("checkboxLabelColor", "black")};`
+    ? css`color: ${theme("disabledLabelColor", "#999999")};`
+    : css`color: ${theme("labelColor", "black")};`
   }
 
   &.is-checked {
-    color: ${theme("checkboxCheckedLabelColor", "black")};
+    color: ${theme("checkedLabelColor", "black")};
   }
 `

@@ -11,8 +11,15 @@ interface Themed {
   theme: ThemeProps
 }
 
-export function theme(prop: keyof ThemeProps, fallback?: any) {
-  return ({ theme }: Themed) => theme[prop] || fallback
+export function createThemer<T extends keyof ThemeProps>(component: T) {
+  type PropType = ThemeProps[T]
+
+  return function(prop: keyof PropType, fallback?: any) {
+    return function ({ theme }: Themed) {
+      const componentStyles = theme[component]
+      return componentStyles[prop] ? componentStyles[prop] : fallback
+    }
+  }
 }
 
 export function blockAbs() {

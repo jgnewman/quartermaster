@@ -1,17 +1,18 @@
 import styled from "styled-components"
 
-import { theme } from "../lib/baseStyles"
+import { createThemer } from "../lib/baseStyles"
+const theme = createThemer("confirmButton")
 
 export const H2Title = styled.h2`
-  color: ${theme("confirmButtonTitleColor", "white")};
+  color: ${theme("titleColor", "white")};
 `
 
 export const DivOptionsWrapper = styled.div`
   .qm-confirm-button-continue {
-    margin-right: ${theme("confirmButtonConfirmMargin", "0.5em")};
+    margin-right: ${theme("confirmMargin", "0.5em")};
   }
 
   .qm-confirm-button-cancel {
-    margin-left: ${theme("confirmButtonCancelMargin", "0.5em")};
+    margin-left: ${theme("cancelMargin", "0.5em")};
   }
 `

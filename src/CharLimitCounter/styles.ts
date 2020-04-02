@@ -2,24 +2,26 @@ import styled from "styled-components"
 
 import {
   absLT,
+  createThemer,
   size,
-  theme,
 } from "../lib/baseStyles"
 
+const theme = createThemer("charLimitCounter")
+
 export const DivCounterContainer = styled.div`
-  font-size: ${theme("charLimitFontSize")};
+  font-size: ${theme("fontSize")};
   &.worst, &.error {
-    color: ${theme("charLimitErrTextColor", "red")};
+    color: ${theme("errTextColor", "red")};
   }
-  ${theme("charLimitCustom")}
+  ${theme("custom")}
 `
 
 export const SpanFillBarWrapper = styled.span`
   width: "auto";
-  height: ${theme("charLimitBarHeight", "0.33em")};
+  height: ${theme("barHeight", "0.33em")};
   display: block;
   position: relative;
-  background: ${theme("charLimitBarBgEmpty", "rgba(0,0,0,0.1)")};
+  background: ${theme("barBgEmpty", "rgba(0,0,0,0.1)")};
   overflow: hidden;
 `
 
@@ -35,21 +37,21 @@ export const SpanFillBar = styled.span<SpanFillBarProps>`
     background: transparent;
   }
   &.worst {
-    background: ${theme("charLimitBarBgWorst", "red")};
+    background: ${theme("barBgWorst", "red")};
   }
   &.worse {
-    background: ${theme("charLimitBarBgWorse", "orange")};
+    background: ${theme("barBgWorse", "orange")};
   }
   &.decent {
-    background: ${theme("charLimitBarBgDecent", "gold")};
+    background: ${theme("barBgDecent", "gold")};
   }
   &.better {
-    background: ${theme("charLimitBarBgBetter", "yellowgreen")};
+    background: ${theme("barBgBetter", "yellowgreen")};
   }
   &.best {
-    background: ${theme("charLimitBarBgBest", "limegreen")};
+    background: ${theme("barBgBest", "limegreen")};
   }
   &.error {
-    background: ${theme("charLimitBarBgError", "red")};
+    background: ${theme("barBgError", "red")};
   }
 `

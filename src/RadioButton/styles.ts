@@ -7,22 +7,24 @@ import {
   absFill,
   absLT,
   circle,
-  theme,
+  createThemer,
   vertMiddle,
   vertMiddleInner,
 } from "../lib/baseStyles"
 
+const theme = createThemer("radioButton")
+
 export const DivRadioButtonContainer = styled.div`
-  ${theme("radioButtonCustom")}
+  ${theme("custom")}
 `
 
 export const SpanRadioButtonWrapper = styled.span`
   ${vertMiddle()}
-  width: ${theme("radioButtonSize", "1em")};
-  height: ${theme("radioButtonSize", "1em")};
+  width: ${theme("size", "1em")};
+  height: ${theme("size", "1em")};
 
   position: relative;
-  margin-right: ${theme("radioButtonLabelMargin", ".33em")};
+  margin-right: ${theme("labelMargin", ".33em")};
 `
 
 export const RadioButtonNative = styled.input`
@@ -38,27 +40,27 @@ export const SpanRadioButtonOverlay = styled.span<SpanRadioButtonOverlayProps>`
   ${absFill()}
   ${circle()}
   box-sizing: border-box;
-  border: ${theme("radioButtonBorder", DEFAULT_BORDER)};
-  background: ${theme("radioButtonBgColor", "white")};
+  border: ${theme("border", DEFAULT_BORDER)};
+  background: ${theme("bgColor", "white")};
 
   ${({ isFocused }) => isFocused && css`
-    box-shadow: ${theme("radioButtonOutlineShadow", DEFAULT_OUTLINE)};
+    box-shadow: ${theme("outlineShadow", DEFAULT_OUTLINE)};
   `}
 
   outline: none !important;
 
   &.is-checked {
-    background: ${theme("radioButtonCheckedBgColor", "white")};
+    background: ${theme("checkedBgColor", "white")};
   }
 
   .qm-radio-button-dot {
     ${absCenter()}
-    width: ${theme("radioButtonDotSize", "85%")};
-    height: ${theme("radioButtonDotSize", "85%")};
+    width: ${theme("dotSize", "85%")};
+    height: ${theme("dotSize", "85%")};
   }
 
   .qm-radio-button-dot circle {
-    fill: ${theme("radioButtonDotColor", "black")};
+    fill: ${theme("dotColor", "black")};
   }
 `
 
@@ -69,11 +71,11 @@ interface LabelForRadioButtonProps {
 export const LabelForRadioButton = styled.label<LabelForRadioButtonProps>`
   ${vertMiddleInner()}
   ${({ isDisabled }) => isDisabled
-    ? css`color: ${theme("radioButtonDisabledLabelColor", "#999999")};`
-    : css`color: ${theme("radioButtonLabelColor", "black")};`
+    ? css`color: ${theme("disabledLabelColor", "#999999")};`
+    : css`color: ${theme("labelColor", "black")};`
   }
 
   &.is-checked {
-    color: ${theme("radioButtonCheckedLabelColor", "black")};
+    color: ${theme("checkedLabelColor", "black")};
   }
 `

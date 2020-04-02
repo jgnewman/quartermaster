@@ -6,22 +6,24 @@ import {
   DEFAULT_RADIUS,
   DEFAULT_OUTLINE,
   absLT,
+  createThemer,
   ellipsisText,
   fixRT,
   flex,
   size,
-  theme,
 } from "../lib/baseStyles"
 
+const theme = createThemer("select")
+
 export const DivSelectContainer = styled.div`
-  ${theme("selectCustom")}
+  ${theme("custom")}
 `
 
 export const LabelForSelect = styled.label`
   display: block;
-  color: ${theme("selectLabelColor")};
-  font-size: ${theme("selectLabelFontSize")};
-  padding: ${theme("selectLabelPadding")};
+  color: ${theme("labelColor")};
+  font-size: ${theme("labelFontSize")};
+  padding: ${theme("labelPadding")};
 `
 
 export const DivSelectContentWrapper = styled.div`
@@ -37,14 +39,14 @@ interface DivFauxSelectWrapperProps {
 
 export const DivFauxSelectWrapper = styled.div<DivFauxSelectWrapperProps>`
   ${flex()}
-  background: ${theme("selectBgColor", "white")};
+  background: ${theme("bgColor", "white")};
   box-sizing: border-box;
-  border: ${theme("selectBorder", DEFAULT_BORDER)};
-  border-radius: ${theme("selectRadius", DEFAULT_RADIUS)};
+  border: ${theme("border", DEFAULT_BORDER)};
+  border-radius: ${theme("radius", DEFAULT_RADIUS)};
   overflow: hidden;
 
   ${({ isFocused }) => isFocused && css`
-    box-shadow: ${theme("selectOutlineShadow", DEFAULT_OUTLINE)};
+    box-shadow: ${theme("outlineShadow", DEFAULT_OUTLINE)};
   `}
 `
 
@@ -55,23 +57,23 @@ interface DivClearButtonWrapperProps {
 export const DivClearButtonWrapper = styled.div<DivClearButtonWrapperProps>`
   display: block;
   align-self: center;
-  background: ${theme("selectClearBgColor", "transparent")};
+  background: ${theme("clearBgColor", "transparent")};
 
   .qm-clear-button {
     display: block;
     border: 0;
-    padding: ${theme("selectClearPadding", "5px")};
-    background: ${theme("selectClearBgColor", "transparent")};
+    padding: ${theme("clearPadding", "5px")};
+    background: ${theme("clearBgColor", "transparent")};
   }
 
   .qm-clear-button path {
-    fill: ${theme("selectClearIconColor")};
+    fill: ${theme("clearIconColor")};
     transition: all .3s ease;
   }
 
   ${({ isDisabled }) => !isDisabled && css`
     .qm-clear-button:hover path {
-      fill: ${theme("selectClearIconHoverColor")};
+      fill: ${theme("clearIconHoverColor")};
     }
   `}
 `
@@ -83,17 +85,17 @@ interface DivCaretWrapperProps {
 export const DivCaretWrapper = styled.div<DivCaretWrapperProps>`
   display: block;
   align-self: center;
-  padding: ${theme("selectCaretPadding", "5px")};
-  background: ${theme("selectCaretBgColor", "transparent")};
+  padding: ${theme("caretPadding", "5px")};
+  background: ${theme("caretBgColor", "transparent")};
 
   .qm-select-icon path {
-    fill: ${theme("selectCaretIconColor")};
+    fill: ${theme("caretIconColor")};
     transition: all .3s ease;
   }
 
   ${({ isDisabled }) => !isDisabled && css`
     &:hover .qm-select-icon path {
-      fill: ${theme("selectCaretIconHoverColor")};
+      fill: ${theme("caretIconHoverColor")};
     }
   `}
 `
@@ -110,11 +112,11 @@ export const DivValueDisplay = styled.div<DivValueDisplayProps>`
 
   ${({ isDisabled, isShowingPlaceholder }) => {
     if (isDisabled && isShowingPlaceholder) {
-      return css`color: ${theme("selectDisabledPlaceholderColor", "#999999")};`
+      return css`color: ${theme("disabledPlaceholderColor", "#999999")};`
     } else if (isDisabled || isShowingPlaceholder) {
-      return css`color: ${theme("selectPlaceholderColor", "#777777")};`
+      return css`color: ${theme("placeholderColor", "#777777")};`
     } else {
-      return css`color: ${theme("selectColor")};`
+      return css`color: ${theme("color")};`
     }
   }}
 `
@@ -124,7 +126,7 @@ export const SpanValueField = styled.span`
   ${ellipsisText()}
   transform: translateY(-50%);
   max-width: 100%;
-  padding: ${theme("selectFieldPadding")};
+  padding: ${theme("fieldPadding")};
 `
 
 export const SelectNative = styled.select`
@@ -139,26 +141,26 @@ export const DivOptionsMenu = styled.div`
   ${size("100%", "auto")}
   overflow: hidden;
   box-sizing: border-box;
-  border: ${theme("selectMenuBorder", DEFAULT_BORDER)};
-  border-radius: ${theme("selectMenuRadius", DEFAULT_RADIUS)};
-  background: ${theme("selectMenuBgColor", "white")};
-  box-shadow: ${theme("selectMenuShadow", "0 0 5px rgba(0,0,0,0.2)")};
+  border: ${theme("menuBorder", DEFAULT_BORDER)};
+  border-radius: ${theme("menuRadius", DEFAULT_RADIUS)};
+  background: ${theme("menuBgColor", "white")};
+  box-shadow: ${theme("menuShadow", "0 0 5px rgba(0,0,0,0.2)")};
 `
 
 export const SpanMenuOption = styled.span`
   display: block;
-  background: ${theme("selectOptionBgColor")};
-  color: ${theme("selectOptionColor")};
-  padding: ${theme("selectOptionPadding")};
+  background: ${theme("optionBgColor")};
+  color: ${theme("optionColor")};
+  padding: ${theme("optionPadding")};
   transition: all .3s ease;
 
   &.is-selected {
-    background: ${theme("selectOptionSelectedBgColor")};
-    color: ${theme("selectOptionSelectedColor")};
+    background: ${theme("optionSelectedBgColor")};
+    color: ${theme("optionSelectedColor")};
   }
 
   &:hover, &.is-selected:hover {
-    background: ${theme("selectOptionHoverBgColor", DEFAULT_BG)};
-    color: ${theme("selectOptionHoverColor")};
+    background: ${theme("optionHoverBgColor", DEFAULT_BG)};
+    color: ${theme("optionHoverColor")};
   }
 `

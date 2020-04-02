@@ -7,11 +7,13 @@ import {
   absLB,
   absRB,
   absRT,
-  theme,
+  createThemer,
 } from "../lib/baseStyles"
 
+const theme = createThemer("textField")
+
 export const DivTextFieldContainer = styled.div`
-  ${theme("textFieldCustom")}
+  ${theme("custom")}
 `
 
 export interface DivInputWrapperProps {
@@ -37,11 +39,11 @@ export const DivInputWrapper = styled.div<DivInputWrapperProps>`
 
   .qm-text-field-limit-counter .qm-char-limit-counter-bar {
     ${absLB()}
-    width: calc(100% - ${theme("textFieldCLOffset", "1px")} - ${theme("textFieldCLOffset", "1px")});
-    border-radius: 0 0 ${theme("textFieldRadius", DEFAULT_RADIUS)} ${theme("textFieldRadius", DEFAULT_RADIUS)};
-    margin-left: ${theme("textFieldCLOffset", "1px")};
-    margin-right: ${theme("textFieldCLOffset", "1px")};
-    margin-bottom: ${theme("textFieldCLOffset", "1px")};
+    width: calc(100% - ${theme("clOffset", "1px")} - ${theme("clOffset", "1px")});
+    border-radius: 0 0 ${theme("radius", DEFAULT_RADIUS)} ${theme("radius", DEFAULT_RADIUS)};
+    margin-left: ${theme("clOffset", "1px")};
+    margin-right: ${theme("clOffset", "1px")};
+    margin-bottom: ${theme("clOffset", "1px")};
   }
 
   ${({ isDisabled }) => isDisabled && css`
@@ -53,16 +55,16 @@ export const DivInputWrapper = styled.div<DivInputWrapperProps>`
 
 export const LabelForTextField = styled.label`
   display: block;
-  color: ${theme("textFieldLabelColor")};
-  font-size: ${theme("textFieldLabelFontSize")};
-  padding: ${theme("textFieldLabelPadding")};
+  color: ${theme("labelColor")};
+  font-size: ${theme("labelFontSize")};
+  padding: ${theme("labelPadding")};
 `
 
 export const SpanErrorText = styled.span`
   display: block;
-  color: ${theme("textFieldErrColor", "red")};
-  font-size: ${theme("textFieldErrFontSize")};
-  padding: ${theme("textFieldErrPadding")};
+  color: ${theme("errColor", "red")};
+  font-size: ${theme("errFontSize")};
+  padding: ${theme("errPadding")};
 `
 
 interface CommonInputProps {
@@ -77,26 +79,26 @@ const commonFieldProps = css<CommonInputProps>`
   margin: 0;
 
   box-sizing: border-box;
-  border: ${theme("textFieldBorder", DEFAULT_BORDER)};
-  border-radius: ${theme("textFieldRadius", DEFAULT_RADIUS)};
+  border: ${theme("border", DEFAULT_BORDER)};
+  border-radius: ${theme("radius", DEFAULT_RADIUS)};
 
   ${({ isFocused }) => isFocused && css`
-    box-shadow: ${theme("textFieldOutlineShadow", DEFAULT_OUTLINE)};
+    box-shadow: ${theme("outlineShadow", DEFAULT_OUTLINE)};
   `}
 
-  color: ${theme("textFieldColor")};
-  background: ${theme("textFieldBgColor")};
+  color: ${theme("color")};
+  background: ${theme("bgColor")};
   line-height: 1;
 
   width: 100%;
-  padding-left: ${theme("textFieldPaddingLeft", 0)};
+  padding-left: ${theme("paddingLeft", 0)};
 
   &::placeholder {
-    color: ${theme("textFieldPlaceholderColor")};
+    color: ${theme("placeholderColor")};
   }
 
   &[disabled]::placeholder {
-    color: ${theme("textFieldDisabledPlaceholderColor")};
+    color: ${theme("disabledPlaceholderColor")};
   }
 
   outline: none !important;
@@ -108,9 +110,9 @@ export interface TextAreaNativeProps extends CommonInputProps {
 
 export const TextAreaNative = styled.textarea<TextAreaNativeProps>`
   ${commonFieldProps}
-  height: ${theme("textFieldTAHeight")};
-  padding-right: ${theme("textFieldPaddingRight", "3px")};
-  padding-top: ${theme("textFieldTAPaddingTop", "3px")};
+  height: ${theme("taHeight")};
+  padding-right: ${theme("paddingRight", "3px")};
+  padding-top: ${theme("taPaddingTop", "3px")};
 
   ${({ enableTextAreaResize }) => {
     return `resize: ${enableTextAreaResize ? "auto" : "none"};`
@@ -118,8 +120,8 @@ export const TextAreaNative = styled.textarea<TextAreaNativeProps>`
 
   ${({ charLimit = 0, hideCharLimitText }) => {
     return charLimit && !hideCharLimitText
-      ? css`padding-bottom: ${theme("textFieldTAPaddingBottomCL", "1.5em")};`
-      : css`padding-bottom: ${theme("textFieldPaddingBottom", "3px")};`
+      ? css`padding-bottom: ${theme("taPaddingBottomCL", "1.5em")};`
+      : css`padding-bottom: ${theme("paddingBottom", "3px")};`
   }}
 `
 
@@ -129,18 +131,18 @@ export interface InputNativeProps extends CommonInputProps {
 
 export const InputNative = styled.input<InputNativeProps>`
   ${commonFieldProps}
-  padding-top: ${theme("textFieldPaddingTop", "3px")};
-  height: ${theme("textFieldHeight")};
+  padding-top: ${theme("paddingTop", "3px")};
+  height: ${theme("height")};
 
   ${({ charLimit = 0, hideCharLimitText }) => {
     if (!charLimit) {
-      return css`padding-bottom: ${theme("textFieldPaddingBottom", "3px")};`
+      return css`padding-bottom: ${theme("paddingBottom", "3px")};`
     }
 
     if (charLimit && hideCharLimitText) {
       return css`
-        padding-bottom: ${theme("textFieldPaddingBottomCL", "8px")};
-        padding-right: ${theme("textFieldPaddingRight", "3px")};
+        padding-bottom: ${theme("paddingBottomCL", "8px")};
+        padding-right: ${theme("paddingRight", "3px")};
       `
     }
 
@@ -148,7 +150,7 @@ export const InputNative = styled.input<InputNativeProps>`
     // The padding we need is calculated as twice the charlimit + 3 chars for the separator
     // all divided by 2 since the width of a character is about half an em.
     return css`
-      padding-bottom: ${theme("textFieldPaddingBottomCL", "8px")};
+      padding-bottom: ${theme("paddingBottomCL", "8px")};
       padding-right: ${(charLimit.toString().length * 2 + 3)/2}em;
     `
   }}

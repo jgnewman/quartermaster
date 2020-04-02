@@ -2,10 +2,12 @@ import styled from "styled-components"
 
 import {
   absLT,
+  createThemer,
   fixFill,
   fixRT,
-  theme,
 } from "../lib/baseStyles"
+
+const theme = createThemer("modal")
 
 export interface DivModalContainerProps {
   isOpen: boolean
@@ -14,7 +16,7 @@ export interface DivModalContainerProps {
 export const DivModalContainer = styled.div<DivModalContainerProps>`
   ${fixFill()}
   z-index: 9999;
-  background: ${theme("modalBgColor", "rgba(0,0,0,0.93)")};
+  background: ${theme("bgColor", "rgba(0,0,0,0.93)")};
   transform: scale(0);
   opacity: 0;
   transition: opacity .3s ease, transform 1s ease;
@@ -25,7 +27,7 @@ export const DivModalContainer = styled.div<DivModalContainerProps>`
     opacity: 1;
   `}
 
-  ${theme("modalCustom")};
+  ${theme("custom")};
 `
 
 export const DivModalContent = styled.div`
