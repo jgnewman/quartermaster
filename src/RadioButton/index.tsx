@@ -34,7 +34,7 @@ export interface RadioButtonProps {
 }
 
 class RadioButton extends PureComponent<RadioButtonProps> {
-  public displayName = "RadioButton"
+  static displayName = "RadioButton"
   public state = { isFocused: false }
   private inputRef: HTMLInputElement | null
 

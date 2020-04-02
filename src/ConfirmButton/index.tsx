@@ -23,7 +23,7 @@ interface ConfirmButtonState {
 }
 
 class ConfirmButton extends Component<ConfirmButtonProps, ConfirmButtonState> {
-  public static displayName = "ConfirmButton"
+  static displayName = "ConfirmButton"
   public state = { open: false }
 
   openConfirmation() {

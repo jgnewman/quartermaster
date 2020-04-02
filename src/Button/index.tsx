@@ -20,7 +20,7 @@ export interface ButtonProps {
 }
 
 class Button extends PureComponent<ButtonProps> {
-  public static displayName = "Button"
+  static displayName = "Button"
   public state = { isFocused: false }
 
   handleFocus = () => this.setState({ isFocused: true })

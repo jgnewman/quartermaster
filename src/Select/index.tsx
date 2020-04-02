@@ -43,7 +43,7 @@ export interface SelectProps {
 }
 
 class Select extends PureComponent<SelectProps, SelectState> {
-  public displayName = "Select"
+  static displayName = "Select"
   public state: SelectState
   private wrapperRef: HTMLDivElement | null
   private selectRef: HTMLSelectElement | null

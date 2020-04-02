@@ -34,7 +34,7 @@ export interface CheckboxProps {
 }
 
 class Checkbox extends PureComponent<CheckboxProps> {
-  public displayName = "Checkbox"
+  static displayName = "Checkbox"
   public state = { isFocused: false }
   private inputRef: HTMLInputElement | null
 

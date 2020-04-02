@@ -44,7 +44,7 @@ export interface TextFieldProps {
 }
 
 class TextField extends PureComponent<TextFieldProps> {
-  public displayName = "TextField"
+  static displayName = "TextField"
   public state = { isFocused: false }
   private inputRef: NullableInputElem
 

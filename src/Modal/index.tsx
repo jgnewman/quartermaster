@@ -17,7 +17,7 @@ export interface ModalProps {
 }
 
 class Modal extends PureComponent<ModalProps> {
-  public static displayName = "Modal"
+  static displayName = "Modal"
   private body: HTMLElement = window.document.body
   private originalBodyHeight: string = this.body.style.height
   private originalBodyOverflow: string = this.body.style.overflow
