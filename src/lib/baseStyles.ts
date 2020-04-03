@@ -78,10 +78,6 @@ export function circle(display?: string) {
   return `${display ? `display: ${display}; ` : ""}border-radius: 50%;`
 }
 
-export function borders(style: StrNum = DEFAULT_BORDER, radius: StrNum = "3px") {
-  return `border: ${style}; box-sizing: border-box; border-radius: ${radius};`
-}
-
 export function bgImg(url: string) {
   return `background-image: url(${url}); background-repeat: no-repeat;`
 }
