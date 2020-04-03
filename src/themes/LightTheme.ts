@@ -5,34 +5,36 @@ import {
 } from "../ThemeProvider"
 
 export const COLORS = {
-  BASE_FONT: "#aaaaaa",
-  BRIGHT_FONT: "#ffffff",
-  CHAR_BEST: "#47ae26",
-  CHAR_BETTER: "#BEE371",
-  CHAR_DECENT: "#FEED78",
+  BASE_FONT: "#333333",
+  LIGHT_FONT: "#ffffff",
+  FADED_FONT: "#bdbdbd",
+  BASE_BG: "#ffffff",
+  DARK_BG: "rgba(0,0,0,0.85)",
+  LIGHT_BG: "rgba(0,0,0,0.1)",
+  BASE_BORDER: "1px solid rgba(0,0,0,0.25)",
+  HIGHLIGHT: "#3C97FF",
+  LIGHT_HIGHLIGHT: "#68afff",
+  CHAR_BEST: "#52c02c",
+  CHAR_BETTER: "#9cd426",
+  CHAR_DECENT: "#fde017",
   CHAR_WORSE: "#FDAB64",
   CHAR_WORST: "#cf2e41",
-  DARK: "#222222",
-  DARKER: "#111111",
-  DARKEST: "#000000",
   ERRORS: "#f7364c",
-  LIGHTER: "#333333",
-  LIGHTEST: "#444444",
+  ON_INDICATORS: "#52c02c",
+  POSITIVE_HOVER: "#72d44f",
+  POSITIVE: "#52c02c",
+  OUTLINES: "#3c97ff",
   NEGATIVE_HOVER: "#f2384e",
   NEGATIVE: "#cf2e41",
-  ON_INDICATORS: "#47ae26",
-  OUTLINES: "#3c97ff",
-  POSITIVE_HOVER: "#55cb2f",
-  POSITIVE: "#47ae26",
-  SELECTIONS: "#3c97ff",
   TRANSPARENCY: "transparent",
+  SELECTIONS: "#3c97ff",
 }
 
 const Theme: ThemeProps = extendTheme(DefaultTheme, {
 
   avatar: {
     height: "40px",
-    indicatorBorder: `2px solid ${COLORS.DARK}`,
+    indicatorBorder: `2px solid ${COLORS.BASE_BG}`,
     indicatorOffColor: COLORS.BASE_FONT,
     indicatorOnColor: COLORS.ON_INDICATORS,
     radius: "50%",
@@ -40,22 +42,20 @@ const Theme: ThemeProps = extendTheme(DefaultTheme, {
   },
 
   button: {
-    bgColor: COLORS.LIGHTER,
-    hoverBgColor: COLORS.LIGHTEST,
-    hoverContentColor: COLORS.BRIGHT_FONT,
+    bgColor: COLORS.HIGHLIGHT,
+    hoverBgColor: COLORS.LIGHT_HIGHLIGHT,
+    hoverContentColor: COLORS.LIGHT_FONT,
     hoverNegativeBgColor: COLORS.NEGATIVE_HOVER,
     hoverPositiveBgColor: COLORS.POSITIVE_HOVER,
     border: "none",
-    contentColor: COLORS.BRIGHT_FONT,
-    fontSize: "75%",
+    contentColor: COLORS.LIGHT_FONT,
+    fontWeight: "bold",
     negativeBgColor: COLORS.NEGATIVE,
     outlineShadow: `0 0 0 2px ${COLORS.OUTLINES}`,
-    padding: "0.85em 2em 0.95em",
+    padding: "0.55em 1.5em 0.75em",
     positiveBgColor: COLORS.POSITIVE,
     radius: "10em",
     custom: `
-      letter-spacing: 3px;
-      text-transform: uppercase;
       transition: all .3s ease;
     `,
   },
@@ -64,23 +64,23 @@ const Theme: ThemeProps = extendTheme(DefaultTheme, {
     barBgBest: COLORS.CHAR_BEST,
     barBgBetter: COLORS.CHAR_BETTER,
     barBgDecent: COLORS.CHAR_DECENT,
-    barBgEmpty: COLORS.LIGHTER,
+    barBgEmpty: COLORS.LIGHT_BG,
     barBgError: COLORS.ERRORS,
     barBgWorse: COLORS.CHAR_WORSE,
     barBgWorst: COLORS.CHAR_WORST,
-    barHeight: "2px",
+    barHeight: "5px",
     color: COLORS.BASE_FONT,
     errTextColor: COLORS.ERRORS,
-    fontSize: "75%",
+    fontSize: "85%",
   },
 
   checkbox: {
-    bgColor: COLORS.LIGHTEST,
-    border: "none",
+    bgColor: COLORS.BASE_BG,
+    border: COLORS.BASE_BORDER,
     checkColor: COLORS.ON_INDICATORS,
-    checkedLabelColor: COLORS.BRIGHT_FONT,
-    checkedBgColor: COLORS.LIGHTEST,
-    disabledLabelColor: COLORS.LIGHTEST,
+    checkedLabelColor: COLORS.BASE_FONT,
+    checkedBgColor: COLORS.LIGHT_FONT,
+    disabledLabelColor: COLORS.FADED_FONT,
     labelColor: COLORS.BASE_FONT,
     outlineShadow: `0 0 0 2px ${COLORS.OUTLINES}`,
     custom: `
@@ -89,22 +89,22 @@ const Theme: ThemeProps = extendTheme(DefaultTheme, {
       }
 
       &:not(.is-disabled) .qm-checkbox-faux-wrapper:hover .qm-checkbox-label {
-        color: ${COLORS.BRIGHT_FONT};
+        color: ${COLORS.HIGHLIGHT};
       }
     `,
   },
 
   modal: {
-    bgColor: COLORS.DARKER,
+    bgColor: COLORS.DARK_BG,
   },
 
   radioButton: {
-    bgColor: COLORS.LIGHTEST,
-    border: "none",
-    checkedBgColor: COLORS.LIGHTEST,
-    checkedLabelColor: COLORS.BRIGHT_FONT,
-    disabledLabelColor: COLORS.LIGHTEST,
-    dotColor: COLORS.SELECTIONS,
+    bgColor: COLORS.BASE_BG,
+    border: COLORS.BASE_BORDER,
+    checkedBgColor: COLORS.BASE_BG,
+    checkedLabelColor: COLORS.BASE_FONT,
+    disabledLabelColor: COLORS.FADED_FONT,
+    dotColor: COLORS.HIGHLIGHT,
     labelColor: COLORS.BASE_FONT,
     outlineShadow: `0 0 0 2px ${COLORS.OUTLINES}`,
     custom: `
@@ -113,45 +113,40 @@ const Theme: ThemeProps = extendTheme(DefaultTheme, {
       }
 
       &:not(.is-disabled) .qm-radio-button-faux-wrapper:hover .qm-radio-button-label {
-        color: ${COLORS.BRIGHT_FONT};
+        color: ${COLORS.HIGHLIGHT};
       }
     `,
   },
 
   select: {
-    bgColor: COLORS.DARKER,
-    border: "none",
-    caretIconColor: COLORS.LIGHTEST,
-    caretIconHoverColor: COLORS.BRIGHT_FONT,
-    caretPadding: ".657em",
+    bgColor: COLORS.BASE_BG,
+    border: COLORS.BASE_BORDER,
+    caretIconColor: COLORS.FADED_FONT,
+    caretIconHoverColor: COLORS.HIGHLIGHT,
+    caretPadding: "0.813em 0.66em",
     clearBgColor: COLORS.TRANSPARENCY,
-    clearIconColor: COLORS.LIGHTEST,
+    clearIconColor: COLORS.FADED_FONT,
     clearIconHoverColor: COLORS.NEGATIVE,
     clearPadding: "0.5em 0.75em",
-    color: COLORS.BRIGHT_FONT,
-    disabledPlaceholderColor: COLORS.LIGHTER,
+    color: COLORS.BASE_FONT,
+    disabledPlaceholderColor: COLORS.FADED_FONT,
     fieldPadding: "0 0 0 0.75em",
-    labelColor: COLORS.BRIGHT_FONT,
-    labelFontSize: "75%",
+    labelColor: COLORS.BASE_FONT,
+    labelFontWeight: "bold",
     labelPadding: "0 0 .33em 0",
-    menuBgColor: COLORS.LIGHTER,
-    menuBorder: "none",
+    menuBgColor: COLORS.BASE_BG,
+    menuBorder: COLORS.BASE_BORDER,
     menuRadius: "0.25em",
     menuShadow: "0 2px 15px rgba(0,0,0,0.2)",
     optionColor: COLORS.BASE_FONT,
-    optionHoverBgColor: COLORS.LIGHTEST,
-    optionHoverColor: COLORS.BRIGHT_FONT,
-    optionPadding: "0.25em 0.75em 0.5em",
+    optionHoverBgColor: COLORS.LIGHT_BG,
+    optionHoverColor: COLORS.BASE_FONT,
+    optionPadding: "0.5em 0.75em 0.66em",
     optionSelectedBgColor: COLORS.SELECTIONS,
-    optionSelectedColor: COLORS.BRIGHT_FONT,
+    optionSelectedColor: COLORS.LIGHT_FONT,
     outlineShadow: `0 0 0 2px ${COLORS.OUTLINES}`,
     radius: "0.25em",
     custom: `
-      .qm-select-label {
-        letter-spacing: 3px;
-        text-transform: uppercase;
-      }
-
       .qm-clear-button {
         transform: translateX(-0.25em);
       }
@@ -169,38 +164,34 @@ const Theme: ThemeProps = extendTheme(DefaultTheme, {
         width: 1px;
         height: 50%;
         transform: translateY(-50%);
-        background: ${COLORS.LIGHTER};
+        background: ${COLORS.FADED_FONT};
       }
     `,
   },
 
   textField: {
-    bgColor: COLORS.DARKER,
-    border: "none",
-    clOffset: "3px", // should include a unit and is usually the same width as your border
-    color: COLORS.BRIGHT_FONT,
-    disabledPlaceholderColor: COLORS.LIGHTER,
+    bgColor: COLORS.BASE_BG,
+    border: COLORS.BASE_BORDER,
+    clOffset: "0px", // should include a unit and is usually the same width as your border
+    color: COLORS.BASE_FONT,
+    disabledPlaceholderColor: COLORS.FADED_FONT,
     errColor: COLORS.ERRORS,
     errFontSize: "75%",
     errPadding: "0.15em 0 0.33em",
-    height: "35px",
-    labelColor: COLORS.BRIGHT_FONT,
-    labelFontSize: "75%",
+    height: "40px",
+    labelColor: COLORS.BASE_FONT,
+    labelFontWeight: "bold",
     labelPadding: "0 0 .33em 0",
     outlineShadow: `0 0 0 2px ${COLORS.OUTLINES}`,
     paddingBottom: "",
     paddingBottomCL: "", // text field with char limit
     paddingLeft: "0.75em",
+    paddingTop: "0.1em",
     radius: "0.25em",
     taHeight: "100px",
-    taPaddingBottomCL: "1.25em", // text area with char limit
-    taPaddingTop: "0.5em",
+    taPaddingBottomCL: "1.5em", // text area with char limit
+    taPaddingTop: "0.66em",
     custom: `
-      .qm-text-field-label {
-        letter-spacing: 3px;
-        text-transform: uppercase;
-      }
-
       .qm-char-limit-counter-text {
         padding-right: 0.5em;
       }

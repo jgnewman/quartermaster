@@ -23,6 +23,7 @@ export const LabelForSelect = styled.label`
   display: block;
   color: ${theme("labelColor")};
   font-size: ${theme("labelFontSize")};
+  font-weight: ${theme("labelFontWeight")};
   padding: ${theme("labelPadding")};
 `
 
@@ -48,6 +49,10 @@ export const DivFauxSelectWrapper = styled.div<DivFauxSelectWrapperProps>`
   ${({ isFocused }) => isFocused && css`
     box-shadow: ${theme("outlineShadow", DEFAULT_OUTLINE)};
   `}
+
+  .qm-select-icon {
+    display: block;
+  }
 `
 
 interface DivClearButtonWrapperProps {

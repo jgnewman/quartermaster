@@ -26,8 +26,9 @@ export const DivInputWrapper = styled.div<DivInputWrapperProps>`
   position: relative;
 
   ${({ isTextArea, theme: themeVals }) => {
-    const offset = themeVals.textFieldCLOffset
-    const yTranslate = offset ? `calc(-1 * (0.75em + ${offset}))` : "-0.33em"
+    const offset = themeVals.textField.clOffset
+    const clSize = themeVals.charLimitCounter.barHeight
+    const yTranslate = offset ? `calc(-1 * (${clSize || "5px"} + 0.25em +  ${offset}))` : "-0.33em"
 
     return `
       .qm-text-field-limit-counter .qm-char-limit-counter-text {
@@ -57,6 +58,7 @@ export const LabelForTextField = styled.label`
   display: block;
   color: ${theme("labelColor")};
   font-size: ${theme("labelFontSize")};
+  font-weight: ${theme("labelFontWeight")};
   padding: ${theme("labelPadding")};
 `
 

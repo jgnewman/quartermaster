@@ -19,6 +19,10 @@ export const DivCheckboxContainer = styled.div`
   ${theme("custom")}
 `
 
+export const SpanFauxCheckboxWrapper = styled.span`
+  ${vertMiddle()}
+`
+
 export const SpanCheckboxWrapper = styled.span`
   ${vertMiddle()}
   width: ${theme("size", "1em")};

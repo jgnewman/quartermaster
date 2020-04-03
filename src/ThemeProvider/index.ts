@@ -51,6 +51,7 @@ export interface ThemeProps {
     barBgWorse?: string
     barBgWorst?: string
     barHeight?: string
+    color?: string
     custom?: string
     errTextColor?: string
     fontSize?: string
@@ -114,6 +115,7 @@ export interface ThemeProps {
     fieldPadding?: string
     labelColor?: string
     labelFontSize?: string
+    labelFontWeight?: string
     labelPadding?: string
     menuBgColor?: string
     menuBorder?: string
@@ -144,6 +146,7 @@ export interface ThemeProps {
     height?: string
     labelColor?: string
     labelFontSize?: string
+    labelFontWeight?: string
     labelPadding?: string
     outlineShadow?: string
     paddingBottom?: string

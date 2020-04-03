@@ -18,6 +18,10 @@ export const DivRadioButtonContainer = styled.div`
   ${theme("custom")}
 `
 
+export const SpanFauxRadioButtonWrapper = styled.span`
+  ${vertMiddle()}
+`
+
 export const SpanRadioButtonWrapper = styled.span`
   ${vertMiddle()}
   width: ${theme("size", "1em")};

@@ -3,7 +3,7 @@ import React from "react"
 import { render } from "react-dom"
 
 import * as QM from "../src/index"
-import DarkTheme from "../src/themes/DarkTheme"
+import LightTheme from "../src/themes/LightTheme"
 
 class App extends React.Component {
   public static displayName = "App"
@@ -175,7 +175,7 @@ class App extends React.Component {
 }
 
 render(
-  <QM.ThemeProvider theme={DarkTheme}>
+  <QM.ThemeProvider theme={LightTheme}>
     <App/>
   </QM.ThemeProvider>
 , document.querySelector("#app"))

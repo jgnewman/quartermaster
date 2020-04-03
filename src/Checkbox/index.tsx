@@ -13,11 +13,12 @@ import {
 } from "../lib/helpers"
 
 import {
-  DivCheckboxContainer,
-  SpanCheckboxWrapper,
   CheckboxNative,
-  SpanCheckboxOverlay,
+  DivCheckboxContainer,
   LabelForCheckbox,
+  SpanCheckboxOverlay,
+  SpanCheckboxWrapper,
+  SpanFauxCheckboxWrapper,
 } from "./styles"
 
 export interface CheckboxProps {
@@ -103,11 +104,12 @@ class Checkbox extends PureComponent<CheckboxProps> {
     const disabledClass = isDisabled ? "is-disabled" : ""
 
     return (
-      <>
-        <DivCheckboxContainer
-          className={`qm-checkbox ${checkedClass} ${disabledClass} ${className || ""}`}
-          onClick={isDisabled ? noopEvtHandler : this.handleOverlayClick}>
+      <DivCheckboxContainer
+        className={`qm-checkbox ${checkedClass} ${disabledClass} ${className || ""}`}>
 
+        <SpanFauxCheckboxWrapper
+          className="qm-checkbox-faux-wrapper"
+          onClick={isDisabled ? noopEvtHandler : this.handleOverlayClick}>
           <SpanCheckboxWrapper className="qm-checkbox-wrapper">
             <SpanCheckboxOverlay
               isFocused={isFocused}
@@ -124,8 +126,7 @@ class Checkbox extends PureComponent<CheckboxProps> {
               {label}
             </LabelForCheckbox>
           )}
-
-        </DivCheckboxContainer>
+        </SpanFauxCheckboxWrapper>
 
         <CheckboxNative
           ref={refFn}
@@ -137,7 +138,8 @@ class Checkbox extends PureComponent<CheckboxProps> {
           onBlur={this.handleBlur}
           {...boxProps}
         />
-      </>
+
+      </DivCheckboxContainer>
     )
   }
 }

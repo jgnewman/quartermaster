@@ -14,10 +14,11 @@ import {
 
 import {
   DivRadioButtonContainer,
-  SpanRadioButtonWrapper,
-  RadioButtonNative,
-  SpanRadioButtonOverlay,
   LabelForRadioButton,
+  RadioButtonNative,
+  SpanFauxRadioButtonWrapper,
+  SpanRadioButtonOverlay,
+  SpanRadioButtonWrapper,
 } from "./styles"
 
 export interface RadioButtonProps {
@@ -103,11 +104,12 @@ class RadioButton extends PureComponent<RadioButtonProps> {
     const disabledClass = isDisabled ? "is-disabled": ""
 
     return (
-      <>
-        <DivRadioButtonContainer
-          className={`qm-radio-button ${checkedClass} ${disabledClass} ${className || ""}`}
-          onClick={isDisabled ? noopEvtHandler : this.handleOverlayClick}>
+      <DivRadioButtonContainer
+        className={`qm-radio-button ${checkedClass} ${disabledClass} ${className || ""}`}>
 
+        <SpanFauxRadioButtonWrapper
+          className="qm-radio-button-faux-wrapper"
+          onClick={isDisabled ? noopEvtHandler : this.handleOverlayClick}>
           <SpanRadioButtonWrapper className="qm-radio-button-wrapper">
             <SpanRadioButtonOverlay
               isFocused={isFocused}
@@ -124,8 +126,7 @@ class RadioButton extends PureComponent<RadioButtonProps> {
               {label}
             </LabelForRadioButton>
           )}
-
-        </DivRadioButtonContainer>
+        </SpanFauxRadioButtonWrapper>
 
         <RadioButtonNative
           ref={refFn}
@@ -137,7 +138,8 @@ class RadioButton extends PureComponent<RadioButtonProps> {
           onBlur={this.handleBlur}
           {...boxProps}
         />
-      </>
+
+      </DivRadioButtonContainer>
     )
   }
 }

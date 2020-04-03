@@ -2,6 +2,7 @@ import React from "react"
 
 import {
   DivCounterContainer,
+  SpanCounterTextWrapper,
   SpanFillBarWrapper,
   SpanFillBar,
 } from "./styles"
@@ -72,7 +73,7 @@ const CharLimitCounter = ({
   return (
     <DivCounterContainer className={`qm-char-limit-counter ${colorClass} ${className || ""}`}>
       {!hideText && (
-        <span className="qm-char-limit-counter-text">
+        <SpanCounterTextWrapper className="qm-char-limit-counter-text">
           <span className="qm-char-limit-count">
             {count || "0"}
           </span>
@@ -80,7 +81,7 @@ const CharLimitCounter = ({
           <span className="qm-char-limit-total">
             {limit}{suffix || ""}
           </span>
-        </span>
+        </SpanCounterTextWrapper>
       )}
       {!hideProgressBar && (
         <SpanFillBarWrapper className="qm-char-limit-counter-bar">

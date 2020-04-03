@@ -16,6 +16,10 @@ export const DivCounterContainer = styled.div`
   ${theme("custom")}
 `
 
+export const SpanCounterTextWrapper = styled.span`
+  color: ${theme("color", "black")};
+`
+
 export const SpanFillBarWrapper = styled.span`
   width: "auto";
   height: ${theme("barHeight", "0.33em")};
