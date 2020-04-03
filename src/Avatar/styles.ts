@@ -1,28 +1,34 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
 import {
   absFill,
   absRB,
   circle,
   coverBg,
+  createThemer,
   size,
-  vertMiddleInner,
+  vertMiddle,
 } from "../lib/baseStyles"
 
-export const StyledAvatarSpan = styled.span`
-  ${circle("inline-block")}
-  ${size("40px")}
-  ${vertMiddleInner()}
+const theme = createThemer("avatar")
+
+export const SpanAvatarContainer = styled.span`
+  ${vertMiddle()}
+  width: ${theme("width", "40px")};
+  height: ${theme("height", "40px")};
+  border: ${theme("border")};
+  box-sizing: border-box;
+  border-radius: ${theme("radius", "50%")};
 
   position: relative;
   overflow: visible;
+  ${theme("custom")}
 `
 
-export const StyledAvatarContentSpan = styled.span`
+export const SpanAvatarContent = styled.span`
   ${absFill()}
-  ${circle()}
   ${coverBg()}
-
+  border-radius: ${theme("radius", "50%")};
   overflow: hidden;
 
   svg {
@@ -31,21 +37,21 @@ export const StyledAvatarContentSpan = styled.span`
   }
 `
 
-export interface StyledActivitySpanProps {
+export interface SpanActivityIndicatorProps {
   isActive: boolean
 }
 
-export const StyledActivitySpan = styled.span`
+export const SpanActivityIndicator = styled.span<SpanActivityIndicatorProps>`
   ${absRB("-1px", "-1px")}
   ${size("12px")}
   ${circle()}
 
   z-index: 2;
-  border: 2px solid white;
   box-sizing: border-box;
-  background: gray;
+  background: ${theme("indicatorOffColor", "gray")};
+  border: ${theme("indicatorBorder")};
 
-  ${({ isActive }: StyledActivitySpanProps) => isActive && `
-    background: limegreen;
+  ${({ isActive }) => isActive && css`
+    background: ${theme("indicatorOnColor", "limegreen")};
   `}
 `

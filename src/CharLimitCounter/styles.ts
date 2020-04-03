@@ -2,58 +2,60 @@ import styled from "styled-components"
 
 import {
   absLT,
+  createThemer,
   size,
 } from "../lib/baseStyles"
 
-export const StyledWrapperDiv = styled.div`
+const theme = createThemer("charLimitCounter")
+
+export const DivCounterContainer = styled.div`
+  font-size: ${theme("fontSize")};
   &.worst, &.error {
-    color: red;
+    color: ${theme("errTextColor", "red")};
   }
+  ${theme("custom")}
 `
 
-export const StyledCounterBarSpan = styled.span`
-  ${size("auto", "0.33em")}
+export const SpanCounterTextWrapper = styled.span`
+  color: ${theme("color", "black")};
+`
+
+export const SpanFillBarWrapper = styled.span`
+  width: "auto";
+  height: ${theme("barHeight", "0.33em")};
   display: block;
   position: relative;
-  background: rgba(0,0,0,0.1);
+  background: ${theme("barBgEmpty", "rgba(0,0,0,0.1)")};
+  overflow: hidden;
 `
 
-export interface StyledFillBarSpanProps {
+export interface SpanFillBarProps {
   width: string
 }
 
-export const StyledFillBarSpan = styled.span`
+export const SpanFillBar = styled.span<SpanFillBarProps>`
   ${absLT()}
-
-  ${({ width }: StyledFillBarSpanProps) => size(width, "100%")}
-
+  ${({ width }) => size(width, "100%")}
   transition: background .3s ease, width .1s ease;
-
   &.empty {
     background: transparent;
   }
-
   &.worst {
-    background: red;
+    background: ${theme("barBgWorst", "red")};
   }
-
   &.worse {
-    background: orange;
+    background: ${theme("barBgWorse", "orange")};
   }
-
   &.decent {
-    background: gold;
+    background: ${theme("barBgDecent", "gold")};
   }
-
   &.better {
-    background: yellowgreen;
+    background: ${theme("barBgBetter", "yellowgreen")};
   }
-
   &.best {
-    background: limegreen;
+    background: ${theme("barBgBest", "limegreen")};
   }
-
   &.error {
-    background: red;
+    background: ${theme("barBgError", "red")};
   }
 `

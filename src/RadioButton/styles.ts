@@ -1,38 +1,85 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
 import {
+  DEFAULT_BORDER,
+  DEFAULT_OUTLINE,
   absCenter,
   absFill,
-  borders,
-  size,
+  absLT,
+  circle,
+  createThemer,
   vertMiddle,
   vertMiddleInner,
 } from "../lib/baseStyles"
 
-export const StyledRadioButtonWrapperSpan = styled.span`
-  ${size("1em")}
-  ${vertMiddle()}
+const theme = createThemer("radioButton")
 
-  position: relative;
-  margin-right: .33em;
+export const DivRadioButtonContainer = styled.div`
+  ${theme("custom")}
 `
 
-export const StyledRadioButton = styled.input`
-  ${absFill()}
+export const SpanFauxRadioButtonWrapper = styled.span`
+  ${vertMiddle()}
+`
+
+export const SpanRadioButtonWrapper = styled.span`
+  ${vertMiddle()}
+  width: ${theme("size", "1em")};
+  height: ${theme("size", "1em")};
+
+  position: relative;
+  margin-right: ${theme("labelMargin", ".33em")};
+`
+
+export const RadioButtonNative = styled.input`
+  ${absLT("-1000vw", 0)}
   border: 0;
 `
 
-export const StyledRadioButtonOverlaySpan = styled.span`
+interface SpanRadioButtonOverlayProps {
+  isFocused: boolean
+}
+
+export const SpanRadioButtonOverlay = styled.span<SpanRadioButtonOverlayProps>`
   ${absFill()}
-  ${borders("50%")}
-  background: white;
+  ${circle()}
+  box-sizing: border-box;
+  border: ${theme("border", DEFAULT_BORDER)};
+  background: ${theme("bgColor", "white")};
+
+  ${({ isFocused }) => isFocused && css`
+    box-shadow: ${theme("outlineShadow", DEFAULT_OUTLINE)};
+  `}
+
+  outline: none !important;
+
+  &.is-checked {
+    background: ${theme("checkedBgColor", "white")};
+  }
 
   .qm-radio-button-dot {
     ${absCenter()}
-    ${size("85%")}
+    width: ${theme("dotSize", "85%")};
+    height: ${theme("dotSize", "85%")};
+  }
+
+  .qm-radio-button-dot circle {
+    fill: ${theme("dotColor", "black")};
   }
 `
 
-export const StyledRadioButtonLabel = styled.label`
+interface LabelForRadioButtonProps {
+  isDisabled: boolean
+}
+
+export const LabelForRadioButton = styled.label<LabelForRadioButtonProps>`
   ${vertMiddleInner()}
+  ${({ isDisabled }) => isDisabled
+    ? css`color: ${theme("disabledLabelColor", "#999999")};`
+    : css`color: ${theme("labelColor", "black")};`
+  }
+
+  &.is-checked {
+    color: ${theme("checkedLabelColor", "black")};
+  }
 `

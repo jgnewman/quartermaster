@@ -1,24 +1,28 @@
 import React, { PureComponent, ReactNodeArray } from "react"
 
 import { noopEvtHandler } from "../lib/helpers"
-import { DynamicProps } from "../lib/helperTypes"
+import { DynamicProps, RefFunction } from "../lib/helperTypes"
 import Button from "../Button"
 import CaretIcon from "../icons/CaretIcon"
 import TimesIcon from "../icons/TimesIcon"
 
 import {
-  StyledSelectLabel,
-  StyledSelectWrapperDiv,
-  StyledInputWrapperDiv,
-  StyledDisplayDiv,
-  StyledDisplaySpan,
-  StyledSelect,
-  StyledMenu,
-  StyledMenuOption,
+  DivCaretWrapper,
+  DivClearButtonWrapper,
+  DivValueDisplay,
+  SpanValueField,
+  DivFauxSelectWrapper,
+  DivOptionsMenu,
+  SpanMenuOption,
+  SelectNative,
+  DivSelectContainer,
+  LabelForSelect,
+  DivSelectContentWrapper,
 } from "./styles"
 
 interface SelectState {
   isOpen: boolean
+  isFocused: boolean
 }
 
 interface SelectOption {
@@ -30,6 +34,7 @@ export interface SelectProps {
   changeHandler?: (value: string | null) => void
   className?: string
   id?: string
+  fieldRef?: RefFunction // function like (elem => this.myRef = elem)
   isDisabled?: boolean
   label?: string
   options: SelectOption[]
@@ -38,20 +43,28 @@ export interface SelectProps {
 }
 
 class Select extends PureComponent<SelectProps, SelectState> {
-  public displayName = "Select"
+  static displayName = "Select"
   public state: SelectState
   private wrapperRef: HTMLDivElement | null
+  private selectRef: HTMLSelectElement | null
 
   constructor(props: SelectProps) {
     super(props)
 
     this.state = {
       isOpen: false,
+      isFocused: false,
     }
   }
 
-  openSelect = () => {
+  handleFocus = () => this.setState({ isFocused: true, isOpen: true })
+  handleBlur = () => this.setState({ isFocused: false })
+
+  handleClickToOpenSelect = () => {
     this.setState({ isOpen: true })
+    if (this.selectRef) {
+      this.selectRef.focus()
+    }
   }
 
   closeSelect = () => {
@@ -104,13 +117,13 @@ class Select extends PureComponent<SelectProps, SelectState> {
 
       optionsArray.push(<option key={optValue} value={optValue}>{label}</option>)
       menuOptionsArray.push(
-        <StyledMenuOption
+        <SpanMenuOption
           key={optValue}
           className={`qm-select-menu-option ${isSelected ? "is-selected" : ""}`}
           data-value={optValue}
           onClick={this.handleClickOption}>
           {label}
-        </StyledMenuOption>,
+        </SpanMenuOption>,
       )
     })
 
@@ -128,6 +141,7 @@ class Select extends PureComponent<SelectProps, SelectState> {
   render() {
     const {
       className,
+      fieldRef,
       id,
       isDisabled,
       label,
@@ -135,10 +149,21 @@ class Select extends PureComponent<SelectProps, SelectState> {
       value,
     } = this.props
 
-    const { isOpen } = this.state
+    const { isOpen, isFocused } = this.state
     const { optionsArray, menuOptionsArray, selectedLabel } = this.buildOptionArrays()
     const textValue = value ? selectedLabel : placeholder
     const hasSelectedValue = !!value
+
+    const wrapperRefFn = (elem: HTMLDivElement | null) => {
+      this.wrapperRef = elem
+    }
+
+    const selectRefFn = (elem: HTMLSelectElement | null) => {
+      this.selectRef = elem
+      if (fieldRef) {
+        fieldRef(elem)
+      }
+    }
 
     const labelProps: DynamicProps = {
       className: "qm-select-label",
@@ -163,53 +188,65 @@ class Select extends PureComponent<SelectProps, SelectState> {
     }
 
     return (
-      <div className={classes.join(" ")} ref={ elem => this.wrapperRef = elem }>
+      <DivSelectContainer className={classes.join(" ")} ref={wrapperRefFn}>
 
         {label && (
-          <StyledSelectLabel {...labelProps}>
+          <LabelForSelect {...labelProps}>
             {label}
-          </StyledSelectLabel>
+          </LabelForSelect>
         )}
 
-        <StyledSelectWrapperDiv className="qm-select-input-wrapper">
-          <StyledSelect
+        <DivSelectContentWrapper className="qm-select-input-wrapper">
+          <SelectNative
+            ref={selectRefFn}
             disabled={!!isDisabled}
+            onFocus={this.handleFocus}
+            onBlur={this.handleBlur}
             onChange={this.updateValueOnRawChange}>
             {optionsArray}
-          </StyledSelect>
+          </SelectNative>
 
-          <StyledInputWrapperDiv
+          <DivFauxSelectWrapper
             className="qm-select-field-wrapper"
-            onClick={isDisabled ? noopEvtHandler : this.openSelect}
+            isFocused={isFocused}
+            onClick={isDisabled ? noopEvtHandler : this.handleClickToOpenSelect}
             aria-hidden={true}>
 
-            <StyledDisplayDiv
+            <DivValueDisplay
               isDisabled={!!isDisabled}
               isShowingPlaceholder={!hasSelectedValue}
               className={`qm-select-display ${!hasSelectedValue ? "is-placeholder" : ""}`}>
-              <StyledDisplaySpan>{textValue}</StyledDisplaySpan>
-            </StyledDisplayDiv>
+              <SpanValueField>{textValue}</SpanValueField>
+            </DivValueDisplay>
 
             {hasSelectedValue && (
-              <Button
-                className="qm-clear-button"
-                clickHandler={isDisabled ? noopEvtHandler : this.clearValueOnClick}>
-                <TimesIcon className="qm-select-icon qm-clear-icon" title="Clear Selection" />
-              </Button>
+              <DivClearButtonWrapper
+                isDisabled={!!isDisabled}
+                className="qm-clear-button-wrapper">
+                <Button
+                  className="qm-clear-button"
+                  clickHandler={isDisabled ? noopEvtHandler : this.clearValueOnClick}>
+                  <TimesIcon className="qm-select-icon qm-clear-icon" title="Clear Selection" />
+                </Button>
+              </DivClearButtonWrapper>
             )}
 
-            <CaretIcon className="qm-select-icon qm-open-icon" title="Open" />
+            <DivCaretWrapper
+              isDisabled={!!isDisabled}
+              className="qm-open-icon-wrapper">
+              <CaretIcon className="qm-select-icon qm-open-icon" title="Open" />
+            </DivCaretWrapper>
 
-          </StyledInputWrapperDiv>
+          </DivFauxSelectWrapper>
 
           {isOpen && (
-            <StyledMenu className="qm-select-menu" aria-hidden={true}>
+            <DivOptionsMenu className="qm-select-menu" aria-hidden={true}>
               {menuOptionsArray}
-            </StyledMenu>
+            </DivOptionsMenu>
           )}
-        </StyledSelectWrapperDiv>
+        </DivSelectContentWrapper>
 
-      </div>
+      </DivSelectContainer>
     )
   }
 }

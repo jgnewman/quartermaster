@@ -2,30 +2,35 @@ import styled from "styled-components"
 
 import {
   absLT,
+  createThemer,
   fixFill,
   fixRT,
 } from "../lib/baseStyles"
 
-export interface SyledModalDivProps {
+const theme = createThemer("modal")
+
+export interface DivModalContainerProps {
   isOpen: boolean
 }
 
-export const StyledModalDiv = styled.div`
+export const DivModalContainer = styled.div<DivModalContainerProps>`
   ${fixFill()}
   z-index: 9999;
-  background: rgba(0, 0, 0, .93);
+  background: ${theme("bgColor", "rgba(0,0,0,0.93)")};
   transform: scale(0);
   opacity: 0;
   transition: opacity .3s ease, transform 1s ease;
 
-  ${({ isOpen }: SyledModalDivProps) => isOpen && `
+  ${({ isOpen }) => isOpen && `
     transition: transform .3s ease, opacity .5s ease;
     transform: scale(1);
     opacity: 1;
   `}
+
+  ${theme("custom")};
 `
 
-export const StyledModalContentDiv = styled.div`
+export const DivModalContent = styled.div`
   ${absLT("50%", "40%")}
   transform: translateX(-50%) translateY(-50%);
   max-width: 100%;
@@ -35,7 +40,7 @@ export const StyledModalContentDiv = styled.div`
   letter-spacing: 0;
 `
 
-export const StyledCloseButton = styled.button`
+export const ButtonClose = styled.button`
   ${fixRT()}
   z-index: 9999;
   padding: 1em 1.25em;

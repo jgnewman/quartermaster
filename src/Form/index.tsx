@@ -28,7 +28,7 @@ export interface FormProps {
 }
 
 class Form extends PureComponent<FormProps, SimpleObject> {
-  public displayName = "Form"
+  static displayName = "Form"
   public state: SimpleObject
 
   public getFormState: GetFormState = () => {

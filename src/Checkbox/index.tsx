@@ -8,14 +8,17 @@ import {
 } from "../lib/helperTypes"
 
 import {
+  noopEvtHandler,
   manuallyTickCheckbox,
 } from "../lib/helpers"
 
 import {
-  StyledCheckboxWrapperSpan,
-  StyledCheckbox,
-  StyledCheckboxOverlaySpan,
-  StyledCheckboxLabel,
+  CheckboxNative,
+  DivCheckboxContainer,
+  LabelForCheckbox,
+  SpanCheckboxOverlay,
+  SpanCheckboxWrapper,
+  SpanFauxCheckboxWrapper,
 } from "./styles"
 
 export interface CheckboxProps {
@@ -32,10 +35,14 @@ export interface CheckboxProps {
 }
 
 class Checkbox extends PureComponent<CheckboxProps> {
-  public displayName = "Checkbox"
+  static displayName = "Checkbox"
+  public state = { isFocused: false }
   private inputRef: HTMLInputElement | null
 
-  handleOverlayClick() {
+  handleFocus = () => this.setState({ isFocused: true })
+  handleBlur = () => this.setState({ isFocused: false })
+
+  handleOverlayClick = () => {
     const { inputRef } = this
 
     if (inputRef) {
@@ -57,6 +64,8 @@ class Checkbox extends PureComponent<CheckboxProps> {
       value,
     } = this.props
 
+    const { isFocused } = this.state
+
     const refFn = (elem: HTMLInputElement | null) => {
       this.inputRef = elem
       if (checkboxRef) {
@@ -65,7 +74,7 @@ class Checkbox extends PureComponent<CheckboxProps> {
     }
 
     const labelProps: DynamicProps = {
-      className: "qm-checkbox-label",
+      className: `qm-checkbox-label ${isChecked ? "is-checked" : ""}`,
     }
 
     const boxProps: DynamicProps = {}
@@ -92,37 +101,45 @@ class Checkbox extends PureComponent<CheckboxProps> {
     }
 
     const checkedClass = isChecked ? "is-checked" : ""
+    const disabledClass = isDisabled ? "is-disabled" : ""
 
     return (
-      <div className={`qm-checkbox ${checkedClass} ${className || ""}`}>
+      <DivCheckboxContainer
+        className={`qm-checkbox ${checkedClass} ${disabledClass} ${className || ""}`}>
 
-        <StyledCheckboxWrapperSpan className="qm-checkbox-wrapper">
+        <SpanFauxCheckboxWrapper
+          className="qm-checkbox-faux-wrapper"
+          onClick={isDisabled ? noopEvtHandler : this.handleOverlayClick}>
+          <SpanCheckboxWrapper className="qm-checkbox-wrapper">
+            <SpanCheckboxOverlay
+              isFocused={isFocused}
+              aria-hidden={true}
+              className={`qm-checkbox-overlay ${checkedClass}`}>
+              {isChecked && <CheckmarkIcon className="qm-checkbox-checkmark" />}
+            </SpanCheckboxOverlay>
+          </SpanCheckboxWrapper>
 
-          <StyledCheckbox
-            ref={refFn}
-            checked={isChecked}
-            className="qm-checkbox-native"
-            disabled={!!isDisabled}
-            type="checkbox"
-            {...boxProps}
-          />
+          {label && (
+            <LabelForCheckbox
+              isDisabled={!!isDisabled}
+              {...labelProps}>
+              {label}
+            </LabelForCheckbox>
+          )}
+        </SpanFauxCheckboxWrapper>
 
-          <StyledCheckboxOverlaySpan
-            aria-hidden={true}
-            className={`qm-checkbox-overlay ${checkedClass}`}
-            onClick={this.handleOverlayClick.bind(this)}>
-            {isChecked && <CheckmarkIcon className="qm-checkbox-checkmark" />}
-          </StyledCheckboxOverlaySpan>
+        <CheckboxNative
+          ref={refFn}
+          checked={isChecked}
+          className="qm-checkbox-native"
+          disabled={!!isDisabled}
+          type="checkbox"
+          onFocus={this.handleFocus}
+          onBlur={this.handleBlur}
+          {...boxProps}
+        />
 
-        </StyledCheckboxWrapperSpan>
-
-        {label && (
-          <StyledCheckboxLabel {...labelProps}>
-            {label}
-          </StyledCheckboxLabel>
-        )}
-
-      </div>
+      </DivCheckboxContainer>
     )
   }
 }

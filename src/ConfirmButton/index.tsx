@@ -4,13 +4,18 @@ import { noopEvtHandler } from "../lib/helpers"
 import Button, { ButtonProps } from "../Button"
 import Modal from "../Modal"
 
-import { StyledTitleH2 } from "./styles"
+import {
+  DivOptionsWrapper,
+  H2Title,
+} from "./styles"
+import { DynamicProps } from "src/lib/helperTypes"
 
-export interface ConfirmButtonProps extends ButtonProps {
+export interface ConfirmButtonProps extends Exclude<ButtonProps, "highlight"> {
   cancelText?: string
   confirmationText?: string
   continueText?: string
   postCancelHook?: React.MouseEventHandler
+  useHighlights?: boolean
 }
 
 interface ConfirmButtonState {
@@ -18,7 +23,7 @@ interface ConfirmButtonState {
 }
 
 class ConfirmButton extends Component<ConfirmButtonProps, ConfirmButtonState> {
-  public static displayName = "ConfirmButton"
+  static displayName = "ConfirmButton"
   public state = { open: false }
 
   openConfirmation() {
@@ -36,6 +41,7 @@ class ConfirmButton extends Component<ConfirmButtonProps, ConfirmButtonState> {
       cancelText,
       continueText,
       confirmationText,
+      useHighlights,
       postCancelHook,
       ...rest
     } = this.props
@@ -62,6 +68,16 @@ class ConfirmButton extends Component<ConfirmButtonProps, ConfirmButtonState> {
       clickHandler: buttonClickHandler,
     }
 
+    const positiveProps: DynamicProps = {}
+    if (useHighlights) {
+      positiveProps.highlight = "positive"
+    }
+
+    const negativeProps: DynamicProps = {}
+    if (useHighlights) {
+      negativeProps.highlight = "negative"
+    }
+
     return (
       <>
 
@@ -74,19 +90,25 @@ class ConfirmButton extends Component<ConfirmButtonProps, ConfirmButtonState> {
           hideCloseButton={true}
           isOpen={this.state.open}>
 
-          <StyledTitleH2 className="qm-confirm-button-title">
+          <H2Title className="qm-confirm-button-title">
             {confirmationText || "Are you sure?"}
-          </StyledTitleH2>
+          </H2Title>
 
-          <div className="qm-confirm-button-options">
-            <Button className="qm-confirm-button-continue" clickHandler={confirmationContinueHandler}>
+          <DivOptionsWrapper className="qm-confirm-button-options">
+            <Button
+              className="qm-confirm-button-continue"
+              clickHandler={confirmationContinueHandler}
+              {...positiveProps}>
               { continueText || "Yes" }
             </Button>
 
-            <Button className="qm-confirm-button-cancel" clickHandler={confirmationCancelHandler}>
+            <Button
+              className="qm-confirm-button-cancel"
+              clickHandler={confirmationCancelHandler}
+              {...negativeProps}>
               { cancelText || "Nevermind" }
             </Button>
-          </div>
+          </DivOptionsWrapper>
 
         </Modal>
 

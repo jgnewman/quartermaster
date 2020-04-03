@@ -21,7 +21,7 @@ export interface RadioGroupProps {
 }
 
 class RadioGroup extends PureComponent<RadioGroupProps> {
-  public displayName = "RadioGroup"
+  static displayName = "RadioGroup"
 
   buildRadio(key: string, { label, value, id, ref, tabIndex }: RadioOption) {
     const { name, isDisabled, changeHandler } = this.props

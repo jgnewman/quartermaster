@@ -1,6 +1,26 @@
+import { ThemeProps } from "../ThemeProvider"
+
 type StrNum = string | number
 
 export const DEFAULT_BG = "#efefef"
+export const DEFAULT_RADIUS = "3px"
+export const DEFAULT_BORDER = "1px solid black"
+export const DEFAULT_OUTLINE = "0 0 0 1px blue"
+
+interface Themed {
+  theme: ThemeProps
+}
+
+export function createThemer<T extends keyof ThemeProps>(component: T) {
+  type PropType = ThemeProps[T]
+
+  return function(prop: keyof PropType, fallback?: any) {
+    return function ({ theme }: Themed) {
+      const componentStyles = theme[component]
+      return componentStyles[prop] ? componentStyles[prop] : fallback
+    }
+  }
+}
 
 export function blockAbs() {
   return "display: block; position: absolute;"
@@ -56,10 +76,6 @@ export function vertMiddle() {
 
 export function circle(display?: string) {
   return `${display ? `display: ${display}; ` : ""}border-radius: 50%;`
-}
-
-export function borders(radius: StrNum = "3px") {
-  return `border: 1px solid black; box-sizing: border-box; border-radius: ${radius};`
 }
 
 export function bgImg(url: string) {

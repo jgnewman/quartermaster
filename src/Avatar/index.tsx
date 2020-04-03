@@ -4,9 +4,9 @@ import SmileIcon from "../icons/SmileIcon"
 import { DynamicProps } from "../lib/helperTypes"
 
 import {
-  StyledAvatarSpan,
-  StyledActivitySpan,
-  StyledAvatarContentSpan,
+  SpanActivityIndicator,
+  SpanAvatarContainer,
+  SpanAvatarContent,
 } from "./styles"
 
 export interface AvatarProps {
@@ -30,22 +30,22 @@ function Avatar({
   }
 
   return (
-    <StyledAvatarSpan className={`qm-avatar ${className || ""}`}>
+    <SpanAvatarContainer className={`qm-avatar ${className || ""}`}>
 
-      <StyledAvatarContentSpan className="qm-avatar-content" style={style}>
+      <SpanAvatarContent className="qm-avatar-content" style={style}>
         {!url && (
           <SmileIcon className="qm-avatar-default-img" />
         )}
-      </StyledAvatarContentSpan>
+      </SpanAvatarContent>
 
       {showActivity && (
-        <StyledActivitySpan
+        <SpanActivityIndicator
           className={`qm-avatar-activity ${isActive ? "is-active" : ""}`}
           isActive={!!isActive}
         />
       )}
 
-    </StyledAvatarSpan>
+    </SpanAvatarContainer>
   )
 }
 
