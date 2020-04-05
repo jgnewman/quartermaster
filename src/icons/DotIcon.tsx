@@ -9,7 +9,7 @@ interface DotIconProps {
 const DotIcon = ({ className, title, size="14px" }: DotIconProps) => {
   return (
     <svg
-      className={`qm-icon qm-dot-icon ${className || ""}`}
+      className={`qmIcon qmDotIcon ${className || ""}`}
       width={size}
       height={size}
       viewBox="0 0 14 14"

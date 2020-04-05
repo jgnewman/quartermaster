@@ -4,7 +4,7 @@ import React, {
   ReactNodeArray,
 } from "react"
 
-import { InputElem } from "src/lib/helperTypes"
+import { InputElem } from "../lib/helperTypes"
 
 interface SimpleObject {
   [key: string]: string | number | boolean | null

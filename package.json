@@ -4,11 +4,14 @@
   "description": "A shared component library",
   "main": "index.js",
   "types": "index.d.ts",
-  "sideEffects": false,
+  "sideEffects": [
+    "**/*.css",
+    "**/*.styl"
+  ],
   "scripts": {
     "start": "NODE_ENV=development webpack-dev-server --http --color --progress --inline --mode development --offline",
     "bundlesize": "NODE_ENV=production webpack --http --color --progress --inline --mode production --offline",
-    "build": "NODE_ENV=production rm -rf dist && tsc --rootDir src --outDir dist --declaration",
+    "build": "node scripts/build",
     "release": ". ./.env && node scripts/release",
     "component": "node scripts/create-component"
   },
@@ -45,10 +48,10 @@
     "import-glob-loader": "^1.1.0",
     "mini-css-extract-plugin": "^0.9.0",
     "node-fetch": "^2.6.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
     "prompts": "^2.3.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "styled-components": "^5.0.1",
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
     "ts-loader": "^6.2.2",
@@ -60,8 +63,7 @@
     "webpack-dev-server": "^3.10.3"
   },
   "peerDependencies": {
-    "react": "^16.x.x",
-    "styled-components": "^5.0.1"
+    "react": "^16.x.x"
   },
   "dependencies": {}
 }

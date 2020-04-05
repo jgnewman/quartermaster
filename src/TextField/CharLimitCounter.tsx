@@ -1,27 +1,21 @@
+import "./styles.styl"
 import React from "react"
 
-import {
-  DivCounterContainer,
-  SpanCounterTextWrapper,
-  SpanFillBarWrapper,
-  SpanFillBar,
-} from "./styles"
-
 export interface CharLimitCounterProps {
-  className?: string
   count: number
   hideProgressBar?: boolean
   hideText?: boolean
+  isTextArea?: boolean
   limit: number
   limitIsMinimum?: boolean
   suffix?: string
 }
 
 const CharLimitCounter = ({
-  className,
   count,
   hideProgressBar,
   hideText,
+  isTextArea,
   limit,
   limitIsMinimum,
   suffix,
@@ -67,28 +61,32 @@ const CharLimitCounter = ({
 
   }
 
+  const fieldClass = isTextArea ? "isTextArea" : "isField"
   const fillWidth = (count / limit) * 100
   const styleWidth = fillWidth > 100 ? "100%" : `${fillWidth}%`
 
   return (
-    <DivCounterContainer className={`qm-char-limit-counter ${colorClass} ${className || ""}`}>
+    <div className={`qmCharLimitContainer ${fieldClass}`}>
+
       {!hideText && (
-        <SpanCounterTextWrapper className="qm-char-limit-counter-text">
-          <span className="qm-char-limit-count">
+        <span className={`qmCharLimitText ${fieldClass} ${colorClass}`}>
+          <span className="qmCharLimitCount">
             {count || "0"}
           </span>
-          <span className="qm-char-limit-divider"> / </span>
-          <span className="qm-char-limit-total">
+          <span className="qmCharLimitDivider"> / </span>
+          <span className="qmCharLImitTotal">
             {limit}{suffix || ""}
           </span>
-        </SpanCounterTextWrapper>
+        </span>
       )}
+
       {!hideProgressBar && (
-        <SpanFillBarWrapper className="qm-char-limit-counter-bar">
-          <SpanFillBar className={`qm-char-limit-counter-bar-fill ${colorClass}`} width={styleWidth} />
-        </SpanFillBarWrapper>
+        <span className={`qmCharLimitBar ${fieldClass}`}>
+          <span className={`qmCharLimitBarFill ${colorClass}`} style={{ width: styleWidth }}></span>
+        </span>
       )}
-    </DivCounterContainer>
+
+    </div>
   )
 }
 

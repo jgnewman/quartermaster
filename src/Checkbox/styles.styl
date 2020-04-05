@@ -1,0 +1,48 @@
+@import "../lib/sharedStyles"
+
+.qmCheckboxLabel
+  @extend $vertMiddle
+  color: BASE_FONT
+  transition: BASE_TRANSITION
+  margin-right: 0.33rem
+
+  &.isDisabled
+    color: FADED_FONT
+
+.qmCheckboxFauxWrapper
+  @extend $vertMiddle
+
+  &:hover .qmCheckboxLabel.isEnabled
+    color: HIGHLIGHT
+
+.qmCheckboxCheckWrapper
+  @extend $vertMiddle
+  size(1.25rem, 1.25rem)
+
+  position: relative
+  margin-right: 0.33rem
+
+.qmCheckboxOverlay
+  @extend $absFill
+  borders(BASE_BORDER, 0.25rem)
+
+  background: BASE_BG
+  outline: solid transparent !important
+
+  &.isFocused
+    box-shadow: BASE_OUTLINE
+
+.qmCheckboxCheckmark
+  @extend $absCenter
+  size(85%, 85%)
+
+  path
+    fill: ON_INDICATORS
+
+.qmCheckboxNative
+  display: block
+  position: absolute
+  left: -1000vw
+  top: 0
+  border: 0
+

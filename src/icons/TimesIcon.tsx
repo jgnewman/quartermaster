@@ -16,7 +16,7 @@ const pathData = [
 const TimesIcon = ({ className, title, color="black", size="14px" }: TimesIconProps) => {
   return (
     <svg
-      className={`qm-icon qm-times-icon ${className || ""}`}
+      className={`qmIcon qmTimesIcon ${className || ""}`}
       width={size}
       height={size}
       viewBox="0 0 14 14"

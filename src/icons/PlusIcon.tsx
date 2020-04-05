@@ -9,7 +9,7 @@ interface PlusIconProps {
 const PlusIcon = ({ className, title, size="14px" }: PlusIconProps) => {
   return (
     <svg
-      className={`qm-icon qm-plus-icon ${className || ""}`}
+      className={`qmIcon qmPlusIcon ${className || ""}`}
       width={size}
       height={size}
       viewBox="0 0 14 14"

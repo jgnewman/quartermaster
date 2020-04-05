@@ -14,7 +14,7 @@ const pathData = [
 const CaretIcon = ({ className, title, size="14px" }: CaretIconProps) => {
   return (
     <svg
-      className={`qm-icon qm-caret-icon ${className || ""}`}
+      className={`qmIcon qmCaretIcon ${className || ""}`}
       width={size}
       height={size}
       viewBox="0 0 14 14"

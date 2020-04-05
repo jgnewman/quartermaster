@@ -1,14 +1,11 @@
+import "./styles.styl"
 import React, { Component } from "react"
 
 import { noopEvtHandler } from "../lib/helpers"
 import Button, { ButtonProps } from "../Button"
 import Modal from "../Modal"
 
-import {
-  DivOptionsWrapper,
-  H2Title,
-} from "./styles"
-import { DynamicProps } from "src/lib/helperTypes"
+import { DynamicProps } from "../lib/helperTypes"
 
 export interface ConfirmButtonProps extends Exclude<ButtonProps, "highlight"> {
   cancelText?: string
@@ -34,6 +31,25 @@ class ConfirmButton extends Component<ConfirmButtonProps, ConfirmButtonState> {
     this.setState({ open: false })
   }
 
+  handleClick = (evt: React.MouseEvent) => {
+    evt.preventDefault()
+    this.openConfirmation()
+  }
+
+  handleContinue = (evt: React.MouseEvent) => {
+    const { clickHandler } = this.props
+    evt.preventDefault()
+    this.closeConfirmation()
+    return (clickHandler || noopEvtHandler)(evt)
+  }
+
+  handleCancel = (evt: React.MouseEvent) => {
+    const { postCancelHook } = this.props
+    evt.preventDefault()
+    this.closeConfirmation()
+    return (postCancelHook || noopEvtHandler)(evt)
+  }
+
   render() {
     const {
       children,
@@ -46,26 +62,9 @@ class ConfirmButton extends Component<ConfirmButtonProps, ConfirmButtonState> {
       ...rest
     } = this.props
 
-    const buttonClickHandler = (evt: React.MouseEvent) => {
-      evt.preventDefault()
-      this.openConfirmation()
-    }
-
-    const confirmationContinueHandler = (evt: React.MouseEvent) => {
-      evt.preventDefault()
-      this.closeConfirmation()
-      return (clickHandler || noopEvtHandler)(evt)
-    }
-
-    const confirmationCancelHandler = (evt: React.MouseEvent) => {
-      evt.preventDefault()
-      this.closeConfirmation()
-      return (postCancelHook || noopEvtHandler)(evt)
-    }
-
     const buttonProps = {
       ...rest,
-      clickHandler: buttonClickHandler,
+      clickHandler: this.handleClick,
     }
 
     const positiveProps: DynamicProps = {}
@@ -86,29 +85,29 @@ class ConfirmButton extends Component<ConfirmButtonProps, ConfirmButtonState> {
         </Button>
 
         <Modal
-          className="qm-confirm-button-modal"
+          className="qmConfButtonModal"
           hideCloseButton={true}
           isOpen={this.state.open}>
 
-          <H2Title className="qm-confirm-button-title">
+          <h2 className="qmConfButtonTitle">
             {confirmationText || "Are you sure?"}
-          </H2Title>
+          </h2>
 
-          <DivOptionsWrapper className="qm-confirm-button-options">
+          <div className="qmConfButtonOptions">
             <Button
-              className="qm-confirm-button-continue"
-              clickHandler={confirmationContinueHandler}
+              className="qmConfButtonContinue"
+              clickHandler={this.handleContinue}
               {...positiveProps}>
               { continueText || "Yes" }
             </Button>
 
             <Button
-              className="qm-confirm-button-cancel"
-              clickHandler={confirmationCancelHandler}
+              className="qmConfButtonCancel"
+              clickHandler={this.handleCancel}
               {...negativeProps}>
               { cancelText || "Nevermind" }
             </Button>
-          </DivOptionsWrapper>
+          </div>
 
         </Modal>
 

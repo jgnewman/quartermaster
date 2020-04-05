@@ -26,7 +26,7 @@ const pathData = [
 const SmileIcon = ({ className, title }: SmileIconProps) => {
   return (
     <svg
-      className={`icon smile-icon ${className || ""}`}
+      className={`qmIcon qmSmileIcon ${className || ""}`}
       width="40px"
       height="40px"
       viewBox="0 0 40 40"
