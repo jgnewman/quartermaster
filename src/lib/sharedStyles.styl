@@ -1,0 +1,68 @@
+BASE_BG = #ffffff
+BASE_FONT = #333333
+BASE_PLACEHOLDER = #777777
+CHAR_BEST = #52c02c
+CHAR_BETTER = #9cd426
+CHAR_DECENT = #fde017
+CHAR_WORSE = #FDAB64
+CHAR_WORST = #cf2e41
+DARK_BG = rgba(0,0,0,0.85)
+ERRORS = #f7364c
+FADED_FONT = #bdbdbd
+HIGHLIGHT = #3C97FF
+LIGHT_BG = rgba(0,0,0,0.1)
+LIGHT_FONT = #ffffff
+LIGHT_HIGHLIGHT = #68afff
+NEGATIVE = #cf2e41
+NEGATIVE_HOVER = #f2384e
+ON_INDICATORS = #52c02c
+OUTLINES = #3c97ff
+POSITIVE = #52c02c
+POSITIVE_HOVER = #72d44f
+SELECTIONS = #3c97ff
+TRANSPARENCY = transparent
+
+BASE_BORDER = 1px solid rgba(0,0,0,0.25)
+BASE_OUTLINE = 0 0 0 2px OUTLINES
+BASE_TRANSITION = all .3s ease
+
+$absFill
+  display: block
+  position: absolute
+  left: 0
+  top: 0
+  width: 100%
+  height: 100%
+
+$absCenter
+  display: block
+  position: absolute
+  left: 50%
+  top: 50%
+  transform: translateX(-50%) translateY(-50%)
+
+$fixFill
+  display: block;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+
+$vertMiddle
+  display: inline-block
+  vertical-align: middle
+
+$ellipsisText
+  overflow: hidden
+  text-overflow: ellipsis
+  white-space: nowrap
+
+size(w, h = w)
+  width: w
+  height: h
+
+borders(b, r = 0)
+  box-sizing: border-box
+  border: b
+  border-radius: r

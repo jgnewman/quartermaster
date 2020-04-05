@@ -7,6 +7,8 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin")
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const config = {
+  devtool: "source-map",
+
   entry: {
     app: "./app/index.tsx",
   },
@@ -124,42 +126,34 @@ const config = {
   },
 }
 
-if (process.env.NODE_ENV === "development") {
-  config.devtool = "source-map"
-}
-
 if (process.env.NODE_ENV === "production") {
   config.plugins.push(new CleanWebpackPlugin())
   config.plugins.push(new BundleAnalyzerPlugin({ openAnalyzer: true }))
 
-  config.optimization = {
-    splitChunks: {
-      minSize: 1,
-      maxSize: 10,
-      cacheGroups: {
-        vendors: {
-          maxSize: Infinity,
-          test: /node_modules/,
-          chunks: "all",
-        },
-        styles: {
-          test: /styles\.ts/,
-          chunks: "all",
-        },
-      },
-    },
-  }
-
   // config.optimization = {
   //   splitChunks: {
+  //     minSize: 1,
+  //     maxSize: 10,
   //     cacheGroups: {
   //       vendors: {
+  //         maxSize: Infinity,
   //         test: /node_modules/,
   //         chunks: "all",
   //       },
   //     },
   //   },
   // }
+
+  config.optimization = {
+    splitChunks: {
+      cacheGroups: {
+        vendors: {
+          test: /node_modules/,
+          chunks: "all",
+        },
+      },
+    },
+  }
 }
 
 module.exports = config

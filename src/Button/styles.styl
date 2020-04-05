@@ -1,0 +1,48 @@
+@import "../lib/sharedStyles"
+
+.qmButtonContent
+  transition: BASE_TRANSITION
+  color: LIGHT_FONT
+
+.qmButtonContainer
+  @extend $vertMiddle
+  borders(0, 10rem)
+
+  background: HIGHLIGHT
+  padding: 0.65rem 1.5rem 0.75rem
+
+  font-weight: bold
+  font-size: 1rem
+  line-height: 1em
+
+  transition: BASE_TRANSITION
+  cursor: default
+  outline: solid transparent !important
+
+  &.isEnabled
+    cursor: pointer
+
+    &:hover
+      background: LIGHT_HIGHLIGHT
+
+      .qmButtonContent
+        color: LIGHT_FONT
+
+  &.isPositive
+    background: POSITIVE
+
+    &.isEnabled:hover
+      background: POSITIVE_HOVER
+
+  &.isNegative
+    background: NEGATIVE
+
+    &.isEnabled:hover
+      background: NEGATIVE_HOVER
+
+  &.isDisabled
+    opacity: 0.5
+
+  &.isEnabled.isFocused
+    transform: scale(1.1)
+

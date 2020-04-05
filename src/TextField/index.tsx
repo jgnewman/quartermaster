@@ -1,13 +1,5 @@
+import "./styles.styl"
 import React, { PureComponent } from "react"
-
-import {
-  DivTextFieldContainer,
-  DivInputWrapper,
-  InputNative,
-  TextAreaNative,
-  LabelForTextField,
-  SpanErrorText,
-} from "./styles"
 
 import {
   DynamicProps,
@@ -17,7 +9,7 @@ import {
 } from "../lib/helperTypes"
 
 import { manuallySetFieldValue } from "../lib/helpers"
-import CharLimitCounter from "../CharLimitCounter"
+import CharLimitCounter from "./CharLimitCounter"
 
 export interface TextFieldProps {
   changeHandler?: React.ChangeEventHandler
@@ -80,6 +72,12 @@ class TextField extends PureComponent<TextFieldProps> {
 
       keyUpHandler(evt)
     }
+  }
+
+  refFn = (elem: NullableInputElem) => {
+    const { fieldRef } = this.props
+    this.inputRef = elem
+    fieldRef && fieldRef(elem)
   }
 
   shouldPreventInput(evtTarget: InputElem) {
@@ -158,7 +156,6 @@ class TextField extends PureComponent<TextFieldProps> {
       defaultValue,
       enableTextAreaResize,
       errorText,
-      fieldRef,
       hideCharLimitProgress,
       hideCharLimitText,
       id,
@@ -173,6 +170,13 @@ class TextField extends PureComponent<TextFieldProps> {
 
     const { isFocused } = this.state
     const isTextArea = type === "textarea"
+
+    const abledClass = isDisabled ? "isDisabled" : "isEnabled"
+    const fieldClass = isTextArea ? "isTextArea" : "isField"
+    const focusedClass = isFocused ? "isFocused" : ""
+    const resizeClass = enableTextAreaResize ? "" : "noResize"
+    const charLimitClass = charLimit ? "hasCharLimit" : ""
+
     const dynamicProps: DynamicProps = {}
 
     if (typeof id === "string") {
@@ -195,99 +199,94 @@ class TextField extends PureComponent<TextFieldProps> {
       dynamicProps["data-lpignore"] = true
     }
 
-    const refFn = (elem: NullableInputElem) => {
-      this.inputRef = elem
-      if (fieldRef) {
-        fieldRef(elem)
-      }
-    }
-
-    const classNames = ["qm-text-field", isTextArea ? "is-text-area" : "is-field"]
-
-    if (charLimit) {
-      classNames.push("has-char-limit")
-    }
-
-    if (isDisabled) {
-      classNames.push("is-disabled")
-    }
+    const classNames = ["qmTextFieldContainer", abledClass, fieldClass]
+    charLimit && classNames.push(charLimitClass)
 
     const labelProps: DynamicProps = {
-      className: "qm-text-field-label",
+      className: "qmTextFieldLabel",
     }
 
     if (id) {
       labelProps.htmlFor = id
     }
 
+    const fieldStyle: DynamicProps = {}
+
+    if (!isTextArea && charLimit) {
+      // We want to display a char count that looks something like "22 / 25".
+      // The padding we need is calculated as twice the charlimit + 3 chars for the separator
+      // all divided by 2 since the width of a character is about half an em.
+      fieldStyle.paddingRight = `${(charLimit.toString().length * 2 + 3)/2}em`
+    }
+
+    const inputClasses = [
+      "qmTextFieldInput",
+      fieldClass,
+      focusedClass,
+      resizeClass,
+      abledClass,
+      charLimitClass,
+    ].join(" ")
+
     return (
-      <DivTextFieldContainer className={`${classNames.join(" ")} ${className || ""}`}>
+      <div className={`${classNames.join(" ")} ${className || ""}`}>
 
         {label && (
-          <LabelForTextField {...labelProps}>
+          <label {...labelProps}>
             {label}
-          </LabelForTextField>
+          </label>
         )}
 
-        <DivInputWrapper
-          className={`qm-text-field-input-wrapper`}
-          isDisabled={!!isDisabled}
-          isTextArea={isTextArea}>
+        <div className={`qmTextFieldInputWrapper ${abledClass} ${fieldClass}`}>
 
           {isTextArea && (
-            <TextAreaNative
-              isFocused={isFocused}
-              charLimit={charLimit}
-              className="qm-text-field-input textarea"
+            <textarea
+              className={inputClasses}
               disabled={!!isDisabled}
-              enableTextAreaResize={!!enableTextAreaResize}
-              hideCharLimitText={hideCharLimitText}
               onChange={this.handleChange}
               onKeyUp={this.handleKeyUp}
               onFocus={this.handleFocus}
               onBlur={this.handleBlur}
               placeholder={placeholder || ""}
-              ref={refFn}
-              {...dynamicProps}
-            />
+              ref={this.refFn}
+              {...dynamicProps}>
+            </textarea>
           )}
 
           {!isTextArea && (
-            <InputNative
-              isFocused={isFocused}
-              charLimit={charLimit}
-              className="qm-text-field-input field"
+            <input
+              className={inputClasses}
               disabled={!!isDisabled}
-              hideCharLimitText={hideCharLimitText}
               onChange={this.handleChange}
               onKeyUp={this.handleKeyUp}
               onFocus={this.handleFocus}
               onBlur={this.handleBlur}
               placeholder={placeholder || ""}
-              ref={refFn}
+              ref={this.refFn}
               type={type || "text"}
+              style={fieldStyle}
               {...dynamicProps}
             />
           )}
 
           {charLimit && (
             <CharLimitCounter
-              className="qm-text-field-limit-counter"
               count={typeof value === "string" ? value.length : 0}
               hideProgressBar={!!hideCharLimitProgress}
               hideText={!!hideCharLimitText}
+              isTextArea={isTextArea}
               limit={charLimit}
               limitIsMinimum={!!charLimitIsMinimum}
             />
           )}
-        </DivInputWrapper>
+        </div>
 
         {errorText && (
-          <SpanErrorText className="qm-text-field-error-msg">{errorText}</SpanErrorText>
+          <span className="qmTextFieldError">{errorText}</span>
         )}
 
         {children}
-      </DivTextFieldContainer>
+      </div>
     )
   }
 }

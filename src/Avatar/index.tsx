@@ -1,13 +1,8 @@
+import "./styles.styl"
 import React from "react"
 
 import SmileIcon from "../icons/SmileIcon"
 import { DynamicProps } from "../lib/helperTypes"
-
-import {
-  SpanActivityIndicator,
-  SpanAvatarContainer,
-  SpanAvatarContent,
-} from "./styles"
 
 export interface AvatarProps {
   className?: string
@@ -30,22 +25,12 @@ function Avatar({
   }
 
   return (
-    <SpanAvatarContainer className={`qm-avatar ${className || ""}`}>
-
-      <SpanAvatarContent className="qm-avatar-content" style={style}>
-        {!url && (
-          <SmileIcon className="qm-avatar-default-img" />
-        )}
-      </SpanAvatarContent>
-
-      {showActivity && (
-        <SpanActivityIndicator
-          className={`qm-avatar-activity ${isActive ? "is-active" : ""}`}
-          isActive={!!isActive}
-        />
-      )}
-
-    </SpanAvatarContainer>
+    <span className={`qmAvatarContainer ${className || ""}`}>
+      <span className="qmAvatarContent" style={style}>
+        {!url && <SmileIcon className="qmAvatarDefaultImg" />}
+      </span>
+      {showActivity && <span className={`qmAvatarIndicator ${isActive ? "isActive" : ""}`}></span>}
+    </span>
   )
 }
 

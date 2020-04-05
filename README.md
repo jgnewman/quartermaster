@@ -98,9 +98,6 @@ interface AvatarProps {
 }
 ```
 
-#### Todo
-- custom sizes
-
 ### Button
 Creates a button from either an `a` tag or a `button` tag as specified, defaulting to `button`. Receives classes based on props indicating if the button is disabled or "processing" (for example while you are waiting for an action to complete). Takes a click handler that fires when the button is clicked.
 
@@ -113,25 +110,6 @@ interface ButtonProps {
   isProcessing?: boolean
   tag?: "a" | "button" // defaults to button
   text?: string // can be used instead of children to display button text
-}
-```
-
-#### Todo
-- custom sizes
-- specify rounded corners maybe
-
-### CharLimitCounter
-Displays a counter in relation to a limit, for example `22 / 25` as well as a colored progress bar indicating how close the counter is coming to the limit. This component is most commonly enabled automatically via props passed to the TextField component, but is available for use independently.
-
-```typescript
-interface CharLimitCounterProps {
-  className?: string
-  count: number
-  hideProgressBar?: boolean
-  hideText?: boolean
-  limit: number
-  limitIsMinimum?: boolean // indicates that the count should be greater than limit
-  suffix?: string // a unit to append to limit, for example "px"
 }
 ```
 
@@ -330,3 +308,6 @@ interface TextFieldProps {
 ```
 
 With regard to `dangerouslyAutoTruncateLimitBreakingValues`, this prop is rarely ever needed but is applicable in any case where you might attempt to pass a value to the text field that is greater than a provided char limit, assuming the character count is not expected to be greater than the limit. With this prop set to true, the component will automatically truncate the provided value and fire both a `change` and `keyUp` event with the new value. The prop is labeled as dangerous because if you are not handling these events in such a way that the component re-renders with the new, truncated value, you will trigger an infinitely recursive loop.
+
+#### TODO
+- required field (also for select)

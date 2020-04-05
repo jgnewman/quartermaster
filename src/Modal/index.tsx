@@ -1,13 +1,8 @@
+import "./styles.styl"
 import React, { PureComponent } from "react"
 
 import { noopEvtHandler } from "../lib/helpers"
 import CloseIcon from "../icons/CloseIcon"
-
-import {
-  DivModalContainer,
-  DivModalContent,
-  ButtonClose,
-} from "./styles"
 
 export interface ModalProps {
   className?: string
@@ -63,23 +58,21 @@ class Modal extends PureComponent<ModalProps> {
     } = this.props
 
     return (
-      <DivModalContainer
-        className={`qm-modal ${isOpen ? "is-open" : "is-closed"} ${className || ""}`}
-        isOpen={isOpen}>
+      <div className={`qmModalContainer ${isOpen ? "isOpen" : "isClosed"} ${className || ""}`}>
 
         {!hideCloseButton && (
-          <ButtonClose
-            className="qm-modal-close-button"
+          <button
+            className="qmModalClose"
             onClick={closeHandler || noopEvtHandler}>
-            <CloseIcon />
-          </ButtonClose>
+            <CloseIcon className="qmModalCloseIcon" />
+          </button>
         )}
 
-        <DivModalContent>
+        <div className="qmModalContent">
           {children}
-        </DivModalContent>
+        </div>
 
-      </DivModalContainer>
+      </div>
     )
   }
 }

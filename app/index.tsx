@@ -3,7 +3,6 @@ import React from "react"
 import { render } from "react-dom"
 
 import * as QM from "../src/index"
-import LightTheme from "../src/themes/LightTheme"
 
 class App extends React.Component {
   public static displayName = "App"
@@ -108,6 +107,7 @@ class App extends React.Component {
         </div>
 
         <QM.Checkbox
+          isDisabled={false}
           isChecked={this.state.boxChecked}
           changeHandler={this.toggleCheckbox.bind(this)}
           value="My Checkbox"
@@ -175,7 +175,5 @@ class App extends React.Component {
 }
 
 render(
-  <QM.ThemeProvider theme={LightTheme}>
-    <App/>
-  </QM.ThemeProvider>
-, document.querySelector("#app"))
+  <App/>
+ , document.querySelector("#app"))

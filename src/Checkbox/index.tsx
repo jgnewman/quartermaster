@@ -1,3 +1,4 @@
+import "./styles.styl"
 import React, { PureComponent } from "react"
 
 import CheckmarkIcon from "../icons/CheckmarkIcon"
@@ -11,15 +12,6 @@ import {
   noopEvtHandler,
   manuallyTickCheckbox,
 } from "../lib/helpers"
-
-import {
-  CheckboxNative,
-  DivCheckboxContainer,
-  LabelForCheckbox,
-  SpanCheckboxOverlay,
-  SpanCheckboxWrapper,
-  SpanFauxCheckboxWrapper,
-} from "./styles"
 
 export interface CheckboxProps {
   changeHandler?: React.ChangeEventHandler
@@ -50,10 +42,15 @@ class Checkbox extends PureComponent<CheckboxProps> {
     }
   }
 
+  refFn = (elem: HTMLInputElement | null) => {
+    const { checkboxRef } = this.props
+    this.inputRef = elem
+    checkboxRef && checkboxRef(elem)
+  }
+
   render() {
     const {
       changeHandler,
-      checkboxRef,
       className,
       groupName,
       id,
@@ -65,16 +62,12 @@ class Checkbox extends PureComponent<CheckboxProps> {
     } = this.props
 
     const { isFocused } = this.state
-
-    const refFn = (elem: HTMLInputElement | null) => {
-      this.inputRef = elem
-      if (checkboxRef) {
-        checkboxRef(elem)
-      }
-    }
+    const checkedClass = isChecked ? "isChecked" : ""
+    const abledClass = isDisabled ? "isDisabled" : "isEnabled"
+    const focusedClass = isFocused ? "isFocused": ""
 
     const labelProps: DynamicProps = {
-      className: `qm-checkbox-label ${isChecked ? "is-checked" : ""}`,
+      className: `qmCheckboxLabel ${checkedClass} ${abledClass}`,
     }
 
     const boxProps: DynamicProps = {}
@@ -100,38 +93,34 @@ class Checkbox extends PureComponent<CheckboxProps> {
       boxProps.value = value
     }
 
-    const checkedClass = isChecked ? "is-checked" : ""
-    const disabledClass = isDisabled ? "is-disabled" : ""
-
     return (
-      <DivCheckboxContainer
-        className={`qm-checkbox ${checkedClass} ${disabledClass} ${className || ""}`}>
+      <span
+        className={`qmCheckboxContainer ${checkedClass} ${abledClass} ${className || ""}`}>
 
-        <SpanFauxCheckboxWrapper
-          className="qm-checkbox-faux-wrapper"
+        <span
+          className="qmCheckboxFauxWrapper"
           onClick={isDisabled ? noopEvtHandler : this.handleOverlayClick}>
-          <SpanCheckboxWrapper className="qm-checkbox-wrapper">
-            <SpanCheckboxOverlay
-              isFocused={isFocused}
+
+          <span className="qmCheckboxCheckWrapper">
+            <span
               aria-hidden={true}
-              className={`qm-checkbox-overlay ${checkedClass}`}>
-              {isChecked && <CheckmarkIcon className="qm-checkbox-checkmark" />}
-            </SpanCheckboxOverlay>
-          </SpanCheckboxWrapper>
+              className={`qmCheckboxOverlay ${checkedClass} ${focusedClass}`}>
+              {isChecked && <CheckmarkIcon className="qmCheckboxCheckmark" />}
+            </span>
+          </span>
 
           {label && (
-            <LabelForCheckbox
-              isDisabled={!!isDisabled}
-              {...labelProps}>
+            <label {...labelProps}>
               {label}
-            </LabelForCheckbox>
+            </label>
           )}
-        </SpanFauxCheckboxWrapper>
 
-        <CheckboxNative
-          ref={refFn}
+        </span>
+
+        <input
+          ref={this.refFn}
           checked={isChecked}
-          className="qm-checkbox-native"
+          className="qmCheckboxNative"
           disabled={!!isDisabled}
           type="checkbox"
           onFocus={this.handleFocus}
@@ -139,7 +128,7 @@ class Checkbox extends PureComponent<CheckboxProps> {
           {...boxProps}
         />
 
-      </DivCheckboxContainer>
+      </span>
     )
   }
 }

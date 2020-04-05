@@ -1,3 +1,4 @@
+import "./styles.styl"
 import React, { PureComponent } from "react"
 
 import DotIcon from "../icons/DotIcon"
@@ -11,15 +12,6 @@ import {
   noopEvtHandler,
   manuallyTickRadioButton,
 } from "../lib/helpers"
-
-import {
-  DivRadioButtonContainer,
-  LabelForRadioButton,
-  RadioButtonNative,
-  SpanFauxRadioButtonWrapper,
-  SpanRadioButtonOverlay,
-  SpanRadioButtonWrapper,
-} from "./styles"
 
 export interface RadioButtonProps {
   changeHandler?: React.ChangeEventHandler
@@ -50,6 +42,12 @@ class RadioButton extends PureComponent<RadioButtonProps> {
     }
   }
 
+  refFn = (elem: HTMLInputElement | null) => {
+    const { radioButtonRef } = this.props
+    this.inputRef = elem
+    radioButtonRef && radioButtonRef(elem)
+  }
+
   render() {
     const {
       changeHandler,
@@ -59,22 +57,17 @@ class RadioButton extends PureComponent<RadioButtonProps> {
       isChecked,
       isDisabled,
       label,
-      radioButtonRef,
       tabIndex,
       value,
     } = this.props
 
     const { isFocused } = this.state
-
-    const refFn = (elem: HTMLInputElement | null) => {
-      this.inputRef = elem
-      if (radioButtonRef) {
-        radioButtonRef(elem)
-      }
-    }
+    const checkedClass = isChecked ? "isChecked" : ""
+    const abledClass = isDisabled ? "isDisabled" : "isEnabled"
+    const focusedClass = isFocused ? "isFocused": ""
 
     const labelProps: DynamicProps = {
-      className: `qm-radio-button-label ${isChecked ? "is-checked" : ""}`,
+      className: `qmRadioLabel ${checkedClass} ${abledClass}`,
     }
 
     const boxProps: DynamicProps = {}
@@ -100,38 +93,34 @@ class RadioButton extends PureComponent<RadioButtonProps> {
       boxProps.value = value
     }
 
-    const checkedClass = isChecked ? "is-checked" : ""
-    const disabledClass = isDisabled ? "is-disabled": ""
-
     return (
-      <DivRadioButtonContainer
-        className={`qm-radio-button ${checkedClass} ${disabledClass} ${className || ""}`}>
+      <span
+        className={`qmRadioContainer ${checkedClass} ${abledClass} ${className || ""}`}>
 
-        <SpanFauxRadioButtonWrapper
-          className="qm-radio-button-faux-wrapper"
+        <span
+          className="qmRadioFauxWrapper"
           onClick={isDisabled ? noopEvtHandler : this.handleOverlayClick}>
-          <SpanRadioButtonWrapper className="qm-radio-button-wrapper">
-            <SpanRadioButtonOverlay
-              isFocused={isFocused}
+
+          <span className="qmRadioCheckWrapper">
+            <span
               aria-hidden={true}
-              className={`qm-radio-button-overlay ${checkedClass}`}>
-              {isChecked && <DotIcon className="qm-radio-button-dot" title="Checked" size="100%"/>}
-            </SpanRadioButtonOverlay>
-          </SpanRadioButtonWrapper>
+              className={`qmRadioOverlay ${checkedClass} ${focusedClass}`}>
+              {isChecked && <DotIcon className="qmRadioDot" title="Checked" size="100%"/>}
+            </span>
+          </span>
 
           {label && (
-            <LabelForRadioButton
-              isDisabled={!!isDisabled}
-              {...labelProps}>
+            <label {...labelProps}>
               {label}
-            </LabelForRadioButton>
+            </label>
           )}
-        </SpanFauxRadioButtonWrapper>
 
-        <RadioButtonNative
-          ref={refFn}
+        </span>
+
+        <input
+          ref={this.refFn}
           checked={isChecked}
-          className="qm-radio-button-native"
+          className="qmRadioNative"
           disabled={!!isDisabled}
           type="radio"
           onFocus={this.handleFocus}
@@ -139,7 +128,7 @@ class RadioButton extends PureComponent<RadioButtonProps> {
           {...boxProps}
         />
 
-      </DivRadioButtonContainer>
+      </span>
     )
   }
 }

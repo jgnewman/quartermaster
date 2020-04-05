@@ -14,7 +14,7 @@ const pathData = [
 const CheckmarkIcon = ({ className, title, size="14px" }: CheckmarkIconProps) => {
   return (
     <svg
-      className={`qm-icon qm-checkmark-icon ${className || ""}`}
+      className={`qmIcon qmCheckmarkIcon ${className || ""}`}
       width={size}
       height={size}
       viewBox="0 0 14 14"

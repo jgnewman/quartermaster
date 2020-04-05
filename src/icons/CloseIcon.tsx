@@ -15,7 +15,7 @@ const pathData = [
 const CloseIcon = ({ className, title }: CloseIconProps) => {
   return (
     <svg
-      className={`qm-icon qm-close-icon ${className || ""}`}
+      className={`qmIcon qmCloseIcon ${className || ""}`}
       width="13px"
       height="13px"
       viewBox="0 0 13 13"

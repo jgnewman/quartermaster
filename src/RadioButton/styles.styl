@@ -1,0 +1,53 @@
+@import "../lib/sharedStyles"
+
+.qmRadioLabel
+  @extend $vertMiddle
+  color: BASE_FONT
+  transition: BASE_TRANSITION
+  margin-right: 0.33rem
+
+  &.isDisabled
+    color: FADED_FONT
+
+.qmRadioFauxWrapper
+  @extend $vertMiddle
+
+  &:hover .qmRadioLabel.isEnabled
+    color: HIGHLIGHT
+
+.qmRadioCheckWrapper
+  @extend $vertMiddle
+  size(1.25rem, 1.25rem)
+
+  position: relative
+  margin-right: 0.33rem
+
+.qmRadioDot
+  @extend $absCenter
+  size(85%, 85%)
+
+  path
+    fill: ON_INDICATORS
+
+.qmRadioOverlay
+  @extend $absFill
+  borders(BASE_BORDER, 50%)
+
+  background: BASE_BG
+  outline: solid transparent !important
+
+  &.isChecked
+    background: HIGHLIGHT
+
+    .qmRadioDot circle
+      fill: LIGHT_FONT
+
+  &.isFocused
+    box-shadow: BASE_OUTLINE
+
+.qmRadioNative
+  display: block
+  position: absolute
+  left: -1000vw
+  top: 0
+  border: 0

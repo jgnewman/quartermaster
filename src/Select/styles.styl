@@ -1,0 +1,132 @@
+@import "../lib/sharedStyles"
+
+.qmSelectLabel
+  display: block
+  color: BASE_FONT
+  font-weight: bold
+  padding: 0 0 0.33rem 0
+
+.qmSelectContentWrapper
+  display: block
+  position: relative
+  overflow: visible
+  line-height: 1
+
+.qmSelectFieldWrapper
+  borders(BASE_BORDER, 0.25rem)
+
+  display: flex
+  align-items: stretch
+  justify-content: space-between
+  overflow: hidden
+
+  background: BASE_BG
+
+  &.isFocused
+    box-shadow: BASE_OUTLINE
+
+.qmSelectOpenIcon,
+.qmSelectClearIcon
+  display: block;
+
+.qmSelectOpenIcon path,
+.qmSelectClearIcon path
+  fill: FADED_FONT
+  transition: BASE_TRANSITION
+
+.qmSelectOpenIconWrapper,
+.qmSelectClearIconWrapper
+  display: block
+  align-self: center
+  position: relative
+
+  padding: 0.813em 0.66em
+  background: transparent
+  border: 0;
+
+  &.isEnabled:hover
+
+    .qmSelectOpenIcon path
+      fill: HIGHLIGHT
+
+    .qmSelectClearIcon path
+      fill: NEGATIVE
+
+.qmSelectClearIconWrapper
+  outline: solid transparent !important
+
+  &.isEnabled:focus .qmSelectClearIcon path
+    fill: NEGATIVE
+
+.qmSelectOpenIconWrapper::before
+  content: ""
+  display: block
+  position: absolute
+  left: 0
+  top: 50%
+  width: 1px
+  height: 50%
+  transform: translateY(-50%)
+  background: FADED_FONT
+
+.qmSelectDisplay
+  flex-grow: 1
+  position: relative
+  overflow: hidden
+  color: BASE_FONT
+
+  &.isPlaceholder
+    color: BASE_PLACEHOLDER
+
+  &.isDisabled
+    color: BASE_PLACEHOLDER
+
+    &.isPlaceholder
+      color: FADED_FONT
+
+.qmSelectValue
+  @extend $ellipsisText
+
+  display: block
+  position: absolute
+  top: 50%
+  transform: translateY(-50%)
+
+  max-width: 100%
+  padding: 0 0 0 0.75rem
+
+.qmSelectNative
+  display: block
+  position: fixed
+  left: -1000vw
+
+  overflow: hidden
+  outline: solid transparent !important
+
+.qmSelectMenu
+  size(100%, auto)
+  borders(BASE_BORDER, 0.25rem)
+
+  display: block
+  position: absolute
+  left: 0
+  top: calc(100% + 0.25rem)
+
+  overflow: hidden
+  background: BASE_BG
+  box-shadow: 0 0 5px rgba(0,0,0,0.2)
+
+.qmSelectMenuOption
+  display: block
+  background: BASE_BG
+  color: BASE_FONT
+  padding: 0.5rem 0.75rem 0.66rem
+  transition: BASE_TRANSITION
+
+  &.isSelected
+    background: HIGHLIGHT
+    color: LIGHT_FONT
+
+  &:hover, &.isSelected:hover
+    background: HIGHLIGHT
+    color: LIGHT_FONT
