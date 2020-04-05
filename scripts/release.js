@@ -3,13 +3,23 @@
  * 1. Fetches branches from github to determine the latest version name
  * 2. Generates a new version name by incrementing the latest version name according to the provided arg
  * 3. Creates a new git branch named after the new version.
- * 4. Runs a build, copies files to /lib, and pushes to the new branch.
+ * 4. Runs a build.
+ * 5. Manually fixes source map source urls becase we are about to move output files.
+ * 6. Copies files from dist to root.
+ * 7. Pushes to the new branch.
  */
 
+const fs = require("fs")
+const path = require("path")
 const fetch = require("node-fetch")
 const execPromise = require("exec-sh").promise
 const prompts = require("prompts")
 const package = require("../package.json")
+const { promisify } = require("util")
+
+const asyncReadDir = promisify(fs.readdir)
+const asyncReadFile = promisify(fs.readFile)
+const asyncWriteFile = promisify(fs.writeFile)
 
 const colorReset = "\x1b[0m"
 const colorBright = "\x1b[1m"
@@ -106,6 +116,29 @@ async function createNewVersionNumber() {
   return newVersion
 }
 
+async function patchSources() {
+  const distPath = path.resolve(__dirname, "../dist")
+  const possibleDirs = await asyncReadDir(distPath, { withFileTypes: true })
+  const distDirs = possibleDirs.filter(dirent => dirent.isDirectory())
+
+  const entryMap = path.resolve(distPath, "index.js.map")
+  const entryContent = await asyncReadFile(entryMap)
+  await asyncWriteFile(entryMap, entryContent.toString().replace(/\.\.\/src/, "./src"))
+
+  await Promise.all(distDirs.map(async ({ name }) => {
+    const dirPath = path.resolve(distPath, name)
+    const files = await asyncReadDir(dirPath)
+
+    files.forEach(async (fileName) => {
+      if (/\.map$/.test(fileName)) {
+        const filePath = path.resolve(dirPath, fileName)
+        const contents = await asyncReadFile(filePath)
+        await asyncWriteFile(filePath, contents.toString().replace(/\.\.\/\.\.\/src/, "../src"))
+      }
+    })
+  }))
+}
+
 async function release() {
   try {
     log("Generating new version number...")
@@ -142,8 +175,11 @@ async function release() {
     log(`Building library...`)
     await execPromise(`npm run build`)
 
+    log(`Patching source map locations...`)
+    await patchSources()
+
     log(`Copying files and removing raw build...`)
-    await execPromise(`mkdir ./lib && cp -R ./dist/* ./ && rm -rf ./dist`)
+    await execPromise(`cp -R ./dist/* ./ && rm -rf ./dist`)
 
     log("Committing and pushing new release...")
     await execPromise(`git add . && git commit -m "Create release ${newVersion}" && git push origin ${newVersion}`)

@@ -4,7 +4,7 @@ A shared React component library. Read the [contributing guide](https://github.c
 ## Installation
 Currently quartermaster is private, not published on npm so installation should be done via `npm install jgnewman/quartermaster#<RELEASE_BRANCH>` where `RELEASE_BRANCH` matches an existing release tag such as `v0.0.1`. It will currently fail for anyone without read access to the repository.
 
-Note that quartermaster does not have any dependencies but it does require two peer dependencies namely React and styled-components. This allows your app to determine the proper versions of these packages, thus allowing you to avoid duplicates.
+Note that quartermaster does not have any dependencies but it does require React as a peer dependency. This allows your app to determine the proper version of React, thus allowing you to avoid duplicates.
 
 ## How to use
 Quartermaster is written in ES6+ and includes .d.ts files for typescript. You can either import all components from a single file...
@@ -21,68 +21,8 @@ import Avatar from "quartermaster/Avatar"
 
 The benefit of the second approach is that unused components will always be excluded from your bundle without having to enable any kind of unused-code stripping.
 
-## Theming
-By default, you can import any Quartermaster component and drop it into your application anywhere and it will work. However, it will only have very minimal styling applied. Fortunately, Quartermaster is themeable and comes with a built-in Light theme and Dark theme that you can apply. You can also create new themes and extend existing themes as desired.
-
-To apply one of the built-in themes, you will want wrap your application in the `ThemeProvider` and specify the theme you want to use.
-
-```jsx
-import { ThemeProvider } from "quartermaster"
-// or import ThemeProvider from "quartermaster/ThemeProvider"
-
-import DarkTheme from "quartermaster/themes/DarkTheme"
-import App from "path/to/app"
-
-ReactDOM.render(
-  <ThemeProvider theme={DarkTheme}>
-    <App/>
-  </ThemeProvider>
-, document.body)
-```
-
-Having done this, every Quartermaster component you use within your app will have your theme styles applied.
-
-### Creating and extending themes
-Generating new themes is done with the `extendTheme` function. To see a list of all available theme options, take a look at the `ThemeProps` interface within `src/ThemeProvider/index.tsx`.
-
-```jsx
-import { ThemeProvider, extendTheme } from "quartermaster"
-// or import ThemeProvider, { extendTheme } from "quartermaster/ThemeProvider"
-
-import DarkTheme from "quartermaster/themes/DarkTheme"
-
-const MyTheme = extendTheme(DarkTheme, {
-  button: {
-    bgColor: "#000000",
-    hoverBgColor: "#111111",
-  },
-})
-
-ReactDOM.render(
-  <ThemeProvider theme={MyTheme}>
-    <App/>
-  </ThemeProvider>
-, document.body)
-```
-
-If you want to create a new theme fully from scratch, you'll simply want to extend the default theme.
-
-```jsx
-import { ThemeProvider, DefaultTheme, extendTheme } from "quartermaster"
-// or import ThemeProvider, { DefaultTheme, extendTheme } from "quartermaster/ThemeProvider"
-
-const MyTheme = extendTheme(DefaultTheme, {
-  avatar: {
-    radius: "3px",
-  },
-})
-
-ReactDOM.render(
-  <ThemeProvider theme={MyTheme}>
-    <App/>
-  </ThemeProvider>
-, document.body)
-```
+## Styles
+Quartermaster deliberately avoids styled-components for performance and bundle size reasons. Instead, the compiled JavaScript files contain imports of css files so you will need to use Webpack or a similar bundling tool in order to use them.
 
 ## What's included
 

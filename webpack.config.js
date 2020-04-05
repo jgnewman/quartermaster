@@ -4,7 +4,8 @@ const HtmlWebPackPlugin = require("html-webpack-plugin")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const CopyWebpackPlugin = require("copy-webpack-plugin")
 const { CleanWebpackPlugin } = require("clean-webpack-plugin")
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
 const config = {
   devtool: "source-map",
@@ -128,6 +129,7 @@ const config = {
 
 if (process.env.NODE_ENV === "production") {
   config.plugins.push(new CleanWebpackPlugin())
+  config.plugins.push(new OptimizeCssAssetsPlugin())
   config.plugins.push(new BundleAnalyzerPlugin({ openAnalyzer: true }))
 
   // config.optimization = {
@@ -151,6 +153,10 @@ if (process.env.NODE_ENV === "production") {
           test: /node_modules/,
           chunks: "all",
         },
+        styles: {
+          test: /\.css$/,
+          chunks: "all",
+        }
       },
     },
   }

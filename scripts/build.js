@@ -4,9 +4,7 @@ const path = require("path")
 const execPromise = require("exec-sh").promise
 
 const srcPath = path.resolve(__dirname, "../src")
-const tempPath = path.resolve(__dirname, "../tmp")
 const distPath = path.resolve(__dirname, "../dist")
-const buildConfigPath = path.resolve(__dirname, "./tsconfig.json")
 
 const asyncReadDir = promisify(fs.readdir)
 const asyncReadFile = promisify(fs.readFile)
@@ -22,37 +20,39 @@ async function getComponentDirs(withinDir) {
 // Removes the /dist and /tmp folders
 async function clean() {
   console.log(`Cleaning ${distPath}`)
-  return execPromise(`rm -rf ${distPath} && rm -rf ${tempPath}`)
+  return execPromise(`rm -rf ${distPath}`)
 }
 
 // Compiles typescript from the /tmp folder to the /dist folder.
 // Uses the tsconfig located in the /scripts folder.
 async function compileTypeScript() {
   console.log("Compiling TypeScript")
-  return execPromise(`NODE_ENV=production tsc --rootDir ${tempPath} --outDir ${distPath} -p ${buildConfigPath} --declaration`)
+  return execPromise(`NODE_ENV=production tsc --rootDir ${srcPath} --outDir ${distPath} --declaration`)
 }
 
-// HACK
-// In /src, our typescript files are importing stylus modules.
-// Typescript doesn't know anything about stylus and we don't want to use
-// webpack here so the result is that if we use tsc to compile the
-// typescript, we will end up with references to .styl files in the
-// compiled output. This circumvents that problem by copying /src into
-// a /tmp folder and then manually reading each component and doing a
-// string replace that changes "./styles.styl" to "./styles.css".
-// This way we can run tsc on the the /tmp folder and end up with
-// references to css files without hurting our /src folder.
+/**
+ * HACK:
+ *
+ * Because we don't want to bundle the library and typescript doesn't
+ * native understand stylus, using tsc to compile results in references
+ * to .styl files in our javascript output.
+ *
+ * So after compiling typescript, we go through the compiled js and d.ts
+ * files and do a manual string replace from "styles.styl" to "styles.css".
+ * Theoretically source maps should be fine because these strings do not
+ * change location within the file and the locations of other tokens are not
+ * affected.
+ */
 async function transformCSSExtensions() {
   console.log("Transforming CSS import file extensions")
-  await execPromise(`cp -a ${srcPath}/. ${tempPath}/`)
 
-  const srcDirs = await getComponentDirs(tempPath)
-  await Promise.all(srcDirs.map(async ({ name }) => {
-    const dirPath = path.resolve(tempPath, name)
+  const distDirs = await getComponentDirs(distPath)
+  await Promise.all(distDirs.map(async ({ name }) => {
+    const dirPath = path.resolve(distPath, name)
     const files = await asyncReadDir(dirPath)
 
     files.forEach(async (fileName) => {
-      if (/\.tsx$/.test(fileName)) {
+      if (/(\.js|\.d\.ts)$/.test(fileName)) {
         const filePath = path.resolve(dirPath, fileName)
         const contents = await asyncReadFile(filePath)
         await asyncWriteFile(filePath, contents.toString().replace(/\.\/styles\.styl/, "./styles.css"))
@@ -75,17 +75,16 @@ async function compileStylus() {
     if (files.includes("styles.styl")) {
       const srcFilePath = path.resolve(dirPath, "styles.styl")
       const destFilePath = path.resolve(distPath, name, "styles.css")
-      await execPromise(`stylus --include ${dirPath} < ${srcFilePath} > ${destFilePath}`)
+      await execPromise(`stylus --sourcemap --include ${dirPath} < ${srcFilePath} > ${destFilePath}`)
     }
   }))
 }
 
 async function init() {
   await clean()
-  await transformCSSExtensions()
   await compileTypeScript()
+  await transformCSSExtensions()
   await compileStylus()
-  await execPromise(`rm -rf ${tempPath}`)
 }
 
 init()
