@@ -1,7 +1,7 @@
 import "./styles.styl"
 import React, { PureComponent, ReactNodeArray } from "react"
 
-import { noopEvtHandler } from "../lib/helpers"
+import { noopEvtHandler, buildClassNames } from "../lib/helpers"
 import { DynamicProps, RefFunction } from "../lib/helperTypes"
 import CaretIcon from "../icons/CaretIcon"
 import TimesIcon from "../icons/TimesIcon"
@@ -116,7 +116,7 @@ class Select extends PureComponent<SelectProps, SelectState> {
       menuOptionsArray.push(
         <span
           key={optValue}
-          className={`qmSelectMenuOption ${isSelected ? "isSelected" : ""}`}
+          className={`qmSelectMenuOption ${buildClassNames({ isSelected })}`}
           data-value={optValue}
           onClick={this.handleClickOption}>
           {label}
@@ -147,13 +147,11 @@ class Select extends PureComponent<SelectProps, SelectState> {
 
     const { isOpen, isFocused } = this.state
     const { optionsArray, menuOptionsArray, selectedLabel } = this.buildOptionArrays()
+
     const textValue = value ? selectedLabel : placeholder
     const hasSelectedValue = !!value
-
-    const focusedClass = isFocused ? "isFocused" : ""
-    const openClass = isOpen ? "isOpen" : ""
-    const abledClass = isDisabled ? "isDisabled" : "isEnabled"
-    const placeholderClass = !hasSelectedValue ? "isPlaceholder" : ""
+    const isEnabled = !isDisabled
+    const isPlaceholder = !hasSelectedValue
 
     const labelProps: DynamicProps = {
       className: "qmSelectLabel",
@@ -163,17 +161,29 @@ class Select extends PureComponent<SelectProps, SelectState> {
       labelProps.htmlFor = id
     }
 
-    const classes = ["qmSelectContainer", abledClass]
+    const containerClasses = buildClassNames({
+      isDisabled,
+      isEnabled,
+      isOpen,
+    })
 
-    isOpen && classes.push(openClass)
+    const fieldWrapperClasses = buildClassNames({
+      isFocused,
+    })
 
+    const displayClasses = buildClassNames({
+      isDisabled,
+      isEnabled,
+      isPlaceholder,
+    })
 
-    if (className) {
-      classes.push(className)
-    }
+    const buttonClasses = buildClassNames({
+      isDisabled,
+      isEnabled,
+    })
 
     return (
-      <div className={classes.join(" ")}>
+      <div className={`qmSelectContainer ${containerClasses} ${className || ""}`}>
 
         {label && (
           <label {...labelProps}>
@@ -193,24 +203,24 @@ class Select extends PureComponent<SelectProps, SelectState> {
           </select>
 
           <div
-            className={`qmSelectFieldWrapper ${focusedClass}`}
+            className={`qmSelectFieldWrapper ${fieldWrapperClasses}`}
             onClick={isDisabled ? noopEvtHandler : this.handleClickToOpenSelect}
             aria-hidden={true}>
 
             <div
-              className={`qmSelectDisplay ${abledClass} ${placeholderClass}`}>
+              className={`qmSelectDisplay ${displayClasses}`}>
               <span className="qmSelectValue">{textValue}</span>
             </div>
 
             {hasSelectedValue && (
               <button
-                className={`qmSelectClearIconWrapper ${abledClass}`}
+                className={`qmSelectClearIconWrapper ${buttonClasses}`}
                 onClick={isDisabled ? noopEvtHandler : this.clearValueOnClick}>
                 <TimesIcon className="qmSelectIcon qmSelectClearIcon" title="Clear Selection" />
               </button>
             )}
 
-            <div className={`qmSelectOpenIconWrapper ${abledClass}`}>
+            <div className={`qmSelectOpenIconWrapper ${buttonClasses}`}>
               <CaretIcon className="qmSelectIcon qmSelectOpenIcon" title="Open" />
             </div>
 

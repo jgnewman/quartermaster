@@ -8,7 +8,11 @@ import {
   RefFunction,
 } from "../lib/helperTypes"
 
-import { manuallySetFieldValue } from "../lib/helpers"
+import {
+  manuallySetFieldValue,
+  buildClassNames,
+} from "../lib/helpers"
+
 import CharLimitCounter from "./CharLimitCounter"
 
 export interface TextFieldProps {
@@ -21,6 +25,7 @@ export interface TextFieldProps {
   enableTextAreaResize?: boolean
   errorText?: string
   fieldRef?: RefFunction // function like (elem => this.myRef = elem)
+  hasError?: boolean
   hideCharLimitProgress?: boolean
   hideCharLimitText?: boolean
   id?: string
@@ -156,6 +161,7 @@ class TextField extends PureComponent<TextFieldProps> {
       defaultValue,
       enableTextAreaResize,
       errorText,
+      hasError,
       hideCharLimitProgress,
       hideCharLimitText,
       id,
@@ -170,12 +176,10 @@ class TextField extends PureComponent<TextFieldProps> {
 
     const { isFocused } = this.state
     const isTextArea = type === "textarea"
-
-    const abledClass = isDisabled ? "isDisabled" : "isEnabled"
-    const fieldClass = isTextArea ? "isTextArea" : "isField"
-    const focusedClass = isFocused ? "isFocused" : ""
-    const resizeClass = enableTextAreaResize ? "" : "noResize"
-    const charLimitClass = charLimit ? "hasCharLimit" : ""
+    const isEnabled = !isDisabled
+    const isField = !isTextArea
+    const noResize = !enableTextAreaResize
+    const hasCharLimit = !!charLimit
 
     const dynamicProps: DynamicProps = {}
 
@@ -199,9 +203,6 @@ class TextField extends PureComponent<TextFieldProps> {
       dynamicProps["data-lpignore"] = true
     }
 
-    const classNames = ["qmTextFieldContainer", abledClass, fieldClass]
-    charLimit && classNames.push(charLimitClass)
-
     const labelProps: DynamicProps = {
       className: "qmTextFieldLabel",
     }
@@ -210,26 +211,45 @@ class TextField extends PureComponent<TextFieldProps> {
       labelProps.htmlFor = id
     }
 
+    // We want to display a char count that looks something like "22 / 25".
+    // The padding we need is calculated as twice the charlimit + 3 chars for the separator
+    // all divided by 2 since the width of a character is about half an em.
     const fieldStyle: DynamicProps = {}
-
     if (!isTextArea && charLimit) {
-      // We want to display a char count that looks something like "22 / 25".
-      // The padding we need is calculated as twice the charlimit + 3 chars for the separator
-      // all divided by 2 since the width of a character is about half an em.
       fieldStyle.paddingRight = `${(charLimit.toString().length * 2 + 3)/2}em`
     }
 
-    const inputClasses = [
-      "qmTextFieldInput",
-      fieldClass,
-      focusedClass,
-      resizeClass,
-      abledClass,
-      charLimitClass,
-    ].join(" ")
+    const containerClasses: string = buildClassNames({
+      hasCharLimit,
+      hasError,
+      isDisabled,
+      isEnabled,
+      isField,
+      isFocused,
+      isTextArea,
+      noResize,
+    })
+
+    const inputWrapperClasses: string = buildClassNames({
+      isDisabled,
+      isEnabled,
+      isField,
+      isTextArea,
+    })
+
+    const inputClasses: string = buildClassNames({
+      hasCharLimit,
+      hasError,
+      isDisabled,
+      isEnabled,
+      isField,
+      isFocused,
+      isTextArea,
+      noResize,
+    })
 
     return (
-      <div className={`${classNames.join(" ")} ${className || ""}`}>
+      <div className={`qmTextFieldContainer ${containerClasses} ${className || ""}`}>
 
         {label && (
           <label {...labelProps}>
@@ -237,11 +257,11 @@ class TextField extends PureComponent<TextFieldProps> {
           </label>
         )}
 
-        <div className={`qmTextFieldInputWrapper ${abledClass} ${fieldClass}`}>
+        <div className={`qmTextFieldInputWrapper ${inputWrapperClasses}`}>
 
           {isTextArea && (
             <textarea
-              className={inputClasses}
+              className={`qmTextFieldInput ${inputClasses}`}
               disabled={!!isDisabled}
               onChange={this.handleChange}
               onKeyUp={this.handleKeyUp}
@@ -255,7 +275,7 @@ class TextField extends PureComponent<TextFieldProps> {
 
           {!isTextArea && (
             <input
-              className={inputClasses}
+            className={`qmTextFieldInput ${inputClasses}`}
               disabled={!!isDisabled}
               onChange={this.handleChange}
               onKeyUp={this.handleKeyUp}
@@ -281,7 +301,7 @@ class TextField extends PureComponent<TextFieldProps> {
           )}
         </div>
 
-        {errorText && (
+        {hasError && errorText && (
           <span className="qmTextFieldError">{errorText}</span>
         )}
 

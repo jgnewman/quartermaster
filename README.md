@@ -232,6 +232,7 @@ interface TextFieldProps {
   enableTextAreaResize?: boolean
   errorText?: string
   fieldRef?: (elem: HTMLElement | null) => void
+  hasError?: boolean
   hideCharLimitProgress?: boolean
   hideCharLimitText?: boolean
   id?: string
@@ -251,3 +252,4 @@ With regard to `dangerouslyAutoTruncateLimitBreakingValues`, this prop is rarely
 
 #### TODO
 - required field (also for select)
+- use margin to not push elements down when error text

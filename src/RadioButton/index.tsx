@@ -9,6 +9,7 @@ import {
 } from "../lib/helperTypes"
 
 import {
+  buildClassNames,
   noopEvtHandler,
   manuallyTickRadioButton,
 } from "../lib/helpers"
@@ -62,14 +63,9 @@ class RadioButton extends PureComponent<RadioButtonProps> {
     } = this.props
 
     const { isFocused } = this.state
-    const checkedClass = isChecked ? "isChecked" : ""
-    const abledClass = isDisabled ? "isDisabled" : "isEnabled"
-    const focusedClass = isFocused ? "isFocused": ""
+    const isEnabled = !isDisabled
 
-    const labelProps: DynamicProps = {
-      className: `qmRadioLabel ${checkedClass} ${abledClass}`,
-    }
-
+    const labelProps: DynamicProps = {}
     const boxProps: DynamicProps = {}
 
     if (id) {
@@ -93,9 +89,26 @@ class RadioButton extends PureComponent<RadioButtonProps> {
       boxProps.value = value
     }
 
+    const containerClasses = buildClassNames({
+      isChecked,
+      isDisabled,
+      isEnabled,
+    })
+
+    const overlayClasses = buildClassNames({
+      isChecked,
+      isFocused,
+    })
+
+    const labelClasses = buildClassNames({
+      isChecked,
+      isDisabled,
+      isEnabled,
+    })
+
     return (
       <span
-        className={`qmRadioContainer ${checkedClass} ${abledClass} ${className || ""}`}>
+        className={`qmRadioContainer ${containerClasses} ${className || ""}`}>
 
         <span
           className="qmRadioFauxWrapper"
@@ -104,13 +117,15 @@ class RadioButton extends PureComponent<RadioButtonProps> {
           <span className="qmRadioCheckWrapper">
             <span
               aria-hidden={true}
-              className={`qmRadioOverlay ${checkedClass} ${focusedClass}`}>
+              className={`qmRadioOverlay ${overlayClasses}`}>
               {isChecked && <DotIcon className="qmRadioDot" title="Checked" size="100%"/>}
             </span>
           </span>
 
           {label && (
-            <label {...labelProps}>
+            <label
+              className={`qmRadioLabel ${labelClasses}`}
+              {...labelProps}>
               {label}
             </label>
           )}

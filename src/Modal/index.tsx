@@ -1,7 +1,7 @@
 import "./styles.styl"
 import React, { PureComponent } from "react"
 
-import { noopEvtHandler } from "../lib/helpers"
+import { buildClassNames, noopEvtHandler } from "../lib/helpers"
 import CloseIcon from "../icons/CloseIcon"
 
 export interface ModalProps {
@@ -57,8 +57,15 @@ class Modal extends PureComponent<ModalProps> {
       isOpen,
     } = this.props
 
+    const isClosed = !isOpen
+
+    const containerClasses = buildClassNames({
+      isClosed,
+      isOpen,
+    })
+
     return (
-      <div className={`qmModalContainer ${isOpen ? "isOpen" : "isClosed"} ${className || ""}`}>
+      <div className={`qmModalContainer ${containerClasses} ${className || ""}`}>
 
         {!hideCloseButton && (
           <button

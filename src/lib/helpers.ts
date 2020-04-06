@@ -37,3 +37,9 @@ export function manuallyTickCheckbox(ref: HTMLInputElement) {
 export function manuallyTickRadioButton(ref: HTMLInputElement) {
   ref.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true }))
 }
+
+export function buildClassNames(options: DynamicProps): string {
+  const classes: string[] = []
+  Object.keys(options).forEach(key => options[key] && classes.push(key))
+  return classes.join(" ")
+}

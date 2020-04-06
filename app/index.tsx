@@ -87,6 +87,7 @@ class App extends React.Component {
           preventInputAtLimit={false}
           value={this.state.fieldVal}
           changeHandler={this.setFieldVal.bind(this)}
+          hasError={this.state.fieldVal.length > 25}
           errorText="You have an error bro"
         />
 

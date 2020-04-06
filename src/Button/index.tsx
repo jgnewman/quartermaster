@@ -2,6 +2,7 @@ import "./styles.styl"
 import React, { PureComponent } from "react"
 
 import { DynamicProps } from "../lib/helperTypes"
+import { buildClassNames } from "../lib/helpers"
 
 export interface ButtonProps {
   className?: string
@@ -40,6 +41,9 @@ class Button extends PureComponent<ButtonProps> {
     } = this.props
 
     const { isFocused } = this.state
+    const isEnabled = !isDisabled && !isProcessing
+    const isNegative = highlight === "negative"
+    const isPositive = highlight === "positive"
     const shouldApplyClickHandler = !!clickHandler && !isDisabled && !isProcessing
 
     const dynamicProps: DynamicProps = {
@@ -54,21 +58,16 @@ class Button extends PureComponent<ButtonProps> {
       dynamicProps.disabled = true
     }
 
-    const classes = ["qmButtonContainer"]
+    const containerClasses = buildClassNames({
+      isDisabled,
+      isEnabled,
+      isProcessing,
+      isFocused,
+      isNegative,
+      isPositive,
+    })
 
-    if (!isDisabled && !isProcessing) {
-      classes.push("isEnabled")
-
-    } else {
-      isDisabled && classes.push("isDisabled")
-      isProcessing && classes.push("isProcessing")
-    }
-
-    isFocused && classes.push("isFocused")
-    highlight && classes.push("is" + highlight[0].toUpperCase() + highlight.slice(1))
-    className && classes.push(className)
-
-    dynamicProps.className = classes.join(" ")
+    dynamicProps.className = `qmButtonContainer ${containerClasses} ${className || ""}`
 
     const content = (
       <span className="qmButtonContent">
