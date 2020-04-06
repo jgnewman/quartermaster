@@ -45,21 +45,30 @@ class Select extends PureComponent<SelectProps, SelectState> {
     }
   }
 
-  handleFocus = () => this.setState({ isFocused: true, isOpen: true })
-  handleBlur = () => this.setState({ isFocused: false })
+  handleFocusSelect = () => {
+    this.setState({
+      isFocused: true,
+      isOpen: true,
+    })
+  }
+
+  handleBlurSelect = (evt: React.FocusEvent) => {
+    this.setState({
+      isFocused: false,
+      isOpen: evt.relatedTarget === null ? this.state.isOpen : false,
+    })
+  }
 
   handleClickToOpenSelect = () => {
-    this.setState({ isOpen: true })
-    if (this.selectRef) {
-      this.selectRef.focus()
-    }
+    const { selectRef } = this
+    selectRef && selectRef.focus()
   }
 
   closeSelect = () => {
     this.setState({ isOpen: false })
   }
 
-  updateValueOnRawChange = (evt: React.ChangeEvent) => {
+  handleChangeSelect = (evt: React.ChangeEvent) => {
     const newValue = (evt.target as HTMLSelectElement).value
     this.selectValue(newValue)
   }
@@ -72,11 +81,14 @@ class Select extends PureComponent<SelectProps, SelectState> {
 
   selectValue(newValue: string | null) {
     const { changeHandler } = this.props
-    this.state.isOpen && this.setState({ isOpen: false })
+    const { selectRef } = this
 
-    if (changeHandler) {
-      changeHandler(newValue)
+    if (selectRef) {
+      selectRef.value = newValue || ""
     }
+
+    this.state.isOpen && this.setState({ isOpen: false })
+    changeHandler && changeHandler(newValue)
   }
 
   closeSelectOnClickAway = (evt: any) => {
@@ -197,9 +209,9 @@ class Select extends PureComponent<SelectProps, SelectState> {
             className="qmSelectNative"
             ref={this.selectRefFn}
             disabled={!!isDisabled}
-            onFocus={this.handleFocus}
-            onBlur={this.handleBlur}
-            onChange={this.updateValueOnRawChange}>
+            onFocus={this.handleFocusSelect}
+            onBlur={this.handleBlurSelect}
+            onChange={this.handleChangeSelect}>
             {optionsArray}
           </select>
 

@@ -229,10 +229,6 @@ interface SelectOption {
 }
 ```
 
-> TODO:
-> Currently when tabbing through fields, when we focus on the select, it opens the menu.
-> However, when we tab away from the select, the menu stays open and we should find a way to close it.
-
 ### TextField
 Generates an input field or textarea as specified by props. Allows capturing the field ref via a function such as `elem => this.myRef = elem`. Takes both a `changeHandler` and a `keyUpHandler` that you can use to capture new values and capture things like enter key presses. Allows enabling character limits, setting a label and placeholder, marking the field as disabled, and displaying error text.
 
