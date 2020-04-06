@@ -10,11 +10,19 @@ const asyncReadDir = promisify(fs.readdir)
 const asyncReadFile = promisify(fs.readFile)
 const asyncWriteFile = promisify(fs.writeFile)
 
+async function assertDir(path) {
+  if (!fs.existsSync(path)) {
+    return execPromise(`mkdir ${path}`)
+  }
+}
+
 // Within a directory, retrieves dirent objects for every
 // subdirectory where the directory's name begins with a capital letter.
-async function getComponentDirs(withinDir) {
+async function getComponentDirs(withinDir, ...additionalDirs) {
   const possibleDirs = await asyncReadDir(withinDir, { withFileTypes: true })
-  return possibleDirs.filter(dirent => /[A-Z]/.test(dirent.name[0]) && dirent.isDirectory())
+  return possibleDirs.filter(dirent => {
+    return (additionalDirs.includes(dirent.name) || /[A-Z]/.test(dirent.name[0])) && dirent.isDirectory()
+  })
 }
 
 // Removes the /dist and /tmp folders
@@ -66,17 +74,23 @@ async function transformCSSExtensions() {
 // and compiles a css file to the corresponding directories in /dist.
 async function compileStylus() {
   console.log("Compiling Stylus")
-  const srcDirs = await getComponentDirs(srcPath)
+  const srcDirs = await getComponentDirs(srcPath, "themes")
 
-  await Promise.all(srcDirs.map(async ({ name }) => {
+  return Promise.all(srcDirs.map(async ({ name }) => {
     const dirPath = path.resolve(srcPath, name)
     const files = await asyncReadDir(dirPath)
 
-    if (files.includes("styles.styl")) {
-      const srcFilePath = path.resolve(dirPath, "styles.styl")
-      const destFilePath = path.resolve(distPath, name, "styles.css")
-      await execPromise(`stylus --sourcemap --include ${dirPath} < ${srcFilePath} > ${destFilePath}`)
-    }
+    return Promise.all(files.map(async (fileName) => {
+      if (/\.styl$/.test(fileName)) {
+        const baseName = fileName.replace(/\.styl$/, "")
+        const srcFilePath = path.resolve(dirPath, fileName)
+        const destDirPath = path.resolve(distPath, name)
+        const destFilePath = path.resolve(destDirPath, baseName + ".css")
+        await assertDir(destDirPath)
+        return execPromise(`stylus --sourcemap --include ${dirPath} < ${srcFilePath} > ${destFilePath}`)
+      }
+    }))
+
   }))
 }
 

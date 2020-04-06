@@ -276,7 +276,7 @@ class TextField extends PureComponent<TextFieldProps> {
 
           {!isTextArea && (
             <input
-            className={`qmTextFieldInput ${inputClasses}`}
+              className={`qmTextFieldInput ${inputClasses}`}
               disabled={!!isDisabled}
               onChange={this.handleChange}
               onKeyUp={this.handleKeyUp}
@@ -292,6 +292,7 @@ class TextField extends PureComponent<TextFieldProps> {
 
           {charLimit && (
             <CharLimitCounter
+              className={buildClassNames({ isEnabled, isDisabled })}
               count={typeof value === "string" ? value.length : 0}
               hideProgressBar={!!hideCharLimitProgress}
               hideText={!!hideCharLimitText}

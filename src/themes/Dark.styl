@@ -1,0 +1,78 @@
+@import "../lib/sharedStyles"
+
+DARK_BG = #333333
+DARK_FIELD_BG = #282828
+DARKER_FIELD_BG = #202020
+DARK_FONT = FADED_FONT
+FADED_ELEMS = #595959
+FADED_PLACEHOLDERS = #505050
+
+body
+  background: DARK_BG
+  color: DARK_FONT
+
+.qmAvatarIndicator
+  border-color: DARK_BG
+
+.qmLabel,
+.qmSelectDisplay,
+.qmTextFieldInput.isField,
+.qmTextFieldInput.isTextArea
+  color: LIGHT_FONT
+
+.qmSelectDisplay.isDisabled,
+.qmTextFieldInput.isField.isDisabled,
+.qmTextFieldInput.isTextArea.isDisabled
+  color: FADED_PLACEHOLDERS
+
+.qmSelectOpenIconWrapper.isDisabled,
+.qmSelectClearIconWrapper.isDisabled
+  opacity: 0.5
+
+.qmCheckboxOverlay,
+.qmRadioOverlay,
+.qmSelectFieldWrapper,
+.qmSelectMenu,
+.qmTextFieldInput.isField,
+.qmTextFieldInput.isTextArea
+  border: 0
+
+.qmCheckboxOverlay,
+.qmRadioOverlay,
+.qmSelectFieldWrapper,
+.qmTextFieldInputWrapper
+  background: DARK_FIELD_BG
+
+.qmSelectMenu,
+.qmSelectMenuOption
+  background: DARKER_FIELD_BG
+
+.qmCharLimitText,
+.qmCheckboxLabel,
+.qmRadioLabel,
+.qmSelectMenuOption
+  color: DARK_FONT
+
+.qmSelectOpenIconWrapper::before
+  background: FADED_ELEMS
+  opacity: .33
+
+.qmSelectOpenIcon path,
+.qmSelectClearIcon path
+  fill: FADED_ELEMS
+
+.qmSelectDisplay.isDisabled.isPlaceholder,
+.qmTextFieldInput.isField.isDisabled::placeholder,
+.qmTextFieldInput.isTextArea.isDisabled::placeholder
+  color: FADED_PLACEHOLDERS
+
+.qmCharLimitContainer.isDisabled .qmCharLimitText
+  color: FADED_PLACEHOLDERS
+
+.qmCharLimitBar
+  background: TRANSPARENCY
+  border-radius: 0.25rem
+  height: 100%
+
+.qmCharLimitBarFill
+  opacity: 0.2

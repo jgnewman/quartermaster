@@ -3,6 +3,7 @@ import React from "react"
 import { render } from "react-dom"
 
 import * as QM from "../src/index"
+// import "../src/themes/Dark.styl"
 
 class App extends React.Component {
   public static displayName = "App"
@@ -108,29 +109,35 @@ class App extends React.Component {
           Rendering checked state as {String(this.state.boxChecked)}
         </div>
 
-        <QM.Checkbox
-          isDisabled={false}
-          isChecked={this.state.boxChecked}
-          changeHandler={this.toggleCheckbox.bind(this)}
-          value="My Checkbox"
-          label="Check me"
-        />
+        <div>
+          <QM.Checkbox
+            isDisabled={false}
+            isChecked={this.state.boxChecked}
+            changeHandler={this.toggleCheckbox.bind(this)}
+            value="My Checkbox"
+            label="Check me"
+          />
+        </div>
 
-        <QM.RadioButton
-          isChecked={this.state.radioVal === "foo"}
-          changeHandler={this.setRadioVal.bind(this)}
-          value="foo"
-          label="Foo"
-          groupName="my-radio-group"
-        />
+        <div>
+          <QM.RadioButton
+            isChecked={this.state.radioVal === "foo"}
+            changeHandler={this.setRadioVal.bind(this)}
+            value="foo"
+            label="Foo"
+            groupName="my-radio-group"
+          />
+        </div>
 
-        <QM.RadioButton
-          isChecked={this.state.radioVal === "bar"}
-          changeHandler={this.setRadioVal.bind(this)}
-          value="bar"
-          label="Bar"
-          groupName="my-radio-group"
-        />
+        <div>
+          <QM.RadioButton
+            isChecked={this.state.radioVal === "bar"}
+            changeHandler={this.setRadioVal.bind(this)}
+            value="bar"
+            label="Bar"
+            groupName="my-radio-group"
+          />
+        </div>
 
         <QM.Form initialState={{ mytext: "", mygroup: "foo", myselect: null }}>
           {({ getFormState, updateValueFor }) => (

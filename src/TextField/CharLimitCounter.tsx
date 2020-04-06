@@ -1,7 +1,10 @@
 import "./styles.styl"
 import React from "react"
 
+import { buildClassNames } from "../lib/helpers"
+
 export interface CharLimitCounterProps {
+  className?: string
   count: number
   hideProgressBar?: boolean
   hideText?: boolean
@@ -12,6 +15,7 @@ export interface CharLimitCounterProps {
 }
 
 const CharLimitCounter = ({
+  className,
   count,
   hideProgressBar,
   hideText,
@@ -61,22 +65,25 @@ const CharLimitCounter = ({
 
   }
 
+  const limitCountClasses = buildClassNames({
+    hasError: colorClass === "error",
+    reachedMin: limitIsMinimum && colorClass === "best",
+  })
+
   const fieldClass = isTextArea ? "isTextArea" : "isField"
   const fillWidth = (count / limit) * 100
   const styleWidth = fillWidth > 100 ? "100%" : `${fillWidth}%`
 
   return (
-    <div className={`qmCharLimitContainer ${fieldClass}`}>
+    <div className={`qmCharLimitContainer ${fieldClass} ${className || ""}`}>
 
       {!hideText && (
         <span className={`qmCharLimitText ${fieldClass} ${colorClass}`}>
-          <span className="qmCharLimitCount">
-            {count || "0"}
+          <span className={`qmCharLimitCount ${limitCountClasses}`}>
+            {limitIsMinimum ? (count ? count : "") : (count || "0")}
           </span>
-          <span className="qmCharLimitDivider"> / </span>
-          <span className="qmCharLImitTotal">
-            {limit}{suffix || ""}
-          </span>
+          {!limitIsMinimum && <span className="qmCharLimitDivider"> / </span>}
+          {!limitIsMinimum && <span className="qmCharLImitTotal">{limit}{suffix || ""}</span>}
         </span>
       )}
 

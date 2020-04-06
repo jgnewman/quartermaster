@@ -18,8 +18,13 @@
     bottom: 50%
     transform: translateY(50%)
 
-  &.worst, &.error
-    color: ERRORS
+.qmCharLimitCount.hasError
+  font-weight: bold
+  color: ERRORS
+
+.qmCharLimitCount.reachedMin
+  font-weight: bold
+  color: CHAR_BEST
 
 .qmCharLimitBar
   size(100%, 5px)
@@ -71,7 +76,8 @@
 .qmTextFieldInputWrapper
   display: block
   position: relative
-  background-attachment: BASE_BG
+  background: BASE_BG
+  border-radius: 0.25rem
 
   &.isDisable .qmCharLimitContainer
     opacity: 0.25
@@ -102,6 +108,9 @@ $commonFieldProps
 
   width: 100%
   outline: solid transparent !important
+
+  box-shadow: BLANK_OUTLINE
+  transition: BASE_TRANSITION
 
   &::placeholder
     color: BASE_PLACEHOLDER
