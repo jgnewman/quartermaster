@@ -11,8 +11,9 @@ export interface ConfirmButtonProps extends Exclude<ButtonProps, "highlight"> {
   cancelText?: string
   confirmationText?: string
   continueText?: string
+  disableHighlights?: boolean
   postCancelHook?: React.MouseEventHandler
-  useHighlights?: boolean
+  skipConfirmation?: boolean
 }
 
 interface ConfirmButtonState {
@@ -32,8 +33,14 @@ class ConfirmButton extends Component<ConfirmButtonProps, ConfirmButtonState> {
   }
 
   handleClick = (evt: React.MouseEvent) => {
+    const { clickHandler, skipConfirmation } = this.props
     evt.preventDefault()
-    this.openConfirmation()
+
+    if (skipConfirmation) {
+      clickHandler && clickHandler(evt)
+    } else {
+      this.openConfirmation()
+    }
   }
 
   handleContinue = (evt: React.MouseEvent) => {
@@ -52,13 +59,14 @@ class ConfirmButton extends Component<ConfirmButtonProps, ConfirmButtonState> {
 
   render() {
     const {
+      cancelText,
       children,
       clickHandler,
-      cancelText,
-      continueText,
       confirmationText,
-      useHighlights,
+      continueText,
+      disableHighlights,
       postCancelHook,
+      skipConfirmation,
       ...rest
     } = this.props
 
@@ -68,12 +76,12 @@ class ConfirmButton extends Component<ConfirmButtonProps, ConfirmButtonState> {
     }
 
     const positiveProps: DynamicProps = {}
-    if (useHighlights) {
+    if (!disableHighlights) {
       positiveProps.highlight = "positive"
     }
 
     const negativeProps: DynamicProps = {}
-    if (useHighlights) {
+    if (!disableHighlights) {
       negativeProps.highlight = "negative"
     }
 
@@ -84,32 +92,34 @@ class ConfirmButton extends Component<ConfirmButtonProps, ConfirmButtonState> {
           {children}
         </Button>
 
-        <Modal
-          className="qmConfButtonModal"
-          hideCloseButton={true}
-          isOpen={this.state.open}>
+        {!skipConfirmation && (
+          <Modal
+            className="qmConfButtonModal"
+            hideCloseButton={true}
+            isOpen={this.state.open}>
 
-          <h2 className="qmConfButtonTitle">
-            {confirmationText || "Are you sure?"}
-          </h2>
+            <h2 className="qmConfButtonTitle">
+              {confirmationText || "Are you sure?"}
+            </h2>
 
-          <div className="qmConfButtonOptions">
-            <Button
-              className="qmConfButtonContinue"
-              clickHandler={this.handleContinue}
-              {...positiveProps}>
-              { continueText || "Yes" }
-            </Button>
+            <div className="qmConfButtonOptions">
+              <Button
+                className="qmConfButtonContinue"
+                clickHandler={this.handleContinue}
+                {...positiveProps}>
+                { continueText || "Yes" }
+              </Button>
 
-            <Button
-              className="qmConfButtonCancel"
-              clickHandler={this.handleCancel}
-              {...negativeProps}>
-              { cancelText || "Nevermind" }
-            </Button>
-          </div>
+              <Button
+                className="qmConfButtonCancel"
+                clickHandler={this.handleCancel}
+                {...negativeProps}>
+                { cancelText || "Nevermind" }
+              </Button>
+            </div>
 
-        </Modal>
+          </Modal>
+        )}
 
       </>
     )

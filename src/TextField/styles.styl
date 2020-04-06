@@ -64,6 +64,9 @@
   &.error
     background: ERRORS
 
+.qmTextFieldContainer
+  position: relative
+  padding-bottom: 1.5rem
 
 .qmTextFieldInputWrapper
   display: block
@@ -73,17 +76,16 @@
   &.isDisable .qmCharLimitContainer
     opacity: 0.25
 
-.qmTextFieldLabel
-  display: block
-  color: BASE_FONT
-  font-weight: bold
-  padding: 0 0 .33rem 0
-
 .qmTextFieldError
   display: block
+  position: absolute
+  left: 0
+  bottom: 0
+  width: 100%
+
   color: ERRORS
   font-size: 75%
-  padding: 0.15rem 0 0.33rem
+  padding: 0.25rem 0 0.33rem
 
 $commonFieldProps
   borders(BASE_BORDER, 0.25rem)

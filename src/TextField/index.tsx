@@ -13,6 +13,7 @@ import {
   buildClassNames,
 } from "../lib/helpers"
 
+import Label from "../Label"
 import CharLimitCounter from "./CharLimitCounter"
 
 export interface TextFieldProps {
@@ -31,6 +32,7 @@ export interface TextFieldProps {
   id?: string
   ignoreLastPass?: boolean
   isDisabled?: boolean
+  isRequired?: boolean
   keyUpHandler?: React.KeyboardEventHandler
   label?: string
   placeholder?: string
@@ -167,6 +169,7 @@ class TextField extends PureComponent<TextFieldProps> {
       id,
       ignoreLastPass,
       isDisabled,
+      isRequired,
       label,
       placeholder,
       tabIndex,
@@ -205,6 +208,7 @@ class TextField extends PureComponent<TextFieldProps> {
 
     const labelProps: DynamicProps = {
       className: "qmTextFieldLabel",
+      isRequired,
     }
 
     if (id) {
@@ -226,6 +230,7 @@ class TextField extends PureComponent<TextFieldProps> {
       isEnabled,
       isField,
       isFocused,
+      isRequired,
       isTextArea,
       noResize,
     })
@@ -251,11 +256,7 @@ class TextField extends PureComponent<TextFieldProps> {
     return (
       <div className={`qmTextFieldContainer ${containerClasses} ${className || ""}`}>
 
-        {label && (
-          <label {...labelProps}>
-            {label}
-          </label>
-        )}
+        {label && <Label text={label} {...labelProps} />}
 
         <div className={`qmTextFieldInputWrapper ${inputWrapperClasses}`}>
 

@@ -72,20 +72,18 @@ interface CheckboxProps {
 ```
 
 ### ConfirmButton
-Behaves similarly to `Button` but intercepts the click handler with a confirmation modal allowing the user to confirm or cancel the action taken before firing the initial click handler. If the action is canceled, the click handler is not fired and the modal is closed. You can specify the confirmation text as well as the text on both the confirm or cancel buttons, all of which have defaults.
+Behaves similarly to `Button` but intercepts the click handler with a confirmation modal allowing the user to confirm or cancel the action taken before firing the initial click handler. If the action is canceled, the click handler is not fired and the modal is closed. You can specify the confirmation text as well as the text on both the confirm or cancel buttons, all of which have defaults. If you don't want to display the confirmation message, for example if you only need confirmation on an action once, you can enable `skipConfirmation` to bypass the confirmation message.
 
 ```typescript
 export interface ConfirmButtonProps extends Exclude<ButtonProps, "highlight"> {
   cancelText?: string
   confirmationText?: string
   continueText?: string
+  disableHighlights?: boolean // disables positive/negative highlights on buttons
   postCancelHook?: React.MouseEventHandler
-  useHighlights?: boolean // automatically applies highlights to buttons
+  skipConfirmation?: boolean
 }
 ```
-
-#### Todo
-- Bypass displaying confirmation
 
 ### Form
 Used for wrapping a group of form-related components and collecting their values into a localized state that can be quickly and easily managed. Takes an `initialState` object specifying each form element's default value and a function as a child component that returns your form elements.
@@ -138,6 +136,18 @@ In addition to the `FormUtils` functions illustrated above, you also have access
 
 ```typescript
 setFormState({ myText: "some value" })
+```
+
+### Label
+TextFields and Selects each have a `label` prop allowing you to turn on label text for the element. However you may want to use a label in the same format elsewhere, especially in a form. This component allows you to output a form-style label wherever you want.
+
+```typescript
+interface LabelProps {
+  className?: string
+  htmlFor?: string
+  isRequired?: boolean
+  text: string
+}
 ```
 
 ### Modal
@@ -204,6 +214,7 @@ interface SelectProps {
   fieldRef?: (elem: HTMLElement | null) => void
   id?: string
   isDisabled?: boolean
+  isRequired?: boolean
   label?: string
   options: SelectOption[]
   placeholder?: string
@@ -238,6 +249,7 @@ interface TextFieldProps {
   id?: string
   ignoreLastPass?: boolean
   isDisabled?: boolean
+  isRequired?: boolean
   keyUpHandler?: React.KeyboardEventHandler
   label?: string
   placeholder?: string
@@ -249,7 +261,3 @@ interface TextFieldProps {
 ```
 
 With regard to `dangerouslyAutoTruncateLimitBreakingValues`, this prop is rarely ever needed but is applicable in any case where you might attempt to pass a value to the text field that is greater than a provided char limit, assuming the character count is not expected to be greater than the limit. With this prop set to true, the component will automatically truncate the provided value and fire both a `change` and `keyUp` event with the new value. The prop is labeled as dangerous because if you are not handling these events in such a way that the component re-renders with the new, truncated value, you will trigger an infinitely recursive loop.
-
-#### TODO
-- required field (also for select)
-- use margin to not push elements down when error text

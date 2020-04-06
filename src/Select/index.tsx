@@ -3,6 +3,7 @@ import React, { PureComponent, ReactNodeArray } from "react"
 
 import { noopEvtHandler, buildClassNames } from "../lib/helpers"
 import { DynamicProps, RefFunction } from "../lib/helperTypes"
+import Label from "../Label"
 import CaretIcon from "../icons/CaretIcon"
 import TimesIcon from "../icons/TimesIcon"
 
@@ -20,6 +21,7 @@ export interface SelectProps {
   changeHandler?: (value: string | null) => void
   className?: string
   id?: string
+  isRequired?: boolean
   fieldRef?: RefFunction // function like (elem => this.myRef = elem)
   isDisabled?: boolean
   label?: string
@@ -140,6 +142,7 @@ class Select extends PureComponent<SelectProps, SelectState> {
       className,
       id,
       isDisabled,
+      isRequired,
       label,
       placeholder = "Select...",
       value,
@@ -155,6 +158,7 @@ class Select extends PureComponent<SelectProps, SelectState> {
 
     const labelProps: DynamicProps = {
       className: "qmSelectLabel",
+      isRequired,
     }
 
     if (id) {
@@ -165,6 +169,7 @@ class Select extends PureComponent<SelectProps, SelectState> {
       isDisabled,
       isEnabled,
       isOpen,
+      isRequired,
     })
 
     const fieldWrapperClasses = buildClassNames({
@@ -185,11 +190,7 @@ class Select extends PureComponent<SelectProps, SelectState> {
     return (
       <div className={`qmSelectContainer ${containerClasses} ${className || ""}`}>
 
-        {label && (
-          <label {...labelProps}>
-            {label}
-          </label>
-        )}
+        {label && <Label text={label} {...labelProps} />}
 
         <div className="qmSelectContentWrapper" ref={this.wrapperRefFn}>
           <select

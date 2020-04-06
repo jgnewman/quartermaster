@@ -11,7 +11,6 @@ if (!componentName) {
 }
 
 function generateTemplate(componentName) {
-  const dasherizedName = componentName.replace(/([A-Z])/g, "-$1").toLowerCase()
   const classString = '${className || ""}'
   return `
     import React, { PureComponent } from "react"
@@ -21,7 +20,7 @@ function generateTemplate(componentName) {
     }
 
     class ${componentName} extends PureComponent<${componentName}Props> {
-      public displayName = "${componentName}"
+      static displayName = "${componentName}"
 
       render() {
         const {
@@ -29,7 +28,7 @@ function generateTemplate(componentName) {
         } = this.props
 
         return (
-          <div className={\`qm${dasherizedName} ${classString}\`}></div>
+          <div className={\`qm${componentName} ${classString}\`}></div>
         )
       }
     }

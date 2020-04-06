@@ -62,7 +62,7 @@ class App extends React.Component {
 
         <QM.ConfirmButton
           cancelText="No, decrement it!"
-          useHighlights={true}
+          disableHighlights={false}
           clickHandler={this.incrementCounter.bind(this)}
           postCancelHook={this.decrementCounter.bind(this)}>
           Increment counter
@@ -79,16 +79,17 @@ class App extends React.Component {
         </QM.Modal>
 
         <QM.TextField
-          label="My Input"
-          type="text"
-          isDisabled={false}
-          placeholder="Say something here"
-          charLimit={25}
-          preventInputAtLimit={false}
-          value={this.state.fieldVal}
           changeHandler={this.setFieldVal.bind(this)}
-          hasError={this.state.fieldVal.length > 25}
+          charLimit={25}
           errorText="You have an error bro"
+          hasError={this.state.fieldVal.length > 25}
+          isDisabled={false}
+          isRequired={true}
+          label="My Input"
+          placeholder="Say something here"
+          preventInputAtLimit={false}
+          type="text"
+          value={this.state.fieldVal}
         />
 
         <QM.TextField
@@ -159,6 +160,7 @@ class App extends React.Component {
                   { label: "Baz", value: "baz" },
                 ]}
                 isDisabled={false}
+                isRequired={true}
                 value={getFormState().myselect}
                 changeHandler={updateValueFor("myselect")}
               />
