@@ -125,17 +125,17 @@ async function patchSources() {
   const entryContent = await asyncReadFile(entryMap)
   await asyncWriteFile(entryMap, entryContent.toString().replace(/\.\.\/src/, "./src"))
 
-  await Promise.all(distDirs.map(async ({ name }) => {
+  return Promise.all(distDirs.map(async ({ name }) => {
     const dirPath = path.resolve(distPath, name)
     const files = await asyncReadDir(dirPath)
 
-    files.forEach(async (fileName) => {
+    return Promise.all(files.map(async (fileName) => {
       if (/\.map$/.test(fileName)) {
         const filePath = path.resolve(dirPath, fileName)
         const contents = await asyncReadFile(filePath)
-        await asyncWriteFile(filePath, contents.toString().replace(/\.\.\/\.\.\/src/, "../src"))
+        return asyncWriteFile(filePath, contents.toString().replace(/\.\.\/\.\.\/src/, "../src"))
       }
-    })
+    }))
   }))
 }
 

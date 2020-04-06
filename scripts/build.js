@@ -47,17 +47,17 @@ async function transformCSSExtensions() {
   console.log("Transforming CSS import file extensions")
 
   const distDirs = await getComponentDirs(distPath)
-  await Promise.all(distDirs.map(async ({ name }) => {
+  return Promise.all(distDirs.map(async ({ name }) => {
     const dirPath = path.resolve(distPath, name)
     const files = await asyncReadDir(dirPath)
 
-    files.forEach(async (fileName) => {
+    return Promise.all(files.map(async (fileName) => {
       if (/(\.js|\.d\.ts)$/.test(fileName)) {
         const filePath = path.resolve(dirPath, fileName)
         const contents = await asyncReadFile(filePath)
-        await asyncWriteFile(filePath, contents.toString().replace(/\.\/styles\.styl/, "./styles.css"))
+        return asyncWriteFile(filePath, contents.toString().replace(/\.\/styles\.styl/, "./styles.css"))
       }
-    })
+    }))
   }))
 }
 
