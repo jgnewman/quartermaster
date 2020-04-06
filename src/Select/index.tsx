@@ -207,6 +207,7 @@ class Select extends PureComponent<SelectProps, SelectState> {
         <div className="qmSelectContentWrapper" ref={this.wrapperRefFn}>
           <select
             className="qmSelectNative"
+            value={value || ""}
             ref={this.selectRefFn}
             disabled={!!isDisabled}
             onFocus={this.handleFocusSelect}
