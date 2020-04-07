@@ -49,26 +49,28 @@ class App extends React.Component {
     return (
       <div style={{ padding: "1em 1em 5em", maxWidth: "500px" }}>
 
-        <QM.Avatar
-          showActivity
-          isActive={true}
-          name="John Newman"
-          // url="https://s.gravatar.com/avatar/cee1d21082337cc54cf9cf07339411e1?size=50&default=retro"
-        />
+        <QM.Align>
+          <QM.Avatar
+            showActivity
+            isActive={true}
+            name="John Newman"
+            // url="https://s.gravatar.com/avatar/cee1d21082337cc54cf9cf07339411e1?size=50&default=retro"
+          />
 
-        <QM.Button
-          highlight="positive"
-          clickHandler={this.openModal.bind(this)}>
-          Open modal
-        </QM.Button>
+          <QM.Button
+            highlight="positive"
+            clickHandler={this.openModal.bind(this)}>
+            Open modal
+          </QM.Button>
 
-        <QM.ConfirmButton
-          cancelText="No, decrement it!"
-          disableHighlights={false}
-          clickHandler={this.incrementCounter.bind(this)}
-          postCancelHook={this.decrementCounter.bind(this)}>
-          Increment counter
-        </QM.ConfirmButton>
+          <QM.ConfirmButton
+            cancelText="No, decrement it!"
+            disableHighlights={false}
+            clickHandler={this.incrementCounter.bind(this)}
+            postCancelHook={this.decrementCounter.bind(this)}>
+            Increment counter
+          </QM.ConfirmButton>
+        </QM.Align>
 
         <div>
           <QM.Label text="Counter" />

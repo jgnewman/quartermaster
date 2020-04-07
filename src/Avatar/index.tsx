@@ -35,13 +35,13 @@ class Avatar extends PureComponent<AvatarProps> {
     }
 
     return (
-      <span className={`qmAvatarContainer ${className || ""}`}>
+      <div className={`qmAvatarContainer ${className || ""}`}>
         <span className="qmAvatarContent">
           <span className="qmAvatarInitials">{ this.getInitials(name) }</span>
           {url && <span className="qmAvatarImg" style={style}></span>}
         </span>
         {showActivity && <span className={`qmAvatarIndicator ${isActive ? "isActive" : ""}`}></span>}
-      </span>
+      </div>
     )
   }
 }

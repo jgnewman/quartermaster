@@ -2,6 +2,7 @@ import "./styles.styl"
 import React, { Component } from "react"
 
 import { noopEvtHandler } from "../lib/helpers"
+import Align from "../Align"
 import Button, { ButtonProps } from "../Button"
 import Modal from "../Modal"
 
@@ -103,19 +104,21 @@ class ConfirmButton extends Component<ConfirmButtonProps, ConfirmButtonState> {
             </h2>
 
             <div className="qmConfButtonOptions">
-              <Button
-                className="qmConfButtonContinue"
-                clickHandler={this.handleContinue}
-                {...positiveProps}>
-                { continueText || "Yes" }
-              </Button>
+              <Align>
+                <Button
+                  className="qmConfButtonContinue"
+                  clickHandler={this.handleContinue}
+                  {...positiveProps}>
+                  { continueText || "Yes" }
+                </Button>
 
-              <Button
-                className="qmConfButtonCancel"
-                clickHandler={this.handleCancel}
-                {...negativeProps}>
-                { cancelText || "Nevermind" }
-              </Button>
+                <Button
+                  className="qmConfButtonCancel"
+                  clickHandler={this.handleCancel}
+                  {...negativeProps}>
+                  { cancelText || "Nevermind" }
+                </Button>
+              </Align>
             </div>
 
           </Modal>

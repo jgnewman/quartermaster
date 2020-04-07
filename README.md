@@ -26,13 +26,39 @@ Quartermaster deliberately avoids styled-components for performance and bundle s
 
 ## What's included
 
+- [Align](#align)
+- [Avatar](#avatar)
+- [Button](#button)
+- [Checkbox](#checkbox)
+- [ConfirmButton](#confirmbutton)
+- [Form](#form)
+- [Grid](#grid)
+- [Grow](#grow)
+- [Label](#label)
+- [Modal](#modal)
+- [RadioButton](#radiobutton)
+- [RadioGroup](#radiogroup)
+- [Select](#select)
+- [TextField](#textfield)
+
+### Align
+For when you need to put two or more elements onto the same horizontal alignment with common spacing. You can specify whether children are justified left, center or right.
+
+```typescript
+interface AlignProps {
+  className?: string
+  justify?: "left" | "center" | "right"
+}
+```
+
 ### Avatar
-Creates a circular avatar allowing you to pass in a url to the avatar image. If no url is present, it falls back to a default image. Includes an optional "activity" indicator that can be displayed to indicate when the user is active/online/etc.
+Creates a circular avatar allowing you to pass in a url to the avatar image. If no url is present, it falls back to generating initials based on the provided name. If no name is present, it defaults to displaying `••`. Includes an optional "activity" indicator that can be displayed to indicate when the user is active/online/etc.
 
 ```typescript
 interface AvatarProps {
   className?: string
   isActive?: boolean
+  name?: string
   showActivity?: boolean
   url?: string
 }

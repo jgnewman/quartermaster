@@ -1,0 +1,23 @@
+@import "../lib/sharedStyles"
+
+.qmAlign
+
+  &.isLeft
+    text-align: left
+
+  &.isCenter
+    text-align: center
+
+  &.isRight
+    text-align: right
+
+.qmAlignItem
+  @extend $vertMiddle
+
+  padding: 0 THIRD_GUTTER
+
+  &:first-child
+    padding-left: 0
+
+  &:last-child
+    padding-right: 0
