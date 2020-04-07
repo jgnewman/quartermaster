@@ -52,7 +52,8 @@ class App extends React.Component {
         <QM.Avatar
           showActivity
           isActive={true}
-          url="https://s.gravatar.com/avatar/cee1d21082337cc54cf9cf07339411e1?size=50&default=retro"
+          name="John Newman"
+          // url="https://s.gravatar.com/avatar/cee1d21082337cc54cf9cf07339411e1?size=50&default=retro"
         />
 
         <QM.Button

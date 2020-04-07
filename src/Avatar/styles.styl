@@ -1,5 +1,11 @@
 @import "../lib/sharedStyles"
 
+$fillCircle
+  @extend $absFill
+  box-sizing: border-box
+  border: 0
+  border-radius: 50%
+
 .qmAvatarContainer
   @extend $vertMiddle
   size(40px)
@@ -7,20 +13,33 @@
 
   position: relative
   overflow: visible
+  box-shadow: 0 0 0 2px BASE_BG
 
   flex-grow: 0 !important
 
 .qmAvatarContent
-  @extend $absFill
-  borders(0, 50%)
+  @extend $fillCircle
+
+.qmAvatarImg
+  @extend $fillCircle
 
   background-size: cover
   background-position: center
-  background-color: #efefef
+  background-color: transparent
 
-.qmAvatarDefaultImg
-  size(100%)
-  display: block
+.qmAvatarInitials
+  @extend $fillCircle
+
+  background: BASE_FONT
+  color: LIGHT_FONT
+  font-size: 90%
+  letter-spacing: 1px
+  font-weight: bold
+
+  display: flex
+  align-content: center
+  justify-content: center
+  align-items: center
 
 .qmAvatarIndicator
   size(12px)

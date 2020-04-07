@@ -21,7 +21,7 @@
 
 .qmCheckboxCheckWrapper
   @extend $vertMiddle
-  size(1.25rem, 1.25rem)
+  size(18px)
 
   position: relative
   margin-right: 0.33rem
@@ -35,15 +35,19 @@
   transition: BASE_TRANSITION
   box-shadow: BLANK_OUTLINE
 
+  &.isChecked
+    background: HIGHLIGHT
+    border-color: HIGHLIGHT
+
   &.isFocused
     box-shadow: BASE_OUTLINE
 
 .qmCheckboxCheckmark
   @extend $absCenter
-  size(85%, 85%)
+  size(75%, 75%)
 
   path
-    fill: ON_INDICATORS
+    fill: LIGHT_FONT
 
 .qmCheckboxNative
   display: block

@@ -1,39 +1,49 @@
 import "./styles.styl"
-import React from "react"
+import React, { PureComponent } from "react"
 
-import SmileIcon from "../icons/SmileIcon"
 import { DynamicProps } from "../lib/helperTypes"
 
 export interface AvatarProps {
   className?: string
   isActive?: boolean
+  name?: string
   showActivity?: boolean
   url?: string
 }
 
-function Avatar({
-  className,
-  isActive,
-  showActivity,
-  url,
-}: AvatarProps) {
+class Avatar extends PureComponent<AvatarProps> {
+  static displayName = "Avatar"
 
-  const style: DynamicProps = {}
-
-  if (url) {
-    style.backgroundImage = `url(${url})`
+  getInitials(rawName: string) {
+    const [chunk1, chunk2]: string[] = rawName.split(/\s+/)
+    return `${chunk1[0]?.toUpperCase() || ""}${(chunk2 ? chunk2[0] : chunk1[1])?.toUpperCase() || ""}`
   }
 
-  return (
-    <span className={`qmAvatarContainer ${className || ""}`}>
-      <span className="qmAvatarContent" style={style}>
-        {!url && <SmileIcon className="qmAvatarDefaultImg" />}
-      </span>
-      {showActivity && <span className={`qmAvatarIndicator ${isActive ? "isActive" : ""}`}></span>}
-    </span>
-  )
-}
+  render() {
+    const {
+      className,
+      isActive,
+      name = "••",
+      showActivity,
+      url,
+    } = this.props
 
-Avatar.displayName = "Avatar"
+    const style: DynamicProps = {}
+
+    if (url) {
+      style.backgroundImage = `url(${url})`
+    }
+
+    return (
+      <span className={`qmAvatarContainer ${className || ""}`}>
+        <span className="qmAvatarContent">
+          <span className="qmAvatarInitials">{ this.getInitials(name) }</span>
+          {url && <span className="qmAvatarImg" style={style}></span>}
+        </span>
+        {showActivity && <span className={`qmAvatarIndicator ${isActive ? "isActive" : ""}`}></span>}
+      </span>
+    )
+  }
+}
 
 export default Avatar
