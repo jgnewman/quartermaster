@@ -47,7 +47,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div style={{ padding: "1em", maxWidth: "500px" }}>
+      <div style={{ padding: "1em 1em 5em", maxWidth: "500px" }}>
 
         <QM.Avatar
           showActivity
@@ -70,6 +70,7 @@ class App extends React.Component {
         </QM.ConfirmButton>
 
         <div>
+          <QM.Label text="Counter" />
           Here is a counter: {this.state.counter}
         </div>
 
@@ -149,16 +150,38 @@ class App extends React.Component {
                 value={getFormState().mytext}
                 changeHandler={updateValueFor("mytext")}
               />
-              <QM.RadioGroup
-                name="mygroup"
-                changeHandler={updateValueFor("mygroup")}
-                value={getFormState().mygroup}
-                options={[
-                  { label: "Foo", value: "foo" },
-                  { label: "Bar", value: "bar" },
-                  { label: "Baz", value: "baz" },
-                ]}
-              />
+              <QM.Grid wrap>
+                <QM.RadioGroup
+                  name="mygroup"
+                  changeHandler={updateValueFor("mygroup")}
+                  value={getFormState().mygroup}
+                  options={[
+                    { label: "Foo", value: "foo" },
+                    { label: "Bar", value: "bar" },
+                    { label: "Baz", value: "baz" },
+                  ]}
+                />
+                <QM.RadioGroup
+                  name="mygroup"
+                  changeHandler={updateValueFor("mygroup")}
+                  value={getFormState().mygroup}
+                  options={[
+                    { label: "Moo", value: "moo" },
+                    { label: "Mar", value: "mar" },
+                    { label: "Maz", value: "maz" },
+                  ]}
+                />
+                <QM.RadioGroup
+                  name="mygroup"
+                  changeHandler={updateValueFor("mygroup")}
+                  value={getFormState().mygroup}
+                  options={[
+                    { label: "Goo", value: "goo" },
+                    { label: "Gar", value: "gar" },
+                    { label: "Gaz", value: "gaz" },
+                  ]}
+                />
+              </QM.Grid>
               <QM.Select
                 label="My select menu"
                 options={[

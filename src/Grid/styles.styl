@@ -1,0 +1,48 @@
+@import "../lib/sharedStyles"
+
+.qmGridContainer
+  display: flex
+  align-items: stretch
+  align-content: center
+
+  margin-left: -1 * HALF_GUTTER
+  margin-right: -1 * HALF_GUTTER
+
+  &.isAround
+    justify-content: space-around
+
+  &.isBetween
+    justify-content: space-between
+
+  &.isCenter
+    justify-content: center
+
+  &.isEnd
+    justify-content: flex-end
+
+  &.isEven
+    justify-content: space-evenly
+
+  &.isStart
+    justify-content: flex-start
+
+  &.hasWrap
+    flex-wrap: wrap
+
+  > *
+    flex-grow: 1
+    margin: 0 HALF_GUTTER GUTTER
+
+.qmGrowContainer
+
+  &.isStatic
+    flex-grow: 0
+
+  &.isSingle
+    flex-grow: 1
+
+  &.isDouble
+    flex-grow: 2
+
+  &.isTriple
+    flex-grow: 3

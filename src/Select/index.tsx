@@ -59,18 +59,24 @@ class Select extends PureComponent<SelectProps, SelectState> {
     })
   }
 
+  handleChangeSelect = (evt: React.ChangeEvent) => {
+    const newValue = (evt.target as HTMLSelectElement).value
+    this.selectValue(newValue)
+  }
+
   handleClickToOpenSelect = () => {
     const { selectRef } = this
-    selectRef && selectRef.focus()
+    const { isOpen } = this.state
+
+    if (isOpen) {
+      this.closeSelect()
+    } else {
+      selectRef && selectRef.focus()
+    }
   }
 
   closeSelect = () => {
     this.setState({ isOpen: false })
-  }
-
-  handleChangeSelect = (evt: React.ChangeEvent) => {
-    const newValue = (evt.target as HTMLSelectElement).value
-    this.selectValue(newValue)
   }
 
   handleClickOption = (evt: React.MouseEvent) => {

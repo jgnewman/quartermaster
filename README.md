@@ -138,6 +138,47 @@ In addition to the `FormUtils` functions illustrated above, you also have access
 setFormState({ myText: "some value" })
 ```
 
+### Grid
+Allows you to drop in an easy flexbox grid. The `wrap` property enables flexbox item wrapping and the `justify` property sets the alignment of items within the grid. Items default to `space-between` justification.
+
+```typescript
+interface GridProps {
+  className?: string
+  justify?: "start" | "end" | "center" | "even" | "between" | "around"
+  wrap?: boolean
+}
+```
+
+Here is an example:
+
+```jsx
+<Grid justify="start" wrap>
+  <div>Item 1</div>
+  <div>Item 2</div>
+  <div>Item 3</div>
+</Grid>
+```
+
+### Grow
+For use within the `Grid` component, `Grow` gives you an element that can be easily sized within the flexbox grid. By providing a value for the `size` prop, your element will receive a corresponding `flex-grow` css attribute.
+
+```typescript
+interface GrowProps {
+  className?: string
+  size: 0 | 1 | 2 | 3
+}
+```
+
+Here is an example:
+
+```jsx
+<Grid>
+  <Grow size={2}></Grow>
+  <div></div>
+  <div></div>
+</Grid>
+```
+
 ### Label
 TextFields and Selects each have a `label` prop allowing you to turn on label text for the element. However you may want to use a label in the same format elsewhere, especially in a form. This component allows you to output a form-style label wherever you want.
 
