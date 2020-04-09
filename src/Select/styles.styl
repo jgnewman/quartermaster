@@ -9,7 +9,7 @@
   overflow: visible
   line-height: 1
 
-.qmSelectFieldWrapper
+.qmSelectClickableWrapper
   borders(BASE_BORDER, 0.25rem)
 
   display: flex
@@ -20,6 +20,8 @@
   background: BASE_BG
   box-shadow: BLANK_OUTLINE
   transition: BASE_TRANSITION
+
+  outline: solid transparent !important
 
   &.isFocused
     box-shadow: BASE_OUTLINE
@@ -95,14 +97,6 @@
   max-width: 100%
   padding: 0 0 0 0.75rem
 
-.qmSelectNative
-  display: block
-  position: fixed
-  left: -1000vw
-
-  overflow: hidden
-  outline: solid transparent !important
-
 .qmSelectMenu
   size(100%, auto)
   borders(BASE_BORDER, 0.25rem)
@@ -124,10 +118,14 @@
   padding: 0.5rem 0.75rem 0.66rem
   transition: BASE_TRANSITION
 
+  outline: solid transparent !important
+
   &.isSelected
     background: HIGHLIGHT
     color: LIGHT_FONT
 
-  &:hover, &.isSelected:hover
+  &:hover,
+  &:focus,
+  &.isSelected:hover
     background: HIGHLIGHT
     color: LIGHT_FONT

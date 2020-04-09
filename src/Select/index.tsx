@@ -34,7 +34,8 @@ class Select extends PureComponent<SelectProps, SelectState> {
   static displayName = "Select"
   public state: SelectState
   private wrapperRef: HTMLDivElement | null
-  private selectRef: HTMLSelectElement | null
+  private optionsRefs: HTMLSpanElement[] = []
+  private expectedOptions = { count: 0 }
 
   constructor(props: SelectProps) {
     super(props)
@@ -45,6 +46,27 @@ class Select extends PureComponent<SelectProps, SelectState> {
     }
   }
 
+  wrapperRefFn = (elem: HTMLDivElement | null) => {
+    this.wrapperRef = elem
+  }
+
+  optionRefFn = (elem: HTMLSpanElement | null) => {
+    const { options } = this.props
+    const { expectedOptions, optionsRefs } = this
+
+    if (!elem) {
+      return
+    }
+
+    if (expectedOptions.count >= options.length) {
+      optionsRefs.length = 0
+      expectedOptions.count = 0
+    }
+
+    expectedOptions.count += 1
+    optionsRefs.push(elem)
+  }
+
   handleFocusSelect = () => {
     this.setState({
       isFocused: true,
@@ -52,31 +74,15 @@ class Select extends PureComponent<SelectProps, SelectState> {
     })
   }
 
-  handleBlurSelect = (evt: React.FocusEvent) => {
-    this.setState({
-      isFocused: false,
-      isOpen: evt.relatedTarget === null ? this.state.isOpen : false,
-    })
+  handleBlurSelect = () => {
+    this.setState({ isFocused: false })
   }
 
-  handleChangeSelect = (evt: React.ChangeEvent) => {
-    const newValue = (evt.target as HTMLSelectElement).value
-    this.selectValue(newValue)
-  }
-
-  handleClickToOpenSelect = () => {
-    const { selectRef } = this
-    const { isOpen } = this.state
-
-    if (isOpen) {
-      this.closeSelect()
-    } else {
-      selectRef && selectRef.focus()
+  handleKeyDownSelect = (evt: React.KeyboardEvent) => {
+    const { key } = evt
+    if (key === " " || key === "ArrowDown") {
+      this.focusSelectedOption()
     }
-  }
-
-  closeSelect = () => {
-    this.setState({ isOpen: false })
   }
 
   handleClickOption = (evt: React.MouseEvent) => {
@@ -85,16 +91,30 @@ class Select extends PureComponent<SelectProps, SelectState> {
     this.selectValue(newValue)
   }
 
-  selectValue(newValue: string | null) {
-    const { changeHandler } = this.props
-    const { selectRef } = this
+  handleKeyDownOption = (evt: React.KeyboardEvent) => {
+    const { key } = evt
+    const target = evt.target as HTMLSpanElement
 
-    if (selectRef) {
-      selectRef.value = newValue || ""
+    switch (key) {
+
+      case "ArrowUp":
+        return this.focusSiblingOption(target, "prev")
+
+      case "ArrowDown":
+        return this.focusSiblingOption(target, "next")
+
+      case " ":
+      case "Enter":
+        return this.selectValue(target.getAttribute("data-value"))
     }
+  }
 
-    this.state.isOpen && this.setState({ isOpen: false })
-    changeHandler && changeHandler(newValue)
+  handleClickClearButton = () => {
+    this.selectValue(null)
+  }
+
+  handleFocusClearButton = (evt: React.FocusEvent) => {
+    evt.stopPropagation()
   }
 
   closeSelectOnClickAway = (evt: any) => {
@@ -103,24 +123,57 @@ class Select extends PureComponent<SelectProps, SelectState> {
     }
   }
 
-  clearValueOnClick = (evt: React.MouseEvent) => {
-    evt.stopPropagation()
-    this.selectValue(null)
+  getSelectedOption(): HTMLSpanElement | null {
+    const { value } = this.props
+    const { optionsRefs } = this
+
+    let selectedOption = optionsRefs[0]
+
+    optionsRefs.some(option => {
+      if (option.getAttribute("data-value") === value) {
+        selectedOption = option
+        return true
+      }
+      return false
+    })
+
+    return selectedOption || null
   }
 
-  wrapperRefFn = (elem: HTMLDivElement | null) => {
-    this.wrapperRef = elem
+  focusSelectedOption() {
+    this.getSelectedOption()?.focus()
   }
 
-  selectRefFn = (elem: HTMLSelectElement | null) => {
-    const { fieldRef } = this.props
-    this.selectRef = elem
-    fieldRef && fieldRef(elem)
+  focusSiblingOption(focusedElem: HTMLSpanElement, direction: "prev" | "next") {
+    const { optionsRefs } = this
+    const focusIndex = optionsRefs.indexOf(focusedElem)
+
+    let elemToFocus: HTMLSpanElement
+    if (direction === "prev") {
+      elemToFocus = focusIndex < 1 ? optionsRefs[optionsRefs.length - 1] : optionsRefs[focusIndex - 1]
+    } else {
+      elemToFocus = (focusIndex >= optionsRefs.length - 1) ? optionsRefs[0] : optionsRefs[focusIndex + 1]
+    }
+
+    elemToFocus.focus()
   }
 
-  buildOptionArrays() {
+  selectValue(newValue: string | null) {
+    const { changeHandler } = this.props
+    this.state.isOpen && this.setState({ isOpen: false })
+    changeHandler && changeHandler(newValue)
+  }
+
+  openSelect() {
+    this.setState({ isOpen: true })
+  }
+
+  closeSelect() {
+    this.setState({ isOpen: false })
+  }
+
+  buildOptionsArray() {
     const { options, value } = this.props
-    const optionsArray: ReactNodeArray = []
     const menuOptionsArray: ReactNodeArray = []
     let selectedLabel: string | null = null
 
@@ -131,20 +184,21 @@ class Select extends PureComponent<SelectProps, SelectState> {
         selectedLabel = label
       }
 
-      optionsArray.push(<option key={optValue} value={optValue}>{label}</option>)
-
       menuOptionsArray.push(
         <span
           key={optValue}
+          ref={this.optionRefFn}
+          tabIndex={0}
           className={`qmSelectMenuOption ${buildClassNames({ isSelected })}`}
           data-value={optValue}
-          onClick={this.handleClickOption}>
+          onClick={this.handleClickOption}
+          onKeyDown={this.handleKeyDownOption}>
           {label}
         </span>,
       )
     })
 
-    return { optionsArray, menuOptionsArray, selectedLabel }
+    return { menuOptionsArray, selectedLabel }
   }
 
   componentDidMount() {
@@ -167,12 +221,14 @@ class Select extends PureComponent<SelectProps, SelectState> {
     } = this.props
 
     const { isOpen, isFocused } = this.state
-    const { optionsArray, menuOptionsArray, selectedLabel } = this.buildOptionArrays()
+    const { menuOptionsArray, selectedLabel } = this.buildOptionsArray()
 
     const textValue = value ? selectedLabel : placeholder
     const hasSelectedValue = !!value
     const isEnabled = !isDisabled
     const isPlaceholder = !hasSelectedValue
+
+    const clickableWrapperProps: DynamicProps = {}
 
     const labelProps: DynamicProps = {
       className: "qmSelectLabel",
@@ -180,6 +236,11 @@ class Select extends PureComponent<SelectProps, SelectState> {
     }
 
     if (id) {
+      const labelId = `${id}-qmLabel`
+      clickableWrapperProps.id = id
+      clickableWrapperProps["aria-labelledby"] = labelId
+
+      labelProps.id = labelId
       labelProps.htmlFor = id
     }
 
@@ -190,7 +251,7 @@ class Select extends PureComponent<SelectProps, SelectState> {
       isRequired,
     })
 
-    const fieldWrapperClasses = buildClassNames({
+    const clickableWrapperClasses = buildClassNames({
       isFocused,
     })
 
@@ -211,21 +272,15 @@ class Select extends PureComponent<SelectProps, SelectState> {
         {label && <Label text={label} {...labelProps} />}
 
         <div className="qmSelectContentWrapper" ref={this.wrapperRefFn}>
-          <select
-            className="qmSelectNative"
-            value={value || ""}
-            ref={this.selectRefFn}
-            disabled={!!isDisabled}
-            onFocus={this.handleFocusSelect}
-            onBlur={this.handleBlurSelect}
-            onChange={this.handleChangeSelect}>
-            {optionsArray}
-          </select>
 
           <div
-            className={`qmSelectFieldWrapper ${fieldWrapperClasses}`}
-            onClick={isDisabled ? noopEvtHandler : this.handleClickToOpenSelect}
-            aria-hidden={true}>
+            className={`qmSelectClickableWrapper ${clickableWrapperClasses}`}
+            role="button"
+            tabIndex={0}
+            onFocus={this.handleFocusSelect}
+            onBlur={this.handleBlurSelect}
+            onKeyDown={this.handleKeyDownSelect}
+            {...clickableWrapperProps}>
 
             <div
               className={`qmSelectDisplay ${displayClasses}`}>
@@ -235,7 +290,8 @@ class Select extends PureComponent<SelectProps, SelectState> {
             {hasSelectedValue && (
               <button
                 className={`qmSelectClearIconWrapper ${buttonClasses}`}
-                onClick={isDisabled ? noopEvtHandler : this.clearValueOnClick}>
+                onClick={isDisabled ? noopEvtHandler : this.handleClickClearButton}
+                onFocus={this.handleFocusClearButton}>
                 <TimesIcon className="qmSelectIcon qmSelectClearIcon" title="Clear Selection" />
               </button>
             )}
@@ -247,7 +303,7 @@ class Select extends PureComponent<SelectProps, SelectState> {
           </div>
 
           {isOpen && (
-            <div className="qmSelectMenu" aria-hidden={true}>
+            <div className="qmSelectMenu" role="list" aria-expanded={isOpen}>
               {menuOptionsArray}
             </div>
           )}
