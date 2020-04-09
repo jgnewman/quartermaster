@@ -27,7 +27,7 @@ class Align extends PureComponent<AlignProps> {
     })
 
     return (
-      <div className={`qmAlign ${justifyClasses} ${className || ""}`}>
+      <div className={`qmAlignContainer ${justifyClasses} ${className || ""}`}>
         {childArray.map((child, index) => (
           <div className="qmAlignItem" key={index}>
             {child}

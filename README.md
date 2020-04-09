@@ -40,6 +40,7 @@ Quartermaster deliberately avoids styled-components for performance and bundle s
 - [RadioGroup](#radiogroup)
 - [Select](#select)
 - [TextField](#textfield)
+- [Toggle](#toggle)
 
 ### Align
 For when you need to put two or more elements onto the same horizontal alignment with common spacing. You can specify whether children are justified left, center or right.
@@ -87,7 +88,6 @@ interface CheckboxProps {
   changeHandler?: React.ChangeEventHandler
   checkboxRef?: (elem: HTMLElement | null) => void
   className?: string
-  groupName?: string
   id?: string
   isChecked: boolean
   isDisabled?: boolean
@@ -328,3 +328,20 @@ interface TextFieldProps {
 ```
 
 With regard to `dangerouslyAutoTruncateLimitBreakingValues`, this prop is rarely ever needed but is applicable in any case where you might attempt to pass a value to the text field that is greater than a provided char limit, assuming the character count is not expected to be greater than the limit. With this prop set to true, the component will automatically truncate the provided value and fire both a `change` and `keyUp` event with the new value. The prop is labeled as dangerous because if you are not handling these events in such a way that the component re-renders with the new, truncated value, you will trigger an infinitely recursive loop.
+
+### Toggle
+Creates a sliding toggle element wrapped around native checkbox input for optimized accessibility. Allows specifying a label, a `isChecked` state, and a `value` among other features. Allows capturing the checkbox ref via a function such as `elem => this.myRef = elem`.
+
+```typescript
+interface ToggleProps {
+  changeHandler?: React.ChangeEventHandler
+  checkboxRef?: (elem: HTMLElement | null) => void
+  className?: string
+  id?: string
+  isChecked: boolean
+  isDisabled?: boolean
+  label?: string
+  tabIndex?: number
+  value?: string
+}
+```

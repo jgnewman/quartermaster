@@ -1,0 +1,87 @@
+@import "../lib/sharedStyles"
+
+TOGGLE_WIDTH = 45px
+SLIDER_WIDTH = 18px
+SLIDER_PADDING = 3px
+
+.qmToggleContainer
+  @extend $vertMiddle
+  padding: 0 HALF_GUTTER 0.33rem 0
+
+.qmToggleLabel
+  @extend $vertMiddle
+  color: BASE_FONT
+  transition: BASE_TRANSITION
+  margin-right: 0.33rem
+
+  &.isDisabled
+    color: FADED_FONT
+
+.qmToggleFauxWrapper
+  @extend $vertMiddle
+
+  &:hover .qmToggleLabel.isEnabled
+    color: HIGHLIGHT
+
+.qmToggleCheckWrapper
+  @extend $vertMiddle
+  size(TOGGLE_WIDTH, 24px)
+
+  position: relative
+  margin-right: 0.33rem
+
+.qmToggleOverlay
+  @extend $absFill
+  borders(0, 10rem)
+
+  background: LIGHT_BG
+  outline: solid transparent !important
+  transition: BASE_TRANSITION
+  box-shadow: BLANK_OUTLINE
+
+  &.isChecked
+    background: HIGHLIGHT
+    border-color: OUTLINES
+
+  &.isFocused
+    box-shadow: BASE_OUTLINE
+    border-color: OUTLINES
+
+.qmToggleSlider
+  size(SLIDER_WIDTH)
+  borders(0, 50%)
+  content: ""
+  display: block
+  position: absolute
+  left: SLIDER_PADDING
+  top: 50%
+  transform: translateY(-50%)
+  background: BASE_BG
+  box-shadow: 0 0 0 1px LIGHT_BG
+  transition: BASE_TRANSITION
+
+  &.isChecked
+    left: "calc(%s - %s - %s)" % (TOGGLE_WIDTH SLIDER_WIDTH SLIDER_PADDING)
+
+.qmToggleCheckmark
+  @extend $absCenter
+  left: 30%
+
+  size(0)
+  opacity: 0
+  transition: BASE_TRANSITION
+
+  &.isChecked
+    size(0.66rem)
+    opacity: 1
+
+  path
+    fill: LIGHT_FONT
+
+.qmToggleNative
+  display: block
+  position: absolute
+  left: -1000vw
+  top: 0
+  border: 0
+

@@ -3,7 +3,7 @@ import React from "react"
 import { render } from "react-dom"
 
 import * as QM from "../src/index"
-// import "../src/themes/Dark.styl"
+import "../src/themes/Dark.styl"
 
 class App extends React.Component {
   public static displayName = "App"
@@ -13,6 +13,7 @@ class App extends React.Component {
     counter: 0,
     fieldVal: "",
     boxChecked: false,
+    toggleChecked: false,
     radioVal: "foo",
   }
 
@@ -39,6 +40,11 @@ class App extends React.Component {
   toggleCheckbox(evt: React.ChangeEvent) {
     this.setState({ boxChecked: !this.state.boxChecked })
     console.log("Toggled checkbox with value", (evt.target as HTMLInputElement).value)
+  }
+
+  toggleToggle(evt: React.ChangeEvent) {
+    this.setState({ toggleChecked: !this.state.toggleChecked })
+    console.log("Toggled toggle with value", (evt.target as HTMLInputElement).value)
   }
 
   setRadioVal(evt: React.ChangeEvent) {
@@ -111,6 +117,16 @@ class App extends React.Component {
 
         <div>
           Rendering checked state as {String(this.state.boxChecked)}
+        </div>
+
+        <div>
+          <QM.Toggle
+            isDisabled={false}
+            isChecked={this.state.toggleChecked}
+            changeHandler={this.toggleToggle.bind(this)}
+            value="My Toggle"
+            label="Toggle me"
+          />
         </div>
 
         <div>

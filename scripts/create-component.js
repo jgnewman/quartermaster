@@ -10,9 +10,19 @@ if (!componentName) {
   throw new Error("Component creator requires a component name argument.")
 }
 
-function generateTemplate(componentName) {
+function createStylTemplate(componentName) {
+  return `
+    @import "../lib/sharedStyles"
+
+    .qm${componentName}Container
+      display: block
+  `.replace(/(\n)    /g, "$1").trim() + "\n"
+}
+
+function createJSXTemplate(componentName) {
   const classString = '${className || ""}'
   return `
+    import "./styles.styl"
     import React, { PureComponent } from "react"
 
     export interface ${componentName}Props {
@@ -28,7 +38,7 @@ function generateTemplate(componentName) {
         } = this.props
 
         return (
-          <div className={\`qm${componentName} ${classString}\`}></div>
+          <div className={\`qm${componentName}Container ${classString}\`}></div>
         )
       }
     }
@@ -39,14 +49,21 @@ function generateTemplate(componentName) {
 
 async function init() {
   const dirPath = path.resolve(__dirname, `../src/${componentName}`)
-  const filePath = path.resolve(dirPath, "index.tsx")
-  const template = generateTemplate(componentName)
+  const jsxPath = path.resolve(dirPath, "index.tsx")
+  const stylPath = path.resolve(dirPath, "styles.styl")
+
+  const jsxTemplate = createJSXTemplate(componentName)
+  const stylTemplate = createStylTemplate(componentName)
 
   console.log(`Creating directory ${dirPath}...`)
   await mkdirPromise(dirPath)
 
-  console.log(`Writing file ${filePath}...`)
-  await writeFilePromise(filePath, template)
+  console.log(`Writing file ${jsxPath}...`)
+  console.log(`Writing file ${stylPath}...`)
+  await Promise.all([
+    writeFilePromise(jsxPath, jsxTemplate),
+    writeFilePromise(stylPath, stylTemplate),
+  ])
 
   console.log("Success.")
 }

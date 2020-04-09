@@ -32,7 +32,7 @@ class Label extends PureComponent<LabelProps> {
 
     return (
       <label
-        className={`qmLabel ${containerClasses} ${className || ""}`}
+        className={`qmLabelContainer ${containerClasses} ${className || ""}`}
         {...dynamicProps}>
         {text}{isRequired && <span className="qmLabelRequired" title="Required field">*</span>}
       </label>

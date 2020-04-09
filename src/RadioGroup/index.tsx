@@ -60,7 +60,7 @@ class RadioGroup extends PureComponent<RadioGroupProps> {
     const { className, options } = this.props
 
     return (
-      <div className={`qm-radio-group ${className || ""}`}>
+      <div className={`qmRadioGroupContainer ${className || ""}`}>
         {options.map(option => this.buildRadio(option.value, option))}
       </div>
     )

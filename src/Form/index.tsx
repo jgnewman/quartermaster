@@ -31,15 +31,20 @@ class Form extends PureComponent<FormProps, SimpleObject> {
   static displayName = "Form"
   public state: SimpleObject
 
-  public getFormState: GetFormState = () => {
+  constructor(props: FormProps) {
+    super(props)
+    this.state = { ...props.initialState }
+  }
+
+  getFormState: GetFormState = () => {
     return { ...this.state }
   }
 
-  public setFormState: SetFormState = (vals) => {
+  setFormState: SetFormState = (vals) => {
     this.setState({ ...vals })
   }
 
-  public updateValueFor: UpdateValueFor = (name) => {
+  updateValueFor: UpdateValueFor = (name) => {
     return (evt) => {
       let val;
 
@@ -53,7 +58,7 @@ class Form extends PureComponent<FormProps, SimpleObject> {
     }
   }
 
-  public toggleCheckedFor: ToggleCheckedFor = (name) => {
+  toggleCheckedFor: ToggleCheckedFor = (name) => {
     return () => {
       if (typeof this.state[name] !== "boolean") {
         throw new Error(`
@@ -64,11 +69,6 @@ class Form extends PureComponent<FormProps, SimpleObject> {
     }
   }
 
-  constructor(props: FormProps) {
-    super(props)
-    this.state = { ...props.initialState }
-  }
-
   render() {
     const { children } = this.props
 
@@ -77,7 +77,7 @@ class Form extends PureComponent<FormProps, SimpleObject> {
     }
 
     return (
-      <div className="qm-form">
+      <div className="qmFormContainer">
         {children({
           getFormState: this.getFormState,
           setFormState: this.setFormState,

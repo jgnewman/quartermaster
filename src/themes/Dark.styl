@@ -20,7 +20,13 @@ body
 .qmAvatarIndicator
   border-color: DARK_BG
 
-.qmLabel,
+.qmToggleSlider
+  background: DARK_FONT
+
+.qmToggleSlider.isChecked
+  background: LIGHT_FONT
+
+.qmLabelContainer,
 .qmSelectDisplay,
 .qmTextFieldInput.isField,
 .qmTextFieldInput.isTextArea
@@ -37,16 +43,18 @@ body
 
 .qmCheckboxOverlay,
 .qmRadioOverlay,
-.qmSelectFieldWrapper,
+.qmSelectClickableWrapper,
 .qmSelectMenu,
 .qmTextFieldInput.isField,
-.qmTextFieldInput.isTextArea
+.qmTextFieldInput.isTextArea,
+.qmToggleOverlay
   border: 0
 
 .qmCheckboxOverlay,
 .qmRadioOverlay,
-.qmSelectFieldWrapper,
-.qmTextFieldInputWrapper
+.qmSelectClickableWrapper,
+.qmTextFieldInputWrapper,
+.qmToggleOverlay
   background: DARK_FIELD_BG
 
 .qmSelectMenu,
@@ -56,7 +64,8 @@ body
 .qmCharLimitText,
 .qmCheckboxLabel,
 .qmRadioLabel,
-.qmSelectMenuOption
+.qmSelectMenuOption,
+.qmToggleLabel
   color: DARK_FONT
 
 .qmSelectOpenIconWrapper::before

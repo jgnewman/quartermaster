@@ -14,7 +14,7 @@ import {
   manuallyTickCheckbox,
 } from "../lib/helpers"
 
-export interface CheckboxProps {
+export interface ToggleProps {
   changeHandler?: React.ChangeEventHandler
   checkboxRef?: RefFunction
   className?: string
@@ -26,8 +26,8 @@ export interface CheckboxProps {
   value?: string
 }
 
-class Checkbox extends PureComponent<CheckboxProps> {
-  static displayName = "Checkbox"
+class Toggle extends PureComponent<ToggleProps> {
+  static displayName = "Toggle"
   public state = { isFocused: false }
   private inputRef: HTMLInputElement | null
 
@@ -100,25 +100,30 @@ class Checkbox extends PureComponent<CheckboxProps> {
       isFocused,
     })
 
+    const sliderAndCheckmarkClasses = buildClassNames({
+      isChecked,
+    })
+
     return (
       <span
-        className={`qmCheckboxContainer ${containerClasses} ${className || ""}`}>
+        className={`qmToggleContainer ${containerClasses} ${className || ""}`}>
 
         <span
-          className="qmCheckboxFauxWrapper"
+          className="qmToggleFauxWrapper"
           onClick={isDisabled ? noopEvtHandler : this.handleOverlayClick}>
 
-          <span className="qmCheckboxCheckWrapper">
+          <span className="qmToggleCheckWrapper">
             <span
               aria-hidden={true}
-              className={`qmCheckboxOverlay ${overlayClasses}`}>
-              {isChecked && <CheckmarkIcon className="qmCheckboxCheckmark" />}
+              className={`qmToggleOverlay ${overlayClasses}`}>
+              <span className={`qmToggleSlider ${sliderAndCheckmarkClasses}`}></span>
+              <CheckmarkIcon className={`qmToggleCheckmark ${sliderAndCheckmarkClasses}`} />
             </span>
           </span>
 
           {label && (
             <label
-              className={`qmCheckboxLabel ${labelClasses}`}
+              className={`qmToggleLabel ${labelClasses}`}
               {...labelProps}>
               {label}
             </label>
@@ -129,7 +134,7 @@ class Checkbox extends PureComponent<CheckboxProps> {
         <input
           ref={this.refFn}
           checked={isChecked}
-          className="qmCheckboxNative"
+          className="qmToggleNative"
           disabled={!!isDisabled}
           type="checkbox"
           onFocus={this.handleFocus}
@@ -142,4 +147,4 @@ class Checkbox extends PureComponent<CheckboxProps> {
   }
 }
 
-export default Checkbox
+export default Toggle
