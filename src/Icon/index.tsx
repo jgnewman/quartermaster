@@ -11,11 +11,10 @@ type IconType = "caret"
               | "tiles"
               | "triangle"
 
-type IconSize = 8 | 10 | 12 | 16 | 24 | 32 | 48
-
 export interface IconProps {
   className?: string
-  size: IconSize
+  rotate?: 45 | 90 | 135 | 180 | 225 | 270 | 315
+  size: 8 | 10 | 12 | 16 | 24 | 32 | 48
   title?: string
   type: IconType
 }
@@ -132,25 +131,38 @@ class Icon extends PureComponent<IconProps> {
   render() {
     const {
       className,
+      rotate,
       size,
       title,
       type,
     } = this.props
 
+    const containerStyle = {
+      width: `${size}px`,
+      height: `${size}px`,
+    }
+
+    const svgStyle = {
+      transform: `rotate(${rotate || 0}deg)`,
+    }
+
     return (
-      <svg
-        className={`qmIconContainer ${className || ""}`}
-        width={size}
-        height={size}
-        viewBox="0 0 8 8"
-        version="1.1"
-        xmlns="http://www.w3.org/2000/svg"
-        fillRule="evenodd">
-        <title>{title || type}</title>
-        {
-          this[type]()
-        }
-      </svg>
+      <div className={`qmIconContainer ${className || ""}`} style={containerStyle}>
+        <svg
+          className={`qmIcon`}
+          style={svgStyle}
+          width={size}
+          height={size}
+          viewBox="0 0 8 8"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          fillRule="evenodd">
+          <title>{title || type}</title>
+          {
+            this[type]()
+          }
+        </svg>
+      </div>
     )
   }
 }

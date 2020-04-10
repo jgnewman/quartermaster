@@ -34,6 +34,7 @@ Quartermaster deliberately avoids styled-components for performance and bundle s
 - [Form](#form)
 - [Grid](#grid)
 - [Grow](#grow)
+- [Icon](#icon)
 - [Label](#label)
 - [Modal](#modal)
 - [RadioButton](#radiobutton)
@@ -203,6 +204,31 @@ Here is an example:
   <div></div>
   <div></div>
 </Grid>
+```
+
+### Icon
+Provides a single component allowing you to drop in a member of a standardized icon set. You can specify one of a few pre-determined sizes as well as rotations. Each svg contains a default `title` tag, however this can be overriden via the `style` prop on the component. It is highly encouraged that you provide titles for accessibility purposes.
+
+```typescript
+interface IconProps {
+  className?: string
+  rotate?: 45 | 90 | 135 | 180 | 225 | 270 | 315
+  size: 8 | 10 | 12 | 16 | 24 | 32 | 48
+  title?: string
+  type: IconType
+}
+
+// Where...
+
+type IconType = "caret"
+              | "checkmark"
+              | "dot"
+              | "ex" // meaning "x" or "times"
+              | "hamburger"
+              | "meatballs"
+              | "plus"
+              | "tiles"
+              | "triangle"
 ```
 
 ### Label

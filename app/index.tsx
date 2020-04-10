@@ -57,6 +57,7 @@ class App extends React.Component {
         <QM.Icon
           type="tiles"
           size={12}
+          rotate={45}
         />
 
         <QM.Align>
