@@ -3,7 +3,7 @@ import React from "react"
 import { render } from "react-dom"
 
 import * as QM from "../src/index"
-import "../src/themes/Dark.styl"
+// import "../src/themes/Dark.styl"
 
 class App extends React.Component {
   public static displayName = "App"
@@ -54,6 +54,10 @@ class App extends React.Component {
   render() {
     return (
       <div style={{ padding: "1em 1em 5em", maxWidth: "500px" }}>
+        <QM.Icon
+          type="tiles"
+          size={12}
+        />
 
         <QM.Align>
           <QM.Avatar

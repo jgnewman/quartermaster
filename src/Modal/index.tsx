@@ -2,7 +2,7 @@ import "./styles.styl"
 import React, { PureComponent } from "react"
 
 import { buildClassNames, noopEvtHandler } from "../lib/helpers"
-import CloseIcon from "../icons/CloseIcon"
+import Icon from "../Icon"
 
 export interface ModalProps {
   className?: string
@@ -71,7 +71,11 @@ class Modal extends PureComponent<ModalProps> {
           <button
             className="qmModalClose"
             onClick={closeHandler || noopEvtHandler}>
-            <CloseIcon className="qmModalCloseIcon" />
+            <Icon
+              type="ex"
+              size={16}
+              className="qmModalCloseIcon"
+            />
           </button>
         )}
 
