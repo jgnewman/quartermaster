@@ -26,25 +26,16 @@
   text-align: center
   letter-spacing: 0
 
-.qmModalCloseIcon
-  transition: BASE_TRANSITION
-
-  .qmIcon
-    fill: LIGHT_FONT
-
-.qmModalClose
-  display: block;
+.qmModalCloseWrapper
   position: fixed;
   right: 0
   top: 0
   z-index: 9999
 
-  padding: 1rem 1.25rem
-  background: transparent
-  border: 0
+  padding: 1rem
 
-  cursor: pointer
-  outline: solid transparent !important
+  .qmIconButtonEffect
+    background: rgba(LIGHT_FONT, 0.1)
 
-  &:hover .qmModalCloseIcon
-    transform: scale(1.15)
+  .qmIcon
+    fill: LIGHT_FONT

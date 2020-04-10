@@ -54,13 +54,18 @@ class App extends React.Component {
   render() {
     return (
       <div style={{ padding: "1em 1em 5em", maxWidth: "500px" }}>
-        <QM.Icon
-          type="tiles"
-          size={12}
-          rotate={45}
-        />
-
         <QM.Align>
+          <QM.Icon
+            type="tiles"
+            size={8}
+            rotate={45}
+          />
+
+          <QM.IconButton
+            type="plus"
+            size={12}
+          />
+
           <QM.Avatar
             showActivity
             isActive={true}
@@ -86,6 +91,10 @@ class App extends React.Component {
         <div>
           <QM.Label text="Counter" />
           Here is a counter: {this.state.counter}
+          <QM.IconButton
+            type="plus"
+            size={12}
+          />
         </div>
 
         <QM.Modal

@@ -8,6 +8,7 @@ export interface ButtonProps {
   className?: string
   clickHandler?: React.MouseEventHandler
   highlight?: "positive" | "negative"
+  href?: string
   isDisabled?: boolean
   isProcessing?: boolean
   tag?: "a" | "button"
@@ -34,6 +35,7 @@ class Button extends PureComponent<ButtonProps> {
       className,
       clickHandler,
       highlight,
+      href,
       isDisabled,
       isProcessing,
       tag,
@@ -56,6 +58,10 @@ class Button extends PureComponent<ButtonProps> {
 
     if (!!isDisabled || isProcessing) {
       dynamicProps.disabled = true
+    }
+
+    if (tag === "a" && href) {
+      dynamicProps.href = href
     }
 
     const containerClasses = buildClassNames({

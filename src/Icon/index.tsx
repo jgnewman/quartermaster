@@ -1,20 +1,23 @@
 import "./styles.styl"
 import React, { PureComponent } from "react"
 
-type IconType = "caret"
-              | "checkmark"
-              | "dot"
-              | "ex"
-              | "hamburger"
-              | "meatballs"
-              | "plus"
-              | "tiles"
-              | "triangle"
+export type IconType = "caret"
+                      | "checkmark"
+                      | "dot"
+                      | "ex"
+                      | "hamburger"
+                      | "meatballs"
+                      | "plus"
+                      | "tiles"
+                      | "triangle"
+
+export type IconRotation = 45 | 90 | 135 | 180 | 225 | 270 | 315
+export type IconSize = 8 | 10 | 12 | 16 | 24 | 32 | 48
 
 export interface IconProps {
   className?: string
-  rotate?: 45 | 90 | 135 | 180 | 225 | 270 | 315
-  size: 8 | 10 | 12 | 16 | 24 | 32 | 48
+  rotate?: IconRotation
+  size: IconSize
   title?: string
   type: IconType
 }
@@ -147,7 +150,7 @@ class Icon extends PureComponent<IconProps> {
     }
 
     return (
-      <div className={`qmIconContainer ${className || ""}`} style={containerStyle}>
+      <span className={`qmIconContainer ${className || ""}`} style={containerStyle}>
         <svg
           className={`qmIcon`}
           style={svgStyle}
@@ -162,7 +165,7 @@ class Icon extends PureComponent<IconProps> {
             this[type]()
           }
         </svg>
-      </div>
+      </span>
     )
   }
 }

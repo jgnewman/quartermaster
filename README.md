@@ -74,6 +74,7 @@ interface ButtonProps {
   className?: string
   clickHandler?: React.MouseEventHandler
   highlight?: "positive" | "negative" // applies additional green or red color stylings
+  href?: string // Only applies if `tag` is "a"
   isDisabled?: boolean
   isProcessing?: boolean
   tag?: "a" | "button" // defaults to button
@@ -212,14 +213,16 @@ Provides a single component allowing you to drop in a member of a standardized i
 ```typescript
 interface IconProps {
   className?: string
-  rotate?: 45 | 90 | 135 | 180 | 225 | 270 | 315
-  size: 8 | 10 | 12 | 16 | 24 | 32 | 48
+  rotate?: IconRotation
+  size: IconSize
   title?: string
   type: IconType
 }
 
 // Where...
 
+type IconRotation = 45 | 90 | 135 | 180 | 225 | 270 | 315
+type IconSize = 8 | 10 | 12 | 16 | 24 | 32 | 48
 type IconType = "caret"
               | "checkmark"
               | "dot"
@@ -229,6 +232,24 @@ type IconType = "caret"
               | "plus"
               | "tiles"
               | "triangle"
+```
+
+### IconButton
+It is often useful to make an icon clickable without applying default button styles. That's what this component is for.
+
+```typescript
+interface IconButtonProps {
+  className?: string
+  clickHandler?: React.MouseEventHandler
+  href?: string // Only applies if `tag` is "a"
+  rotate?: IconRotation
+  size: IconSize
+  tag?: "a" | "button"
+  title?: string
+  type: IconType
+}
+
+// Where IconRotation, IconType, and IconSize are defined in the `Icon` component
 ```
 
 ### Label
