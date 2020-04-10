@@ -63,19 +63,16 @@ SLIDER_PADDING = 3px
   &.isChecked
     left: "calc(%s - %s - %s)" % (TOGGLE_WIDTH SLIDER_WIDTH SLIDER_PADDING)
 
-.qmToggleCheckmark
+.qmIconContainer.qmToggleCheckmark
   @extend $absCenter
   left: 30%
-
-  size(0)
   opacity: 0
   transition: BASE_TRANSITION
+  transform: translateX(-50%) translateY(-50%) scale(0)
 
   &.isChecked
-    size(0.66rem)
     opacity: 1
-
-  path
+    transform: translateX(-50%) translateY(-50%) scale(1)
     fill: LIGHT_FONT
 
 .qmToggleNative

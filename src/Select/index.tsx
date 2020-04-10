@@ -4,8 +4,7 @@ import React, { PureComponent, ReactNodeArray } from "react"
 import { noopEvtHandler, buildClassNames } from "../lib/helpers"
 import { DynamicProps, RefFunction } from "../lib/helperTypes"
 import Label from "../Label"
-import CaretIcon from "../icons/CaretIcon"
-import TimesIcon from "../icons/TimesIcon"
+import Icon from "../Icon"
 
 interface SelectState {
   isOpen: boolean
@@ -292,12 +291,22 @@ class Select extends PureComponent<SelectProps, SelectState> {
                 className={`qmSelectClearIconWrapper ${buttonClasses}`}
                 onClick={isDisabled ? noopEvtHandler : this.handleClickClearButton}
                 onFocus={this.handleFocusClearButton}>
-                <TimesIcon className="qmSelectIcon qmSelectClearIcon" title="Clear Selection" />
+                <Icon
+                  className="qmSelectIcon qmSelectClearIcon"
+                  type="ex"
+                  size={10}
+                  title="Clear Selection"
+                />
               </button>
             )}
 
             <div className={`qmSelectOpenIconWrapper ${buttonClasses}`}>
-              <CaretIcon className="qmSelectIcon qmSelectOpenIcon" title="Open" />
+              <Icon
+                className="qmSelectIcon qmSelectOpenIcon"
+                type="caret"
+                size={12}
+                title="Open"
+              />
             </div>
 
           </div>

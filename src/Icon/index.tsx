@@ -11,12 +11,13 @@ type IconType = "caret"
               | "tiles"
               | "triangle"
 
-type IconSize = 8 | 12 | 16 | 24 | 32 | 48
+type IconSize = 8 | 10 | 12 | 16 | 24 | 32 | 48
 
 export interface IconProps {
   className?: string
-  type: IconType
   size: IconSize
+  title?: string
+  type: IconType
 }
 
 class Icon extends PureComponent<IconProps> {
@@ -49,7 +50,7 @@ class Icon extends PureComponent<IconProps> {
   }
 
   dot() {
-    return <circle cx="4" cy="4" r="4"></circle>
+    return <circle cx="4" cy="4" r="3"></circle>
   }
 
   ex() {
@@ -131,8 +132,9 @@ class Icon extends PureComponent<IconProps> {
   render() {
     const {
       className,
-      type,
       size,
+      title,
+      type,
     } = this.props
 
     return (
@@ -144,7 +146,7 @@ class Icon extends PureComponent<IconProps> {
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
         fillRule="evenodd">
-        <title>{type}</title>
+        <title>{title || type}</title>
         {
           this[type]()
         }

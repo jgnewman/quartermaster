@@ -11,7 +11,6 @@ export interface CharLimitCounterProps {
   isTextArea?: boolean
   limit: number
   limitIsMinimum?: boolean
-  suffix?: string
 }
 
 const CharLimitCounter = ({
@@ -22,7 +21,6 @@ const CharLimitCounter = ({
   isTextArea,
   limit,
   limitIsMinimum,
-  suffix,
 }: CharLimitCounterProps) => {
 
   const quarterMark = Math.round(limit / 4)
@@ -66,6 +64,7 @@ const CharLimitCounter = ({
   }
 
   const limitCountClasses = buildClassNames({
+    hasCount: count > 0,
     hasError: colorClass === "error",
     reachedMin: limitIsMinimum && colorClass === "best",
   })
@@ -83,7 +82,7 @@ const CharLimitCounter = ({
             {limitIsMinimum ? (count ? count : "") : (count || "0")}
           </span>
           {!limitIsMinimum && <span className="qmCharLimitDivider"> / </span>}
-          {!limitIsMinimum && <span className="qmCharLImitTotal">{limit}{suffix || ""}</span>}
+          {!limitIsMinimum && <span className="qmCharLImitTotal">{limit}</span>}
         </span>
       )}
 

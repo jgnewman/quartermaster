@@ -1,7 +1,7 @@
 import "./styles.styl"
 import React, { PureComponent } from "react"
 
-import DotIcon from "../icons/DotIcon"
+import Icon from "../Icon"
 
 import {
   DynamicProps,
@@ -118,7 +118,14 @@ class RadioButton extends PureComponent<RadioButtonProps> {
             <span
               aria-hidden={true}
               className={`qmRadioOverlay ${overlayClasses}`}>
-              {isChecked && <DotIcon className="qmRadioDot" title="Checked" size="100%"/>}
+              {isChecked && (
+                <Icon
+                  type="dot"
+                  title="checked"
+                  size={8}
+                  className="qmRadioDotIcon"
+                />
+              )}
             </span>
           </span>
 

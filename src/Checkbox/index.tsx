@@ -1,7 +1,7 @@
 import "./styles.styl"
 import React, { PureComponent } from "react"
 
-import CheckmarkIcon from "../icons/CheckmarkIcon"
+import Icon from "../Icon"
 
 import {
   DynamicProps,
@@ -112,7 +112,13 @@ class Checkbox extends PureComponent<CheckboxProps> {
             <span
               aria-hidden={true}
               className={`qmCheckboxOverlay ${overlayClasses}`}>
-              {isChecked && <CheckmarkIcon className="qmCheckboxCheckmark" />}
+              {isChecked && (
+                <Icon
+                  className="qmCheckboxCheckmark"
+                  type="checkmark"
+                  size={10}
+                />
+              )}
             </span>
           </span>
 

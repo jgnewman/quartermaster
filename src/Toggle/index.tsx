@@ -1,7 +1,7 @@
 import "./styles.styl"
 import React, { PureComponent } from "react"
 
-import CheckmarkIcon from "../icons/CheckmarkIcon"
+import Icon from "../Icon"
 
 import {
   DynamicProps,
@@ -116,8 +116,12 @@ class Toggle extends PureComponent<ToggleProps> {
             <span
               aria-hidden={true}
               className={`qmToggleOverlay ${overlayClasses}`}>
+              <Icon
+                className={`qmToggleCheckmark ${sliderAndCheckmarkClasses}`}
+                type="checkmark"
+                size={10}
+              />
               <span className={`qmToggleSlider ${sliderAndCheckmarkClasses}`}></span>
-              <CheckmarkIcon className={`qmToggleCheckmark ${sliderAndCheckmarkClasses}`} />
             </span>
           </span>
 

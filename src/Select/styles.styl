@@ -29,10 +29,6 @@
 
 .qmSelectOpenIcon,
 .qmSelectClearIcon
-  display: block;
-
-.qmSelectOpenIcon path,
-.qmSelectClearIcon path
   fill: FADED_FONT
   transition: BASE_TRANSITION
 
@@ -42,22 +38,22 @@
   align-self: center
   position: relative
 
-  padding: 0.813em 0.66em
+  padding: 0.813em 0.75em
   background: transparent
   border: 0;
 
   &.isEnabled:hover
 
-    .qmSelectOpenIcon path
+    .qmSelectOpenIcon
       fill: HIGHLIGHT
 
-    .qmSelectClearIcon path
+    .qmSelectClearIcon
       fill: NEGATIVE
 
 .qmSelectClearIconWrapper
   outline: solid transparent !important
 
-  &.isEnabled:focus .qmSelectClearIcon path
+  &.isEnabled:focus .qmSelectClearIcon
     fill: NEGATIVE
 
 .qmSelectOpenIconWrapper::before
