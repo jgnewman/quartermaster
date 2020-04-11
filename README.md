@@ -35,6 +35,7 @@ Quartermaster deliberately avoids styled-components for performance and bundle s
 - [Grid](#grid)
 - [Grow](#grow)
 - [Icon](#icon)
+- [IconButton](#iconbutton)
 - [Label](#label)
 - [Modal](#modal)
 - [RadioButton](#radiobutton)
