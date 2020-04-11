@@ -1,45 +1,46 @@
 @import "../lib/sharedStyles"
 
-DARK_BG = #333333
-DARK_FIELD_BG = #282828
-DARKER_FIELD_BG = #202020
-DARK_FONT = FADED_FONT
-FADED_ELEMS = #595959
-FADED_PLACEHOLDERS = #505050
+DARK_GRAY = #333333
+DARKER_GRAY = #282828
+DARKEST_GRAY = #202020
+
+LIGHT_GRAY = #505050
+LIGHTER_GRAY = #595959
+LIGHTEST_GRAY = #BDBDBD
+
+LIGHT_TRANSPARENCY = rgba(255, 255, 255, 0.15)
+WHITE = #FFFFFF
 
 body
-  background: DARK_BG
-  color: DARK_FONT
+  background: DARK_GRAY
+  color: LIGHTEST_GRAY
 
-.qmAvatarContainer
-  box-shadow: 0 0 0 3px DARK_BG
+.qmCheckboxOverlay,
+.qmRadioOverlay,
+.qmSelectClickableWrapper,
+.qmTextFieldInputWrapper,
+.qmToggleOverlay
+  background: DARKER_GRAY
 
-.qmAvatarInitials
-  background: FADED_PLACEHOLDERS
-
-.qmAvatarIndicator
-  border-color: DARK_BG
+.qmIconButtonEffect,
+.qmSelectMenu,
+.qmSelectMenuOption
+  background: DARKEST_GRAY
 
 .qmToggleSlider
-  background: DARK_FONT
+  background: LIGHTEST_GRAY
+
+.qmSelectOpenIconWrapper::before
+  background: LIGHTER_GRAY
+
+.qmAvatarInitials
+  background: LIGHT_GRAY
 
 .qmToggleSlider.isChecked
-  background: LIGHT_FONT
+  background: WHITE
 
-.qmLabelContainer,
-.qmSelectDisplay,
-.qmTextFieldInput.isField,
-.qmTextFieldInput.isTextArea
-  color: LIGHT_FONT
-
-.qmSelectDisplay.isDisabled,
-.qmTextFieldInput.isField.isDisabled,
-.qmTextFieldInput.isTextArea.isDisabled
-  color: FADED_PLACEHOLDERS
-
-.qmSelectOpenIconWrapper.isDisabled,
-.qmSelectClearIconWrapper.isDisabled
-  opacity: 0.5
+.qmCharLimitBar
+  background: TRANSPARENCY
 
 .qmCheckboxOverlay,
 .qmRadioOverlay,
@@ -50,48 +51,60 @@ body
 .qmToggleOverlay
   border: 0
 
-.qmCheckboxOverlay,
-.qmRadioOverlay,
-.qmSelectClickableWrapper,
-.qmTextFieldInputWrapper,
-.qmToggleOverlay
-  background: DARK_FIELD_BG
+.qmAvatarIndicator
+  border-color: DARK_GRAY
 
-.qmIconButtonEffect,
-.qmSelectMenu,
-.qmSelectMenuOption
-  background: DARKER_FIELD_BG
+.qmSpinnerContainer
+  border-color: LIGHT_TRANSPARENCY
+
+.qmSpinnerContainer
+  border-top-color: HIGHLIGHT
+
+.qmCharLimitBar
+  border-radius: 0.25rem
+
+.qmAvatarContainer
+  box-shadow: 0 0 0 3px DARK_GRAY
 
 .qmCharLimitText,
 .qmCheckboxLabel,
 .qmRadioLabel,
 .qmSelectMenuOption,
 .qmToggleLabel
-  color: DARK_FONT
+  color: LIGHTEST_GRAY
 
-.qmSelectOpenIconWrapper::before
-  background: FADED_ELEMS
-  opacity: .33
+.qmCharLimitContainer.isDisabled .qmCharLimitText
+.qmSelectDisplay.isDisabled,
+.qmSelectDisplay.isDisabled.isPlaceholder,
+.qmTextFieldInput.isField.isDisabled,
+.qmTextFieldInput.isField.isDisabled::placeholder,
+.qmTextFieldInput.isTextArea.isDisabled,
+.qmTextFieldInput.isTextArea.isDisabled::placeholder
+  color: LIGHT_GRAY
+
+.qmLabelContainer,
+.qmSelectDisplay,
+.qmTextFieldInput.isField,
+.qmTextFieldInput.isTextArea
+  color: WHITE
 
 .qmSelectOpenIcon .qmIcon,
 .qmSelectClearIcon .qmIcon
-  fill: FADED_ELEMS
+  fill: LIGHTER_GRAY
 
-.qmSelectDisplay.isDisabled.isPlaceholder,
-.qmTextFieldInput.isField.isDisabled::placeholder,
-.qmTextFieldInput.isTextArea.isDisabled::placeholder
-  color: FADED_PLACEHOLDERS
-
-.qmCharLimitContainer.isDisabled .qmCharLimitText
-  color: FADED_PLACEHOLDERS
+.qmIcon
+  fill: WHITE
 
 .qmCharLimitBar
-  background: TRANSPARENCY
-  border-radius: 0.25rem
   height: 100%
 
 .qmCharLimitBarFill
   opacity: 0.2
 
-.qmIcon
-  fill: LIGHT_FONT
+.qmSelectOpenIconWrapper::before
+  opacity: 0.33
+
+.qmSelectOpenIconWrapper.isDisabled,
+.qmSelectClearIconWrapper.isDisabled
+  opacity: 0.5
+

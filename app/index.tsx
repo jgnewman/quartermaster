@@ -55,6 +55,10 @@ class App extends React.Component {
     return (
       <div style={{ padding: "1em 1em 5em", maxWidth: "500px" }}>
         <QM.Align>
+          <QM.Spinner
+            size={16}
+          />
+
           <QM.Icon
             type="tiles"
             size={8}

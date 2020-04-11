@@ -1,0 +1,17 @@
+@import "../lib/sharedStyles"
+
+@keyframes qmSpin
+  0%
+    transform: rotate(0deg)
+  100%
+    transform: rotate(360deg)
+
+.qmSpinnerContainer
+  display: block
+
+  border-radius: 50%
+  border-style: solid
+  border-color: LIGHT_BG
+  border-top-color: HIGHLIGHT
+
+  animation: qmSpin 1s linear infinite

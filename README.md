@@ -41,6 +41,7 @@ Quartermaster deliberately avoids styled-components for performance and bundle s
 - [RadioButton](#radiobutton)
 - [RadioGroup](#radiogroup)
 - [Select](#select)
+- [Spinner](#spinner)
 - [TextField](#textfield)
 - [Toggle](#toggle)
 
@@ -342,6 +343,18 @@ interface SelectOption {
   label: string
   value: string
 }
+```
+
+### Spinner
+Creates a loading spinner in one of the allowed icon sizes.
+
+```typescript
+interface SpinnerProps {
+  className?: string
+  size: IconSize
+}
+
+// Where IconSize is defined in the `Icon` component
 ```
 
 ### TextField
