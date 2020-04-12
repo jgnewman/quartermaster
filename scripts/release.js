@@ -149,7 +149,7 @@ async function release() {
     await execPromise(`git status`)
     console.log("\n")
 
-    logWarn("Sanity check! Make sure you don't have uncommit changes before proceeding.")
+    logWarn("Sanity check! Make sure you don't have uncommitted changes before proceeding.")
     logWarn("Sanity check! Make sure you are creating your release from master.\n")
     const { confirmed } = await prompts({
       type: "confirm",
