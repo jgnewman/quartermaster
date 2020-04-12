@@ -22,6 +22,7 @@ export interface SelectProps {
   id?: string
   isRequired?: boolean
   fieldRef?: RefFunction // function like (elem => this.myRef = elem)
+  isCompact?: boolean
   isDisabled?: boolean
   label?: string
   options: SelectOption[]
@@ -212,6 +213,7 @@ class Select extends PureComponent<SelectProps, SelectState> {
     const {
       className,
       id,
+      isCompact,
       isDisabled,
       isRequired,
       label,
@@ -244,6 +246,7 @@ class Select extends PureComponent<SelectProps, SelectState> {
     }
 
     const containerClasses = buildClassNames({
+      isCompact,
       isDisabled,
       isEnabled,
       isOpen,
@@ -251,6 +254,7 @@ class Select extends PureComponent<SelectProps, SelectState> {
     })
 
     const clickableWrapperClasses = buildClassNames({
+      isCompact,
       isFocused,
     })
 

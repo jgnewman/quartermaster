@@ -3,7 +3,6 @@ import React from "react"
 import { render } from "react-dom"
 
 import * as QM from "../src/index"
-// import "../src/themes/Dark.styl"
 
 class App extends React.Component {
   public static displayName = "App"
@@ -15,6 +14,7 @@ class App extends React.Component {
     boxChecked: false,
     toggleChecked: false,
     radioVal: "foo",
+    darkThemeEnabled: false,
   }
 
   openModal() {
@@ -51,195 +51,212 @@ class App extends React.Component {
     this.setState({ radioVal: (evt.target as HTMLInputElement).value })
   }
 
+  toggleTheme() {
+    this.setState({ darkThemeEnabled: !this.state.darkThemeEnabled })
+  }
+
   render() {
     return (
-      <div style={{ padding: "1em 1em 5em", maxWidth: "500px" }}>
-        <QM.Align>
-          <QM.Spinner
-            size={16}
-          />
+      <QM.Theme data={this.state.darkThemeEnabled ? QM.DarkTheme : null}>
+        <div style={{ padding: "1em 1em 5em", maxWidth: "500px" }}>
 
-          <QM.Icon
-            type="tiles"
-            size={8}
-            rotate={45}
-          />
+          <div style={{ marginBottom: "1em" }}>
+            <QM.Button
+              text="Toggle Theme"
+              isCompact={true}
+              clickHandler={this.toggleTheme.bind(this)}
+            />
+          </div>
 
-          <QM.IconButton
-            type="plus"
-            size={12}
-          />
+          <QM.Align>
+            <QM.Spinner
+              size={16}
+            />
 
-          <QM.Avatar
-            showActivity
-            isActive={true}
-            name="John Newman"
-            // url="https://s.gravatar.com/avatar/cee1d21082337cc54cf9cf07339411e1?size=50&default=retro"
-          />
+            <QM.Icon
+              type="tiles"
+              size={8}
+              rotate={45}
+            />
 
-          <QM.Button
-            highlight="positive"
-            clickHandler={this.openModal.bind(this)}>
-            Open modal
-          </QM.Button>
+            <QM.IconButton
+              type="plus"
+              size={12}
+            />
 
-          <QM.ConfirmButton
-            cancelText="No, decrement it!"
-            disableHighlights={false}
-            clickHandler={this.incrementCounter.bind(this)}
-            postCancelHook={this.decrementCounter.bind(this)}>
-            Increment counter
-          </QM.ConfirmButton>
-        </QM.Align>
+            <QM.Avatar
+              showActivity
+              isActive={true}
+              name="John Newman"
+              isCompact={true}
+              // url="https://s.gravatar.com/avatar/cee1d21082337cc54cf9cf07339411e1?size=50&default=retro"
+            />
 
-        <div>
-          <QM.Label text="Counter" />
-          Here is a counter: {this.state.counter}
-          <QM.IconButton
-            type="plus"
-            size={12}
-          />
-        </div>
+            <QM.Button
+              highlight="positive"
+              isCompact={true}
+              clickHandler={this.openModal.bind(this)}>
+              Open modal
+            </QM.Button>
 
-        <QM.Modal
-          isOpen={this.state.modalOpen}
-          closeHandler={this.closeModal.bind(this)}>
-          This is a modal
-        </QM.Modal>
+            <QM.ConfirmButton
+              cancelText="No, decrement it!"
+              disableHighlights={false}
+              isCompact={true}
+              clickHandler={this.incrementCounter.bind(this)}
+              postCancelHook={this.decrementCounter.bind(this)}>
+              Increment counter
+            </QM.ConfirmButton>
+          </QM.Align>
 
-        <QM.TextField
-          changeHandler={this.setFieldVal.bind(this)}
-          charLimit={25}
-          errorText="You have an error bro"
-          hasError={this.state.fieldVal.length > 25}
-          isDisabled={false}
-          isRequired={true}
-          label="My Input"
-          placeholder="Say something here"
-          preventInputAtLimit={false}
-          type="text"
-          value={this.state.fieldVal}
-        />
+          <div>
+            <QM.Label text="Counter" />
+            Here is a counter: {this.state.counter}
+          </div>
 
-        <QM.TextField
-          label="My Textarea"
-          type="textarea"
-          isDisabled={false}
-          placeholder="Say something here"
-          charLimit={150}
-          preventInputAtLimit={true}
-          value={this.state.fieldVal}
-          changeHandler={this.setFieldVal.bind(this)}
-          errorText=""
-        />
+          <QM.Modal
+            isOpen={this.state.modalOpen}
+            closeHandler={this.closeModal.bind(this)}>
+            This is a modal
+          </QM.Modal>
 
-        <div>
-          Rendering checked state as {String(this.state.boxChecked)}
-        </div>
-
-        <div>
-          <QM.Toggle
+          <QM.TextField
+            changeHandler={this.setFieldVal.bind(this)}
+            charLimit={25}
+            errorText="You have an error bro"
+            hasError={this.state.fieldVal.length > 25}
+            isCompact={false}
             isDisabled={false}
-            isChecked={this.state.toggleChecked}
-            changeHandler={this.toggleToggle.bind(this)}
-            value="My Toggle"
-            label="Toggle me"
+            isRequired={true}
+            label="My Input"
+            placeholder="Say something here"
+            preventInputAtLimit={false}
+            type="text"
+            value={this.state.fieldVal}
           />
-        </div>
 
-        <div>
-          <QM.Checkbox
+          <QM.TextField
+            label="My Textarea"
+            type="textarea"
+            isCompact={false}
             isDisabled={false}
-            isChecked={this.state.boxChecked}
-            changeHandler={this.toggleCheckbox.bind(this)}
-            value="My Checkbox"
-            label="Check me"
+            placeholder="Say something here"
+            charLimit={150}
+            preventInputAtLimit={true}
+            value={this.state.fieldVal}
+            changeHandler={this.setFieldVal.bind(this)}
+            errorText=""
           />
-        </div>
 
-        <div>
-          <QM.RadioButton
-            isChecked={this.state.radioVal === "foo"}
-            changeHandler={this.setRadioVal.bind(this)}
-            value="foo"
-            label="Foo"
-            groupName="my-radio-group"
-          />
-        </div>
+          <div>
+            Rendering checked state as {String(this.state.boxChecked)}
+          </div>
 
-        <div>
-          <QM.RadioButton
-            isChecked={this.state.radioVal === "bar"}
-            changeHandler={this.setRadioVal.bind(this)}
-            value="bar"
-            label="Bar"
-            groupName="my-radio-group"
-          />
-        </div>
+          <div>
+            <QM.Toggle
+              isDisabled={false}
+              isChecked={this.state.toggleChecked}
+              changeHandler={this.toggleToggle.bind(this)}
+              value="My Toggle"
+              label="Toggle me"
+            />
+          </div>
 
-        <QM.Form initialState={{ mytext: "", mygroup: "foo", myselect: null }}>
-          {({ getFormState, updateValueFor }) => (
-            <>
-              <QM.TextField
-                label="Form Text field"
-                type="text"
-                placeholder="Say something here"
-                value={getFormState().mytext}
-                changeHandler={updateValueFor("mytext")}
-              />
-              <QM.Grid wrap>
-                <QM.RadioGroup
-                  name="mygroup"
-                  changeHandler={updateValueFor("mygroup")}
-                  value={getFormState().mygroup}
+          <div>
+            <QM.Checkbox
+              isDisabled={false}
+              isChecked={this.state.boxChecked}
+              changeHandler={this.toggleCheckbox.bind(this)}
+              value="My Checkbox"
+              label="Check me"
+            />
+          </div>
+
+          <div>
+            <QM.RadioButton
+              isChecked={this.state.radioVal === "foo"}
+              changeHandler={this.setRadioVal.bind(this)}
+              value="foo"
+              label="Foo"
+              groupName="my-radio-group"
+            />
+          </div>
+
+          <div>
+            <QM.RadioButton
+              isChecked={this.state.radioVal === "bar"}
+              changeHandler={this.setRadioVal.bind(this)}
+              value="bar"
+              label="Bar"
+              groupName="my-radio-group"
+            />
+          </div>
+
+          <QM.Form initialState={{ mytext: "", mygroup: "foo", myselect: null }}>
+            {({ getFormState, updateValueFor }) => (
+              <>
+                <QM.TextField
+                  label="Form Text field"
+                  type="text"
+                  placeholder="Say something here"
+                  value={getFormState().mytext}
+                  changeHandler={updateValueFor("mytext")}
+                />
+                <QM.Grid wrap>
+                  <QM.RadioGroup
+                    name="mygroup"
+                    changeHandler={updateValueFor("mygroup")}
+                    value={getFormState().mygroup}
+                    options={[
+                      { label: "Foo", value: "foo" },
+                      { label: "Bar", value: "bar" },
+                      { label: "Baz", value: "baz" },
+                    ]}
+                  />
+                  <QM.RadioGroup
+                    name="mygroup"
+                    changeHandler={updateValueFor("mygroup")}
+                    value={getFormState().mygroup}
+                    options={[
+                      { label: "Moo", value: "moo" },
+                      { label: "Mar", value: "mar" },
+                      { label: "Maz", value: "maz" },
+                    ]}
+                  />
+                  <QM.RadioGroup
+                    name="mygroup"
+                    changeHandler={updateValueFor("mygroup")}
+                    value={getFormState().mygroup}
+                    options={[
+                      { label: "Goo", value: "goo" },
+                      { label: "Gar", value: "gar" },
+                      { label: "Gaz", value: "gaz" },
+                    ]}
+                  />
+                </QM.Grid>
+                <QM.Select
+                  label="My select menu"
                   options={[
                     { label: "Foo", value: "foo" },
                     { label: "Bar", value: "bar" },
                     { label: "Baz", value: "baz" },
                   ]}
+                  isCompact={true}
+                  isDisabled={false}
+                  isRequired={true}
+                  value={getFormState().myselect}
+                  changeHandler={updateValueFor("myselect")}
                 />
-                <QM.RadioGroup
-                  name="mygroup"
-                  changeHandler={updateValueFor("mygroup")}
-                  value={getFormState().mygroup}
-                  options={[
-                    { label: "Moo", value: "moo" },
-                    { label: "Mar", value: "mar" },
-                    { label: "Maz", value: "maz" },
-                  ]}
-                />
-                <QM.RadioGroup
-                  name="mygroup"
-                  changeHandler={updateValueFor("mygroup")}
-                  value={getFormState().mygroup}
-                  options={[
-                    { label: "Goo", value: "goo" },
-                    { label: "Gar", value: "gar" },
-                    { label: "Gaz", value: "gaz" },
-                  ]}
-                />
-              </QM.Grid>
-              <QM.Select
-                label="My select menu"
-                options={[
-                  { label: "Foo", value: "foo" },
-                  { label: "Bar", value: "bar" },
-                  { label: "Baz", value: "baz" },
-                ]}
-                isDisabled={false}
-                isRequired={true}
-                value={getFormState().myselect}
-                changeHandler={updateValueFor("myselect")}
-              />
-              <QM.Button
-                clickHandler={() => console.log(getFormState())}>
-                Log form data
-              </QM.Button>
-            </>
-          )}
-        </QM.Form>
+                <QM.Button
+                  clickHandler={() => console.log(getFormState())}>
+                  Log form data
+                </QM.Button>
+              </>
+            )}
+          </QM.Form>
 
-      </div>
+        </div>
+      </QM.Theme>
     )
   }
 }

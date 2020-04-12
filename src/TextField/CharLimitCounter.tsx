@@ -8,6 +8,7 @@ export interface CharLimitCounterProps {
   count: number
   hideProgressBar?: boolean
   hideText?: boolean
+  isCompact?: boolean
   isTextArea?: boolean
   limit: number
   limitIsMinimum?: boolean
@@ -18,11 +19,13 @@ const CharLimitCounter = ({
   count,
   hideProgressBar,
   hideText,
+  isCompact,
   isTextArea,
   limit,
   limitIsMinimum,
 }: CharLimitCounterProps) => {
 
+  const isField = !isTextArea
   const quarterMark = Math.round(limit / 4)
   const halfMark = Math.round(limit / 2)
   const threeQuarterMark = quarterMark * 3
@@ -69,15 +72,20 @@ const CharLimitCounter = ({
     reachedMin: limitIsMinimum && colorClass === "best",
   })
 
-  const fieldClass = isTextArea ? "isTextArea" : "isField"
+  const modClasses = buildClassNames({
+    isField,
+    isTextArea,
+    isCompact,
+  })
+
   const fillWidth = (count / limit) * 100
   const styleWidth = fillWidth > 100 ? "100%" : `${fillWidth}%`
 
   return (
-    <div className={`qmCharLimitContainer ${fieldClass} ${className || ""}`}>
+    <div className={`qmCharLimitContainer ${modClasses} ${className || ""}`}>
 
       {!hideText && (
-        <span className={`qmCharLimitText ${fieldClass} ${colorClass}`}>
+        <span className={`qmCharLimitText ${modClasses} ${colorClass}`}>
           <span className={`qmCharLimitCount ${limitCountClasses}`}>
             {limitIsMinimum ? (count ? count : "") : (count || "0")}
           </span>
@@ -87,7 +95,7 @@ const CharLimitCounter = ({
       )}
 
       {!hideProgressBar && (
-        <span className={`qmCharLimitBar ${fieldClass}`}>
+        <span className={`qmCharLimitBar ${modClasses}`}>
           <span className={`qmCharLimitBarFill ${colorClass}`} style={{ width: styleWidth }}></span>
         </span>
       )}

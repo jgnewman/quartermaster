@@ -9,15 +9,19 @@
   borders(0, 10rem)
 
   background: HIGHLIGHT
-  padding: 0.65rem 1.5rem 0.75rem
+  padding: 0.5rem 2rem 0.57rem
+  height: LARGER_ELEM_HEIGHT
 
-  font-weight: bold
-  font-size: 1rem
   line-height: 1em
+  font-size: 90%
 
   transition: BASE_TRANSITION
   cursor: default
   outline: solid transparent !important
+
+  &.isCompact
+    height: SMALLER_ELEM_HEIGHT
+    padding: 0.5rem 1.5rem 0.57rem
 
   &.isEnabled
     cursor: pointer

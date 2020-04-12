@@ -43,6 +43,7 @@ Quartermaster deliberately avoids styled-components for performance and bundle s
 - [Select](#select)
 - [Spinner](#spinner)
 - [TextField](#textfield)
+- [Theme](#theme)
 - [Toggle](#toggle)
 
 ### Align
@@ -56,12 +57,13 @@ interface AlignProps {
 ```
 
 ### Avatar
-Creates a circular avatar allowing you to pass in a url to the avatar image. If no url is present, it falls back to generating initials based on the provided name. If no name is present, it defaults to displaying `••`. Includes an optional "activity" indicator that can be displayed to indicate when the user is active/online/etc.
+Creates a circular avatar allowing you to pass in a url to the avatar image. If no url is present, it falls back to generating initials based on the provided name. If no name is present, it defaults to displaying `••`. Includes an optional "activity" indicator that can be displayed to indicate when the user is active/online/etc. If `isCompact` is true, it will generate a smaller version of the component.
 
 ```typescript
 interface AvatarProps {
   className?: string
   isActive?: boolean
+  isCompact?: true
   name?: string
   showActivity?: boolean
   url?: string
@@ -69,7 +71,7 @@ interface AvatarProps {
 ```
 
 ### Button
-Creates a button from either an `a` tag or a `button` tag as specified, defaulting to `button`. Receives classes based on props indicating if the button is disabled or "processing" (for example while you are waiting for an action to complete). Takes a click handler that fires when the button is clicked.
+Creates a button from either an `a` tag or a `button` tag as specified, defaulting to `button`. Receives classes based on props indicating if the button is disabled or "processing" (for example while you are waiting for an action to complete). Takes a click handler that fires when the button is clicked. If `isCompact` is true, it will generate a smaller version of the component.
 
 ```typescript
 interface ButtonProps {
@@ -77,6 +79,7 @@ interface ButtonProps {
   clickHandler?: React.MouseEventHandler
   highlight?: "positive" | "negative" // applies additional green or red color stylings
   href?: string // Only applies if `tag` is "a"
+  isCompact?: boolean
   isDisabled?: boolean
   isProcessing?: boolean
   tag?: "a" | "button" // defaults to button
@@ -321,7 +324,7 @@ interface RadioOption {
 ```
 
 ### Select
-Generates a stylable select menu built on top of a raw `select` element for accessibility. Allows capturing the field ref via a function such as `elem => this.myRef = elem`. Is controlled by a `value`, and takes an array of `options` objects and a `changeHandler` for capturing value updates.
+Generates a stylable select menu built on top of a raw `select` element for accessibility. Allows capturing the field ref via a function such as `elem => this.myRef = elem`. Is controlled by a `value`, and takes an array of `options` objects and a `changeHandler` for capturing value updates. If `isCompact` is true, it will generate a smaller version of the component.
 
 ```typescript
 interface SelectProps {
@@ -329,6 +332,7 @@ interface SelectProps {
   className?: string
   fieldRef?: (elem: HTMLElement | null) => void
   id?: string
+  isCompact?: boolean
   isDisabled?: boolean
   isRequired?: boolean
   label?: string
@@ -358,7 +362,7 @@ interface SpinnerProps {
 ```
 
 ### TextField
-Generates an input field or textarea as specified by props. Allows capturing the field ref via a function such as `elem => this.myRef = elem`. Takes both a `changeHandler` and a `keyUpHandler` that you can use to capture new values and capture things like enter key presses. Allows enabling character limits, setting a label and placeholder, marking the field as disabled, and displaying error text.
+Generates an input field or textarea as specified by props. Allows capturing the field ref via a function such as `elem => this.myRef = elem`. Takes both a `changeHandler` and a `keyUpHandler` that you can use to capture new values and capture things like enter key presses. Allows enabling character limits, setting a label and placeholder, marking the field as disabled, and displaying error text. If `isCompact` is true, it will generate a smaller version of the component.
 
 ```typescript
 interface TextFieldProps {
@@ -376,6 +380,7 @@ interface TextFieldProps {
   hideCharLimitText?: boolean
   id?: string
   ignoreLastPass?: boolean
+  isCompact?: boolean
   isDisabled?: boolean
   isRequired?: boolean
   keyUpHandler?: React.KeyboardEventHandler
@@ -389,6 +394,91 @@ interface TextFieldProps {
 ```
 
 With regard to `dangerouslyAutoTruncateLimitBreakingValues`, this prop is rarely ever needed but is applicable in any case where you might attempt to pass a value to the text field that is greater than a provided char limit, assuming the character count is not expected to be greater than the limit. With this prop set to true, the component will automatically truncate the provided value and fire both a `change` and `keyUp` event with the new value. The prop is labeled as dangerous because if you are not handling these events in such a way that the component re-renders with the new, truncated value, you will trigger an infinitely recursive loop.
+
+### Theme
+Quartermaster is theme-able and comes with an alternate dark theme that can be applied. To apply a theme, wrap your application in the `Theme` component and supply a `data` prop specifying the theme data. Note that instantiating `Theme` at **any level** of your nested component tree will apply theme styles to **the entire tree** so it is best to wrap your application in this component near the top level.
+
+```typescript
+interface ThemeProps {
+  data: CSSData | null
+}
+
+// Where...
+
+interface CSSData {
+  [key: string]: ValueSpec
+}
+
+// Where...
+
+interface ValueSpec {
+  [key: string]: string
+}
+```
+
+Here is an example:
+
+```jsx
+import { DarkTheme } from "quartermaster"
+// or import DarkTheme from "quartermaster/Theme/Dark
+
+<Theme data={DarkTheme}>
+  <App />
+</Theme>
+```
+
+To create your own themes, you just need to know the format for a theme data object. This object's keys represent css properties and its values are objects as well. These sub-objects' keys represent css values, and the objects' values are css selector strings. This may seem backward at first, but it is an efficient and sane way to manage themeing, wherein you are not attempting to rewrite all of the library's styles, but instead just need to make small adjustments here and there. For example:
+
+```jsx
+const RED = "#ff0000"
+const WHITE = "#ffffff"
+const BLUE = "#0000ff"
+
+const AmericanTheme = {
+
+  "background": {
+    [RED]: ".qmSelectContainer, .qmFieldContainer",
+    [WHITE]: "body",
+    [BLUE]: ".qmCheckboxOverlay, .qmRadioButtonOverlay",
+  },
+
+  "border-radius": {
+    "0": ".qmSelectContainer, .qmFieldContainer, .qmCheckboxContainer",
+  },
+}
+
+<Theme data={AmericanTheme}>
+  <App />
+</Theme>
+```
+
+This technique allows you to determine a simple and common set of colors and styles and then choose the selectors to which they apply.
+
+It is also possible to create a very minor extension of a theme simply by wrapping the original `Theme` instance inside another. In this case, the _outermost_ theme styles will take priority (assuming, of course, that the selectors are at least equally specific as the selectors of the innermost theme). For example:
+
+```jsx
+// In this case, all DarkTheme styles will be applied but the
+// background of .qmTextFieldInputWrapper elements will be
+// overridden and set to "red".
+<Theme data={{ background: { red: ".qmTextFieldInputWrapper" } }}>
+  <Theme data={DarkTheme}>
+    <App />
+  </Theme>
+</Theme>
+```
+
+However, you may prefer this alternative approach to extending themes:
+
+```jsx
+import { ThemeExtension } from "quartermaster"
+// or import { ThemeExtension } from "quartermaster/ThemeExtension"
+
+<ThemeExtension
+  base={DarkTheme}
+  data={{ background: { red: ".qmTextFieldInputWrapper" } }}>
+  <App />
+<ThemeExtension>
+```
 
 ### Toggle
 Creates a sliding toggle element wrapped around native checkbox input for optimized accessibility. Allows specifying a label, a `isChecked` state, and a `value` among other features. Allows capturing the checkbox ref via a function such as `elem => this.myRef = elem`.

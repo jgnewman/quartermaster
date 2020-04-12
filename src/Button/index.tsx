@@ -9,6 +9,7 @@ export interface ButtonProps {
   clickHandler?: React.MouseEventHandler
   highlight?: "positive" | "negative"
   href?: string
+  isCompact?: boolean
   isDisabled?: boolean
   isProcessing?: boolean
   tag?: "a" | "button"
@@ -36,6 +37,7 @@ class Button extends PureComponent<ButtonProps> {
       clickHandler,
       highlight,
       href,
+      isCompact,
       isDisabled,
       isProcessing,
       tag,
@@ -65,6 +67,7 @@ class Button extends PureComponent<ButtonProps> {
     }
 
     const containerClasses = buildClassNames({
+      isCompact,
       isDisabled,
       isEnabled,
       isProcessing,

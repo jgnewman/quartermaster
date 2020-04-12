@@ -31,6 +31,7 @@ export interface TextFieldProps {
   hideCharLimitText?: boolean
   id?: string
   ignoreLastPass?: boolean
+  isCompact?: boolean
   isDisabled?: boolean
   isRequired?: boolean
   keyUpHandler?: React.KeyboardEventHandler
@@ -168,6 +169,7 @@ class TextField extends PureComponent<TextFieldProps> {
       hideCharLimitText,
       id,
       ignoreLastPass,
+      isCompact,
       isDisabled,
       isRequired,
       label,
@@ -226,6 +228,7 @@ class TextField extends PureComponent<TextFieldProps> {
     const containerClasses: string = buildClassNames({
       hasCharLimit,
       hasError,
+      isCompact,
       isDisabled,
       isEnabled,
       isField,
@@ -245,6 +248,7 @@ class TextField extends PureComponent<TextFieldProps> {
     const inputClasses: string = buildClassNames({
       hasCharLimit,
       hasError,
+      isCompact,
       isDisabled,
       isEnabled,
       isField,
@@ -296,6 +300,7 @@ class TextField extends PureComponent<TextFieldProps> {
               count={typeof value === "string" ? value.length : 0}
               hideProgressBar={!!hideCharLimitProgress}
               hideText={!!hideCharLimitText}
+              isCompact={!!isCompact}
               isTextArea={isTextArea}
               limit={charLimit}
               limitIsMinimum={!!charLimitIsMinimum}

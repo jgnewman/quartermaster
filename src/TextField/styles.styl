@@ -38,6 +38,9 @@
   background: LIGHT_BG
   overflow: hidden
 
+  &.isCompact
+    size(100%, 3px)
+
 .qmCharLimitBarFill
   size(0, 100%)
 
@@ -129,9 +132,12 @@ $commonFieldProps
 .qmTextFieldInput.isTextArea
   @extend $commonFieldProps
 
-  height: 100px
+  height: LARGER_ELEM_HEIGHT * 3
   padding: 0.66rem 0.75rem
   resize: auto
+
+  &.isCompact
+    height: SMALLER_ELEM_HEIGHT * 3
 
   &.hasCharLimit
     padding-bottom: 1.75rem
@@ -143,5 +149,8 @@ $commonFieldProps
   @extend $commonFieldProps
 
   padding: 0.1rem 0.75rem
-  height: 40px;
+  height: LARGER_ELEM_HEIGHT
+
+  &.isCompact
+    height: SMALLER_ELEM_HEIGHT
 

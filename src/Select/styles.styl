@@ -11,6 +11,7 @@
 
 .qmSelectClickableWrapper
   borders(BASE_BORDER, 0.25rem)
+  height: LARGER_ELEM_HEIGHT
 
   display: flex
   align-items: stretch
@@ -22,6 +23,9 @@
   transition: BASE_TRANSITION
 
   outline: solid transparent !important
+
+  &.isCompact
+    height: SMALLER_ELEM_HEIGHT
 
   &.isFocused
     box-shadow: BASE_OUTLINE
@@ -38,7 +42,7 @@
   align-self: center
   position: relative
 
-  padding: 0.813em 0.75em
+  padding: 0.5em 0.75em
   background: transparent
   border: 0;
 

@@ -2,10 +2,12 @@ import "./styles.styl"
 import React, { PureComponent } from "react"
 
 import { DynamicProps } from "../lib/helperTypes"
+import { buildClassNames } from "../lib/helpers"
 
 export interface AvatarProps {
   className?: string
   isActive?: boolean
+  isCompact?: boolean
   name?: string
   showActivity?: boolean
   url?: string
@@ -23,6 +25,7 @@ class Avatar extends PureComponent<AvatarProps> {
     const {
       className,
       isActive,
+      isCompact,
       name = "••",
       showActivity,
       url,
@@ -34,13 +37,15 @@ class Avatar extends PureComponent<AvatarProps> {
       style.backgroundImage = `url(${url})`
     }
 
+    const compactClass = buildClassNames({ isCompact })
+
     return (
-      <div className={`qmAvatarContainer ${className || ""}`}>
+      <div className={`qmAvatarContainer ${compactClass} ${className || ""}`}>
         <span className="qmAvatarContent">
           <span className="qmAvatarInitials">{ this.getInitials(name) }</span>
           {url && <span className="qmAvatarImg" style={style}></span>}
         </span>
-        {showActivity && <span className={`qmAvatarIndicator ${isActive ? "isActive" : ""}`}></span>}
+        {showActivity && <span className={`qmAvatarIndicator ${compactClass} ${isActive ? "isActive" : ""}`}></span>}
       </div>
     )
   }

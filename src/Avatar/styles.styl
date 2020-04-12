@@ -8,7 +8,7 @@ $fillCircle
 
 .qmAvatarContainer
   @extend $vertMiddle
-  size(40px)
+  size(LARGER_ELEM_HEIGHT)
   borders(0, 50%)
 
   position: relative
@@ -16,6 +16,9 @@ $fillCircle
   box-shadow: 0 0 0 2px BASE_BG
 
   flex-grow: 0 !important
+
+  &.isCompact
+    size(SMALLER_ELEM_HEIGHT)
 
 .qmAvatarContent
   @extend $fillCircle
@@ -32,9 +35,8 @@ $fillCircle
 
   background: BASE_FONT
   color: LIGHT_FONT
-  font-size: 90%
+  font-size: SMALLER_FONT
   letter-spacing: 1px
-  font-weight: bold
 
   display: flex
   align-content: center
@@ -47,11 +49,16 @@ $fillCircle
 
   display: block
   position: absolute
-  right: -1px
-  bottom: -1px
+  right: 0
+  bottom: 0
   z-index: 2
 
   background: FADED_FONT
+
+  &.isCompact
+    size(10px)
+    right: -1px
+    bottom: -1px
 
 .qmAvatarIndicator.isActive
   background: ON_INDICATORS

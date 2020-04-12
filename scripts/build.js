@@ -74,7 +74,7 @@ async function transformCSSExtensions() {
 // and compiles a css file to the corresponding directories in /dist.
 async function compileStylus() {
   console.log("Compiling Stylus")
-  const srcDirs = await getComponentDirs(srcPath, "themes")
+  const srcDirs = await getComponentDirs(srcPath)
 
   return Promise.all(srcDirs.map(async ({ name }) => {
     const dirPath = path.resolve(srcPath, name)

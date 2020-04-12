@@ -14,4 +14,7 @@ export { default as RadioGroup, RadioGroupProps, RadioOption } from "./RadioGrou
 export { default as Select, SelectProps } from "./Select"
 export { default as Spinner, SpinnerProps } from "./Spinner"
 export { default as TextField, TextFieldProps } from "./TextField"
+export { default as Theme, ThemeProps } from "./Theme"
+export { default as DarkTheme } from "./Theme/Dark"
+export { default as ThemeExtension } from "./ThemeExtension"
 export { default as Toggle, ToggleProps } from "./Toggle"
