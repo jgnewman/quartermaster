@@ -241,7 +241,7 @@ class App extends React.Component {
                     { label: "Bar", value: "bar" },
                     { label: "Baz", value: "baz" },
                   ]}
-                  isCompact={true}
+                  isCompact={false}
                   isDisabled={false}
                   isRequired={true}
                   value={getFormState().myselect}
