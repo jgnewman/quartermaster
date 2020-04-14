@@ -1,6 +1,8 @@
 import "./styles.styl"
 import React, { PureComponent } from "react"
 
+import sizeMap from "./sizeMap"
+
 export type IconType = "caret"
                       | "checkmark"
                       | "dot"
@@ -12,7 +14,7 @@ export type IconType = "caret"
                       | "triangle"
 
 export type IconRotation = 45 | 90 | 135 | 180 | 225 | 270 | 315
-export type IconSize = 8 | 10 | 12 | 16 | 24 | 32 | 48
+export type IconSize = "xxs" | "xs" | "s" | "m" | "l" | "xl" | "xxl"
 
 export interface IconProps {
   className?: string
@@ -140,9 +142,11 @@ class Icon extends PureComponent<IconProps> {
       type,
     } = this.props
 
+    const pxSize = sizeMap[size]
+
     const containerStyle = {
-      width: `${size}px`,
-      height: `${size}px`,
+      width: `${pxSize}px`,
+      height: `${pxSize}px`,
     }
 
     const svgStyle = {
@@ -154,8 +158,8 @@ class Icon extends PureComponent<IconProps> {
         <svg
           className={`qmIcon`}
           style={svgStyle}
-          width={size}
-          height={size}
+          width={pxSize}
+          height={pxSize}
           viewBox="0 0 8 8"
           version="1.1"
           xmlns="http://www.w3.org/2000/svg"

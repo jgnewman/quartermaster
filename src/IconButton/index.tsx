@@ -2,6 +2,8 @@ import "./styles.styl"
 import React, { PureComponent } from "react"
 
 import Button from "../Button"
+import sizeMap from "../Icon/sizeMap"
+
 import Icon, {
   IconRotation,
   IconSize,
@@ -37,7 +39,7 @@ class IconButton extends PureComponent<IconButtonProps> {
     } = this.props
 
     const containerStyle = {
-      fontSize: `${size}px`,
+      fontSize: `${sizeMap[size]}px`,
     }
 
     return (

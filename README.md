@@ -115,6 +115,7 @@ export interface ConfirmButtonProps extends Exclude<ButtonProps, "highlight"> {
   disableHighlights?: boolean // disables positive/negative highlights on buttons
   postCancelHook?: React.MouseEventHandler
   skipConfirmation?: boolean
+  useCompactModalButtons?: boolean // affects yes/no button size
 }
 ```
 
@@ -227,7 +228,7 @@ interface IconProps {
 // Where...
 
 type IconRotation = 45 | 90 | 135 | 180 | 225 | 270 | 315
-type IconSize = 8 | 10 | 12 | 16 | 24 | 32 | 48
+type IconSize = "xxs" | "xs" | "s" | "m" | "l" | "xl" | "xxl"
 type IconType = "caret"
               | "checkmark"
               | "dot"

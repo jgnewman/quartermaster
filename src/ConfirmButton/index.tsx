@@ -15,6 +15,7 @@ export interface ConfirmButtonProps extends Exclude<ButtonProps, "highlight"> {
   disableHighlights?: boolean
   postCancelHook?: React.MouseEventHandler
   skipConfirmation?: boolean
+  useCompactModalButtons?: boolean
 }
 
 interface ConfirmButtonState {
@@ -68,6 +69,7 @@ class ConfirmButton extends Component<ConfirmButtonProps, ConfirmButtonState> {
       disableHighlights,
       postCancelHook,
       skipConfirmation,
+      useCompactModalButtons,
       ...rest
     } = this.props
 
@@ -108,6 +110,7 @@ class ConfirmButton extends Component<ConfirmButtonProps, ConfirmButtonState> {
                 <Button
                   className="qmConfButtonContinue"
                   clickHandler={this.handleContinue}
+                  isCompact={!!useCompactModalButtons}
                   {...positiveProps}>
                   { continueText || "Yes" }
                 </Button>
@@ -115,6 +118,7 @@ class ConfirmButton extends Component<ConfirmButtonProps, ConfirmButtonState> {
                 <Button
                   className="qmConfButtonCancel"
                   clickHandler={this.handleCancel}
+                  isCompact={!!useCompactModalButtons}
                   {...negativeProps}>
                   { cancelText || "Nevermind" }
                 </Button>

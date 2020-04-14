@@ -119,7 +119,7 @@ class Toggle extends PureComponent<ToggleProps> {
               <Icon
                 className={`qmToggleCheckmark ${sliderAndCheckmarkClasses}`}
                 type="checkmark"
-                size={10}
+                size="xs"
               />
               <span className={`qmToggleSlider ${sliderAndCheckmarkClasses}`}></span>
             </span>

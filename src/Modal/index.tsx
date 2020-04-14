@@ -73,7 +73,7 @@ class Modal extends PureComponent<ModalProps> {
               className="qmModalClose"
               clickHandler={closeHandler || noopEvtHandler}
               type="ex"
-              size={16}
+              size="s"
             />
           </div>
         )}

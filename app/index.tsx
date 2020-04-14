@@ -70,18 +70,18 @@ class App extends React.Component {
 
           <QM.Align>
             <QM.Spinner
-              size={16}
+              size="m"
             />
 
             <QM.Icon
               type="tiles"
-              size={8}
+              size="xxs"
               rotate={45}
             />
 
             <QM.IconButton
               type="plus"
-              size={12}
+              size="s"
             />
 
             <QM.Avatar
@@ -103,6 +103,7 @@ class App extends React.Component {
               cancelText="No, decrement it!"
               disableHighlights={false}
               isCompact={true}
+              useCompactModalButtons={true}
               clickHandler={this.incrementCounter.bind(this)}
               postCancelHook={this.decrementCounter.bind(this)}>
               Increment counter

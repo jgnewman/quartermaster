@@ -298,7 +298,7 @@ class Select extends PureComponent<SelectProps, SelectState> {
                 <Icon
                   className="qmSelectIcon qmSelectClearIcon"
                   type="ex"
-                  size={10}
+                  size="xs"
                   title="Clear Selection"
                 />
               </button>
@@ -308,7 +308,7 @@ class Select extends PureComponent<SelectProps, SelectState> {
               <Icon
                 className="qmSelectIcon qmSelectOpenIcon"
                 type="caret"
-                size={12}
+                size="s"
                 title="Open"
               />
             </div>

@@ -116,7 +116,7 @@ class Checkbox extends PureComponent<CheckboxProps> {
                 <Icon
                   className="qmCheckboxCheckmark"
                   type="checkmark"
-                  size={10}
+                  size="xs"
                 />
               )}
             </span>

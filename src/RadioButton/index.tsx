@@ -122,7 +122,7 @@ class RadioButton extends PureComponent<RadioButtonProps> {
                 <Icon
                   type="dot"
                   title="checked"
-                  size={8}
+                  size="xxs"
                   className="qmRadioDotIcon"
                 />
               )}

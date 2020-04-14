@@ -1,6 +1,7 @@
 import "./styles.styl"
 import React, { PureComponent } from "react"
 
+import sizeMap from "../Icon/sizeMap"
 import type { IconSize } from "../Icon"
 
 export interface SpinnerProps {
@@ -14,14 +15,35 @@ class Spinner extends PureComponent<SpinnerProps> {
   render() {
     const {
       className,
-      size = 8,
+      size = "xxs",
     } = this.props
 
-    const borderWidth = size > 24 ? 3 : size > 10 ? 2 : 1
+    const pxSize = sizeMap[size]
+    let borderWidth: number
+
+    switch (size) {
+
+      case "xxs":
+      case "xs":
+        borderWidth = 1
+        break
+
+      case "s":
+      case "m":
+      case "l":
+        borderWidth = 2
+        break
+
+      case "xl":
+      case "xxl":
+      default:
+        borderWidth = 3
+
+    }
 
     const spinnerStyle = {
-      width: `${size}px`,
-      height: `${size}px`,
+      width: `${pxSize}px`,
+      height: `${pxSize}px`,
       borderWidth: `${borderWidth}px`,
     }
 
