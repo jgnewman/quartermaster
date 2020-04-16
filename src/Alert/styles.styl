@@ -1,0 +1,34 @@
+@import "../lib/sharedStyles"
+
+.qmAlertContainer
+  borders(BASE_BORDER, 0.25rem)
+  padding: 0.75rem 1rem 0.75rem
+
+  &.isDanger
+    background: rgba(ERRORS, 0.15)
+    border-color: rgba(ERRORS, 0.25)
+
+  &.isInfo
+    background: rgba(HIGHLIGHT, 0.15)
+    border-color: rgba(HIGHLIGHT, 0.25)
+
+  &.isWarning
+    background: rgba(WARNING, 0.15)
+    border-color: rgba(WARNING, 0.25)
+
+.qmAlertIcon
+
+  &.isDanger .qmIcon
+    fill: ERRORS
+
+  &.isInfo .qmIcon
+    fill: HIGHLIGHT
+
+  &.isWarning .qmIcon
+    fill: WARNING
+
+.qmAlertContent.qmGrowContainer
+  margin-left: 0.25rem
+
+.qmAlertGrid.qmGridContainer > *
+  margin-bottom: 0

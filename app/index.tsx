@@ -2,7 +2,28 @@ import "./styles.styl"
 import React from "react"
 import { render } from "react-dom"
 
-import * as QM from "../src/index"
+import {
+  Alert,
+  Align,
+  Avatar,
+  Button,
+  Checkbox,
+  ConfirmButton,
+  DarkTheme,
+  Form,
+  Grid,
+  Icon,
+  IconButton,
+  Modal,
+  RadioButton,
+  RadioGroup,
+  Select,
+  Space,
+  Spinner,
+  TextField,
+  Theme,
+  Toggle,
+} from "../src/index"
 
 class App extends React.Component {
   public static displayName = "App"
@@ -57,34 +78,34 @@ class App extends React.Component {
 
   render() {
     return (
-      <QM.Theme data={this.state.darkThemeEnabled ? QM.DarkTheme : null}>
+      <Theme data={this.state.darkThemeEnabled ? DarkTheme : null}>
         <div style={{ padding: "1em 1em 5em", maxWidth: "500px" }}>
 
-          <div style={{ marginBottom: "1em" }}>
-            <QM.Button
+          <Space bottom="l">
+            <Button
               text="Toggle Theme"
               isCompact={true}
               clickHandler={this.toggleTheme.bind(this)}
             />
-          </div>
+          </Space>
 
-          <QM.Align>
-            <QM.Spinner
+          <Align bottomSpace="l">
+            <Spinner
               size="m"
             />
 
-            <QM.Icon
+            <Icon
               type="tiles"
               size="xxs"
               rotate={45}
             />
 
-            <QM.IconButton
+            <IconButton
               type="plus"
               size="s"
             />
 
-            <QM.Avatar
+            <Avatar
               showActivity
               isActive={true}
               name="John Newman"
@@ -92,14 +113,14 @@ class App extends React.Component {
               // url="https://s.gravatar.com/avatar/cee1d21082337cc54cf9cf07339411e1?size=50&default=retro"
             />
 
-            <QM.Button
+            <Button
               highlight="positive"
               isCompact={true}
               clickHandler={this.openModal.bind(this)}>
               Open modal
-            </QM.Button>
+            </Button>
 
-            <QM.ConfirmButton
+            <ConfirmButton
               cancelText="No, decrement it!"
               disableHighlights={false}
               isCompact={true}
@@ -107,54 +128,59 @@ class App extends React.Component {
               clickHandler={this.incrementCounter.bind(this)}
               postCancelHook={this.decrementCounter.bind(this)}>
               Increment counter
-            </QM.ConfirmButton>
-          </QM.Align>
+            </ConfirmButton>
+          </Align>
 
-          <div>
-            <QM.Label text="Counter" />
-            Here is a counter: {this.state.counter}
-          </div>
+          <Space bottom="l">
+            <Alert type="info">
+              Here is a counter: {this.state.counter}
+            </Alert>
+          </Space>
 
-          <QM.Modal
+          <Modal
             isOpen={this.state.modalOpen}
             closeHandler={this.closeModal.bind(this)}>
             This is a modal
-          </QM.Modal>
+          </Modal>
 
-          <QM.TextField
-            changeHandler={this.setFieldVal.bind(this)}
-            charLimit={25}
-            errorText="You have an error bro"
-            hasError={this.state.fieldVal.length > 25}
-            isCompact={false}
-            isDisabled={false}
-            isRequired={true}
-            label="My Input"
-            placeholder="Say something here"
-            preventInputAtLimit={false}
-            type="text"
-            value={this.state.fieldVal}
-          />
+          <Space bottom="l">
+            <TextField
+              changeHandler={this.setFieldVal.bind(this)}
+              charLimit={25}
+              errorText="You have an error bro"
+              hasError={this.state.fieldVal.length > 25}
+              isCompact={false}
+              isDisabled={false}
+              isRequired={true}
+              label="My Input"
+              placeholder="Say something here"
+              preventInputAtLimit={false}
+              type="text"
+              value={this.state.fieldVal}
+            />
+          </Space>
 
-          <QM.TextField
-            label="My Textarea"
-            type="textarea"
-            isCompact={false}
-            isDisabled={false}
-            placeholder="Say something here"
-            charLimit={150}
-            preventInputAtLimit={true}
-            value={this.state.fieldVal}
-            changeHandler={this.setFieldVal.bind(this)}
-            errorText=""
-          />
+          <Space bottom="l">
+            <TextField
+              label="My Textarea"
+              type="textarea"
+              isCompact={false}
+              isDisabled={false}
+              placeholder="Say something here"
+              charLimit={150}
+              preventInputAtLimit={true}
+              value={this.state.fieldVal}
+              changeHandler={this.setFieldVal.bind(this)}
+              errorText=""
+            />
+          </Space>
 
           <div>
             Rendering checked state as {String(this.state.boxChecked)}
           </div>
 
           <div>
-            <QM.Toggle
+            <Toggle
               isDisabled={false}
               isChecked={this.state.toggleChecked}
               changeHandler={this.toggleToggle.bind(this)}
@@ -164,7 +190,7 @@ class App extends React.Component {
           </div>
 
           <div>
-            <QM.Checkbox
+            <Checkbox
               isDisabled={false}
               isChecked={this.state.boxChecked}
               changeHandler={this.toggleCheckbox.bind(this)}
@@ -174,7 +200,7 @@ class App extends React.Component {
           </div>
 
           <div>
-            <QM.RadioButton
+            <RadioButton
               isChecked={this.state.radioVal === "foo"}
               changeHandler={this.setRadioVal.bind(this)}
               value="foo"
@@ -184,7 +210,7 @@ class App extends React.Component {
           </div>
 
           <div>
-            <QM.RadioButton
+            <RadioButton
               isChecked={this.state.radioVal === "bar"}
               changeHandler={this.setRadioVal.bind(this)}
               value="bar"
@@ -193,18 +219,20 @@ class App extends React.Component {
             />
           </div>
 
-          <QM.Form initialState={{ mytext: "", mygroup: "foo", myselect: null }}>
+          <Form initialState={{ mytext: "", mygroup: "foo", myselect: null }}>
             {({ getFormState, updateValueFor }) => (
               <>
-                <QM.TextField
-                  label="Form Text field"
-                  type="text"
-                  placeholder="Say something here"
-                  value={getFormState().mytext}
-                  changeHandler={updateValueFor("mytext")}
-                />
-                <QM.Grid wrap>
-                  <QM.RadioGroup
+                <Space bottom="l">
+                  <TextField
+                    label="Form Text field"
+                    type="text"
+                    placeholder="Say something here"
+                    value={getFormState().mytext}
+                    changeHandler={updateValueFor("mytext")}
+                  />
+                </Space>
+                <Grid wrap>
+                  <RadioGroup
                     name="mygroup"
                     changeHandler={updateValueFor("mygroup")}
                     value={getFormState().mygroup}
@@ -214,7 +242,7 @@ class App extends React.Component {
                       { label: "Baz", value: "baz" },
                     ]}
                   />
-                  <QM.RadioGroup
+                  <RadioGroup
                     name="mygroup"
                     changeHandler={updateValueFor("mygroup")}
                     value={getFormState().mygroup}
@@ -224,7 +252,7 @@ class App extends React.Component {
                       { label: "Maz", value: "maz" },
                     ]}
                   />
-                  <QM.RadioGroup
+                  <RadioGroup
                     name="mygroup"
                     changeHandler={updateValueFor("mygroup")}
                     value={getFormState().mygroup}
@@ -234,30 +262,32 @@ class App extends React.Component {
                       { label: "Gaz", value: "gaz" },
                     ]}
                   />
-                </QM.Grid>
-                <QM.Select
-                  label="My select menu"
-                  options={[
-                    { label: "Foo", value: "foo" },
-                    { label: "Bar", value: "bar" },
-                    { label: "Baz", value: "baz" },
-                  ]}
-                  isCompact={false}
-                  isDisabled={false}
-                  isRequired={true}
-                  value={getFormState().myselect}
-                  changeHandler={updateValueFor("myselect")}
-                />
-                <QM.Button
+                </Grid>
+                <Space bottom="l">
+                  <Select
+                    label="My select menu"
+                    options={[
+                      { label: "Foo", value: "foo" },
+                      { label: "Bar", value: "bar" },
+                      { label: "Baz", value: "baz" },
+                    ]}
+                    isCompact={false}
+                    isDisabled={false}
+                    isRequired={true}
+                    value={getFormState().myselect}
+                    changeHandler={updateValueFor("myselect")}
+                  />
+                </Space>
+                <Button
                   clickHandler={() => console.log(getFormState())}>
                   Log form data
-                </QM.Button>
+                </Button>
               </>
             )}
-          </QM.Form>
+          </Form>
 
         </div>
-      </QM.Theme>
+      </Theme>
     )
   }
 }

@@ -3,9 +3,15 @@ import React, { PureComponent } from "react"
 
 import { buildClassNames } from "../lib/helpers"
 
+import Space, { SpaceSize } from "../Space"
+
 export interface AlignProps {
   className?: string
   justify?: "left" | "center" | "right"
+  bottomSpace?: SpaceSize
+  leftSpace?: SpaceSize
+  rightSpace?: SpaceSize
+  topSpace?: SpaceSize
 }
 
 class Align extends PureComponent<AlignProps> {
@@ -16,6 +22,10 @@ class Align extends PureComponent<AlignProps> {
       children,
       className,
       justify = "left",
+      bottomSpace,
+      leftSpace,
+      rightSpace,
+      topSpace,
     } = this.props
 
     const childArray = !children ? [] : (Array.isArray(children) ? children : [children])
@@ -27,13 +37,18 @@ class Align extends PureComponent<AlignProps> {
     })
 
     return (
-      <div className={`qmAlignContainer ${justifyClasses} ${className || ""}`}>
+      <Space
+        bottom={bottomSpace}
+        left={leftSpace}
+        right={rightSpace}
+        top={topSpace}
+        className={`qmAlignContainer ${justifyClasses} ${className || ""}`}>
         {childArray.map((child, index) => (
           <div className="qmAlignItem" key={index}>
             {child}
           </div>
         ))}
-      </div>
+      </Space>
     )
   }
 }

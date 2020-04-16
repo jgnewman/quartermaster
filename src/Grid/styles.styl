@@ -2,7 +2,7 @@
 
 .qmGridContainer
   display: flex
-  align-items: stretch
+  align-items: center
   align-content: center
 
   margin-left: -1 * HALF_GUTTER
@@ -28,6 +28,9 @@
 
   &.hasWrap
     flex-wrap: wrap
+
+  &.isStretch
+    align-items: stretch
 
   > *
     flex-grow: 1

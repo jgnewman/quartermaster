@@ -36,6 +36,7 @@ export class Grow extends PureComponent<GrowProps> {
 export interface GridProps {
   className?: string
   justify?: "start" | "end" | "center" | "even" | "between" | "around"
+  equalHeight?: boolean
   wrap?: boolean
 }
 
@@ -47,6 +48,7 @@ export default class Grid extends PureComponent<GridProps> {
       children,
       className,
       justify = "between",
+      equalHeight,
       wrap,
     } = this.props
 
@@ -58,6 +60,7 @@ export default class Grid extends PureComponent<GridProps> {
       isEnd: justify === "end",
       isEven: justify === "even",
       isStart: justify === "start",
+      isStretch: equalHeight,
     })
 
     return (

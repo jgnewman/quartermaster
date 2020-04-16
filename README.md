@@ -26,6 +26,7 @@ Quartermaster deliberately avoids styled-components for performance and bundle s
 
 ## What's included
 
+- [Alert](#alert)
 - [Align](#align)
 - [Avatar](#avatar)
 - [Button](#button)
@@ -46,14 +47,30 @@ Quartermaster deliberately avoids styled-components for performance and bundle s
 - [Theme](#theme)
 - [Toggle](#toggle)
 
+### Alert
+Places a colored box with an alert icon in one of three forms: `info`, `danger`, or `warning`. Children become the content of the alert box.
+
+```typescript
+interface AlertProps {
+  className?: string
+  type: "danger" | "info" | "warning"
+}
+```
+
 ### Align
-For when you need to put two or more elements onto the same horizontal alignment with common spacing. You can specify whether children are justified left, center or right.
+For when you need to put two or more elements onto the same horizontal alignment with common spacing. You can specify whether children are justified left, center or right. Additionally, you can apply a measure of spacing to any of the group's 4 sides.
 
 ```typescript
 interface AlignProps {
   className?: string
   justify?: "left" | "center" | "right"
+  bottomSpace?: SpaceSize
+  leftSpace?: SpaceSize
+  rightSpace?: SpaceSize
+  topSpace?: SpaceSize
 }
+
+// Where `SpaceSize` is defined in the Space component
 ```
 
 ### Avatar
@@ -178,6 +195,7 @@ Allows you to drop in an easy flexbox grid. The `wrap` property enables flexbox 
 ```typescript
 interface GridProps {
   className?: string
+  equalHeight?: boolean
   justify?: "start" | "end" | "center" | "even" | "between" | "around"
   wrap?: boolean
 }
@@ -228,12 +246,14 @@ interface IconProps {
 // Where...
 
 type IconRotation = 45 | 90 | 135 | 180 | 225 | 270 | 315
-type IconSize = "xxs" | "xs" | "s" | "m" | "l" | "xl" | "xxl"
-type IconType = "caret"
+type IconSize = "xxs" | "xs" | "s" | "m" | "i" | "l" | "xl" | "xxl"
+type IconType = "attn"
+              | "caret"
               | "checkmark"
               | "dot"
               | "ex" // meaning "x" or "times"
               | "hamburger"
+              | "info"
               | "meatballs"
               | "plus"
               | "tiles"
@@ -360,6 +380,23 @@ interface SpinnerProps {
 }
 
 // Where IconSize is defined in the `Icon` component
+```
+
+### Space
+Wrap any element in a `Space` component to add a measure of consistent spacing to any of the element's 4 sides.
+
+```typescript
+interface SpaceProps {
+  className?: string
+  bottom?: SpaceSize
+  left?: SpaceSize
+  right?: SpaceSize
+  top?: SpaceSize
+}
+
+// Where...
+
+type SpaceSize = "s" | "m" | "l"
 ```
 
 ### TextField
