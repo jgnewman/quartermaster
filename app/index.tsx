@@ -125,6 +125,7 @@ class App extends React.Component {
               disableHighlights={false}
               isCompact={true}
               useCompactModalButtons={true}
+              skipConfirmation={this.state.counter > 0}
               clickHandler={this.incrementCounter.bind(this)}
               postCancelHook={this.decrementCounter.bind(this)}>
               Increment counter
