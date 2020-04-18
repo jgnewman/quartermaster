@@ -9,7 +9,6 @@ import {
   Button,
   Checkbox,
   ConfirmButton,
-  DarkTheme,
   Form,
   Grid,
   Icon,
@@ -24,6 +23,8 @@ import {
   Theme,
   Toggle,
 } from "../src/index"
+
+import DarkTheme from "../src/themes/Dark"
 
 class App extends React.Component {
   public static displayName = "App"
@@ -91,7 +92,7 @@ class App extends React.Component {
 
           <Align bottomSpace="l">
             <Spinner
-              size="m"
+              size="i"
             />
 
             <Icon
@@ -221,42 +222,45 @@ class App extends React.Component {
           </div>
 
           <Form initialState={{ mytext: "", mygroup: "foo", myselect: null }}>
-            {({ getFormState, updateValueFor }) => (
+            {({ formState, updateValueFor }) => (
               <>
                 <Space bottom="l">
                   <TextField
                     label="Form Text field"
                     type="text"
                     placeholder="Say something here"
-                    value={getFormState().mytext}
+                    value={formState.mytext}
                     changeHandler={updateValueFor("mytext")}
                   />
                 </Space>
+
                 <Grid wrap>
                   <RadioGroup
                     name="mygroup"
                     changeHandler={updateValueFor("mygroup")}
-                    value={getFormState().mygroup}
+                    value={formState.mygroup}
                     options={[
                       { label: "Foo", value: "foo" },
                       { label: "Bar", value: "bar" },
                       { label: "Baz", value: "baz" },
                     ]}
                   />
+
                   <RadioGroup
                     name="mygroup"
                     changeHandler={updateValueFor("mygroup")}
-                    value={getFormState().mygroup}
+                    value={formState.mygroup}
                     options={[
                       { label: "Moo", value: "moo" },
                       { label: "Mar", value: "mar" },
                       { label: "Maz", value: "maz" },
                     ]}
                   />
+
                   <RadioGroup
                     name="mygroup"
                     changeHandler={updateValueFor("mygroup")}
-                    value={getFormState().mygroup}
+                    value={formState.mygroup}
                     options={[
                       { label: "Goo", value: "goo" },
                       { label: "Gar", value: "gar" },
@@ -264,6 +268,7 @@ class App extends React.Component {
                     ]}
                   />
                 </Grid>
+
                 <Space bottom="l">
                   <Select
                     label="My select menu"
@@ -275,12 +280,13 @@ class App extends React.Component {
                     isCompact={false}
                     isDisabled={false}
                     isRequired={true}
-                    value={getFormState().myselect}
+                    value={formState.myselect}
                     changeHandler={updateValueFor("myselect")}
                   />
                 </Space>
+
                 <Button
-                  clickHandler={() => console.log(getFormState())}>
+                  clickHandler={() => console.log(formState)}>
                   Log form data
                 </Button>
               </>

@@ -10,13 +10,12 @@ interface SimpleObject {
   [key: string]: string | number | boolean | null
 }
 
-type GetFormState = () => any
 type SetFormState = (vals: SimpleObject) => void
 type UpdateValueFor = (name: string) => (evt: React.ChangeEvent | string | null) => void
 type ToggleCheckedFor = (name: string) => () => void
 
 interface FormUtils {
-  getFormState: GetFormState
+  formState: any
   setFormState: SetFormState
   updateValueFor: UpdateValueFor
   toggleCheckedFor: ToggleCheckedFor
@@ -34,10 +33,6 @@ class Form extends PureComponent<FormProps, SimpleObject> {
   constructor(props: FormProps) {
     super(props)
     this.state = { ...props.initialState }
-  }
-
-  getFormState: GetFormState = () => {
-    return { ...this.state }
   }
 
   setFormState: SetFormState = (vals) => {
@@ -79,7 +74,7 @@ class Form extends PureComponent<FormProps, SimpleObject> {
     return (
       <div className="qmFormContainer">
         {children({
-          getFormState: this.getFormState,
+          formState: { ...this.state },
           setFormState: this.setFormState,
           updateValueFor: this.updateValueFor,
           toggleCheckedFor: this.toggleCheckedFor,

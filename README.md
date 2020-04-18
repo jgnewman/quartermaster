@@ -148,9 +148,13 @@ interface FormProps {
 // where...
 
 interface FormUtils {
-  getFormState: () => any
+  formState: SimpleObject
   setFormState: (vals: SimpleObject) => void
+
+  // Compatible with Select, TextField
   updateValueFor: (name: string) => (evt: React.ChangeEvent | string | null) => void
+
+  // Compatible with Checkbox, RadioButton, Toggle
   toggleCheckedFor: (name: string) => () => void
 }
 
@@ -163,19 +167,19 @@ Here is an example:
 
 ```jsx
 <Form initialState={{ myText: "", myBox: false }}>
-  {({ getFormState, updateValueFor, toggleCheckedFor }) => (
+  {({ formState, updateValueFor, toggleCheckedFor }) => (
     <>
       <TextField
         type="text"
-        value={getFormState().myText}
+        value={formState.myText}
         changeHandler={updateValueFor("myText")}
       />
       <Checkbox
         label="Check me"
-        isChecked={getFormState().myBox}
+        isChecked={formState.myBox}
         changeHandler={toggleCheckedFor("myBox")}
       />
-      <Button clickHandler={() => console.log(getFormState())}>
+      <Button clickHandler={() => console.log(formState)}>
         Log form data
       </Button>
     </>
@@ -183,7 +187,7 @@ Here is an example:
 </Form>
 ```
 
-In addition to the `FormUtils` functions illustrated above, you also have access to a `setFormState` function that you can use to manually update the form state.
+Notice that the `FormUtils` here function similarly to React's `useState` hook. In addition to the util functions illustrated above, you also have access to a `setFormState` function that you can use to manually update one or many values on the form state.
 
 ```typescript
 setFormState({ myText: "some value" })
@@ -457,15 +461,14 @@ interface ValueSpec {
 Here is an example:
 
 ```jsx
-import { DarkTheme } from "quartermaster"
-// or import DarkTheme from "quartermaster/Theme/Dark
+import DarkTheme from "quartermaster/themes/Dark
 
 <Theme data={DarkTheme}>
   <App />
 </Theme>
 ```
 
-To create your own themes, you just need to know the format for a theme data object. This object's keys represent css properties and its values are objects as well. These sub-objects' keys represent css values, and the objects' values are css selector strings. This may seem backward at first, but it is an efficient and sane way to manage themeing, wherein you are not attempting to rewrite all of the library's styles, but instead just need to make small adjustments here and there. For example:
+To create your own themes, you just need to know the format for a theme data object. This object's keys represent css properties (such as `background`) and its values are objects as well. These sub-objects' keys represent css values (such as `#ffffff`), which map to css selector strings (such as `.qmFieldContainer`). This may seem backward at first, but it is an efficient and sane way to manage themeing, wherein you are not attempting to rewrite all of the library's styles, but instead just need to make small adjustments here and there. For example:
 
 ```jsx
 const RED = "#ff0000"

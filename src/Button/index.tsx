@@ -4,6 +4,8 @@ import React, { PureComponent } from "react"
 import { DynamicProps } from "../lib/helperTypes"
 import { buildClassNames } from "../lib/helpers"
 
+import Spinner from "../Spinner"
+
 export interface ButtonProps {
   className?: string
   clickHandler?: React.MouseEventHandler
@@ -85,6 +87,13 @@ class Button extends PureComponent<ButtonProps> {
       </span>
     )
 
+    const spinner = !isProcessing ? null : (
+      <Spinner
+        className="qmButtonSpinner"
+        size={isCompact ? "m" : "i"}
+      />
+    )
+
     switch (tag) {
 
       case "a":
@@ -93,6 +102,7 @@ class Button extends PureComponent<ButtonProps> {
             onFocus={this.handleFocus}
             onBlur={this.handleBlur}
             {...dynamicProps}>
+            {spinner}
             {content}
           </a>
         )
@@ -104,6 +114,7 @@ class Button extends PureComponent<ButtonProps> {
             onFocus={this.handleFocus}
             onBlur={this.handleBlur}
             {...dynamicProps}>
+            {spinner}
             {content}
           </button>
         )

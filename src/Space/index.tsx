@@ -1,7 +1,11 @@
 import "./styles.styl"
 import React, { PureComponent } from "react"
 
-import { DynamicProps } from "../lib/helperTypes"
+const sizeMap = {
+  s: "0.5rem",
+  m: "1rem",
+  l: "1.5rem",
+}
 
 export type SpaceSize = "s" | "m" | "l"
 
@@ -26,28 +30,11 @@ class Space extends PureComponent<SpaceProps> {
       top,
     } = this.props
 
-    const sizeMap = {
-      s: "0.5rem",
-      m: "1rem",
-      l: "1.5rem",
-    }
-
-    const style: DynamicProps = {}
-
-    if (top) {
-      style.paddingTop = sizeMap[top]
-    }
-
-    if (right) {
-      style.paddingRight = sizeMap[right]
-    }
-
-    if (bottom) {
-      style.paddingBottom = sizeMap[bottom]
-    }
-
-    if (left) {
-      style.paddingLeft = sizeMap[left]
+    const style = {
+      paddingTop: top ? sizeMap[top] : 0,
+      paddingRight: right ? sizeMap[right] : 0,
+      paddingBottom: bottom ? sizeMap[bottom] : 0,
+      paddingLeft: left ? sizeMap[left] : 0,
     }
 
     return (

@@ -30,6 +30,7 @@ class Spinner extends PureComponent<SpinnerProps> {
 
       case "s":
       case "m":
+      case "i":
       case "l":
         borderWidth = 2
         break
