@@ -89,6 +89,12 @@
     transform: scale(0) translateX(2rem) translateY(0)
 
 .qmAnimationContainer
+  &.isOverrideShow
+    transform: scale(1) translateX(0) translateY(0)
+
+  &.isOverrideHide
+    transform: scale(0) translateX(0) translateY(0)
+    display: none
 
   &.isAnimating
     animation-timing-function: ease

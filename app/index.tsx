@@ -5,6 +5,7 @@ import { render } from "react-dom"
 import {
   Alert,
   Align,
+  Animation,
   Avatar,
   Button,
   Checkbox,
@@ -304,20 +305,25 @@ class App extends React.Component {
             )}
           </Form>
 
-          <Menu
-            maxWidth="200px"
-            isLifted={true}
-            isCompact={true}
-            data={[
-              {type: "label", text: "Section 1"},
-              {type: "link", text: "Google", href: "https://google.com", isActive: true},
-              {type: "link", text: "Yahoo", href: "https://yahoo.com"},
-              {type: "separator"},
-              {type: "label", text: "Section 2"},
-              {type: "link", text: "Bing", href: "https://bing.com"},
-              {type: "link", text: "Duck Duck Go", href: "https://duckduckgo.com"},
-            ]}
-          />
+          <Animation
+            type="fadeIn"
+            direction="down"
+            override="hide">
+            <Menu
+              maxWidth="200px"
+              isLifted={true}
+              isCompact={true}
+              data={[
+                {type: "label", text: "Section 1"},
+                {type: "link", text: "Google", href: "https://google.com", isActive: true},
+                {type: "link", text: "Yahoo", href: "https://yahoo.com"},
+                {type: "separator"},
+                {type: "label", text: "Section 2"},
+                {type: "link", text: "Bing", href: "https://bing.com"},
+                {type: "link", text: "Duck Duck Go", href: "https://duckduckgo.com"},
+              ]}
+            />
+          </Animation>
 
         </div>
       </Theme>

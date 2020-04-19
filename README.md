@@ -76,13 +76,15 @@ interface AlignProps {
 ```
 
 ### Animation
-Allows you to fade an element in or out by wrapping it in this component, optionally specifying a direction it moves as it does so. The `duration` prop is specified in milliseconds and is translated into a CSS animation duration.
+Allows you to fade an element in or out by wrapping it in this component, optionally specifying a direction it moves as it does so. The `duration` prop is specified in milliseconds and is translated into a CSS animation duration. The `override` prop allows you to prevent animation and either show or hide the element.
 
 ```typescript
 interface AnimationProps {
   className?: string
   direction?: "left" | "right" | "up" | "down"
   duration?: number // defaults to 200
+  override?: "hide" | "show" | null
+  style?: any
   type: "fadeIn" | "fadeOut"
 }
 ```
