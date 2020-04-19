@@ -9,6 +9,7 @@ export interface AnimationProps {
   className?: string
   direction?: "left" | "right" | "up" | "down"
   duration?: number
+  style?: any
   type: "fadeIn" | "fadeOut"
 }
 
@@ -22,7 +23,8 @@ class Animation extends PureComponent<AnimationProps> {
       className,
       direction,
       duration = DEFAULT_DURATION,
-      type,
+      style,
+      type = {},
     } = this.props
 
     const { isAnimating } = this.state
@@ -39,12 +41,13 @@ class Animation extends PureComponent<AnimationProps> {
 
     const cssDuration = duration / 1000
 
-    const style = {
+    const extendedStyle = {
+      ...style,
       animationDuration: cssDuration + "s",
     }
 
     return (
-      <div className={`qmAnimationContainer ${animClasses} ${className || ""}`} style={style}>
+      <div className={`qmAnimationContainer ${animClasses} ${className || ""}`} style={extendedStyle}>
         {children}
       </div>
     )
