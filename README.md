@@ -28,6 +28,7 @@ Quartermaster deliberately avoids styled-components for performance and bundle s
 
 - [Alert](#alert)
 - [Align](#align)
+- [Animation](#animation)
 - [Avatar](#avatar)
 - [Button](#button)
 - [Checkbox](#checkbox)
@@ -38,6 +39,7 @@ Quartermaster deliberately avoids styled-components for performance and bundle s
 - [Icon](#icon)
 - [IconButton](#iconbutton)
 - [Label](#label)
+- [Menu](#menu)
 - [Modal](#modal)
 - [RadioButton](#radiobutton)
 - [RadioGroup](#radiogroup)
@@ -71,6 +73,18 @@ interface AlignProps {
 }
 
 // Where `SpaceSize` is defined in the Space component
+```
+
+### Animation
+Allows you to fade an element in or out by wrapping it in this component, optionally specifying a direction it moves as it does so. The `duration` prop is specified in milliseconds and is translated into a CSS animation duration.
+
+```typescript
+interface AnimationProps {
+  className?: string
+  direction?: "left" | "right" | "up" | "down"
+  duration?: number // defaults to 200
+  type: "fadeIn" | "fadeOut"
+}
 ```
 
 ### Avatar
@@ -293,6 +307,64 @@ interface LabelProps {
   text: string
 }
 ```
+
+### Menu
+Allows you to build a menu of links by passing an array of data to this component.
+
+```typescript
+interface MenuProps {
+  className?: string
+  data: Data[]
+  isCompact?: boolean
+  isLifted?: boolean
+  maxWidth?: string
+  minWidth?: string
+}
+
+// where...
+
+type Data = LabelData | LinkData | SeparatorData
+
+// where...
+
+interface LabelData {
+  text: string
+  type: "label"
+}
+
+interface LinkData {
+  clickHandler?: React.MouseEventHandler
+  href?: string
+  isActive?: boolean
+  text: string
+  type: "link"
+}
+
+interface SeparatorData {
+  type: "separator"
+}
+```
+
+Here is an example:
+
+```jsx
+<Menu
+  maxWidth="200px"
+  isLifted={true}
+  isCompact={true}
+  data={[
+    {type: "label", text: "Section 1"},
+    {type: "link", text: "Google", href: "https://google.com", isActive: true},
+    {type: "link", text: "Yahoo", href: "https://yahoo.com"},
+    {type: "separator"},
+    {type: "label", text: "Section 2"},
+    {type: "link", text: "Bing", href: "https://bing.com"},
+    {type: "link", text: "Duck Duck Go", href: "https://duckduckgo.com"},
+  ]}
+/>
+```
+
+The `label` data type creates a non-clickable, stylized label for a section of items in the menu. The `separator` type creates a horizontal line.
 
 ### Modal
 Takes an `isOpen` prop that determines whether or not the modal should be open. Also takes a `closeHandler` function that fires when the modal's close button is clicked. Note that the modal does not close itself. You must determine when to change the `isOpen` after the close handler is fired. Nested content will appear inside the modal.

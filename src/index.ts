@@ -1,5 +1,6 @@
 export { default as Alert, AlertProps } from "./Alert"
 export { default as Align, AlignProps } from "./Align"
+export { default as Animation, AnimationProps } from "./Animation"
 export { default as Avatar, AvatarProps } from "./Avatar"
 export { default as Button, ButtonProps } from "./Button"
 export { default as Checkbox, CheckboxProps } from "./Checkbox"

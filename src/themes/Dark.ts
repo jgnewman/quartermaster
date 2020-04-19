@@ -18,6 +18,7 @@ export default {
 
     [DARKER_GRAY]: `
       .qmCheckboxOverlay,
+      .qmMenuContainer,
       .qmRadioOverlay,
       .qmSelectClickableWrapper,
       .qmTextFieldInputWrapper,
