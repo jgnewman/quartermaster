@@ -2,12 +2,13 @@ import "./styles.styl"
 import React, { PureComponent } from "react"
 
 const sizeMap = {
+  xs: "0.25rem",
   s: "0.5rem",
   m: "1rem",
   l: "1.5rem",
 }
 
-export type SpaceSize = "s" | "m" | "l"
+export type SpaceSize = "xs" | "s" | "m" | "l"
 
 export interface SpaceProps {
   className?: string

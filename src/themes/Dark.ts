@@ -81,6 +81,7 @@ export default {
       body,
       .qmCharLimitText,
       .qmCheckboxLabel,
+      .qmMenuLink,
       .qmRadioLabel,
       .qmSelectMenuOption,
       .qmToggleLabel

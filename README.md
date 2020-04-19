@@ -400,7 +400,7 @@ interface SpaceProps {
 
 // Where...
 
-type SpaceSize = "s" | "m" | "l"
+type SpaceSize = "xs" | "s" | "m" | "l"
 ```
 
 ### TextField

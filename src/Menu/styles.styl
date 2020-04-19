@@ -1,0 +1,50 @@
+@import "../lib/sharedStyles"
+
+.qmMenuContainer
+  display: block
+  background: BASE_BG
+  padding: 1.25rem 0
+  box-shadow: 0 0 15px rgba(black, 0.2)
+  position: relative
+
+  &.isCompact
+    padding: 0.75rem 0
+
+  &.isLifted
+    box-shadow: LIFTED_SHADOW
+    z-index: 3
+
+.qmMenuLabel
+  padding-bottom: 0
+
+.qmMenuLink
+  display: block
+  color: BASE_FONT
+  text-decoration: none
+  line-height: 1.2
+  transition: BASE_TRANSITION
+
+  position: relative
+
+  &:hover
+    color: HIGHLIGHT
+
+.qmMenuLinkText
+  display: block
+  max-width: calc(100% - 2rem)
+
+.qmMenuSeparator
+  border: 0
+  border-bottom: BASE_BORDER
+
+.qmMenuActiveIcon
+  position: absolute
+  top: 50%
+  right: 1.5rem
+  transform: translateY(-50%)
+
+  &.isCompact
+    right: 1rem
+
+.qmMenuActiveIcon svg
+  fill: ON_INDICATORS
