@@ -2,7 +2,7 @@ import "./styles.styl"
 import React, { PureComponent, ReactNodeArray } from "react"
 
 import { noopEvtHandler, buildClassNames } from "../lib/helpers"
-import { DynamicProps, RefFunction } from "../lib/helperTypes"
+import { DynamicProps } from "../lib/helperTypes"
 import Label from "../Label"
 import Icon from "../Icon"
 
@@ -21,7 +21,6 @@ export interface SelectProps {
   className?: string
   id?: string
   isRequired?: boolean
-  fieldRef?: RefFunction // function like (elem => this.myRef = elem)
   isCompact?: boolean
   isDisabled?: boolean
   label?: string

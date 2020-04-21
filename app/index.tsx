@@ -35,7 +35,7 @@ interface AppState {
   boxChecked: boolean
   toggleChecked: boolean
   radioVal: string
-  darkThemeEnabled: false
+  darkThemeEnabled: boolean
 }
 
 class App extends React.Component {
@@ -94,11 +94,61 @@ class App extends React.Component {
       <Theme data={this.state.darkThemeEnabled ? DarkTheme : null}>
         <div style={{ padding: "1em 1em 5em", maxWidth: "500px" }}>
 
+          <Animation
+            type="fadeIn"
+            direction="left"
+            duration={1000}>
+            <Space bottom="l">
+              <Button
+                text="Toggle Theme"
+                isCompact={true}
+                clickHandler={this.toggleTheme.bind(this)}
+              />
+            </Space>
+          </Animation>
+
           <Space bottom="l">
-            <Button
-              text="Toggle Theme"
+            <Menu
+              maxWidth="200px"
+              isLifted={true}
               isCompact={true}
-              clickHandler={this.toggleTheme.bind(this)}
+              isOpen={true}
+              animate={false}
+              data={[
+                {type: "label", text: "Section 1"},
+                {type: "link", text: "Google", href: "https://google.com", isActive: true},
+                {type: "link", text: "Yahoo", href: "https://yahoo.com"},
+                {
+                  key: "foo",
+                  type: "submenu",
+                  text: "Submenu",
+                  animate: { inDirection: "down", outDirection: "up" },
+                  startOpen: false,
+                  isCollapsible: true,
+                  data: [
+                    {type: "label", text: "Submenu 1"},
+                    {type: "link", text: "Wikipedia", href: "https://wikipedia.com"},
+                    {type: "link", text: "W3Schools", href: "https://w3schools.com"},
+                    {
+                      key: "bar",
+                      type: "submenu",
+                      text: "Submenu 2",
+                      animate: { inDirection: "down", outDirection: "up" },
+                      startOpen: false,
+                      isCollapsible: true,
+                      data: [
+                        {type: "label", text: "Submenu 2"},
+                        {type: "link", text: "Wikipedia", href: "https://wikipedia.com"},
+                        {type: "link", text: "W3Schools", href: "https://w3schools.com"},
+                      ],
+                    },
+                  ],
+                },
+                {type: "separator"},
+                {type: "label", text: "Section 2"},
+                {type: "link", text: "Bing", href: "https://bing.com"},
+                {type: "link", text: "Duck Duck Go", href: "https://duckduckgo.com"},
+              ]}
             />
           </Space>
 
@@ -304,26 +354,6 @@ class App extends React.Component {
               </>
             )}
           </Form>
-
-          <Animation
-            type="fadeIn"
-            direction="down"
-            override="hide">
-            <Menu
-              maxWidth="200px"
-              isLifted={true}
-              isCompact={true}
-              data={[
-                {type: "label", text: "Section 1"},
-                {type: "link", text: "Google", href: "https://google.com", isActive: true},
-                {type: "link", text: "Yahoo", href: "https://yahoo.com"},
-                {type: "separator"},
-                {type: "label", text: "Section 2"},
-                {type: "link", text: "Bing", href: "https://bing.com"},
-                {type: "link", text: "Duck Duck Go", href: "https://duckduckgo.com"},
-              ]}
-            />
-          </Animation>
 
         </div>
       </Theme>

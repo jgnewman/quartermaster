@@ -1,31 +1,27 @@
 import "./styles.styl"
 import React, { PureComponent } from "react"
 
+import { RefFunction } from "../lib/helperTypes"
 import { buildClassNames } from "../lib/helpers"
 
-const DEFAULT_DURATION = 2000
+const DEFAULT_DURATION = 200
 
 export interface AnimationProps {
   className?: string
   direction?: "left" | "right" | "up" | "down"
   duration?: number
+  elemRef?: RefFunction // function like (elem => this.myRef = elem)
   override?: "hide" | "show" | null
   style?: any
   type: "fadeIn" | "fadeOut"
 }
 
-interface AnimationState {
-  isAnimating: boolean
-}
-
-class Animation extends PureComponent<AnimationProps, AnimationState> {
+class Animation extends PureComponent<AnimationProps> {
   static displayName = "Animation"
-  public state: AnimationState
 
-  constructor(props: AnimationProps) {
-    super(props)
-    this.state = {
-      isAnimating: props.override ? false : true,
+  refFn = (elem: HTMLDivElement | null) => {
+    if (this.props.elemRef) {
+      this.props.elemRef(elem)
     }
   }
 
@@ -40,11 +36,10 @@ class Animation extends PureComponent<AnimationProps, AnimationState> {
       type = {},
     } = this.props
 
-    const { isAnimating } = this.state
     const hasOverride = typeof override === "string"
 
     const animClasses = buildClassNames({
-      isAnimating,
+      isAnimating: !hasOverride,
       isOverrideHide: override === "hide",
       isOverrideShow: override === "show",
       isDown: !hasOverride && direction === "down",
@@ -63,7 +58,10 @@ class Animation extends PureComponent<AnimationProps, AnimationState> {
     }
 
     return (
-      <div className={`qmAnimationContainer ${animClasses} ${className || ""}`} style={extendedStyle}>
+      <div
+        className={`qmAnimationContainer ${animClasses} ${className || ""}`}
+        ref={this.refFn}
+        style={extendedStyle}>
         {children}
       </div>
     )

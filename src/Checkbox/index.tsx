@@ -16,8 +16,8 @@ import {
 
 export interface CheckboxProps {
   changeHandler?: React.ChangeEventHandler
-  checkboxRef?: RefFunction
   className?: string
+  elemRef?: RefFunction
   id?: string
   isChecked: boolean
   isDisabled?: boolean
@@ -43,9 +43,9 @@ class Checkbox extends PureComponent<CheckboxProps> {
   }
 
   refFn = (elem: HTMLInputElement | null) => {
-    const { checkboxRef } = this.props
+    const { elemRef } = this.props
     this.inputRef = elem
-    checkboxRef && checkboxRef(elem)
+    elemRef && elemRef(elem)
   }
 
   render() {

@@ -76,13 +76,14 @@ interface AlignProps {
 ```
 
 ### Animation
-Allows you to fade an element in or out by wrapping it in this component, optionally specifying a direction it moves as it does so. The `duration` prop is specified in milliseconds and is translated into a CSS animation duration. The `override` prop allows you to prevent animation and either show or hide the element.
+Allows you to fade an element in or out by wrapping it in this component, optionally specifying a direction it moves as it does so. The `duration` prop is specified in milliseconds and is translated into a CSS animation duration. The `override` prop allows you to prevent animation and either show or hide the element. It also allows capturing the animated div ref via a function such as `elem => this.myRef = elem`.
 
 ```typescript
 interface AnimationProps {
   className?: string
   direction?: "left" | "right" | "up" | "down"
   duration?: number // defaults to 200
+  elemRef?: RefFunction // function like (elem => this.myRef = elem)
   override?: "hide" | "show" | null
   style?: any
   type: "fadeIn" | "fadeOut"
@@ -126,8 +127,8 @@ Creates a stylable checkbox element wrapped around native checkbox input for opt
 ```typescript
 interface CheckboxProps {
   changeHandler?: React.ChangeEventHandler
-  checkboxRef?: (elem: HTMLElement | null) => void
   className?: string
+  elemRef?: (elem: HTMLElement | null) => void
   id?: string
   isChecked: boolean
   isDisabled?: boolean
@@ -311,21 +312,23 @@ interface LabelProps {
 ```
 
 ### Menu
-Allows you to build a menu of links by passing an array of data to this component.
+Allows you to build a menu of links and submenus by passing an array of data to this component. Note that submenus can be nested infinitely.
 
 ```typescript
 interface MenuProps {
+  animate?: boolean | Pick<AnimationProps, "direction" | "duration">
   className?: string
   data: Data[]
   isCompact?: boolean
   isLifted?: boolean
+  isOpen: boolean
   maxWidth?: string
   minWidth?: string
 }
 
-// where...
+// where AnimationProps are defined in the `Animation` component and...
 
-type Data = LabelData | LinkData | SeparatorData
+type Data = LabelData | LinkData | SeparatorData | SubmenuData
 
 // where...
 
@@ -336,6 +339,7 @@ interface LabelData {
 
 interface LinkData {
   clickHandler?: React.MouseEventHandler
+  component?: Function // Allows you to use React Router's `Link` to build the link
   href?: string
   isActive?: boolean
   text: string
@@ -344,6 +348,30 @@ interface LinkData {
 
 interface SeparatorData {
   type: "separator"
+}
+
+interface SubmenuData {
+  animate?: boolean | SubAnimate
+  data: Data[]
+  key: string | number // Must be unique within an instance of `Menu`
+  isCollapsible?: boolean
+  isLifted?: boolean
+  maxWidth?: string
+  minWidth?: string
+  posX?: "left" | "right"
+  posY?: "top" | "bottom"
+  startOpen?: boolean
+  text: string
+  type: "submenu"
+}
+
+// where...
+
+interface SubAnimate {
+  inDirection?: "left" | "right" | "up" | "down"
+  outDirection?: "left" | "right" | "up" | "down"
+  inDuration?: number
+  outDuration?: number
 }
 ```
 
@@ -358,6 +386,19 @@ Here is an example:
     {type: "label", text: "Section 1"},
     {type: "link", text: "Google", href: "https://google.com", isActive: true},
     {type: "link", text: "Yahoo", href: "https://yahoo.com"},
+    {
+      key: "my-menu",
+      type: "submenu",
+      text: "Click to open submenu",
+      animate: { inDirection: "down", outDirection: "up" },
+      startOpen: false,
+      isCollapsible: true,
+      data: [
+        {type: "label", text: "Submenu 1"},
+        {type: "link", text: "Wikipedia", href: "https://wikipedia.com"},
+        {type: "link", text: "W3Schools", href: "https://w3schools.com"},
+      ],
+    },
     {type: "separator"},
     {type: "label", text: "Section 2"},
     {type: "link", text: "Bing", href: "https://bing.com"},
@@ -386,8 +427,8 @@ Creates a stylable radio button element wrapped around native radio input for op
 ```typescript
 interface RadioButtonProps {
   changeHandler?: React.ChangeEventHandler
-  checkboxRef?: (elem: HTMLElement | null) => void
   className?: string
+  elemRef?: (elem: HTMLElement | null) => void
   groupName?: string
   id?: string
   isChecked: boolean
@@ -414,22 +455,21 @@ interface RadioGroupProps {
 // where...
 
 interface RadioOption {
-  label: string
-  value: string
+  elemRef?: (elem: HTMLElement | null) => void
   id?: string
-  ref?: RefFunction
+  label: string
   tabIndex?: number
+  value: string
 }
 ```
 
 ### Select
-Generates a stylable select menu built on top of a raw `select` element for accessibility. Allows capturing the field ref via a function such as `elem => this.myRef = elem`. Is controlled by a `value`, and takes an array of `options` objects and a `changeHandler` for capturing value updates. If `isCompact` is true, it will generate a smaller version of the component.
+Generates a stylable select menu built on top of a raw `select` element for accessibility. Is controlled by a `value`, and takes an array of `options` objects and a `changeHandler` for capturing value updates. If `isCompact` is true, it will generate a smaller version of the component.
 
 ```typescript
 interface SelectProps {
   changeHandler?: (value: string | null) => void
   className?: string
-  fieldRef?: (elem: HTMLElement | null) => void
   id?: string
   isCompact?: boolean
   isDisabled?: boolean
@@ -488,9 +528,9 @@ interface TextFieldProps {
   className?: string
   dangerouslyAutoTruncateLimitBreakingValues?: boolean
   defaultValue?: string
+  elemRef?: (elem: HTMLElement | null) => void
   enableTextAreaResize?: boolean
   errorText?: string
-  fieldRef?: (elem: HTMLElement | null) => void
   hasError?: boolean
   hideCharLimitProgress?: boolean
   hideCharLimitText?: boolean
@@ -601,8 +641,8 @@ Creates a sliding toggle element wrapped around native checkbox input for optimi
 ```typescript
 interface ToggleProps {
   changeHandler?: React.ChangeEventHandler
-  checkboxRef?: (elem: HTMLElement | null) => void
   className?: string
+  elemRef?: (elem: HTMLElement | null) => void
   id?: string
   isChecked: boolean
   isDisabled?: boolean

@@ -17,12 +17,12 @@ import {
 export interface RadioButtonProps {
   changeHandler?: React.ChangeEventHandler
   className?: string
+  elemRef?: RefFunction
   groupName?: string
   id?: string
   isChecked: boolean
   isDisabled?: boolean
   label?: string
-  radioButtonRef?: RefFunction
   tabIndex?: number
   value?: string
 }
@@ -44,9 +44,9 @@ class RadioButton extends PureComponent<RadioButtonProps> {
   }
 
   refFn = (elem: HTMLInputElement | null) => {
-    const { radioButtonRef } = this.props
+    const { elemRef } = this.props
     this.inputRef = elem
-    radioButtonRef && radioButtonRef(elem)
+    elemRef && elemRef(elem)
   }
 
   render() {

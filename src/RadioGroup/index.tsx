@@ -4,11 +4,11 @@ import { RefFunction, DynamicProps } from "../lib/helperTypes"
 import RadioButton from "../RadioButton"
 
 export interface RadioOption {
-  label: string
-  value: string
+  elemRef?: RefFunction
   id?: string
-  ref?: RefFunction
+  label: string
   tabIndex?: number
+  value: string
 }
 
 export interface RadioGroupProps {
@@ -23,7 +23,7 @@ export interface RadioGroupProps {
 class RadioGroup extends PureComponent<RadioGroupProps> {
   static displayName = "RadioGroup"
 
-  buildRadio(key: string, { label, value, id, ref, tabIndex }: RadioOption) {
+  buildRadio(key: string, { label, value, id, elemRef, tabIndex }: RadioOption) {
     const { name, isDisabled, changeHandler } = this.props
     const groupValue = this.props.value
 
@@ -33,12 +33,12 @@ class RadioGroup extends PureComponent<RadioGroupProps> {
       dynamicProps.id = id
     }
 
-    if (ref) {
-      dynamicProps.radioButtonRef = ref
+    if (elemRef) {
+      dynamicProps.elemRef = elemRef
     }
 
     if (tabIndex) {
-      dynamicProps.tabIndex = ref
+      dynamicProps.tabIndex = tabIndex
     }
 
     if (changeHandler) {

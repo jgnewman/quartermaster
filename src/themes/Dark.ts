@@ -83,6 +83,7 @@ export default {
       .qmCharLimitText,
       .qmCheckboxLabel,
       .qmMenuLink,
+      .qmMenuSubmenuLink,
       .qmRadioLabel,
       .qmSelectMenuOption,
       .qmToggleLabel
@@ -98,6 +99,7 @@ export default {
 
   "fill": {
     [LIGHTER_GRAY]: `
+      .qmMenuSubmenuIcon .qmIcon,
       .qmSelectOpenIcon .qmIcon,
       .qmSelectClearIcon .qmIcon
     `,

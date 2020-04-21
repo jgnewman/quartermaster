@@ -16,7 +16,7 @@ import {
 
 export interface ToggleProps {
   changeHandler?: React.ChangeEventHandler
-  checkboxRef?: RefFunction
+  elemRef?: RefFunction
   className?: string
   id?: string
   isChecked: boolean
@@ -43,9 +43,9 @@ class Toggle extends PureComponent<ToggleProps> {
   }
 
   refFn = (elem: HTMLInputElement | null) => {
-    const { checkboxRef } = this.props
+    const { elemRef } = this.props
     this.inputRef = elem
-    checkboxRef && checkboxRef(elem)
+    elemRef && elemRef(elem)
   }
 
   render() {

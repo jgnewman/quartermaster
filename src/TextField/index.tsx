@@ -23,9 +23,9 @@ export interface TextFieldProps {
   className?: string
   dangerouslyAutoTruncateLimitBreakingValues?: boolean // almost never necessary
   defaultValue?: string
+  elemRef?: RefFunction // function like (elem => this.myRef = elem)
   enableTextAreaResize?: boolean
   errorText?: string
-  fieldRef?: RefFunction // function like (elem => this.myRef = elem)
   hasError?: boolean
   hideCharLimitProgress?: boolean
   hideCharLimitText?: boolean
@@ -83,9 +83,9 @@ class TextField extends PureComponent<TextFieldProps> {
   }
 
   refFn = (elem: NullableInputElem) => {
-    const { fieldRef } = this.props
+    const { elemRef } = this.props
     this.inputRef = elem
-    fieldRef && fieldRef(elem)
+    elemRef && elemRef(elem)
   }
 
   shouldPreventInput(evtTarget: InputElem) {
