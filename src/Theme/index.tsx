@@ -44,6 +44,13 @@ class Theme extends PureComponent<ThemeProps> {
   private tag: HTMLElement
   private prevStyles = ""
 
+  constructor(props: ThemeProps) {
+    super(props)
+    this.buildStyleTag()
+    this.updateStyles()
+    console.log("styles injected")
+  }
+
   buildCSSChunk(propName: string, propSpec: ValueSpec): string {
     return Object.keys(propSpec).map(color => {
       const selector: string = propSpec[color]
@@ -86,11 +93,6 @@ class Theme extends PureComponent<ThemeProps> {
 
   removeStyleTag() {
     this.tag?.parentNode?.removeChild(this.tag)
-  }
-
-  componentDidMount() {
-    this.buildStyleTag()
-    this.updateStyles()
   }
 
   componentDidUpdate() {
