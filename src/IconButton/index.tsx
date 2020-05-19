@@ -1,5 +1,8 @@
 import "./styles.styl"
-import React, { memo } from "react"
+import React, {
+  MouseEventHandler,
+  memo,
+} from "react"
 
 import Button from "../Button"
 import sizeMap from "../Icon/sizeMap"
@@ -14,7 +17,7 @@ import { noopEvtHandler } from "../lib/helpers"
 
 export interface IconButtonProps {
   className?: string
-  clickHandler?: React.MouseEventHandler
+  clickHandler?: MouseEventHandler
   href?: string
   rotate?: IconRotation
   size: IconSize

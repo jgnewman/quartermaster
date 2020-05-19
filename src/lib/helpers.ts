@@ -75,3 +75,32 @@ export function usePrevious(value: any) {
   useEffect(() => { ref.current = value })
   return ref.current
 }
+
+type RefArray<T> = T[]
+type RefArrayAdder<T> = (item: T) => void
+type RefArrayResetter = () => void
+
+export function useRefArray<T>(value: T[] = []): [RefArray<T>, RefArrayAdder<T>, RefArrayResetter] {
+  const ref = useRef<T[]>(value)
+  const toAdd: T[] = []
+  let shouldReset = false
+
+  useEffect(() => {
+    if (toAdd.length) {
+      ref.current.push(...toAdd)
+      toAdd.length = 0
+    }
+
+    if (shouldReset) {
+      toAdd.length = 0
+      ref.current = []
+      shouldReset = false
+    }
+  })
+
+  return [
+    ref.current,
+    (item: T) => { toAdd.push(item) }, // Add an item
+    () => { shouldReset = true }, // Reset items
+  ]
+}

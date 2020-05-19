@@ -1,6 +1,8 @@
 import "./styles.styl"
 
 import React, {
+  MouseEvent,
+  MouseEventHandler,
   ReactNode,
   memo,
   useCallback,
@@ -16,7 +18,7 @@ import Spinner from "../Spinner"
 export interface ButtonProps {
   children?: ReactNode
   className?: string
-  clickHandler?: React.MouseEventHandler
+  clickHandler?: MouseEventHandler
   highlight?: "positive" | "negative"
   href?: string
   isCompact?: boolean
@@ -45,7 +47,7 @@ function Button({
 
   const buttonRef = useRef<HTMLAnchorElement | HTMLButtonElement>(null)
 
-  const handleClick = useCallback((evt: React.MouseEvent) => {
+  const handleClick = useCallback((evt: MouseEvent) => {
     const { current: currentRef } = buttonRef
     currentRef && currentRef.blur()
     clickHandler && clickHandler(evt)

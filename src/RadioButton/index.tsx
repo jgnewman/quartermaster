@@ -1,12 +1,18 @@
 import "./styles.styl"
-import React, { PureComponent } from "react"
+
+import React, {
+  ChangeEventHandler,
+  RefObject,
+  forwardRef,
+  memo,
+  useCallback,
+  useRef,
+  useState,
+} from "react"
+
+import { DynamicProps } from "../lib/helperTypes"
 
 import Icon from "../Icon"
-
-import {
-  DynamicProps,
-  RefFunction,
-} from "../lib/helperTypes"
 
 import {
   buildClassNames,
@@ -15,9 +21,8 @@ import {
 } from "../lib/helpers"
 
 export interface RadioButtonProps {
-  changeHandler?: React.ChangeEventHandler
+  changeHandler?: ChangeEventHandler
   className?: string
-  elemRef?: RefFunction
   groupName?: string
   id?: string
   isChecked: boolean
@@ -27,43 +32,30 @@ export interface RadioButtonProps {
   value?: string
 }
 
-class RadioButton extends PureComponent<RadioButtonProps> {
-  static displayName = "RadioButton"
-  public state = { isFocused: false }
-  private inputRef: HTMLInputElement | null
+const RadioButton = forwardRef(function ({
+  changeHandler,
+  className,
+  groupName,
+  id,
+  isChecked,
+  isDisabled,
+  label,
+  tabIndex,
+  value,
+}: RadioButtonProps, ref: RefObject<HTMLInputElement>) {
 
-  handleFocus = () => this.setState({ isFocused: true })
-  handleBlur = () => this.setState({ isFocused: false })
+  const inputRef = ref || useRef<HTMLInputElement>(null)
 
-  handleOverlayClick = () => {
-    const { inputRef } = this
+  const handleOverlayClick = useCallback(() => {
+    const { current: currentInput } = inputRef
+    currentInput && manuallyTickRadioButton(currentInput)
+  }, [inputRef])
 
-    if (inputRef) {
-      manuallyTickRadioButton(inputRef)
-    }
-  }
+  const [isFocused, setIsFocused] = useState(false)
+  const handleFocus = useCallback(() => setIsFocused(true), [setIsFocused])
+  const handleBlur = useCallback(() => setIsFocused(false), [setIsFocused])
 
-  refFn = (elem: HTMLInputElement | null) => {
-    const { elemRef } = this.props
-    this.inputRef = elem
-    elemRef && elemRef(elem)
-  }
-
-  render() {
-    const {
-      changeHandler,
-      className,
-      groupName,
-      id,
-      isChecked,
-      isDisabled,
-      label,
-      tabIndex,
-      value,
-    } = this.props
-
-    const { isFocused } = this.state
-    const isEnabled = !isDisabled
+  const isEnabled = !isDisabled
 
     const labelProps: DynamicProps = {}
     const boxProps: DynamicProps = {}
@@ -112,7 +104,7 @@ class RadioButton extends PureComponent<RadioButtonProps> {
 
         <span
           className="qmRadioFauxWrapper"
-          onClick={isDisabled ? noopEvtHandler : this.handleOverlayClick}>
+          onClick={isDisabled ? noopEvtHandler : handleOverlayClick}>
 
           <span className="qmRadioCheckWrapper">
             <span
@@ -140,19 +132,21 @@ class RadioButton extends PureComponent<RadioButtonProps> {
         </span>
 
         <input
-          ref={this.refFn}
+          ref={inputRef}
           checked={isChecked}
           className="qmRadioNative"
           disabled={!!isDisabled}
           type="radio"
-          onFocus={this.handleFocus}
-          onBlur={this.handleBlur}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           {...boxProps}
         />
 
       </span>
     )
-  }
-}
 
-export default RadioButton
+})
+
+RadioButton.displayName = "RadioButton"
+
+export default memo(RadioButton)

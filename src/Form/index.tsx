@@ -1,4 +1,5 @@
 import React, {
+  ChangeEvent,
   ReactNode,
   ReactNodeArray,
   memo,
@@ -13,7 +14,7 @@ interface SimpleObject {
 }
 
 type SetFormState = (vals: SimpleObject) => void
-type UpdateValueFor = (name: string) => (evt: React.ChangeEvent | string | null) => void
+type UpdateValueFor = (name: string) => (evt: ChangeEvent | string | null) => void
 type ToggleCheckedFor = (name: string) => () => void
 
 interface FormUtils {
@@ -37,7 +38,7 @@ function Form({
 
   const setFormState: SetFormState = useCallback((vals) => {
     setState({ ...state, ...vals })
-  }, [setState])
+  }, [state, setState])
 
   const updateValueFor: UpdateValueFor = useCallback((name) => {
     return (evt) => {
@@ -51,7 +52,7 @@ function Form({
 
       setState({ ...state, [name]: val })
     }
-  }, [setState])
+  }, [state, setState])
 
   const toggleCheckedFor: ToggleCheckedFor = useCallback((name) => {
     return () => {

@@ -1,13 +1,14 @@
 import "./styles.styl"
 
 import React, {
+  MouseEvent,
+  MouseEventHandler,
   ReactNode,
   memo,
   useCallback,
   useState,
 } from "react"
 
-import { DynamicProps } from "../lib/helperTypes"
 import { noopEvtHandler, usePrevious } from "../lib/helpers"
 
 import Align from "../Align"
@@ -20,7 +21,7 @@ export interface ConfirmButtonProps extends Exclude<ButtonProps, "highlight"> {
   confirmationText?: string
   continueText?: string
   disableHighlights?: boolean
-  postCancelHook?: React.MouseEventHandler
+  postCancelHook?: MouseEventHandler
   skipConfirmation?: boolean
   useCompactModalButtons?: boolean
 }
@@ -50,42 +51,39 @@ function ConfirmButton({
     setRenderModal(true)
   }
 
-  const openConfirmation = useCallback(() => setOpen(true), [setOpen])
-  const closeConfirmation = useCallback(() => setOpen(false), [setOpen])
-
-  const handleClick = useCallback((evt: React.MouseEvent) => {
+  const handleClick = useCallback((evt: MouseEvent) => {
     evt.preventDefault()
 
     if (skipConfirmation) {
       clickHandler && clickHandler(evt)
     } else {
-      openConfirmation()
+      setOpen(true)
     }
-  }, [skipConfirmation, clickHandler, openConfirmation])
+  }, [skipConfirmation, clickHandler, setOpen])
 
-  const handleContinue = useCallback((evt: React.MouseEvent) => {
+  const handleContinue = useCallback((evt: MouseEvent) => {
     evt.preventDefault()
-    closeConfirmation()
+    setOpen(false)
     return (clickHandler || noopEvtHandler)(evt)
-  }, [closeConfirmation, clickHandler])
+  }, [clickHandler, setOpen])
 
-  const handleCancel = useCallback((evt: React.MouseEvent) => {
+  const handleCancel = useCallback((evt: MouseEvent) => {
     evt.preventDefault()
-    closeConfirmation()
+    setOpen(false)
     return (postCancelHook || noopEvtHandler)(evt)
-  }, [closeConfirmation, postCancelHook])
+  }, [postCancelHook, setOpen])
 
   const buttonProps = {
     ...rest,
     clickHandler: handleClick,
   }
 
-  const positiveProps: DynamicProps = {}
+  const positiveProps: Partial<ButtonProps> = {}
   if (!disableHighlights) {
     positiveProps.highlight = "positive"
   }
 
-  const negativeProps: DynamicProps = {}
+  const negativeProps: Partial<ButtonProps> = {}
   if (!disableHighlights) {
     negativeProps.highlight = "negative"
   }

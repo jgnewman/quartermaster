@@ -1,6 +1,7 @@
 import "./styles.styl"
 
 import React, {
+  ChangeEventHandler,
   RefObject,
   forwardRef,
   memo,
@@ -9,12 +10,9 @@ import React, {
   useState,
 } from "react"
 
-import Icon from "../Icon"
+import { DynamicProps } from "../lib/helperTypes"
 
-import {
-  DynamicProps,
-  RefFunction,
-} from "../lib/helperTypes"
+import Icon from "../Icon"
 
 import {
   buildClassNames,
@@ -23,9 +21,8 @@ import {
 } from "../lib/helpers"
 
 export interface CheckboxProps {
-  changeHandler?: React.ChangeEventHandler
+  changeHandler?: ChangeEventHandler
   className?: string
-  elemRef?: RefFunction
   id?: string
   isChecked: boolean
   isDisabled?: boolean

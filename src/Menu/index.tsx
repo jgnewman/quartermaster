@@ -1,5 +1,6 @@
 import "./styles.styl"
 import React, {
+  MouseEvent,
   memo,
   useCallback,
   useEffect,
@@ -65,9 +66,9 @@ const Submenu = memo(function ({
   const smallPad = isCompact ? "xs" : "s"
   const largePad = isCompact ? "m" : "l"
 
-  const stopper = (evt: React.MouseEvent) => evt.stopPropagation()
+  const stopper = (evt: MouseEvent) => evt.stopPropagation()
 
-  const clickHandler = !isCollapsible ? stopper : (evt: React.MouseEvent) => {
+  const clickHandler = !isCollapsible ? stopper : (evt: MouseEvent) => {
     stopper(evt)
     setMenuState({
       ...menuState,
