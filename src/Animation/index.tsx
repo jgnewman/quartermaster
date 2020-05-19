@@ -31,14 +31,16 @@ const Animation = forwardRef(function ({
 }: AnimationProps, ref: RefObject<HTMLDivElement>) {
 
   const hasOverride = typeof override === "string"
+  const hasDirection = !!direction
 
   const animClasses = buildClassNames({
     isAnimating: !hasOverride,
     isOverrideHide: override === "hide",
     isOverrideShow: override === "show",
-    isDown: !hasOverride && direction === "down",
     isFadeIn: !hasOverride && type === "fadeIn",
     isFadeOut: !hasOverride && type === "fadeOut",
+    isStill: !hasDirection,
+    isDown: !hasOverride && direction === "down",
     isLeft: !hasOverride && direction === "left",
     isRight: !hasOverride && direction === "right",
     isUp: !hasOverride && direction === "up",

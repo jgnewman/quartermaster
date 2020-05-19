@@ -23,27 +23,24 @@ function createJSXTemplate(componentName) {
   const classString = '${className || ""}'
   return `
     import "./styles.styl"
-    import React, { PureComponent } from "react"
+    import React, { memo } from "react"
 
     export interface ${componentName}Props {
       className?: string
     }
 
-    class ${componentName} extends PureComponent<${componentName}Props> {
-      static displayName = "${componentName}"
+    function ${componentName}({
+      className,
+    }: ${componentName}Props) {
 
-      render() {
-        const {
-          className,
-        } = this.props
-
-        return (
-          <div className={\`qm${componentName}Container ${classString}\`}></div>
-        )
-      }
+      return (
+        <div className={\`qm${componentName}Container ${classString}\`}></div>
+      )
     }
 
-    export default ${componentName}
+    ${componentName}.displayName = "${componentName}"
+
+    export default memo(${componentName})
   `.replace(/(\n)    /g, "$1").trim() + "\n"
 }
 

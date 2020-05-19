@@ -85,10 +85,7 @@ class App extends React.Component {
     this.setState({ radioVal: (evt.target as HTMLInputElement).value })
   }
 
-  fooRef = React.createRef<HTMLInputElement>()
-
   toggleTheme() {
-    console.log(this.fooRef)
     this.setState({ darkThemeEnabled: !this.state.darkThemeEnabled })
   }
 
@@ -305,7 +302,7 @@ class App extends React.Component {
                     changeHandler={updateValueFor("mygroup")}
                     value={formState.mygroup}
                     options={[
-                      { label: "Foo", value: "foo", ref: this.fooRef },
+                      { label: "Foo", value: "foo" },
                       { label: "Bar", value: "bar" },
                       { label: "Baz", value: "baz" },
                     ]}
