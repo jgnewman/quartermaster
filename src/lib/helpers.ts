@@ -43,3 +43,27 @@ export function buildClassNames(options: DynamicProps): string {
   Object.keys(options).forEach(key => options[key] && classes.push(key))
   return classes.join(" ")
 }
+
+const body: HTMLElement = window.document.body
+let scrollingEnabled = true
+let originalBodyHeight: string = body.style.height
+let originalBodyOverflow: string = body.style.overflow
+
+export function disableScrolling() {
+  if (scrollingEnabled) {
+    originalBodyHeight = body.style.height
+    originalBodyOverflow = body.style.overflow
+
+    body.style.height = "100%"
+    body.style.overflow = "hidden"
+    scrollingEnabled = false
+  }
+}
+
+export function enableScrolling() {
+  if (!scrollingEnabled) {
+    body.style.height = originalBodyHeight
+    body.style.overflow = originalBodyOverflow
+    scrollingEnabled = true
+  }
+}

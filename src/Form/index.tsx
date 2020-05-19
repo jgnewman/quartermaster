@@ -1,7 +1,9 @@
 import React, {
-  PureComponent,
   ReactNode,
   ReactNodeArray,
+  memo,
+  useCallback,
+  useState,
 } from "react"
 
 import { InputElem } from "../lib/helperTypes"
@@ -26,20 +28,18 @@ export interface FormProps {
   initialState: SimpleObject
 }
 
-class Form extends PureComponent<FormProps, SimpleObject> {
-  static displayName = "Form"
-  public state: SimpleObject
+function Form({
+  children,
+  initialState,
+}: FormProps) {
 
-  constructor(props: FormProps) {
-    super(props)
-    this.state = { ...props.initialState }
-  }
+  const [state, setState] = useState({ ...initialState })
 
-  setFormState: SetFormState = (vals) => {
-    this.setState({ ...vals })
-  }
+  const setFormState: SetFormState = useCallback((vals) => {
+    setState({ ...state, ...vals })
+  }, [setState])
 
-  updateValueFor: UpdateValueFor = (name) => {
+  const updateValueFor: UpdateValueFor = useCallback((name) => {
     return (evt) => {
       let val;
 
@@ -49,39 +49,37 @@ class Form extends PureComponent<FormProps, SimpleObject> {
         val = (evt.target as InputElem).value
       }
 
-      this.setState({ [name]: val })
+      setState({ ...state, [name]: val })
     }
-  }
+  }, [setState])
 
-  toggleCheckedFor: ToggleCheckedFor = (name) => {
+  const toggleCheckedFor: ToggleCheckedFor = useCallback((name) => {
     return () => {
-      if (typeof this.state[name] !== "boolean") {
+      if (typeof state[name] !== "boolean") {
         throw new Error(`
-          "toggleCheckedFor" expects to update booleans but "${name}" is currently ${this.state[name]}.
+          "toggleCheckedFor" expects to update booleans but "${name}" is currently ${state[name]}.
         `)
       }
-      this.setState({ [name]: !this.state[name] })
+      setState({ ...state, [name]: !state[name] })
     }
+  }, [state, setState])
+
+  if (typeof children !== "function") {
+    throw new Error("Quartermaster Form component must take a single function child.")
   }
 
-  render() {
-    const { children } = this.props
-
-    if (typeof children !== "function") {
-      throw new Error("Quartermaster Form component must take a single function child.")
-    }
-
-    return (
-      <div className="qmFormContainer">
-        {children({
-          formState: { ...this.state },
-          setFormState: this.setFormState,
-          updateValueFor: this.updateValueFor,
-          toggleCheckedFor: this.toggleCheckedFor,
-        })}
-      </div>
-    )
-  }
+  return (
+    <div className="qmFormContainer">
+      {children({
+        formState: { ...state },
+        setFormState: setFormState,
+        updateValueFor: updateValueFor,
+        toggleCheckedFor: toggleCheckedFor,
+      })}
+    </div>
+  )
 }
 
-export default Form
+Form.displayName = "Form"
+
+export default memo(Form)

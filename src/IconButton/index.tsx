@@ -1,5 +1,5 @@
 import "./styles.styl"
-import React, { PureComponent } from "react"
+import React, { memo } from "react"
 
 import Button from "../Button"
 import sizeMap from "../Icon/sizeMap"
@@ -23,43 +23,40 @@ export interface IconButtonProps {
   type: IconType
 }
 
-class IconButton extends PureComponent<IconButtonProps> {
-  static displayName = "IconButton"
+function IconButton({
+  className = "",
+  clickHandler = noopEvtHandler,
+  href,
+  rotate,
+  size,
+  tag,
+  title,
+  type,
+}: IconButtonProps) {
 
-  render() {
-    const {
-      className = "",
-      clickHandler = noopEvtHandler,
-      href,
-      rotate,
-      size,
-      tag,
-      title,
-      type,
-    } = this.props
-
-    const containerStyle = {
-      fontSize: `${sizeMap[size]}px`,
-    }
-
-    return (
-      <span className={`qmIconButtonContainer ${className}`} style={containerStyle}>
-        <span className="qmIconButtonEffect"></span>
-        <Button
-          className="qmIconButton"
-          clickHandler={clickHandler}
-          href={href}
-          tag={tag}>
-          <Icon
-            rotate={rotate}
-            size={size}
-            title={title}
-            type={type}
-          />
-        </Button>
-      </span>
-    )
+  const containerStyle = {
+    fontSize: `${sizeMap[size]}px`,
   }
+
+  return (
+    <span className={`qmIconButtonContainer ${className}`} style={containerStyle}>
+      <span className="qmIconButtonEffect"></span>
+      <Button
+        className="qmIconButton"
+        clickHandler={clickHandler}
+        href={href}
+        tag={tag}>
+        <Icon
+          rotate={rotate}
+          size={size}
+          title={title}
+          type={type}
+        />
+      </Button>
+    </span>
+  )
 }
 
-export default IconButton
+IconButton.displayName = "IconButton"
+
+export default memo(IconButton)

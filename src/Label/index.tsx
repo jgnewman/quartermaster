@@ -1,5 +1,5 @@
 import "./styles.styl"
-import React, { PureComponent } from "react"
+import React, { memo } from "react"
 
 import { DynamicProps } from "../lib/helperTypes"
 import { buildClassNames } from "../lib/helpers"
@@ -11,33 +11,30 @@ export interface LabelProps {
   text: string
 }
 
-class Label extends PureComponent<LabelProps> {
-  static displayName = "Label"
+function Label({
+  className,
+  htmlFor,
+  isRequired,
+  text,
+}: LabelProps) {
 
-  render() {
-    const {
-      className,
-      htmlFor,
-      isRequired,
-      text,
-    } = this.props
+  const dynamicProps: DynamicProps = {}
 
-    const dynamicProps: DynamicProps = {}
-
-    if (htmlFor) {
-      dynamicProps.htmlFor = htmlFor
-    }
-
-    const containerClasses = buildClassNames({ isRequired })
-
-    return (
-      <label
-        className={`qmLabelContainer ${containerClasses} ${className || ""}`}
-        {...dynamicProps}>
-        {text}{isRequired && <span className="qmLabelRequired" title="Required field">*</span>}
-      </label>
-    )
+  if (htmlFor) {
+    dynamicProps.htmlFor = htmlFor
   }
+
+  const containerClasses = buildClassNames({ isRequired })
+
+  return (
+    <label
+      className={`qmLabelContainer ${containerClasses} ${className || ""}`}
+      {...dynamicProps}>
+      {text}{isRequired && <span className="qmLabelRequired" title="Required field">*</span>}
+    </label>
+  )
 }
 
-export default Label
+Label.displayName = "Label"
+
+export default memo(Label)

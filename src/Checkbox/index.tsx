@@ -1,5 +1,13 @@
 import "./styles.styl"
-import React, { PureComponent } from "react"
+
+import React, {
+  RefObject,
+  forwardRef,
+  memo,
+  useCallback,
+  useRef,
+  useState,
+} from "react"
 
 import Icon from "../Icon"
 
@@ -26,126 +34,115 @@ export interface CheckboxProps {
   value?: string
 }
 
-class Checkbox extends PureComponent<CheckboxProps> {
-  static displayName = "Checkbox"
-  public state = { isFocused: false }
-  private inputRef: HTMLInputElement | null
+const Checkbox = forwardRef(function ({
+  changeHandler,
+  className,
+  id,
+  isChecked,
+  isDisabled,
+  label,
+  tabIndex,
+  value,
+}: CheckboxProps, ref: RefObject<HTMLInputElement>) {
 
-  handleFocus = () => this.setState({ isFocused: true })
-  handleBlur = () => this.setState({ isFocused: false })
+  const inputRef = ref || useRef<HTMLInputElement>(null)
 
-  handleOverlayClick = () => {
-    const { inputRef } = this
+  const handleOverlayClick = useCallback(() => {
+    const { current: currentInput } = inputRef
+    currentInput && manuallyTickCheckbox(currentInput)
+  }, [inputRef])
 
-    if (inputRef) {
-      manuallyTickCheckbox(inputRef)
-    }
+  const [isFocused, setIsFocused] = useState(false)
+  const handleFocus = useCallback(() => setIsFocused(true), [setIsFocused])
+  const handleBlur = useCallback(() => setIsFocused(false), [setIsFocused])
+
+  const isEnabled = !isDisabled
+
+  const labelProps: DynamicProps = {}
+  const boxProps: DynamicProps = {}
+
+  if (id) {
+    labelProps.htmlFor = id
+    boxProps.id = id
   }
 
-  refFn = (elem: HTMLInputElement | null) => {
-    const { elemRef } = this.props
-    this.inputRef = elem
-    elemRef && elemRef(elem)
+  if (tabIndex) {
+    boxProps.tabIndex = tabIndex
   }
 
-  render() {
-    const {
-      changeHandler,
-      className,
-      id,
-      isChecked,
-      isDisabled,
-      label,
-      tabIndex,
-      value,
-    } = this.props
+  if (changeHandler) {
+    boxProps.onChange = changeHandler
+  }
 
-    const { isFocused } = this.state
-    const isEnabled = !isDisabled
+  if (value) {
+    boxProps.value = value
+  }
 
-    const labelProps: DynamicProps = {}
-    const boxProps: DynamicProps = {}
+  const containerClasses = buildClassNames({
+    isChecked,
+    isDisabled,
+    isEnabled,
+  })
 
-    if (id) {
-      labelProps.htmlFor = id
-      boxProps.id = id
-    }
+  const labelClasses = buildClassNames({
+    isChecked,
+    isDisabled,
+    isEnabled,
+  })
 
-    if (tabIndex) {
-      boxProps.tabIndex = tabIndex
-    }
+  const overlayClasses = buildClassNames({
+    isChecked,
+    isFocused,
+  })
 
-    if (changeHandler) {
-      boxProps.onChange = changeHandler
-    }
+  return (
+    <span
+      className={`qmCheckboxContainer ${containerClasses} ${className || ""}`}>
 
-    if (value) {
-      boxProps.value = value
-    }
-
-    const containerClasses = buildClassNames({
-      isChecked,
-      isDisabled,
-      isEnabled,
-    })
-
-    const labelClasses = buildClassNames({
-      isChecked,
-      isDisabled,
-      isEnabled,
-    })
-
-    const overlayClasses = buildClassNames({
-      isChecked,
-      isFocused,
-    })
-
-    return (
       <span
-        className={`qmCheckboxContainer ${containerClasses} ${className || ""}`}>
+        className="qmCheckboxFauxWrapper"
+        onClick={isDisabled ? noopEvtHandler : handleOverlayClick}>
 
-        <span
-          className="qmCheckboxFauxWrapper"
-          onClick={isDisabled ? noopEvtHandler : this.handleOverlayClick}>
-
-          <span className="qmCheckboxCheckWrapper">
-            <span
-              aria-hidden={true}
-              className={`qmCheckboxOverlay ${overlayClasses}`}>
-              {isChecked && (
-                <Icon
-                  className="qmCheckboxCheckmark"
-                  type="checkmark"
-                  size="xs"
-                />
-              )}
-            </span>
+        <span className="qmCheckboxCheckWrapper">
+          <span
+            aria-hidden={true}
+            className={`qmCheckboxOverlay ${overlayClasses}`}>
+            {isChecked && (
+              <Icon
+                className="qmCheckboxCheckmark"
+                type="checkmark"
+                size="xs"
+              />
+            )}
           </span>
-
-          {label && (
-            <label
-              className={`qmCheckboxLabel ${labelClasses}`}
-              {...labelProps}>
-              {label}
-            </label>
-          )}
-
         </span>
 
-        <input
-          ref={this.refFn}
-          checked={isChecked}
-          className="qmCheckboxNative"
-          disabled={!!isDisabled}
-          type="checkbox"
-          onFocus={this.handleFocus}
-          onBlur={this.handleBlur}
-          {...boxProps}
-        />
+        {label && (
+          <label
+            className={`qmCheckboxLabel ${labelClasses}`}
+            {...labelProps}>
+            {label}
+          </label>
+        )}
 
       </span>
-    )
-  }
-}
 
-export default Checkbox
+      <input
+        ref={inputRef}
+        checked={isChecked}
+        className="qmCheckboxNative"
+        disabled={!!isDisabled}
+        type="checkbox"
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        {...boxProps}
+      />
+
+    </span>
+  )
+
+})
+
+Checkbox.displayName = "Checkbox"
+
+export default memo(Checkbox)

@@ -1,8 +1,13 @@
 import "./styles.styl"
-import React, { PureComponent } from "react"
+import React, { memo } from "react"
 
 import { DynamicProps } from "../lib/helperTypes"
 import { buildClassNames } from "../lib/helpers"
+
+function getInitials(rawName: string) {
+  const [chunk1, chunk2]: string[] = rawName.split(/\s+/)
+  return `${chunk1[0]?.toUpperCase() || ""}${(chunk2 ? chunk2[0] : chunk1[1])?.toUpperCase() || ""}`
+}
 
 export interface AvatarProps {
   className?: string
@@ -13,42 +18,35 @@ export interface AvatarProps {
   url?: string
 }
 
-class Avatar extends PureComponent<AvatarProps> {
-  static displayName = "Avatar"
+function Avatar({
+  className,
+  isActive,
+  isCompact,
+  name = "••",
+  showActivity,
+  url,
+}: AvatarProps) {
 
-  getInitials(rawName: string) {
-    const [chunk1, chunk2]: string[] = rawName.split(/\s+/)
-    return `${chunk1[0]?.toUpperCase() || ""}${(chunk2 ? chunk2[0] : chunk1[1])?.toUpperCase() || ""}`
+  const style: DynamicProps = {}
+
+  if (url) {
+    style.backgroundImage = `url(${url})`
   }
 
-  render() {
-    const {
-      className,
-      isActive,
-      isCompact,
-      name = "••",
-      showActivity,
-      url,
-    } = this.props
+  const compactClass = buildClassNames({ isCompact })
 
-    const style: DynamicProps = {}
+  return (
+    <div className={`qmAvatarContainer ${compactClass} ${className || ""}`}>
+      <span className="qmAvatarContent">
+        <span className="qmAvatarInitials">{ getInitials(name) }</span>
+        {url && <span className="qmAvatarImg" style={style}></span>}
+      </span>
+      {showActivity && <span className={`qmAvatarIndicator ${compactClass} ${isActive ? "isActive" : ""}`}></span>}
+    </div>
+  )
 
-    if (url) {
-      style.backgroundImage = `url(${url})`
-    }
-
-    const compactClass = buildClassNames({ isCompact })
-
-    return (
-      <div className={`qmAvatarContainer ${compactClass} ${className || ""}`}>
-        <span className="qmAvatarContent">
-          <span className="qmAvatarInitials">{ this.getInitials(name) }</span>
-          {url && <span className="qmAvatarImg" style={style}></span>}
-        </span>
-        {showActivity && <span className={`qmAvatarIndicator ${compactClass} ${isActive ? "isActive" : ""}`}></span>}
-      </div>
-    )
-  }
 }
 
-export default Avatar
+Avatar.displayName = "Avatar"
+
+export default memo(Avatar)

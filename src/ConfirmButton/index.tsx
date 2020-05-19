@@ -1,5 +1,11 @@
 import "./styles.styl"
-import React, { Component } from "react"
+
+import React, {
+  ReactNode,
+  memo,
+  useCallback,
+  useState,
+} from "react"
 
 import { noopEvtHandler } from "../lib/helpers"
 import Align from "../Align"
@@ -10,6 +16,7 @@ import { DynamicProps } from "../lib/helperTypes"
 
 export interface ConfirmButtonProps extends Exclude<ButtonProps, "highlight"> {
   cancelText?: string
+  children?: ReactNode
   confirmationText?: string
   continueText?: string
   disableHighlights?: boolean
@@ -18,119 +25,106 @@ export interface ConfirmButtonProps extends Exclude<ButtonProps, "highlight"> {
   useCompactModalButtons?: boolean
 }
 
-interface ConfirmButtonState {
-  open: boolean
-}
+function ConfirmButton({
+  cancelText,
+  children,
+  clickHandler,
+  confirmationText,
+  continueText,
+  disableHighlights,
+  postCancelHook,
+  skipConfirmation,
+  useCompactModalButtons,
+  ...rest
+}: ConfirmButtonProps) {
 
-class ConfirmButton extends Component<ConfirmButtonProps, ConfirmButtonState> {
-  static displayName = "ConfirmButton"
-  public state = { open: false }
+  const [isOpen, setOpen] = useState(false)
+  const openConfirmation = useCallback(() => setOpen(true), [setOpen])
+  const closeConfirmation = useCallback(() => setOpen(false), [setOpen])
 
-  openConfirmation() {
-    this.setState({ open: true })
-  }
-
-  closeConfirmation() {
-    this.setState({ open: false })
-  }
-
-  handleClick = (evt: React.MouseEvent) => {
-    const { clickHandler, skipConfirmation } = this.props
+  const handleClick = useCallback((evt: React.MouseEvent) => {
     evt.preventDefault()
 
     if (skipConfirmation) {
       clickHandler && clickHandler(evt)
     } else {
-      this.openConfirmation()
+      openConfirmation()
     }
-  }
+  }, [skipConfirmation, clickHandler, openConfirmation])
 
-  handleContinue = (evt: React.MouseEvent) => {
-    const { clickHandler } = this.props
+  const handleContinue = useCallback((evt: React.MouseEvent) => {
     evt.preventDefault()
-    this.closeConfirmation()
+    closeConfirmation()
     return (clickHandler || noopEvtHandler)(evt)
-  }
+  }, [closeConfirmation, clickHandler])
 
-  handleCancel = (evt: React.MouseEvent) => {
-    const { postCancelHook } = this.props
+  const handleCancel = useCallback((evt: React.MouseEvent) => {
     evt.preventDefault()
-    this.closeConfirmation()
+    closeConfirmation()
     return (postCancelHook || noopEvtHandler)(evt)
+  }, [closeConfirmation, postCancelHook])
+
+
+  const buttonProps = {
+    ...rest,
+    clickHandler: handleClick,
   }
 
-  render() {
-    const {
-      cancelText,
-      children,
-      clickHandler,
-      confirmationText,
-      continueText,
-      disableHighlights,
-      postCancelHook,
-      skipConfirmation,
-      useCompactModalButtons,
-      ...rest
-    } = this.props
-
-    const buttonProps = {
-      ...rest,
-      clickHandler: this.handleClick,
-    }
-
-    const positiveProps: DynamicProps = {}
-    if (!disableHighlights) {
-      positiveProps.highlight = "positive"
-    }
-
-    const negativeProps: DynamicProps = {}
-    if (!disableHighlights) {
-      negativeProps.highlight = "negative"
-    }
-
-    return (
-      <>
-
-        <Button {...buttonProps}>
-          {children}
-        </Button>
-
-        {!skipConfirmation && (
-          <Modal
-            className="qmConfButtonModal"
-            hideCloseButton={true}
-            isOpen={this.state.open}>
-
-            <h2 className="qmConfButtonTitle">
-              {confirmationText || "Are you sure?"}
-            </h2>
-
-            <div className="qmConfButtonOptions">
-              <Align>
-                <Button
-                  className="qmConfButtonContinue"
-                  clickHandler={this.handleContinue}
-                  isCompact={!!useCompactModalButtons}
-                  {...positiveProps}>
-                  { continueText || "Yes" }
-                </Button>
-
-                <Button
-                  className="qmConfButtonCancel"
-                  clickHandler={this.handleCancel}
-                  isCompact={!!useCompactModalButtons}
-                  {...negativeProps}>
-                  { cancelText || "Nevermind" }
-                </Button>
-              </Align>
-            </div>
-
-          </Modal>
-        )}
-
-      </>
-    )
+  const positiveProps: DynamicProps = {}
+  if (!disableHighlights) {
+    positiveProps.highlight = "positive"
   }
+
+  const negativeProps: DynamicProps = {}
+  if (!disableHighlights) {
+    negativeProps.highlight = "negative"
+  }
+
+  return (
+    <>
+
+      <Button {...buttonProps}>
+        {children}
+      </Button>
+
+      {!skipConfirmation && (
+        <Modal
+          className="qmConfButtonModal"
+          hideCloseButton={true}
+          isOpen={isOpen}>
+
+          <h2 className="qmConfButtonTitle">
+            {confirmationText || "Are you sure?"}
+          </h2>
+
+          <div className="qmConfButtonOptions">
+            <Align>
+              <Button
+                className="qmConfButtonContinue"
+                clickHandler={handleContinue}
+                isCompact={!!useCompactModalButtons}
+                {...positiveProps}>
+                { continueText || "Yes" }
+              </Button>
+
+              <Button
+                className="qmConfButtonCancel"
+                clickHandler={handleCancel}
+                isCompact={!!useCompactModalButtons}
+                {...negativeProps}>
+                { cancelText || "Nevermind" }
+              </Button>
+            </Align>
+          </div>
+
+        </Modal>
+      )}
+
+    </>
+  )
+
 }
 
-export default ConfirmButton
+ConfirmButton.displayName = "ConfirmButton"
+
+export default memo(ConfirmButton)
