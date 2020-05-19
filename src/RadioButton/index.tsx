@@ -2,10 +2,11 @@ import "./styles.styl"
 
 import React, {
   ChangeEventHandler,
-  RefObject,
+  MutableRefObject,
   forwardRef,
   memo,
   useCallback,
+  useMemo,
   useRef,
   useState,
 } from "react"
@@ -18,6 +19,7 @@ import {
   buildClassNames,
   noopEvtHandler,
   manuallyTickRadioButton,
+  mergeRefs,
 } from "../lib/helpers"
 
 export interface RadioButtonProps {
@@ -42,9 +44,10 @@ const RadioButton = forwardRef(function ({
   label,
   tabIndex,
   value,
-}: RadioButtonProps, ref: RefObject<HTMLInputElement>) {
+}: RadioButtonProps, ref: MutableRefObject<HTMLInputElement>) {
 
-  const inputRef = ref || useRef<HTMLInputElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
+  const mergedRef = useMemo(() => mergeRefs(ref, inputRef), [ref, inputRef])
 
   const handleOverlayClick = useCallback(() => {
     const { current: currentInput } = inputRef
@@ -132,7 +135,7 @@ const RadioButton = forwardRef(function ({
         </span>
 
         <input
-          ref={inputRef}
+          ref={mergedRef}
           checked={isChecked}
           className="qmRadioNative"
           disabled={!!isDisabled}

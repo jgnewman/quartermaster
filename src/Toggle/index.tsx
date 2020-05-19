@@ -2,10 +2,11 @@ import "./styles.styl"
 
 import React, {
   ChangeEventHandler,
-  RefObject,
+  MutableRefObject,
   forwardRef,
   memo,
   useCallback,
+  useMemo,
   useRef,
   useState,
 } from "react"
@@ -18,6 +19,7 @@ import {
   buildClassNames,
   noopEvtHandler,
   manuallyTickCheckbox,
+  mergeRefs,
 } from "../lib/helpers"
 
 export interface ToggleProps {
@@ -40,9 +42,10 @@ const Toggle = forwardRef(function ({
   label,
   tabIndex,
   value,
-}: ToggleProps, ref: RefObject<HTMLInputElement>) {
+}: ToggleProps, ref: MutableRefObject<HTMLInputElement>) {
 
-  const inputRef = ref || useRef<HTMLInputElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
+  const mergedRef = useMemo(() => mergeRefs(ref, inputRef), [ref, inputRef])
 
   const handleOverlayClick = useCallback(() => {
     const { current: currentInput } = inputRef
@@ -128,7 +131,7 @@ const Toggle = forwardRef(function ({
       </span>
 
       <input
-        ref={inputRef}
+        ref={mergedRef}
         checked={isChecked}
         className="qmToggleNative"
         disabled={!!isDisabled}

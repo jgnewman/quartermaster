@@ -98,7 +98,7 @@ function Theme({ children, data }: ThemeProps) {
 
   useEffect(() => {
     updateStyles()
-  }, [data])
+  }, [data, updateStyles])
 
   useEffect(() => () => {
     removeStyleTag(tag)

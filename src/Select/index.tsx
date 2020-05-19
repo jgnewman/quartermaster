@@ -173,7 +173,7 @@ function Select({
 
   const handleClickClearButton = useCallback(() => {
     selectValue(null)
-  }, [])
+  }, [selectValue])
 
   const handleFocusClearButton = useCallback((evt: FocusEvent) => {
     evt.stopPropagation()

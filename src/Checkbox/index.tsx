@@ -2,10 +2,11 @@ import "./styles.styl"
 
 import React, {
   ChangeEventHandler,
-  RefObject,
+  MutableRefObject,
   forwardRef,
   memo,
   useCallback,
+  useMemo,
   useRef,
   useState,
 } from "react"
@@ -18,6 +19,7 @@ import {
   buildClassNames,
   noopEvtHandler,
   manuallyTickCheckbox,
+  mergeRefs,
 } from "../lib/helpers"
 
 export interface CheckboxProps {
@@ -40,9 +42,10 @@ const Checkbox = forwardRef(function ({
   label,
   tabIndex,
   value,
-}: CheckboxProps, ref: RefObject<HTMLInputElement>) {
+}: CheckboxProps, ref: MutableRefObject<HTMLInputElement>) {
 
-  const inputRef = ref || useRef<HTMLInputElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
+  const mergedRef = useMemo(() => mergeRefs(ref, inputRef), [ref, inputRef])
 
   const handleOverlayClick = useCallback(() => {
     const { current: currentInput } = inputRef
@@ -125,7 +128,7 @@ const Checkbox = forwardRef(function ({
       </span>
 
       <input
-        ref={inputRef}
+        ref={mergedRef}
         checked={isChecked}
         className="qmCheckboxNative"
         disabled={!!isDisabled}

@@ -4,12 +4,14 @@ import React, {
   ChangeEventHandler,
   KeyboardEvent,
   KeyboardEventHandler,
-  ReactNode,
+  MutableRefObject,
   RefObject,
+  ReactNode,
   forwardRef,
   memo,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react"
@@ -22,6 +24,7 @@ import {
 import {
   manuallySetFieldValue,
   buildClassNames,
+  mergeRefs,
   usePrevious,
 } from "../lib/helpers"
 
@@ -91,9 +94,11 @@ const TextField = forwardRef(function ({
   tabIndex,
   type,
   value,
-}: TextFieldProps, ref: RefObject<HTMLInputElement | HTMLTextAreaElement>) {
+}: TextFieldProps, ref: MutableRefObject<HTMLInputElement | HTMLTextAreaElement>) {
 
-  const inputRef = ref || useRef<HTMLInputElement | HTMLTextAreaElement>(null)
+  const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null)
+  const mergedRef = useMemo(() => mergeRefs(ref, inputRef), [ref, inputRef])
+
   const prevVal = usePrevious(value)
   const [isFocused, setIsFocused] = useState(false)
   const handleFocus = useCallback(() => setIsFocused(true), [setIsFocused])
@@ -153,7 +158,7 @@ const TextField = forwardRef(function ({
     if (changeHandler) {
       changeHandler(evt)
     }
-  }, [changeHandler, inputRef, shouldPreventInput])
+  }, [type, changeHandler, inputRef, shouldPreventInput])
 
   const handleKeyUp = useCallback((evt: KeyboardEvent) => {
     if (keyUpHandler) {
@@ -168,7 +173,7 @@ const TextField = forwardRef(function ({
   useEffect(() => {
     maybeTruncateValue()
     prevVal !== value && scrollToBottom(type, inputRef)
-  }, [type, prevVal, value, maybeTruncateValue, scrollToBottom])
+  }, [type, prevVal, value, maybeTruncateValue])
 
   const isTextArea = type === "textarea"
   const isEnabled = !isDisabled
@@ -263,7 +268,7 @@ const TextField = forwardRef(function ({
             onFocus={handleFocus}
             onBlur={handleBlur}
             placeholder={placeholder || ""}
-            ref={inputRef as RefObject<HTMLTextAreaElement>}
+            ref={mergedRef}
             {...dynamicProps}>
           </textarea>
         )}
@@ -277,7 +282,7 @@ const TextField = forwardRef(function ({
             onFocus={handleFocus}
             onBlur={handleBlur}
             placeholder={placeholder || ""}
-            ref={inputRef as RefObject<HTMLInputElement>}
+            ref={mergedRef}
             type={type || "text"}
             style={fieldStyle}
             {...dynamicProps}
