@@ -7,12 +7,12 @@ import React, {
   useState,
 } from "react"
 
-import { noopEvtHandler } from "../lib/helpers"
+import { DynamicProps } from "../lib/helperTypes"
+import { noopEvtHandler, usePrevious } from "../lib/helpers"
+
 import Align from "../Align"
 import Button, { ButtonProps } from "../Button"
 import Modal from "../Modal"
-
-import { DynamicProps } from "../lib/helperTypes"
 
 export interface ConfirmButtonProps extends Exclude<ButtonProps, "highlight"> {
   cancelText?: string
@@ -38,7 +38,18 @@ function ConfirmButton({
   ...rest
 }: ConfirmButtonProps) {
 
+  const [renderModal, setRenderModal] = useState(!skipConfirmation)
   const [isOpen, setOpen] = useState(false)
+  const wasSkipConfirmation = usePrevious(skipConfirmation)
+
+  if (!wasSkipConfirmation && skipConfirmation && renderModal) {
+    setTimeout(() => setRenderModal(false), 500)
+  }
+
+  if (wasSkipConfirmation && !skipConfirmation && !renderModal) {
+    setRenderModal(true)
+  }
+
   const openConfirmation = useCallback(() => setOpen(true), [setOpen])
   const closeConfirmation = useCallback(() => setOpen(false), [setOpen])
 
@@ -64,7 +75,6 @@ function ConfirmButton({
     return (postCancelHook || noopEvtHandler)(evt)
   }, [closeConfirmation, postCancelHook])
 
-
   const buttonProps = {
     ...rest,
     clickHandler: handleClick,
@@ -87,7 +97,7 @@ function ConfirmButton({
         {children}
       </Button>
 
-      {!skipConfirmation && (
+      {renderModal && (
         <Modal
           className="qmConfButtonModal"
           hideCloseButton={true}

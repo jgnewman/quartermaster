@@ -33,8 +33,6 @@ function Modal({
   isOpen,
 }: ModalProps) {
 
-  console.log({ isOpen })
-
   const handleScrolling = useCallback(() => {
     isOpen ? disableScrolling() : enableScrolling()
   }, [isOpen])

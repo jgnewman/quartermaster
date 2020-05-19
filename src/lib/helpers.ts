@@ -1,3 +1,5 @@
+import { useEffect, useRef } from "react"
+
 import {
   DynamicProps,
   InputElem,
@@ -66,4 +68,10 @@ export function enableScrolling() {
     body.style.overflow = originalBodyOverflow
     scrollingEnabled = true
   }
+}
+
+export function usePrevious(value: any) {
+  const ref = useRef()
+  useEffect(() => { ref.current = value })
+  return ref.current
 }
