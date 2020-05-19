@@ -28,6 +28,17 @@ import {
 import Label from "../Label"
 import CharLimitCounter from "./CharLimitCounter"
 
+function scrollToBottom(type = "", inputRef: RefObject<HTMLInputElement | HTMLTextAreaElement>) {
+  const { current: currentInputRef } = inputRef
+  if (currentInputRef) {
+    if (type === "textarea") {
+      currentInputRef.scrollTop = currentInputRef.scrollHeight
+    } else {
+      currentInputRef.scrollLeft = currentInputRef.scrollWidth
+    }
+  }
+}
+
 export interface TextFieldProps {
   changeHandler?: ChangeEventHandler
   charLimit?: number
@@ -99,17 +110,6 @@ const TextField = forwardRef(function ({
       && newValue.length > curVal.length
   }, [charLimit, charLimitIsMinimum, preventInputAtLimit, value])
 
-  const scrollToBottom = useCallback(() => {
-    const { current: currentInputRef } = inputRef
-    if (currentInputRef) {
-      if (type === "textarea") {
-        currentInputRef.scrollTop = currentInputRef.scrollHeight
-      } else {
-        currentInputRef.scrollLeft = currentInputRef.scrollWidth
-      }
-    }
-  }, [type, inputRef])
-
   const maybeTruncateValue = useCallback(() => {
     const { current: currentInputRef } = inputRef
     const valueStr = value || ""
@@ -167,8 +167,8 @@ const TextField = forwardRef(function ({
 
   useEffect(() => {
     maybeTruncateValue()
-    prevVal !== value && scrollToBottom()
-  }, [prevVal, value, maybeTruncateValue, scrollToBottom])
+    prevVal !== value && scrollToBottom(type, inputRef)
+  }, [type, prevVal, value, maybeTruncateValue, scrollToBottom])
 
   const isTextArea = type === "textarea"
   const isEnabled = !isDisabled

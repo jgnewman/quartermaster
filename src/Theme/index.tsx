@@ -59,6 +59,17 @@ function buildCSSStyles(data: CSSData | null): string {
   }).join("")
 }
 
+function removeStyleTag(tag: HTMLStyleElement) {
+  tag.parentNode?.removeChild(tag)
+}
+
+function createStyleTag(id: string): HTMLStyleElement {
+  const styleTag = document.createElement("style")
+  styleTag.setAttribute("type", "text/css")
+  styleTag.setAttribute("id", id)
+  return styleTag
+}
+
 export interface ThemeProps {
   children?: ReactNode
   data: CSSData | null
@@ -69,17 +80,7 @@ function Theme({ children, data }: ThemeProps) {
   const { current: id } = useRef<string>(`qm-${String(Date.now()).slice(9)}-${String(Math.random()).slice(2, 6)}`)
   const [stylesInjected, setStylesInjected] = useState(false)
   const [prevStyles, setPrevStyles] = useState("")
-
-  const tag: HTMLElement = useMemo(() => {
-    const styleTag = document.createElement("style")
-    styleTag.setAttribute("type", "text/css")
-    styleTag.setAttribute("id", id)
-    return styleTag
-  }, [id])
-
-  const removeStyleTag = useCallback(() => {
-    tag.parentNode?.removeChild(tag)
-  }, [id])
+  const tag: HTMLStyleElement = useMemo(() => createStyleTag(id), [id])
 
   const updateStyles = useCallback(() => {
     const newStyles = buildCSSStyles(data)
@@ -100,8 +101,8 @@ function Theme({ children, data }: ThemeProps) {
   }, [data])
 
   useEffect(() => () => {
-    removeStyleTag()
-  }, [])
+    removeStyleTag(tag)
+  }, [tag])
 
   return (
     <>
