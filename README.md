@@ -44,6 +44,7 @@ Quartermaster deliberately avoids styled-components for performance and bundle s
 - [RadioButton](#radiobutton)
 - [RadioGroup](#radiogroup)
 - [Select](#select)
+- [Space](#space)
 - [Spinner](#spinner)
 - [TextField](#textfield)
 - [Theme](#theme)
@@ -54,6 +55,7 @@ Places a colored box with an alert icon in one of three forms: `info`, `danger`,
 
 ```typescript
 interface AlertProps {
+  children?: React.ReactNode
   className?: string
   type: "danger" | "info" | "warning"
 }
@@ -64,6 +66,7 @@ For when you need to put two or more elements onto the same horizontal alignment
 
 ```typescript
 interface AlignProps {
+  children?: React.ReactNode
   className?: string
   justify?: "left" | "center" | "right"
   bottomSpace?: SpaceSize
@@ -80,10 +83,11 @@ Allows you to fade an element in or out by wrapping it in this component, option
 
 ```typescript
 interface AnimationProps {
+  children?: React.ReactNode
   className?: string
   direction?: "left" | "right" | "up" | "down"
   duration?: number // defaults to 200
-  elemRef?: RefFunction // function like (elem => this.myRef = elem)
+  elemRef?: React.Ref<HTMLDivElement> // either a Ref object or a Ref callback
   override?: "hide" | "show" | null
   style?: any
   type: "fadeIn" | "fadeOut"
@@ -109,6 +113,7 @@ Creates a button from either an `a` tag or a `button` tag as specified, defaulti
 
 ```typescript
 interface ButtonProps {
+  children?: React.ReactNode
   className?: string
   clickHandler?: React.MouseEventHandler
   highlight?: "positive" | "negative" // applies additional green or red color stylings
@@ -116,6 +121,7 @@ interface ButtonProps {
   isCompact?: boolean
   isDisabled?: boolean
   isProcessing?: boolean
+  ref?: React.MutableRefObject<HTMLAnchorElement | HTMLButtonElement>
   tag?: "a" | "button" // defaults to button
   text?: string // can be used instead of children to display button text
 }
@@ -128,11 +134,11 @@ Creates a stylable checkbox element wrapped around native checkbox input for opt
 interface CheckboxProps {
   changeHandler?: React.ChangeEventHandler
   className?: string
-  elemRef?: (elem: HTMLElement | null) => void
   id?: string
   isChecked: boolean
   isDisabled?: boolean
   label?: string
+  ref?: React.MutableRefObject<HTMLInputElement>
   tabIndex?: number
   value?: string
 }
@@ -215,6 +221,7 @@ Allows you to drop in an easy flexbox grid. The `wrap` property enables flexbox 
 
 ```typescript
 interface GridProps {
+  children?: React.ReactNode
   className?: string
   equalHeight?: boolean
   justify?: "start" | "end" | "center" | "even" | "between" | "around"
@@ -237,6 +244,7 @@ For use within the `Grid` component, `Grow` gives you an element that can be eas
 
 ```typescript
 interface GrowProps {
+  children?: React.ReactNode
   className?: string
   size: 0 | 1 | 2 | 3
 }
@@ -259,6 +267,7 @@ Provides a single component allowing you to drop in a member of a standardized i
 interface IconProps {
   className?: string
   rotate?: IconRotation
+  ref?: React.Ref<SVGSVGElement>
   size: IconSize
   title?: string
   type: IconType
@@ -289,6 +298,7 @@ interface IconButtonProps {
   className?: string
   clickHandler?: React.MouseEventHandler
   href?: string // Only applies if `tag` is "a"
+  ref?: React.MutableRefObject<HTMLAnchorElement | HTMLButtonElement>
   rotate?: IconRotation
   size: IconSize
   tag?: "a" | "button"
@@ -428,12 +438,12 @@ Creates a stylable radio button element wrapped around native radio input for op
 interface RadioButtonProps {
   changeHandler?: React.ChangeEventHandler
   className?: string
-  elemRef?: (elem: HTMLElement | null) => void
   groupName?: string
   id?: string
   isChecked: boolean
   isDisabled?: boolean
   label?: string
+  ref?: React.MutableRefObject<HTMLInputElement>
   tabIndex?: number
   value?: string
 }
@@ -455,9 +465,9 @@ interface RadioGroupProps {
 // where...
 
 interface RadioOption {
-  elemRef?: (elem: HTMLElement | null) => void
   id?: string
   label: string
+  ref?: React.MutableRefObject<HTMLInputElement>
   tabIndex?: number
   value: string
 }
@@ -505,6 +515,7 @@ Wrap any element in a `Space` component to add a measure of consistent spacing t
 
 ```typescript
 interface SpaceProps {
+  children?: React.ReactNode
   className?: string
   bottom?: SpaceSize
   left?: SpaceSize
@@ -528,7 +539,6 @@ interface TextFieldProps {
   className?: string
   dangerouslyAutoTruncateLimitBreakingValues?: boolean
   defaultValue?: string
-  elemRef?: (elem: HTMLElement | null) => void
   enableTextAreaResize?: boolean
   errorText?: string
   hasError?: boolean
@@ -543,6 +553,7 @@ interface TextFieldProps {
   label?: string
   placeholder?: string
   preventInputAtLimit?: boolean // Stops firing events once the char limit has been reached
+  ref?: React.MutableRefObject<HTMLInputElement | HTMLTextAreaElement>
   tabIndex?: number
   type?: string // For example "text" | "tel" | "password"
   value?: string
@@ -556,6 +567,7 @@ Quartermaster is theme-able and comes with an alternate dark theme that can be a
 
 ```typescript
 interface ThemeProps {
+  children?: React.ReactNode
   data: CSSData | null
 }
 
@@ -642,11 +654,11 @@ Creates a sliding toggle element wrapped around native checkbox input for optimi
 interface ToggleProps {
   changeHandler?: React.ChangeEventHandler
   className?: string
-  elemRef?: (elem: HTMLElement | null) => void
   id?: string
   isChecked: boolean
   isDisabled?: boolean
   label?: string
+  ref?: React.MutableRefObject<HTMLInputElement>
   tabIndex?: number
   value?: string
 }

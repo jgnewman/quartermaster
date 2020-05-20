@@ -1,6 +1,7 @@
 import "./styles.styl"
 
-import React, { RefObject,
+import React, {
+  Ref,
   ReactNode,
   forwardRef,
   memo,
@@ -28,7 +29,7 @@ const Animation = forwardRef(function ({
   override,
   style,
   type,
-}: AnimationProps, ref: RefObject<HTMLDivElement>) {
+}: AnimationProps, ref: Ref<HTMLDivElement>) {
 
   const hasOverride = typeof override === "string"
   const hasDirection = !!direction

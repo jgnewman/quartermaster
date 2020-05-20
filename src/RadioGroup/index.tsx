@@ -1,6 +1,6 @@
 import React, {
   ChangeEventHandler,
-  RefObject,
+  MutableRefObject,
   forwardRef,
   memo,
 } from "react"
@@ -8,7 +8,7 @@ import React, {
 import RadioButton, { RadioButtonProps } from "../RadioButton"
 
 export interface RadioOptionSettingsObject {
-  ref?: RefObject<HTMLInputElement>
+  ref?: MutableRefObject<HTMLInputElement>
   id?: string
   label: string
   tabIndex?: number
@@ -31,7 +31,7 @@ const RadioOption = memo(forwardRef(function ({
   name,
   tabIndex,
   value,
-}: RadioOptionProps, ref: RefObject<HTMLInputElement>) {
+}: RadioOptionProps, ref: MutableRefObject<HTMLInputElement>) {
 
   const dynamicProps: Partial<RadioButtonProps> = {}
 

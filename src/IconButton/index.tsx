@@ -1,6 +1,8 @@
 import "./styles.styl"
 import React, {
   MouseEventHandler,
+  MutableRefObject,
+  forwardRef,
   memo,
 } from "react"
 
@@ -26,7 +28,7 @@ export interface IconButtonProps {
   type: IconType
 }
 
-function IconButton({
+const IconButton = forwardRef(function ({
   className = "",
   clickHandler = noopEvtHandler,
   href,
@@ -35,7 +37,7 @@ function IconButton({
   tag,
   title,
   type,
-}: IconButtonProps) {
+}: IconButtonProps, ref: MutableRefObject<HTMLAnchorElement | HTMLButtonElement>) {
 
   const containerStyle = {
     fontSize: `${sizeMap[size]}px`,
@@ -48,7 +50,8 @@ function IconButton({
         className="qmIconButton"
         clickHandler={clickHandler}
         href={href}
-        tag={tag}>
+        tag={tag}
+        ref={ref}>
         <Icon
           rotate={rotate}
           size={size}
@@ -58,7 +61,7 @@ function IconButton({
       </Button>
     </span>
   )
-}
+})
 
 IconButton.displayName = "IconButton"
 

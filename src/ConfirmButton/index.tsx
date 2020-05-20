@@ -3,7 +3,9 @@ import "./styles.styl"
 import React, {
   MouseEvent,
   MouseEventHandler,
+  MutableRefObject,
   ReactNode,
+  forwardRef,
   memo,
   useCallback,
   useState,
@@ -26,7 +28,7 @@ export interface ConfirmButtonProps extends Exclude<ButtonProps, "highlight"> {
   useCompactModalButtons?: boolean
 }
 
-function ConfirmButton({
+const ConfirmButton = forwardRef(function ({
   cancelText,
   children,
   clickHandler,
@@ -37,7 +39,7 @@ function ConfirmButton({
   skipConfirmation,
   useCompactModalButtons,
   ...rest
-}: ConfirmButtonProps) {
+}: ConfirmButtonProps, ref: MutableRefObject<HTMLAnchorElement | HTMLButtonElement>) {
 
   const [renderModal, setRenderModal] = useState(!skipConfirmation)
   const [isOpen, setOpen] = useState(false)
@@ -76,6 +78,7 @@ function ConfirmButton({
   const buttonProps = {
     ...rest,
     clickHandler: handleClick,
+    ref: ref,
   }
 
   const positiveProps: Partial<ButtonProps> = {}
@@ -131,7 +134,7 @@ function ConfirmButton({
     </>
   )
 
-}
+})
 
 ConfirmButton.displayName = "ConfirmButton"
 

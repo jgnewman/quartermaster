@@ -3,15 +3,18 @@ import "./styles.styl"
 import React, {
   MouseEvent,
   MouseEventHandler,
+  MutableRefObject,
   ReactNode,
+  forwardRef,
   memo,
   useCallback,
+  useMemo,
   useRef,
   useState,
 } from "react"
 
 import { DynamicProps } from "../lib/helperTypes"
-import { buildClassNames } from "../lib/helpers"
+import { buildClassNames, mergeRefs } from "../lib/helpers"
 
 import Spinner from "../Spinner"
 
@@ -28,7 +31,7 @@ export interface ButtonProps {
   text?: string
 }
 
-function Button({
+const Button = forwardRef(function ({
   children,
   className,
   clickHandler,
@@ -39,13 +42,14 @@ function Button({
   isProcessing,
   tag,
   text,
-}: ButtonProps) {
+}: ButtonProps, ref: MutableRefObject<HTMLAnchorElement | HTMLButtonElement>) {
 
   const [isFocused, setIsFocused] = useState(false)
   const handleFocus = useCallback(() => setIsFocused(true), [setIsFocused])
   const handleBlur = useCallback(() => setIsFocused(false), [setIsFocused])
 
   const buttonRef = useRef<HTMLAnchorElement | HTMLButtonElement>(null)
+  const mergedRef = useMemo(() => mergeRefs(ref, buttonRef), [ref, buttonRef])
 
   const handleClick = useCallback((evt: MouseEvent) => {
     const { current: currentRef } = buttonRef
@@ -59,7 +63,7 @@ function Button({
   const shouldApplyClickHandler = !!clickHandler && !isDisabled && !isProcessing
 
   const dynamicProps: DynamicProps = {
-    ref: buttonRef,
+    ref: mergedRef,
   }
 
   if (shouldApplyClickHandler) {
@@ -126,7 +130,7 @@ function Button({
       )
 
   }
-}
+})
 
 Button.displayName = "Button"
 

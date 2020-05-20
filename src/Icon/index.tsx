@@ -2,6 +2,8 @@ import "./styles.styl"
 
 import React, {
   NamedExoticComponent,
+  Ref,
+  forwardRef,
   memo,
 } from "react"
 
@@ -188,13 +190,13 @@ export interface IconProps {
   type: IconType
 }
 
-function Icon({
+const Icon = forwardRef(function ({
   className,
   rotate,
   size,
   title,
   type,
-}: IconProps) {
+}: IconProps, ref: Ref<SVGSVGElement>) {
 
   const pxSize = sizeMap[size]
 
@@ -219,13 +221,14 @@ function Icon({
         viewBox="0 0 8 8"
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
-        fillRule="evenodd">
+        fillRule="evenodd"
+        ref={ref}>
         <title>{title || type}</title>
         <IconComponent />
       </svg>
     </span>
   )
-}
+})
 
 Icon.displayName = "Icon"
 
