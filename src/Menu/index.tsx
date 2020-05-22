@@ -107,6 +107,8 @@ const Submenu = memo(function ({
     if (!startOpen && !hasToggled) {
       animProps.override = "hide"
     }
+
+    animProps.displayNoneOnHide = true
   }
 
   const canAnimate = !!animProps

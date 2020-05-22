@@ -1,121 +1,125 @@
 @import "../lib/sharedStyles"
 
+// Fade in animations
 @keyframes qmFadeInStill
   0%
-    transform: scale(0) translateX(0) translateY(0)
+    transform: translateX(0) translateY(0)
     opacity: 0
   1%
-    transform: scale(1) translateX(0) translateY(0)
+    transform: translateX(0) translateY(0)
     opacity: 0
   100%
     opacity: 1
-    transform: scale(1) translateX(0) translateY(0)
+    transform: translateX(0) translateY(0)
 
 @keyframes qmFadeInDown
   0%
-    transform: scale(0) translateX(0) translateY(-2rem)
+    transform: translateX(0) translateY(-2rem)
     opacity: 0
   1%
-    transform: scale(1) translateX(0) translateY(-2rem)
+    transform: translateX(0) translateY(-2rem)
     opacity: 0
   100%
     opacity: 1
-    transform: scale(1) translateX(0) translateY(0)
+    transform: translateX(0) translateY(0)
 
 @keyframes qmFadeInUp
   0%
-    transform: scale(0) translateX(0) translateY(2rem)
+    transform: translateX(0) translateY(2rem)
     opacity: 0
   1%
-    transform: scale(1) translateX(0) translateY(2rem)
+    transform: translateX(0) translateY(2rem)
     opacity: 0
   100%
     opacity: 1
-    transform: scale(1) translateX(0) translateY(0)
+    transform: translateX(0) translateY(0)
 
 @keyframes qmFadeInLeft
   0%
-    transform: scale(0) translateX(-2rem) translateY(0)
+    transform: translateX(-2rem) translateY(0)
     opacity: 0
   1%
-    transform: scale(1) translateX(-2rem) translateY(0)
+    transform: translateX(-2rem) translateY(0)
     opacity: 0
   100%
     opacity: 1
-    transform: scale(1) translateX(0) translateY(0)
+    transform: translateX(0) translateY(0)
 
 @keyframes qmFadeInRight
   0%
-    transform: scale(0) translateX(2rem) translateY(0)
+    transform: translateX(2rem) translateY(0)
     opacity: 0
   1%
-    transform: scale(1) translateX(2rem) translateY(0)
+    transform: translateX(2rem) translateY(0)
     opacity: 0
   100%
     opacity: 1
-    transform: scale(1) translateX(0) translateY(0)
+    transform: translateX(0) translateY(0)
 
+// Fade out animations
 @keyframes qmFadeOutStill
   0%
     opacity: 1
-    transform: scale(1) translateX(0) translateY(0)
+    transform: translateX(0) translateY(0)
   99%
     opacity: 0
-    transform: scale(1) translateX(0) translateY(0)
+    transform: translateX(0) translateY(0)
   100%
     opacity: 0
-    transform: scale(0) translateX(0) translateY(0)
+    transform: translateX(0) translateY(0)
 
 @keyframes qmFadeOutDown
   0%
     opacity: 1
-    transform: scale(1) translateX(0) translateY(0)
+    transform: translateX(0) translateY(0)
   99%
     opacity: 0
-    transform: scale(1) translateX(0) translateY(2rem)
+    transform: translateX(0) translateY(2rem)
   100%
     opacity: 0
-    transform: scale(0) translateX(0) translateY(2rem)
+    transform: translateX(0) translateY(2rem)
 
 @keyframes qmFadeOutUp
   0%
     opacity: 1
-    transform: scale(1) translateX(0) translateY(0)
+    transform: translateX(0) translateY(0)
   99%
     opacity: 0
-    transform: scale(1) translateX(0) translateY(-2rem)
+    transform: translateX(0) translateY(-2rem)
   100%
     opacity: 0
-    transform: scale(0) translateX(0) translateY(-2rem)
+    transform: translateX(0) translateY(-2rem)
 
 @keyframes qmFadeOutLeft
   0%
     opacity: 1
-    transform: scale(1) translateX(0) translateY(0)
+    transform: translateX(0) translateY(0)
   99%
     opacity: 0
-    transform: scale(1) translateX(-2rem) translateY(0)
+    transform: translateX(-2rem) translateY(0)
   100%
     opacity: 0
-    transform: scale(0) translateX(-2rem) translateY(0)
+    transform: translateX(-2rem) translateY(0)
 
 @keyframes qmFadeOutRight
   0%
     opacity: 1
-    transform: scale(1) translateX(0) translateY(0)
+    transform: translateX(0) translateY(0)
   99%
     opacity: 0
-    transform: scale(1) translateX(2rem) translateY(0)
+    transform: translateX(2rem) translateY(0)
   100%
     opacity: 0
-    transform: scale(0) translateX(2rem) translateY(0)
+    transform: translateX(2rem) translateY(0)
 
 .qmAnimationContainer
   &.isOverrideShow
-    transform: scale(1) translateX(0) translateY(0)
+    transform: translateX(0) translateY(0)
 
   &.isOverrideHide
-    transform: scale(0) translateX(0) translateY(0)
+    transform: translateX(0) translateY(0)
+
+  &.isDetached
     display: none
 
   &.isAnimating

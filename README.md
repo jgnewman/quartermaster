@@ -86,6 +86,7 @@ interface AnimationProps {
   children?: React.ReactNode
   className?: string
   direction?: "left" | "right" | "up" | "down"
+  displayNoneOnHide?: boolean // Removes the element from the DOM flow when hidden
   duration?: number // defaults to 200
   elemRef?: React.Ref<HTMLDivElement> // either a Ref object or a Ref callback
   override?: "hide" | "show" | null
