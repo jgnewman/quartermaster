@@ -42,7 +42,7 @@ async function compileTypeScript() {
  * HACK:
  *
  * Because we don't want to bundle the library and typescript doesn't
- * native understand stylus, using tsc to compile results in references
+ * natively understand stylus, using tsc to compile results in references
  * to .styl files in our javascript output.
  *
  * So after compiling typescript, we go through the compiled js and d.ts

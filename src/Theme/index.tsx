@@ -20,7 +20,15 @@
  *   }}
  * />
  */
-import { PureComponent } from "react"
+import React, {
+  ReactNode,
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react"
 
 interface ValueSpec {
   [key: string]: string
@@ -30,82 +38,79 @@ interface CSSData {
   [key: string]: ValueSpec
 }
 
+function buildCSSChunk(propName: string, propSpec: ValueSpec): string {
+  return Object.keys(propSpec).map(color => {
+    const selector: string = propSpec[color]
+      .trim()
+      .replace(/,$/, "") // forgive trailing commas on selectors
+      .replace(/\n\s*/g, "\n") // remove indentation in template strings
+
+    return `${selector} {\n${propName}: ${color};\n}`
+  }).join("\n")
+}
+
+function buildCSSStyles(data: CSSData | null): string {
+  if (!data) {
+    return ""
+  }
+
+  return Object.keys(data).map(propName => {
+    return`${buildCSSChunk(propName, data[propName])}\n`
+  }).join("")
+}
+
+function removeStyleTag(tag: HTMLStyleElement) {
+  tag.parentNode?.removeChild(tag)
+}
+
+function createStyleTag(id: string): HTMLStyleElement {
+  const styleTag = document.createElement("style")
+  styleTag.setAttribute("type", "text/css")
+  styleTag.setAttribute("id", id)
+  return styleTag
+}
+
 export interface ThemeProps {
+  children?: ReactNode
   data: CSSData | null
 }
 
-class Theme extends PureComponent<ThemeProps> {
-  static displayName = "Theme"
+function Theme({ children, data }: ThemeProps) {
 
-  public state = {
-    id: `qm-${String(Date.now()).slice(9)}-${String(Math.random()).slice(2, 6)}`,
-  }
+  const { current: id } = useRef<string>(`qm-${String(Date.now()).slice(9)}-${String(Math.random()).slice(2, 6)}`)
+  const [stylesInjected, setStylesInjected] = useState(false)
+  const [prevStyles, setPrevStyles] = useState("")
+  const tag: HTMLStyleElement = useMemo(() => createStyleTag(id), [id])
 
-  private tag: HTMLElement
-  private prevStyles = ""
-
-  constructor(props: ThemeProps) {
-    super(props)
-    this.buildStyleTag()
-    this.updateStyles()
-    console.log("styles injected")
-  }
-
-  buildCSSChunk(propName: string, propSpec: ValueSpec): string {
-    return Object.keys(propSpec).map(color => {
-      const selector: string = propSpec[color]
-        .trim()
-        .replace(/,$/, "") // forgive trailing commas on selectors
-        .replace(/\n\s*/g, "\n") // remove indentation in template strings
-
-      return `${selector} {\n${propName}: ${color};\n}`
-    }).join("\n")
-  }
-
-  buildCSSStyles() {
-    const { data } = this.props
-
-    if (!data) {
-      return ""
+  const updateStyles = useCallback(() => {
+    const newStyles = buildCSSStyles(data)
+    if (newStyles !== prevStyles) {
+      tag.innerHTML = newStyles
+      setPrevStyles(newStyles)
     }
+  }, [data, tag, prevStyles, setPrevStyles])
 
-    return Object.keys(data).map(propName => {
-      return`${this.buildCSSChunk(propName, data[propName])}\n`
-    }).join("")
-  }
-
-  updateStyles() {
-    const newStyles = this.buildCSSStyles()
-    if (newStyles !== this.prevStyles) {
-      this.tag.innerHTML = newStyles
-      this.prevStyles = newStyles
-    }
-  }
-
-  buildStyleTag() {
-    const tag = document.createElement("style")
-    tag.setAttribute("type", "text/css")
-    tag.setAttribute("id", this.state.id)
-
-    this.tag = tag
+  if (!stylesInjected) {
     document.head.appendChild(tag)
+    updateStyles()
+    setStylesInjected(true)
   }
 
-  removeStyleTag() {
-    this.tag?.parentNode?.removeChild(this.tag)
-  }
+  useEffect(() => {
+    updateStyles()
+  }, [data, updateStyles])
 
-  componentDidUpdate() {
-    this.updateStyles()
-  }
+  useEffect(() => () => {
+    removeStyleTag(tag)
+  }, [tag])
 
-  componentWillUnmount() {
-    this.removeStyleTag()
-  }
-
-  render() {
-    return this.props.children
-  }
+  return (
+    <>
+     {children}
+    </>
+  )
 }
 
-export default Theme
+Theme.displayName = "Theme"
+
+export default memo(Theme)

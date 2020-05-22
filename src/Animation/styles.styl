@@ -1,6 +1,6 @@
 @import "../lib/sharedStyles"
 
-@keyframes qmFadeIn
+@keyframes qmFadeInStill
   0%
     transform: scale(0) translateX(0) translateY(0)
     opacity: 0
@@ -55,7 +55,7 @@
     opacity: 1
     transform: scale(1) translateX(0) translateY(0)
 
-@keyframes qmFadeOut
+@keyframes qmFadeOutStill
   0%
     opacity: 1
     transform: scale(1) translateX(0) translateY(0)
@@ -122,8 +122,8 @@
     animation-timing-function: ease
     animation-fill-mode: forwards
 
-    &.isFadeIn
-      animation-name: qmFadeIn
+    &.isFadeIn.isStill
+      animation-name: qmFadeInStill
 
     &.isFadeIn.isDown
       animation-name: qmFadeInDown
@@ -137,8 +137,8 @@
     &.isFadeIn.isRight
       animation-name: qmFadeInRight
 
-    &.isFadeOut
-      animation-name: qmFadeOut
+    &.isFadeOut.isStill
+      animation-name: qmFadeOutStill
 
     &.isFadeOut.isDown
       animation-name: qmFadeOutDown

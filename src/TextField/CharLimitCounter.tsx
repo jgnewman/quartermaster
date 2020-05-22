@@ -1,5 +1,5 @@
 import "./styles.styl"
-import React from "react"
+import React, { memo } from "react"
 
 import { buildClassNames } from "../lib/helpers"
 
@@ -14,7 +14,7 @@ export interface CharLimitCounterProps {
   limitIsMinimum?: boolean
 }
 
-const CharLimitCounter = ({
+function CharLimitCounter({
   className,
   count,
   hideProgressBar,
@@ -23,7 +23,7 @@ const CharLimitCounter = ({
   isTextArea,
   limit,
   limitIsMinimum,
-}: CharLimitCounterProps) => {
+}: CharLimitCounterProps) {
 
   const isField = !isTextArea
   const quarterMark = Math.round(limit / 4)
@@ -106,4 +106,4 @@ const CharLimitCounter = ({
 
 CharLimitCounter.displayName = "CharLimitCounter"
 
-export default CharLimitCounter
+export default memo(CharLimitCounter)

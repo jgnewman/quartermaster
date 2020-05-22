@@ -3,7 +3,7 @@ module.exports = {
 
   parser: '@typescript-eslint/parser',
 
-  plugins: ['@typescript-eslint', 'react'],
+  plugins: ['@typescript-eslint', 'react', 'react-hooks'],
 
   settings: {
     react: {
@@ -27,6 +27,8 @@ module.exports = {
   rules: {
     'react/prop-types': ['off'],
     'react/display-name': ['error', { ignoreTranspilerName: true }],
+    'react-hooks/rules-of-hooks': 'warn',
+    'react-hooks/exhaustive-deps': 'warn',
     'prefer-const': [
       'error',
       {
@@ -81,7 +83,7 @@ module.exports = {
         'no-useless-constructor': 'off',
         '@typescript-eslint/no-useless-constructor': 'error',
         '@typescript-eslint/no-unused-vars': [
-          'error',
+          'warn',
           {
             vars: 'all',
             args: 'after-used',

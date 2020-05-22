@@ -1,35 +1,35 @@
 import "./styles.styl"
-import React, { PureComponent } from "react"
+
+import React, {
+  NamedExoticComponent,
+  Ref,
+  forwardRef,
+  memo,
+} from "react"
 
 import sizeMap from "./sizeMap"
-
-export type IconType = "attn"
-                      | "caret"
-                      | "checkmark"
-                      | "dot"
-                      | "ex"
-                      | "hamburger"
-                      | "info"
-                      | "meatballs"
-                      | "plus"
-                      | "tiles"
-                      | "triangle"
 
 export type IconRotation = 45 | 90 | 135 | 180 | 225 | 270 | 315
 export type IconSize = "xxs" | "xs" | "s" | "m" | "i" | "l" | "xl" | "xxl"
 
-export interface IconProps {
-  className?: string
-  rotate?: IconRotation
-  size: IconSize
-  title?: string
-  type: IconType
+interface IconLib {
+  attn: NamedExoticComponent
+  caret: NamedExoticComponent
+  checkmark: NamedExoticComponent
+  dot: NamedExoticComponent
+  ex: NamedExoticComponent
+  hamburger: NamedExoticComponent
+  info: NamedExoticComponent
+  meatballs: NamedExoticComponent
+  plus: NamedExoticComponent
+  tiles: NamedExoticComponent
+  triangle: NamedExoticComponent
 }
 
-class Icon extends PureComponent<IconProps> {
-  static displayName = "Icon"
+const iconLib: IconLib = {
 
-  attn() {
+  // eslint-disable-next-line react/display-name
+  attn: memo(function () {
     const d = [
       "M0.508629483,8 C0.429845617,8 0.352143715,7.98165707 0.281677283,7.94642385",
       "C0.0309928055,7.82108161 -0.0706171554,7.51625173 0.0547250835,7.26556725",
@@ -47,9 +47,10 @@ class Icon extends PureComponent<IconProps> {
       "4.00109253,7 Z",
     ].join(" ")
     return <path d={d}></path>
-  }
+  }),
 
-  caret() {
+  // eslint-disable-next-line react/display-name
+  caret: memo(function () {
     const d = [
       "M1.35355339,2.14644661 C1.15829124,1.95118446 0.841708755,1.95118446",
       "0.646446609,2.14644661 C0.451184464,2.34170876 0.451184464,2.65829124",
@@ -60,9 +61,10 @@ class Icon extends PureComponent<IconProps> {
       "L4,4.79289322 L1.35355339,2.14644661 Z",
     ].join(" ")
     return <path d={d}></path>
-  }
+  }),
 
-  checkmark() {
+  // eslint-disable-next-line react/display-name
+  checkmark: memo(function () {
     const d = [
       "M0.868580015,4.16221076 C0.681983812,3.95865127 0.365700126,3.94489981",
       "0.162140631,4.13149601 C-0.041418864,4.31809221 -0.0551703286,4.6343759",
@@ -73,13 +75,15 @@ class Icon extends PureComponent<IconProps> {
       "L3.16837842,6.67108175 L0.868580015,4.16221076 Z",
     ].join(" ")
     return <path d={d}></path>
-  }
+  }),
 
-  dot() {
+  // eslint-disable-next-line react/display-name
+  dot: memo(function () {
     return <circle cx="4" cy="4" r="3"></circle>
-  }
+  }),
 
-  ex() {
+  // eslint-disable-next-line react/display-name
+  ex: memo(function () {
     const d = [
       "M4,3.29289322 L7.14644661,0.146446609 C7.34170876,-0.0488155365",
       "7.65829124,-0.0488155365 7.85355339,0.146446609 C8.04881554,0.341708755",
@@ -94,9 +98,10 @@ class Icon extends PureComponent<IconProps> {
       "L4,3.29289322 Z",
     ].join(" ")
     return <path d={d}></path>
-  }
+  }),
 
-  hamburger() {
+  // eslint-disable-next-line react/display-name
+  hamburger: memo(function () {
     const d = [
       "M0.5,1 L7.5,1 C7.77614237,1 8,1.22385763 8,1.5 C8,1.77614237 7.77614237,2 7.5,2",
       "L0.5,2 C0.223857625,2 0,1.77614237 0,1.5 C0,1.22385763 0.223857625,1 0.5,1 Z",
@@ -107,9 +112,10 @@ class Icon extends PureComponent<IconProps> {
       "C0,6.22385763 0.223857625,6 0.5,6 Z",
     ].join(" ")
     return <path d={d}></path>
-  }
+  }),
 
-  info() {
+  // eslint-disable-next-line react/display-name
+  info: memo(function () {
     const d = [
       "M4,8 C1.790861,8 0,6.209139 0,4 C0,1.790861 1.790861,0 4,0 C6.209139,0 8,1.790861",
       "8,4 C8,6.209139 6.209139,8 4,8 Z M4,7 C5.65685425,7 7,5.65685425 7,4 C7,2.34314575",
@@ -121,9 +127,10 @@ class Icon extends PureComponent<IconProps> {
       "3.5,2.25 C3.5,1.97385763 3.72385763,1.75 4,1.75 Z",
     ].join(" ")
     return <path d={d}></path>
-  }
+  }),
 
-  meatballs() {
+  // eslint-disable-next-line react/display-name
+  meatballs: memo(function () {
     const d = [
       "M0.75,4.75 C0.335786438,4.75 0,4.41421356 0,4 C0,3.58578644 0.335786438,3.25",
       "0.75,3.25 C1.16421356,3.25 1.5,3.58578644 1.5,4 C1.5,4.41421356 1.16421356,4.75",
@@ -134,9 +141,10 @@ class Icon extends PureComponent<IconProps> {
       "C8,4.41421356 7.66421356,4.75 7.25,4.75 Z",
     ].join(" ")
     return <path d={d}></path>
-  }
+  }),
 
-  plus() {
+  // eslint-disable-next-line react/display-name
+  plus: memo(function () {
     const d = [
       "M4.5,3.5 L7.5,3.5 C7.77614237,3.5 8,3.72385763 8,4 C8,4.27614237",
       "7.77614237,4.5 7.5,4.5 L4.5,4.5 L4.5,7.5 C4.5,7.77614237 4.27614237,8 4,8",
@@ -146,9 +154,10 @@ class Icon extends PureComponent<IconProps> {
       "L4.5,3.5 Z",
     ].join(" ")
     return <path d={d}></path>
-  }
+  }),
 
-  tiles() {
+  // eslint-disable-next-line react/display-name
+  tiles: memo(function () {
     const d = [
       "M0.5,0 L3.25,0 L3.25,3.25 L0,3.25 L0,0.5 C-3.38176876e-17,0.223857625",
       "0.223857625,5.07265313e-17 0.5,0 Z M4.75,0 L7.5,0 C7.77614237,-5.07265313e-17",
@@ -157,9 +166,10 @@ class Icon extends PureComponent<IconProps> {
       "L8,4.75 L8,7.5 C8,7.77614237 7.77614237,8 7.5,8 L4.75,8 L4.75,4.75 Z",
     ].join(" ")
     return <path d={d}></path>
-  }
+  }),
 
-  triangle() {
+  // eslint-disable-next-line react/display-name
+  triangle: memo(function () {
     const d = [
       "M0.647448987,2.85355339 L3.64744899,5.85355339 C3.84271113,6.04881554",
       "4.15929362,6.04881554 4.35455577,5.85355339 L7.35455577,2.85355339",
@@ -167,47 +177,59 @@ class Icon extends PureComponent<IconProps> {
       "0.332466556,2.53857096 0.647448987,2.85355339 Z",
     ].join(" ")
     return <path d={d}></path>
-  }
-
-  render() {
-    const {
-      className,
-      rotate,
-      size,
-      title,
-      type,
-    } = this.props
-
-    const pxSize = sizeMap[size]
-
-    const containerStyle = {
-      width: `${pxSize}px`,
-      height: `${pxSize}px`,
-    }
-
-    const svgStyle = {
-      transform: `rotate(${rotate || 0}deg)`,
-    }
-
-    return (
-      <span className={`qmIconContainer ${className || ""}`} style={containerStyle}>
-        <svg
-          className={`qmIcon`}
-          style={svgStyle}
-          width={pxSize}
-          height={pxSize}
-          viewBox="0 0 8 8"
-          version="1.1"
-          xmlns="http://www.w3.org/2000/svg"
-          fillRule="evenodd">
-          <title>{title || type}</title>
-          {
-            this[type]()
-          }
-        </svg>
-      </span>
-    )
-  }
+  }),
 }
 
-export default Icon
+export type IconType = keyof IconLib
+
+export interface IconProps {
+  className?: string
+  rotate?: IconRotation
+  size: IconSize
+  title?: string
+  type: IconType
+}
+
+const Icon = forwardRef(function ({
+  className,
+  rotate,
+  size,
+  title,
+  type,
+}: IconProps, ref: Ref<SVGSVGElement>) {
+
+  const pxSize = sizeMap[size]
+
+  const containerStyle = {
+    width: `${pxSize}px`,
+    height: `${pxSize}px`,
+  }
+
+  const svgStyle = {
+    transform: `rotate(${rotate || 0}deg)`,
+  }
+
+  const IconComponent = iconLib[type]
+
+  return (
+    <span className={`qmIconContainer ${className || ""}`} style={containerStyle}>
+      <svg
+        className={`qmIcon`}
+        style={svgStyle}
+        width={pxSize}
+        height={pxSize}
+        viewBox="0 0 8 8"
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+        fillRule="evenodd"
+        ref={ref}>
+        <title>{title || type}</title>
+        <IconComponent />
+      </svg>
+    </span>
+  )
+})
+
+Icon.displayName = "Icon"
+
+export default memo(Icon)

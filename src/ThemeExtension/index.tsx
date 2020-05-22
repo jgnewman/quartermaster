@@ -1,25 +1,29 @@
-import React, { PureComponent } from "react"
+import React, {
+  ReactNode,
+  memo,
+} from "react"
 
 import Theme, { ThemeProps } from "../Theme"
 
 export interface ThemeExtensionProps extends ThemeProps {
   base: ThemeProps["data"]
+  children?: ReactNode
 }
 
-class ThemeExtension extends PureComponent<ThemeExtensionProps> {
-  static displayName = "ThemeExtension"
-
-  render() {
-    const { base, data, children } = this.props
-
-    return (
-      <Theme data={data}>
-        <Theme data={base}>
-          {children}
-        </Theme>
+function ThemeExtension({
+  base,
+  data,
+  children,
+}: ThemeExtensionProps) {
+  return (
+    <Theme data={data}>
+      <Theme data={base}>
+        {children}
       </Theme>
-    )
-  }
+    </Theme>
+  )
 }
 
-export default ThemeExtension
+ThemeExtension.displayName = "ThemeExtension"
+
+export default memo(ThemeExtension)

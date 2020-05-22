@@ -1,14 +1,27 @@
 import "./styles.styl"
-import React, { PureComponent } from "react"
+
+import React, {
+  MouseEvent,
+  MouseEventHandler,
+  MutableRefObject,
+  ReactNode,
+  forwardRef,
+  memo,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from "react"
 
 import { DynamicProps } from "../lib/helperTypes"
-import { buildClassNames } from "../lib/helpers"
+import { buildClassNames, mergeRefs } from "../lib/helpers"
 
 import Spinner from "../Spinner"
 
 export interface ButtonProps {
+  children?: ReactNode
   className?: string
-  clickHandler?: React.MouseEventHandler
+  clickHandler?: MouseEventHandler
   highlight?: "positive" | "negative"
   href?: string
   isCompact?: boolean
@@ -18,110 +31,107 @@ export interface ButtonProps {
   text?: string
 }
 
-class Button extends PureComponent<ButtonProps> {
-  static displayName = "Button"
-  public state = { isFocused: false }
-  public buttonRef: HTMLElement | null
+const Button = forwardRef(function ({
+  children,
+  className,
+  clickHandler,
+  highlight,
+  href,
+  isCompact,
+  isDisabled,
+  isProcessing,
+  tag,
+  text,
+}: ButtonProps, ref: MutableRefObject<HTMLAnchorElement | HTMLButtonElement>) {
 
-  handleFocus = () => this.setState({ isFocused: true })
-  handleBlur = () => this.setState({ isFocused: false })
+  const [isFocused, setIsFocused] = useState(false)
+  const handleFocus = useCallback(() => setIsFocused(true), [setIsFocused])
+  const handleBlur = useCallback(() => setIsFocused(false), [setIsFocused])
 
-  handleClick = (evt: React.MouseEvent) => {
-    const { clickHandler } = this.props
-    this.buttonRef && this.buttonRef.blur()
+  const buttonRef = useRef<HTMLAnchorElement | HTMLButtonElement>(null)
+  const mergedRef = useMemo(() => mergeRefs(ref, buttonRef), [ref, buttonRef])
+
+  const handleClick = useCallback((evt: MouseEvent) => {
+    const { current: currentRef } = buttonRef
+    currentRef && currentRef.blur()
     clickHandler && clickHandler(evt)
+  }, [buttonRef, clickHandler])
+
+  const isEnabled = !isDisabled && !isProcessing
+  const isNegative = highlight === "negative"
+  const isPositive = highlight === "positive"
+  const shouldApplyClickHandler = !!clickHandler && !isDisabled && !isProcessing
+
+  const dynamicProps: DynamicProps = {
+    ref: mergedRef,
   }
 
-  render() {
-    const {
-      children,
-      className,
-      clickHandler,
-      highlight,
-      href,
-      isCompact,
-      isDisabled,
-      isProcessing,
-      tag,
-      text,
-    } = this.props
+  if (shouldApplyClickHandler) {
+    dynamicProps.onClick = handleClick
+  }
 
-    const { isFocused } = this.state
-    const isEnabled = !isDisabled && !isProcessing
-    const isNegative = highlight === "negative"
-    const isPositive = highlight === "positive"
-    const shouldApplyClickHandler = !!clickHandler && !isDisabled && !isProcessing
+  if (!!isDisabled || isProcessing) {
+    dynamicProps.disabled = true
+  }
 
-    const dynamicProps: DynamicProps = {
-      ref: (elem: HTMLElement) => this.buttonRef = elem,
-    }
+  if (tag === "a" && href) {
+    dynamicProps.href = href
+  }
 
-    if (shouldApplyClickHandler) {
-      dynamicProps.onClick = this.handleClick
-    }
+  const containerClasses = buildClassNames({
+    isCompact,
+    isDisabled,
+    isEnabled,
+    isProcessing,
+    isFocused,
+    isNegative,
+    isPositive,
+  })
 
-    if (!!isDisabled || isProcessing) {
-      dynamicProps.disabled = true
-    }
+  dynamicProps.className = `qmButtonContainer ${containerClasses} ${className || ""}`
 
-    if (tag === "a" && href) {
-      dynamicProps.href = href
-    }
+  const content = (
+    <span className="qmButtonContent">
+      {text}
+      {children}
+    </span>
+  )
 
-    const containerClasses = buildClassNames({
-      isCompact,
-      isDisabled,
-      isEnabled,
-      isProcessing,
-      isFocused,
-      isNegative,
-      isPositive,
-    })
+  const spinner = !isProcessing ? null : (
+    <Spinner
+      className="qmButtonSpinner"
+      size={isCompact ? "m" : "i"}
+    />
+  )
 
-    dynamicProps.className = `qmButtonContainer ${containerClasses} ${className || ""}`
+  switch (tag) {
 
-    const content = (
-      <span className="qmButtonContent">
-        {text}
-        {children}
-      </span>
-    )
+    case "a":
+      return (
+        <a
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          {...dynamicProps}>
+          {spinner}
+          {content}
+        </a>
+      )
 
-    const spinner = !isProcessing ? null : (
-      <Spinner
-        className="qmButtonSpinner"
-        size={isCompact ? "m" : "i"}
-      />
-    )
-
-    switch (tag) {
-
-      case "a":
-        return (
-          <a
-            onFocus={this.handleFocus}
-            onBlur={this.handleBlur}
-            {...dynamicProps}>
-            {spinner}
-            {content}
-          </a>
-        )
-
-      case "button":
-      default:
-        return (
-          <button
-            onFocus={this.handleFocus}
-            onBlur={this.handleBlur}
-            {...dynamicProps}>
-            {spinner}
-            {content}
-          </button>
-        )
-
-    }
+    case "button":
+    default:
+      return (
+        <button
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          {...dynamicProps}>
+          {spinner}
+          {content}
+        </button>
+      )
 
   }
-}
+})
 
-export default Button
+Button.displayName = "Button"
+
+export default memo(Button)

@@ -1,5 +1,10 @@
 import "./styles.styl"
-import React, { PureComponent } from "react"
+import React, {
+  MouseEventHandler,
+  MutableRefObject,
+  forwardRef,
+  memo,
+} from "react"
 
 import Button from "../Button"
 import sizeMap from "../Icon/sizeMap"
@@ -14,7 +19,7 @@ import { noopEvtHandler } from "../lib/helpers"
 
 export interface IconButtonProps {
   className?: string
-  clickHandler?: React.MouseEventHandler
+  clickHandler?: MouseEventHandler
   href?: string
   rotate?: IconRotation
   size: IconSize
@@ -23,43 +28,41 @@ export interface IconButtonProps {
   type: IconType
 }
 
-class IconButton extends PureComponent<IconButtonProps> {
-  static displayName = "IconButton"
+const IconButton = forwardRef(function ({
+  className = "",
+  clickHandler = noopEvtHandler,
+  href,
+  rotate,
+  size,
+  tag,
+  title,
+  type,
+}: IconButtonProps, ref: MutableRefObject<HTMLAnchorElement | HTMLButtonElement>) {
 
-  render() {
-    const {
-      className = "",
-      clickHandler = noopEvtHandler,
-      href,
-      rotate,
-      size,
-      tag,
-      title,
-      type,
-    } = this.props
-
-    const containerStyle = {
-      fontSize: `${sizeMap[size]}px`,
-    }
-
-    return (
-      <span className={`qmIconButtonContainer ${className}`} style={containerStyle}>
-        <span className="qmIconButtonEffect"></span>
-        <Button
-          className="qmIconButton"
-          clickHandler={clickHandler}
-          href={href}
-          tag={tag}>
-          <Icon
-            rotate={rotate}
-            size={size}
-            title={title}
-            type={type}
-          />
-        </Button>
-      </span>
-    )
+  const containerStyle = {
+    fontSize: `${sizeMap[size]}px`,
   }
-}
 
-export default IconButton
+  return (
+    <span className={`qmIconButtonContainer ${className}`} style={containerStyle}>
+      <span className="qmIconButtonEffect"></span>
+      <Button
+        className="qmIconButton"
+        clickHandler={clickHandler}
+        href={href}
+        tag={tag}
+        ref={ref}>
+        <Icon
+          rotate={rotate}
+          size={size}
+          title={title}
+          type={type}
+        />
+      </Button>
+    </span>
+  )
+})
+
+IconButton.displayName = "IconButton"
+
+export default memo(IconButton)
