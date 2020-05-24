@@ -28,9 +28,9 @@
     box-shadow: BASE_OUTLINE
     border-color: OUTLINES
 
-.qmSelectOpenIcon .qmIcon,
-.qmSelectClearIcon .qmIcon
-  fill: FADED_FONT
+.qmIcon.qmSelectOpenIcon,
+.qmIcon.qmSelectClearIcon
+  stroke: FADED_FONT
   transition: BASE_TRANSITION
 
 .qmSelectOpenIconWrapper,
@@ -45,17 +45,17 @@
 
   &.isEnabled:hover
 
-    .qmSelectOpenIcon .qmIcon
-      fill: HIGHLIGHT
+    .qmIcon.qmSelectOpenIcon
+      stroke: HIGHLIGHT
 
-    .qmSelectClearIcon .qmIcon
-      fill: NEGATIVE
+    .qmIcon.qmSelectClearIcon
+      stroke: NEGATIVE
 
 .qmSelectClearIconWrapper
   outline: solid transparent !important
 
-  &.isEnabled:focus .qmSelectClearIcon .qmIcon
-    fill: NEGATIVE
+  &.isEnabled:focus .qmIcon.qmSelectClearIcon
+    stroke: NEGATIVE
 
 .qmSelectOpenIconWrapper::before
   content: ""

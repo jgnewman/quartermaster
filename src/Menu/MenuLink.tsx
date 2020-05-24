@@ -6,7 +6,7 @@ import React, {
 import { DynamicProps } from "../lib/helperTypes"
 import { buildClassNames } from "../lib/helpers"
 
-import Icon from "../Icon"
+import Checkmark from "../icons/Checkmark"
 import Space from "../Space"
 
 export interface MenuLinkProps {
@@ -57,10 +57,9 @@ function MenuLink({
       </span>
 
       {isActive && (
-        <Icon
+        <Checkmark
           className={`qmMenuActiveIcon ${iconClasses}`}
-          type="dot"
-          size="xs"
+          size="s"
         />
       )}
     </Space>

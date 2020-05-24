@@ -13,7 +13,7 @@ import React, {
 
 import { DynamicProps } from "../lib/helperTypes"
 
-import Icon from "../Icon"
+import Checkmark from "../icons/Checkmark"
 
 import {
   buildClassNames,
@@ -108,10 +108,9 @@ const Checkbox = forwardRef(function ({
             aria-hidden={true}
             className={`qmCheckboxOverlay ${overlayClasses}`}>
             {isChecked && (
-              <Icon
+              <Checkmark
                 className="qmCheckboxCheckmark"
-                type="checkmark"
-                size="xs"
+                size="s"
               />
             )}
           </span>

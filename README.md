@@ -36,7 +36,7 @@ Quartermaster deliberately avoids styled-components for performance and bundle s
 - [Form](#form)
 - [Grid](#grid)
 - [Grow](#grow)
-- [Icon](#icon)
+- [Icons](#icons)
 - [IconButton](#iconbutton)
 - [Label](#label)
 - [Menu](#menu)
@@ -51,12 +51,13 @@ Quartermaster deliberately avoids styled-components for performance and bundle s
 - [Toggle](#toggle)
 
 ### Alert
-Places a colored box with an alert icon in one of three forms: `info`, `danger`, or `warning`. Children become the content of the alert box.
+Places a colored box with an alert icon in one of three forms: `info`, `danger`, or `warning`. The content of the alert box can be specified with either `text` or `children`.
 
 ```typescript
 interface AlertProps {
   children?: React.ReactNode
   className?: string
+  text?: string
   type: "danger" | "info" | "warning"
 }
 ```
@@ -261,8 +262,20 @@ Here is an example:
 </Grid>
 ```
 
-### Icon
-Provides a single component allowing you to drop in a member of a standardized icon set. You can specify one of a few pre-determined sizes as well as rotations. Each svg contains a default `title` tag, however this can be overriden via the `style` prop on the component. It is highly encouraged that you provide titles for accessibility purposes.
+### Icons
+Quartermaster's icons are importable from a the top level of the library as are all other components, however they must be accessed individually from a directory called `/icons`. This makes importing individual icons slightly different from importing other components. To illustrate, let's compare the `Checkmark` icon to the `Button` component.
+
+```javascript
+// Importing from the top-level is the same.
+import { Button } from "quartermaster"
+import { Checkmark } from "quartermaster"
+
+// Importing individually is different.
+import Button from "quartermaster/Button
+import Checkmark from "quartermaster/icons/Checkmark
+```
+
+For each icon, you can specify one of a few pre-determined sizes as well as rotations. Each svg contains a default title, however this can be overriden via the `title` prop on the component. It is highly encouraged that you provide titles for accessibility purposes.
 
 ```typescript
 interface IconProps {
@@ -271,28 +284,41 @@ interface IconProps {
   ref?: React.Ref<SVGSVGElement>
   size: IconSize
   title?: string
-  type: IconType
 }
 
 // Where...
 
 type IconRotation = 45 | 90 | 135 | 180 | 225 | 270 | 315
 type IconSize = "xxs" | "xs" | "s" | "m" | "i" | "l" | "xl" | "xxl"
-type IconType = "attn"
-              | "caret"
-              | "checkmark"
-              | "dot"
-              | "ex" // meaning "x" or "times"
-              | "hamburger"
-              | "info"
-              | "meatballs"
-              | "plus"
-              | "tiles"
-              | "triangle"
+```
+
+The current list of icons includes:
+
+- `Attn` - A triangle with an exclamation point in the center.
+- `Caret` - Resembles an angle bracket pointing up.
+- `Checkmark` - A checkmark.
+- `Dot` - A small circle.
+- `Ex` - Two crossing lines in the shape of the letter "x".
+- `Hamburger` - Three stacked, horizontal lines.
+- `Info` - A circle with a letter "i" in the center.
+- `Meatballs` - Three small circles in a horizontal line.
+- `Plus` - An addition sign.
+- `Tiles` - 4 small squares, arranged like window panes.
+- `Triangle` - A small triangle.
+
+In addition, you may import the `IconWrapper` component which takes the same props as an icon, but allows you to manually specify the svg children within an 8x8 square. For example:
+
+```jsx
+import IconWrapper from "quartermaster/icons/IconWrapper
+
+// Creates a circle that fills the svg's prescribed area
+<IconWrapper size="m" title="circle">
+  <circle cx="4" cy="4" r="4"></circle>
+</IconWrapper>
 ```
 
 ### IconButton
-It is often useful to make an icon clickable without applying default button styles. That's what this component is for.
+It is often useful to make an icon clickable without applying default button styles. To do that, you can wrap the icon in an `IconButton`.
 
 ```typescript
 interface IconButtonProps {
@@ -300,14 +326,10 @@ interface IconButtonProps {
   clickHandler?: React.MouseEventHandler
   href?: string // Only applies if `tag` is "a"
   ref?: React.MutableRefObject<HTMLAnchorElement | HTMLButtonElement>
-  rotate?: IconRotation
-  size: IconSize
   tag?: "a" | "button"
   title?: string
   type: IconType
 }
-
-// Where IconRotation, IconType, and IconSize are defined in the `Icon` component
 ```
 
 ### Label

@@ -13,7 +13,7 @@ import React, {
 
 import { DynamicProps } from "../lib/helperTypes"
 
-import Icon from "../Icon"
+import Dot from "../icons/Dot"
 
 import {
   buildClassNames,
@@ -114,10 +114,10 @@ const RadioButton = forwardRef(function ({
               aria-hidden={true}
               className={`qmRadioOverlay ${overlayClasses}`}>
               {isChecked && (
-                <Icon
-                  type="dot"
+                <Dot
+                  disableStroke
                   title="checked"
-                  size="xxs"
+                  size="l"
                   className="qmRadioDotIcon"
                 />
               )}

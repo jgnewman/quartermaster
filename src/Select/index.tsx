@@ -15,7 +15,8 @@ import React, {
 import { noopEvtHandler, buildClassNames, useRefArray } from "../lib/helpers"
 import { DynamicProps } from "../lib/helperTypes"
 import Label from "../Label"
-import Icon from "../Icon"
+import Ex from "../icons/Ex"
+import Caret from "../icons/Caret"
 
 interface SelectState {
   isOpen: boolean
@@ -257,19 +258,17 @@ function Select({
               className={`qmSelectClearIconWrapper ${buttonClasses}`}
               onClick={isDisabled ? noopEvtHandler : handleClickClearButton}
               onFocus={handleFocusClearButton}>
-              <Icon
+              <Ex
                 className="qmSelectIcon qmSelectClearIcon"
-                type="ex"
-                size="xs"
+                size="s"
                 title="Clear Selection"
               />
             </button>
           )}
 
           <div className={`qmSelectOpenIconWrapper ${buttonClasses}`}>
-            <Icon
+            <Caret
               className="qmSelectIcon qmSelectOpenIcon"
-              type="caret"
               size="s"
               title="Open"
             />

@@ -10,7 +10,7 @@ import React, {
 
 import { buildClassNames } from "../lib/helpers"
 import Animation, { AnimationProps } from "../Animation"
-import Icon from "../Icon"
+import Triangle from "../icons/Triangle"
 import Space from "../Space"
 
 import {
@@ -147,10 +147,10 @@ const Submenu = memo(function ({
         </span>
 
         {canAnimate && (
-          <Icon
+          <Triangle
             className={`qmMenuSubmenuIcon ${iconClasses}`}
-            type="triangle"
-            size="xs"
+            disableStroke
+            size="m"
           />
         )}
 

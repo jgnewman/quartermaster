@@ -30,6 +30,8 @@ import React, {
   useState,
 } from "react"
 
+import { usePrevious } from "../lib/helpers"
+
 interface ValueSpec {
   [key: string]: string
 }
@@ -77,18 +79,32 @@ export interface ThemeProps {
 
 function Theme({ children, data }: ThemeProps) {
 
+  const prevData = usePrevious(data)
   const { current: id } = useRef<string>(`qm-${String(Date.now()).slice(9)}-${String(Math.random()).slice(2, 6)}`)
+
   const [stylesInjected, setStylesInjected] = useState(false)
   const [prevStyles, setPrevStyles] = useState("")
+
   const tag: HTMLStyleElement = useMemo(() => createStyleTag(id), [id])
 
   const updateStyles = useCallback(() => {
+    if (data === prevData) {
+      return
+    }
+
     const newStyles = buildCSSStyles(data)
+
     if (newStyles !== prevStyles) {
       tag.innerHTML = newStyles
       setPrevStyles(newStyles)
     }
-  }, [data, tag, prevStyles, setPrevStyles])
+  }, [
+    data,
+    prevData,
+    prevStyles,
+    setPrevStyles,
+    tag,
+  ])
 
   if (!stylesInjected) {
     document.head.appendChild(tag)
@@ -103,6 +119,10 @@ function Theme({ children, data }: ThemeProps) {
   useEffect(() => () => {
     removeStyleTag(tag)
   }, [tag])
+
+  if (!stylesInjected) {
+    return null
+  }
 
   return (
     <>

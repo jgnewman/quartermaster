@@ -11,7 +11,7 @@ import React, {
   useState,
 } from "react"
 
-import Icon from "../Icon"
+import Checkmark from "../icons/Checkmark"
 
 import { DynamicProps } from "../lib/helperTypes"
 
@@ -111,10 +111,9 @@ const Toggle = forwardRef(function ({
           <span
             aria-hidden={true}
             className={`qmToggleOverlay ${overlayClasses}`}>
-            <Icon
+            <Checkmark
               className={`qmToggleCheckmark ${sliderAndCheckmarkClasses}`}
-              type="checkmark"
-              size="xs"
+              size="s"
             />
             <span className={`qmToggleSlider ${sliderAndCheckmarkClasses}`}></span>
           </span>

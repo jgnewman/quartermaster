@@ -27,6 +27,8 @@ export default {
 
     [DARKEST_GRAY]: `
       .qmIconButtonEffect,
+      .qmMenuLink:hover,
+      .qmMenuSubmenuLink.isCollapsible:hover,
       .qmSelectMenu,
       .qmSelectMenuOption
     `,
@@ -98,13 +100,8 @@ export default {
   },
 
   "fill": {
-    [LIGHTER_GRAY]: `
-      .qmMenuSubmenuIcon .qmIcon,
-      .qmSelectOpenIcon .qmIcon,
-      .qmSelectClearIcon .qmIcon
-    `,
-
-    [WHITE]: ".qmIcon",
+    [LIGHTER_GRAY]: ".qmIcon.qmMenuSubmenuIcon",
+    [WHITE]: ".qmPathIsFilled",
   },
 
   "height": {
@@ -112,6 +109,15 @@ export default {
       .qmCharLimitBar,
       .qmCharLimitBar.isCompact
     `,
+  },
+
+  "stroke": {
+    [LIGHTER_GRAY]: `
+      .qmIcon.qmSelectOpenIcon,
+      .qmIcon.qmSelectClearIcon
+    `,
+
+    [WHITE]: ".qmIcon",
   },
 
   "opacity": {

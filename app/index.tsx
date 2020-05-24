@@ -2,6 +2,8 @@ import "./styles.styl"
 import React from "react"
 import { render } from "react-dom"
 
+import FPSChart from "./FPSChart"
+
 import {
   Alert,
   Align,
@@ -12,15 +14,16 @@ import {
   ConfirmButton,
   Form,
   Grid,
-  Icon,
   IconButton,
   Modal,
+  Plus,
   RadioButton,
   RadioGroup,
   Select,
   Space,
   Spinner,
   TextField,
+  Tiles,
   Theme,
   Toggle,
   Menu,
@@ -51,41 +54,41 @@ class App extends React.Component {
     darkThemeEnabled: false,
   }
 
-  openModal() {
+  openModal = () => {
     this.setState({ modalOpen: true })
   }
 
-  closeModal() {
+  closeModal = () => {
     this.setState({ modalOpen: false })
   }
 
-  incrementCounter() {
+  incrementCounter = () => {
     this.setState({ counter: this.state.counter + 1 })
   }
 
-  decrementCounter() {
+  decrementCounter = () => {
     this.setState({ counter: this.state.counter - 1 })
   }
 
-  setFieldVal(evt: React.ChangeEvent) {
+  setFieldVal = (evt: React.ChangeEvent) => {
     this.setState({ fieldVal: (evt.target as HTMLInputElement).value })
   }
 
-  toggleCheckbox(evt: React.ChangeEvent) {
+  toggleCheckbox = (evt: React.ChangeEvent) => {
     this.setState({ boxChecked: !this.state.boxChecked })
     console.log("Toggled checkbox with value", (evt.target as HTMLInputElement).value)
   }
 
-  toggleToggle(evt: React.ChangeEvent) {
+  toggleToggle = (evt: React.ChangeEvent) => {
     this.setState({ toggleChecked: !this.state.toggleChecked })
     console.log("Toggled toggle with value", (evt.target as HTMLInputElement).value)
   }
 
-  setRadioVal(evt: React.ChangeEvent) {
+  setRadioVal = (evt: React.ChangeEvent) => {
     this.setState({ radioVal: (evt.target as HTMLInputElement).value })
   }
 
-  toggleTheme() {
+  toggleTheme = () => {
     this.setState({ darkThemeEnabled: !this.state.darkThemeEnabled })
   }
 
@@ -93,6 +96,8 @@ class App extends React.Component {
     return (
       <Theme data={this.state.darkThemeEnabled ? DarkTheme : null}>
         <div style={{ padding: "1em 1em 5em", maxWidth: "500px" }}>
+
+          <FPSChart />
 
           <Animation
             type="fadeIn"
@@ -102,7 +107,7 @@ class App extends React.Component {
               <Button
                 text="Toggle Theme"
                 isCompact={true}
-                clickHandler={this.toggleTheme.bind(this)}
+                clickHandler={this.toggleTheme}
               />
             </Space>
           </Animation>
@@ -116,8 +121,8 @@ class App extends React.Component {
               animate={false}
               data={[
                 {type: "label", text: "Section 1"},
-                {type: "link", text: "Google", href: "https://google.com", isActive: true},
-                {type: "link", text: "Yahoo", href: "https://yahoo.com"},
+                {type: "link", text: "Google", href: "https://google.com"},
+                {type: "link", text: "Yahoo", href: "https://yahoo.com", isActive: true},
                 {
                   key: "foo",
                   type: "submenu",
@@ -153,20 +158,16 @@ class App extends React.Component {
           </Space>
 
           <Align bottomSpace="l">
-            <Spinner
-              size="i"
-            />
+            <Spinner size="i" />
 
-            <Icon
-              type="tiles"
-              size="xxs"
+            <Tiles
+              size="xs"
               rotate={45}
             />
 
-            <IconButton
-              type="plus"
-              size="s"
-            />
+            <IconButton>
+              <Plus size="m" />
+            </IconButton>
 
             <Avatar
               showActivity
@@ -179,7 +180,7 @@ class App extends React.Component {
             <Button
               highlight="positive"
               isCompact={true}
-              clickHandler={this.openModal.bind(this)}>
+              clickHandler={this.openModal}>
               Open modal
             </Button>
 
@@ -189,27 +190,28 @@ class App extends React.Component {
               isCompact={true}
               useCompactModalButtons={true}
               skipConfirmation={this.state.counter > 0 && this.state.counter < 3}
-              clickHandler={this.incrementCounter.bind(this)}
-              postCancelHook={this.decrementCounter.bind(this)}>
+              clickHandler={this.incrementCounter}
+              postCancelHook={this.decrementCounter}>
               Increment counter
             </ConfirmButton>
           </Align>
 
           <Space bottom="l">
-            <Alert type="info">
-              Here is a counter: {this.state.counter}
-            </Alert>
+            <Alert
+             type="info"
+             text={`Here is a counter: ${this.state.counter}`}
+            />
           </Space>
 
           <Modal
             isOpen={this.state.modalOpen}
-            closeHandler={this.closeModal.bind(this)}>
+            closeHandler={this.closeModal}>
             This is a modal
           </Modal>
 
           <Space bottom="l">
             <TextField
-              changeHandler={this.setFieldVal.bind(this)}
+              changeHandler={this.setFieldVal}
               charLimit={25}
               errorText="You have an error bro"
               hasError={this.state.fieldVal.length > 25}
@@ -234,7 +236,7 @@ class App extends React.Component {
               charLimit={150}
               preventInputAtLimit={true}
               value={this.state.fieldVal}
-              changeHandler={this.setFieldVal.bind(this)}
+              changeHandler={this.setFieldVal}
               errorText=""
             />
           </Space>
@@ -247,7 +249,7 @@ class App extends React.Component {
             <Toggle
               isDisabled={false}
               isChecked={this.state.toggleChecked}
-              changeHandler={this.toggleToggle.bind(this)}
+              changeHandler={this.toggleToggle}
               value="My Toggle"
               label="Toggle me"
             />
@@ -257,7 +259,7 @@ class App extends React.Component {
             <Checkbox
               isDisabled={false}
               isChecked={this.state.boxChecked}
-              changeHandler={this.toggleCheckbox.bind(this)}
+              changeHandler={this.toggleCheckbox}
               value="My Checkbox"
               label="Check me"
             />
@@ -266,7 +268,7 @@ class App extends React.Component {
           <div>
             <RadioButton
               isChecked={this.state.radioVal === "foo"}
-              changeHandler={this.setRadioVal.bind(this)}
+              changeHandler={this.setRadioVal}
               value="foo"
               label="Foo"
               groupName="my-radio-group"
@@ -276,7 +278,7 @@ class App extends React.Component {
           <div>
             <RadioButton
               isChecked={this.state.radioVal === "bar"}
-              changeHandler={this.setRadioVal.bind(this)}
+              changeHandler={this.setRadioVal}
               value="bar"
               label="Bar"
               groupName="my-radio-group"
