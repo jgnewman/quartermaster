@@ -15,13 +15,13 @@ SLIDER_PADDING = 3px
   margin-right: 0.33rem
 
   &.isDisabled
-    color: FADED_FONT
+    color: BASE_FONT_DISABLED
 
 .qmToggleFauxWrapper
   @extend $vertMiddle
 
   &:hover .qmToggleLabel.isEnabled
-    color: HIGHLIGHT
+    color: HIGHLIGHTS
 
 .qmToggleCheckWrapper
   @extend $vertMiddle
@@ -34,18 +34,18 @@ SLIDER_PADDING = 3px
   @extend $absFill
   borders(0, 10rem)
 
-  background: LIGHT_BG
+  background: BLACK_FADE_FLY
   outline: solid transparent !important
   transition: BASE_TRANSITION
   box-shadow: BLANK_OUTLINE
 
   &.isChecked
-    background: HIGHLIGHT
-    border-color: OUTLINES
+    background: HIGHLIGHTS
+    border-color: HIGHLIGHTS
 
   &.isFocused
     box-shadow: BASE_OUTLINE
-    border-color: OUTLINES
+    border-color: HIGHLIGHTS
 
 .qmToggleSlider
   size(SLIDER_WIDTH)
@@ -57,7 +57,7 @@ SLIDER_PADDING = 3px
   top: 50%
   transform: translateY(-50%)
   background: BASE_BG
-  box-shadow: 0 0 0 1px LIGHT_BG
+  box-shadow: 0 0 0 1px BLACK_FADE_FLY
   transition: BASE_TRANSITION
 
   &.isChecked
@@ -69,7 +69,7 @@ SLIDER_PADDING = 3px
   opacity: 0
   transition: BASE_TRANSITION
   transform: translateX(-50%) translateY(-50%) scale(0)
-  stroke: LIGHT_FONT
+  stroke: WHITE
 
   &.isChecked
     opacity: 1

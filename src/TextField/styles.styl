@@ -7,7 +7,7 @@
   overflow: hidden
 
 .qmCharLimitText
-  color: FADED_FONT
+  color: BASE_FONT_LIGHTER
   font-size: 85%
 
   position: absolute
@@ -20,11 +20,11 @@
 
 .qmCharLimitCount.hasError
   font-weight: bold
-  color: ERRORS
+  color: ERROR
 
 .qmCharLimitCount.reachedMin
   font-weight: bold
-  color: CHAR_BEST
+  color: GREEN
 
 .qmCharLimitBar
   size(100%, 5px)
@@ -35,7 +35,7 @@
   bottom: 0
 
   display: block
-  background: LIGHT_BG
+  background: BLACK_FADE_FLY
   overflow: hidden
 
   &.isCompact
@@ -55,22 +55,22 @@
     background: transparent
 
   &.worst
-    background: CHAR_WORST
+    background: RED
 
   &.worse
-    background: CHAR_WORSE
+    background: ORANGE
 
   &.decent
-    background: CHAR_DECENT
+    background: YELLOW
 
   &.better
-    background: CHAR_BETTER
+    background: YELLOW_GREEN
 
   &.best
-    background: CHAR_BEST
+    background: GREEN
 
   &.error
-    background: ERRORS
+    background: RED
 
 .qmTextFieldContainer
   position: relative
@@ -91,7 +91,7 @@
   top: 100%
   width: 100%
 
-  color: ERRORS
+  color: ERROR
   font-size: 75%
   padding: 0.25rem 0 0.33rem
 
@@ -119,14 +119,14 @@ $commonFieldProps
 
   &.isFocused
     box-shadow: BASE_OUTLINE
-    border-color: OUTLINES
+    border-color: HIGHLIGHTS
 
   &.hasError
     box-shadow: ERR_OUTLINE
-    border-color: ERRORS
+    border-color: ERROR
 
   &.isDisabled::placeholder
-    color: FADED_FONT
+    color: BASE_FONT_DISABLED
 
 .qmTextFieldInput.isTextArea
   @extend $commonFieldProps

@@ -11,13 +11,13 @@
   margin-right: 0.33rem
 
   &.isDisabled
-    color: FADED_FONT
+    color: BASE_FONT_DISABLED
 
 .qmRadioFauxWrapper
   @extend $vertMiddle
 
   &:hover .qmRadioLabel.isEnabled
-    color: HIGHLIGHT
+    color: HIGHLIGHTS
 
 .qmRadioCheckWrapper
   @extend $vertMiddle
@@ -28,7 +28,7 @@
 
 .qmIcon.qmRadioDotIcon
   @extend $absCenter
-  fill: LIGHT_FONT
+  fill: WHITE
 
 .qmRadioOverlay
   @extend $absFill
@@ -42,12 +42,12 @@
   box-shadow: BLANK_OUTLINE
 
   &.isChecked
-    background: HIGHLIGHT
-    border-color: OUTLINES
+    background: HIGHLIGHTS
+    border-color: HIGHLIGHTS
 
   &.isFocused
     box-shadow: BASE_OUTLINE
-    border-color: OUTLINES
+    border-color: HIGHLIGHTS
 
 .qmRadioNative
   display: block

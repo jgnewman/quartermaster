@@ -11,13 +11,13 @@
   margin-right: 0.33rem
 
   &.isDisabled
-    color: FADED_FONT
+    color: BASE_FONT_DISABLED
 
 .qmCheckboxFauxWrapper
   @extend $vertMiddle
 
   &:hover .qmCheckboxLabel.isEnabled
-    color: HIGHLIGHT
+    color: HIGHLIGHTS
 
 .qmCheckboxCheckWrapper
   @extend $vertMiddle
@@ -36,16 +36,16 @@
   box-shadow: BLANK_OUTLINE
 
   &.isChecked
-    background: HIGHLIGHT
-    border-color: OUTLINES
+    background: HIGHLIGHTS
+    border-color: HIGHLIGHTS
 
   &.isFocused
     box-shadow: BASE_OUTLINE
-    border-color: OUTLINES
+    border-color: HIGHLIGHTS
 
 .qmIcon.qmCheckboxCheckmark
   @extend $absCenter
-  stroke: LIGHT_FONT
+  stroke: WHITE
 
 .qmCheckboxNative
   display: block

@@ -2,7 +2,7 @@
 
 .qmButtonContent
   transition: BASE_TRANSITION
-  color: LIGHT_FONT
+  color: BASE_FONT_LIGHTEST
 
 .qmButtonContainer
   @extend $vertMiddle
@@ -10,7 +10,7 @@
 
   position: relative
 
-  background: HIGHLIGHT
+  background: HIGHLIGHTS
   padding: 0.5rem 2.5rem 0.5rem
   height: LARGER_ELEM_HEIGHT
 
@@ -28,8 +28,8 @@
     left: 0.75rem
     margin-top: -10px
 
-    border-color: rgba(255,255,255,0.25)
-    border-top-color: LIGHT_FONT
+    border-color: WHITE_FADE_LIGHT
+    border-top-color: WHITE
 
   &.isCompact
     height: SMALLER_ELEM_HEIGHT
@@ -44,22 +44,22 @@
     opacity: 1
 
     &:hover
-      background: LIGHT_HIGHLIGHT
+      background: HIGHLIGHTS_LIGHT
 
       .qmButtonContent
-        color: LIGHT_FONT
+        color: BASE_FONT_LIGHTEST
 
   &.isPositive
-    background: POSITIVE
+    background: GREEN
 
     &.isEnabled:hover
-      background: POSITIVE_HOVER
+      background: GREEN_LIGHT
 
   &.isNegative
-    background: NEGATIVE
+    background: RED
 
     &.isEnabled:hover
-      background: NEGATIVE_HOVER
+      background: RED_LIGHT
 
   &.isDisabled
     opacity: 0.5

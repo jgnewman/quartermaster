@@ -6,36 +6,36 @@
   min-height: LARGER_ELEM_HEIGHT
 
   &.isDanger
-    background: rgba(ERRORS, 0.15)
-    border-color: rgba(ERRORS, 0.25)
+    background: rgba(RED, 0.15)
+    border-color: rgba(RED, 0.18)
 
   &.isInfo
-    background: rgba(HIGHLIGHT, 0.15)
-    border-color: rgba(HIGHLIGHT, 0.25)
+    background: rgba(BLUE, 0.15)
+    border-color: rgba(BLUE, 0.18)
 
   &.isWarning
-    background: rgba(WARNING, 0.15)
-    border-color: rgba(WARNING, 0.25)
+    background: rgba(YELLOW, 0.15)
+    border-color: rgba(YELLOW, 0.18)
 
 .qmIcon.qmAlertIcon
 
   &.isDanger
-    stroke: ERRORS
+    stroke: RED
 
   &.isInfo
-    stroke: HIGHLIGHT
+    stroke: BLUE
 
   &.isWarning
-    stroke: WARNING
+    stroke: YELLOW
 
   &.isDanger .qmPathIsFilled
-    fill: ERRORS
+    fill: RED
 
   &.isInfo .qmPathIsFilled
-    fill: HIGHLIGHT
+    fill: BLUE
 
   &.isWarning .qmPathIsFilled
-    fill: WARNING
+    fill: YELLOW
 
 .qmAlertContent.qmGrowContainer
   margin-left: 0.25rem

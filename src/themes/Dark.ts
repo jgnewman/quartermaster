@@ -7,10 +7,12 @@ const LIGHTER_GRAY = "#595959"
 const LIGHTEST_GRAY = "#BDBDBD"
 
 const TRANSPARENCY = "transparent"
-const LIGHT_TRANSPARENCY = "rgba(255, 255, 255, 0.15)"
+const WHITE_FADE_BANTAM = "rgba(255, 255, 255, 0.15)"
+const BLACK_FADE_FEATHER = "rgba(0, 0, 0, 0.2)"
+const BLACK_FADE_LIGHT = "rgba(0, 0, 0, 0.25)"
 
 const WHITE = "#FFFFFF"
-const HIGHLIGHT = "#3C97FF"
+const HIGHLIGHTS = "#3C97FF"
 
 export default {
   "background": {
@@ -53,12 +55,13 @@ export default {
   },
 
   "border-color": {
+    [BLACK_FADE_FEATHER]: ".qmMenuSeparator",
     [DARK_GRAY]: ".qmAvatarIndicator",
-    [LIGHT_TRANSPARENCY]: ".qmSpinnerContainer",
+    [WHITE_FADE_BANTAM]: ".qmSpinnerContainer",
   },
 
   "border-top-color": {
-    [HIGHLIGHT]: ".qmSpinnerContainer",
+    [HIGHLIGHTS]: ".qmSpinnerContainer",
   },
 
   "border-radius": {
@@ -66,7 +69,9 @@ export default {
   },
 
   "box-shadow": {
+    [`0 3px 15px ${BLACK_FADE_LIGHT}`]: ".qmMenuContainer.isLifted",
     [`0 0 0 3px ${DARK_GRAY}`]: ".qmAvatarContainer",
+
   },
 
   "color": {
