@@ -198,7 +198,7 @@ class App extends React.Component {
 
           <Space bottom="l">
             <Alert
-             type="info"
+             type="warning"
              text={`Here is a counter: ${this.state.counter}`}
             />
           </Space>

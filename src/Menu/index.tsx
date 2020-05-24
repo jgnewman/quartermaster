@@ -149,8 +149,7 @@ const Submenu = memo(function ({
         {canAnimate && (
           <Triangle
             className={`qmMenuSubmenuIcon ${iconClasses}`}
-            disableStroke
-            size="m"
+            size="s"
           />
         )}
 

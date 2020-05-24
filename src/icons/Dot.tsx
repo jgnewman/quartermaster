@@ -9,7 +9,11 @@ import IconWrapper from "./IconWrapper"
 
 const Dot = forwardRef(function (props: IconProps, ref: Ref<SVGSVGElement>) {
   return (
-    <IconWrapper ref={ref} title={props.title || "Dot icon"} {...props}>
+    <IconWrapper
+      {...props}
+      disableStroke
+      ref={ref}
+      title={props.title || "Dot icon"}>
       <circle cx="4" cy="4" r="1"></circle>
     </IconWrapper>
   )

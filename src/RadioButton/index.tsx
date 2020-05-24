@@ -115,7 +115,6 @@ const RadioButton = forwardRef(function ({
               className={`qmRadioOverlay ${overlayClasses}`}>
               {isChecked && (
                 <Dot
-                  disableStroke
                   title="checked"
                   size="l"
                   className="qmRadioDotIcon"

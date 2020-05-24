@@ -3,7 +3,7 @@
 .qmAlertContainer
   borders(BASE_BORDER, 0.25rem)
   padding: 0.75rem 1rem 0.75rem
-  height: LARGER_ELEM_HEIGHT
+  min-height: LARGER_ELEM_HEIGHT
 
   &.isDanger
     background: rgba(ERRORS, 0.15)
@@ -18,6 +18,15 @@
     border-color: rgba(WARNING, 0.25)
 
 .qmIcon.qmAlertIcon
+
+  &.isDanger
+    stroke: ERRORS
+
+  &.isInfo
+    stroke: HIGHLIGHT
+
+  &.isWarning
+    stroke: WARNING
 
   &.isDanger .qmPathIsFilled
     fill: ERRORS

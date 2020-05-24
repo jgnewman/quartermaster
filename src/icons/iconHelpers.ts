@@ -19,3 +19,14 @@ export const strokeMap = {
   xl: 0.4,
   xxl: 0.25,
 }
+
+export const radiusMap = {
+  xxs: 0.66,
+  xs: 0.66,
+  s: 0.55,
+  m: 0.5,
+  i: 0.5,
+  l: 0.38,
+  xl: 0.33,
+  xxl: 0.25,
+}

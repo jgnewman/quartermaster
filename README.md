@@ -306,15 +306,27 @@ The current list of icons includes:
 - `Tiles` - 4 small squares, arranged like window panes.
 - `Triangle` - A small triangle.
 
-In addition, you may import the `IconWrapper` component which takes the same props as an icon, but allows you to manually specify the svg children within an 8x8 square. For example:
+In addition, you may import the `IconWrapper` component which takes the same props as an icon (with a couple extra options), but allows you to manually specify the svg children. Note that when creating an icon with `IconWrapper`, you should assume the svg area to be confined to an 8x8 square. To apply default fills for any given shape, add the `qmPathIsFilled` class to that element. For example:
 
 ```jsx
 import IconWrapper from "quartermaster/icons/IconWrapper
 
-// Creates a circle that fills the svg's prescribed area
-<IconWrapper size="m" title="circle">
-  <circle cx="4" cy="4" r="4"></circle>
+// Creates a circle icon.
+// The full svg area is filled because the x and y center
+// points are set to 4 (the area's center) and the radius
+// is also 4, thus making an 8px circle.
+<IconWrapper disableStroke size="m" title="circle">
+  <circle className="qmPathIsFilled" cx="4" cy="4" r="4"></circle>
 </IconWrapper>
+```
+
+In this case, IconWrapper's props are defined as:
+
+```typescript
+interface IconWrapperProps extends IconProps {
+  children?: React.ReactNode
+  diableStroke?: boolean // Allows you to turn off the default stroke algorithm
+}
 ```
 
 ### IconButton

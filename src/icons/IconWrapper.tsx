@@ -17,6 +17,7 @@ interface SVGStyle {
 
 export interface IconWrapperProps extends IconProps {
   children?: ReactNode
+  disableStroke?: boolean
 }
 
 const IconWrapper = forwardRef(function ({

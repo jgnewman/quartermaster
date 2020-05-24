@@ -3,7 +3,6 @@ export type IconSize = "xxs" | "xs" | "s" | "m" | "i" | "l" | "xl" | "xxl"
 
 export interface IconProps {
   className?: string
-  disableStroke?: boolean
   rotate?: IconRotation
   size: IconSize
   title?: string
