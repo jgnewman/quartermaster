@@ -29,6 +29,7 @@
 .qmMenuLink:hover,
 .qmMenuSubmenuLink.isCollapsible:hover
   color: HIGHLIGHT
+  background-color: LIGHTEST_BG
 
 .qmMenuSubmenuLink
   border: 0
@@ -70,8 +71,8 @@
   border: 0
   border-bottom: BASE_BORDER
 
-.qmMenuActiveIcon,
-.qmMenuSubmenuIcon
+.qmIcon.qmMenuActiveIcon,
+.qmIcon.qmMenuSubmenuIcon
   position: absolute
   top: 50%
   right: 1.5rem
@@ -83,5 +84,6 @@
 .qmMenuSubmenuIcon.isFlipped
   transform: translateY(-50%) rotate(180deg)
 
-.qmMenuActiveIcon svg
-  fill: ON_INDICATORS
+.qmIcon.qmMenuActiveIcon
+  stroke: ON_INDICATORS
+  margin-right: 1px

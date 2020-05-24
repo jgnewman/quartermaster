@@ -26,11 +26,9 @@
   position: relative
   margin-right: 0.33rem
 
-.qmRadioDotIcon
+.qmIcon.qmRadioDotIcon
   @extend $absCenter
-
-  .qmIcon
-    fill: LIGHT_FONT
+  fill: LIGHT_FONT
 
 .qmRadioOverlay
   @extend $absFill
@@ -46,9 +44,6 @@
   &.isChecked
     background: HIGHLIGHT
     border-color: OUTLINES
-
-    .qmRadioDot circle
-      fill: LIGHT_FONT
 
   &.isFocused
     box-shadow: BASE_OUTLINE

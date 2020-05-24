@@ -8,17 +8,20 @@ import React, {
 import { buildClassNames } from "../lib/helpers"
 
 import Grid, { Grow } from "../Grid"
-import Icon from "../Icon"
+import Attn from "../icons/Attn"
+import Info from "../icons/Info"
 
 export interface AlertProps {
   children?: ReactNode
   className?: string
+  text?: string
   type: "danger" | "info" | "warning"
 }
 
 function Alert({
   children,
   className,
+  text,
   type,
 }: AlertProps) {
 
@@ -27,21 +30,21 @@ function Alert({
   const isWarning = type === "warning"
 
   const typeClass = buildClassNames({ isDanger, isInfo, isWarning})
-  const iconType = isDanger || isWarning ? "attn" : "info"
+  const IconComponent = isDanger || isWarning ? Attn : Info
 
   return (
     <div className={`qmAlertContainer ${typeClass} ${className || ""}`}>
       <Grid className={`qmAlertGrid ${typeClass}`}>
 
         <Grow size={0} className="qmAlertIconWrapper">
-          <Icon
+          <IconComponent
             className={`qmAlertIcon ${typeClass}`}
-            type={iconType}
             size="i"
           />
         </Grow>
 
         <Grow size={2} className="qmAlertContent">
+          {text}
           {children}
         </Grow>
 

@@ -16,6 +16,7 @@ import {
 } from "../lib/helpers"
 
 import IconButton from "../IconButton"
+import Ex from "../icons/Ex"
 
 export interface ModalProps {
   children?: ReactNode
@@ -56,10 +57,9 @@ function Modal({
         <div className="qmModalCloseWrapper">
           <IconButton
             className="qmModalClose"
-            clickHandler={closeHandler || noopEvtHandler}
-            type="ex"
-            size="s"
-          />
+            clickHandler={closeHandler || noopEvtHandler}>
+            <Ex size="m" />
+          </IconButton>
         </div>
       )}
 
