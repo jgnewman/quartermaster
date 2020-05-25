@@ -6,13 +6,15 @@ import React, {
 } from "react"
 
 const sizeMap = {
-  xs: "0.25rem",
-  s: "0.5rem",
-  m: "1rem",
-  l: "1.5rem",
+  xs: "0.25em",
+  s: "0.5em",
+  m: "0.75em",
+  i: "1em",
+  l: "1.5em",
+  xl: "2em",
 }
 
-export type SpaceSize = "xs" | "s" | "m" | "l"
+export type SpaceSize = "xs" | "s" | "m" | "i" | "l" | "xl"
 
 export interface SpaceProps {
   children?: ReactNode

@@ -1,23 +1,65 @@
-import React, {
-  memo,
-  useEffect,
-} from "react"
-
-let chart: HTMLElement | null = null
-let text: HTMLElement | null = null
-const bars: HTMLElement[] = []
-let meanCounter = 0
-let meanPoints = 0
-
 const BEST = "#52c02c"
 const BETTER = "#9cd426"
 const DECENT = "#fde017"
 const WORSE = "#FDAB64"
 const WORST = "#cf2e41"
 
+function createElement(tag: string, attrs: any = {}, styles: any = {}): HTMLElement {
+  const elem = document.createElement(tag)
+
+  Object.keys(attrs).forEach(attrName => {
+    elem.setAttribute(attrName, attrs[attrName])
+  })
+
+  Object.keys(styles).forEach(styleName => {
+    elem.style[styleName] = styles[styleName]
+  })
+
+  return elem
+}
+
+interface ChartElems {
+  chartWrapper: HTMLElement
+  chart: HTMLElement
+  text: HTMLElement
+}
+
+function appendChartStructure(): ChartElems {
+  const chartWrapper = createElement("div", { "class": "fps-chart-wrapper" }, {
+    width: "85px",
+    display: "flex",
+    "justify-content": "space-between",
+    position: "fixed",
+    bottom: "10px",
+    right: "10px",
+  })
+
+  const chart = createElement("div", { "class": "fps-chart" }, {
+    display: "flex",
+    alignItems: "flex-end",
+    "justify-content": "flex-start",
+    width: "50px",
+    height: "30px",
+    background: "rgba(0, 0, 0, 0.05)",
+    overflow: "hidden",
+    "border-radius": "3px",
+  })
+
+  const text = createElement("div", { "class": "fps-text" }, {
+    width: "25px",
+    "line-height": "1",
+    "font-size": "13px",
+  })
+
+  chartWrapper.appendChild(chart)
+  chartWrapper.appendChild(text)
+  document.body.appendChild(chartWrapper)
+
+  return { chartWrapper, chart, text }
+}
+
 function buildBar(fps: number): HTMLElement {
   const height = fps / 2
-  const bar = document.createElement("div")
   let color = BEST
 
   if (fps < 59) {
@@ -36,82 +78,51 @@ function buildBar(fps: number): HTMLElement {
     color = WORST
   }
 
-  bar.style.background = color
-  bar.style.width = "1px"
-  bar.style.height = `${height}px`
-  return bar
+  return createElement("div", { "class" : "fps-bar" }, {
+    background: color,
+    width: "1px",
+    height: `${height}px`,
+  })
 }
 
-function addBar(fps: number) {
-  if (chart) {
+export function createFPSChart() {
+  const { chart, text } = appendChartStructure()
+  const bars: HTMLElement[] = []
+  let meanCounter = 0
+  let meanPoints = 0
+
+  function addBar(fps: number) {
     const newBar = buildBar(fps)
-    bars.length >= 100 && chart.removeChild(chart.childNodes[0])
+    bars.length >= 50 && chart.removeChild(chart.childNodes[0])
     chart.appendChild(newBar)
     bars.push(newBar)
   }
-}
 
-function updateAverage(fps: number) {
-  if (text) {
+  function updateAverage(fps: number) {
+    addBar(fps)
     meanPoints += 1
     meanCounter += fps
-    if (meanPoints >= 10) {
-      text.innerHTML = Math.round(meanCounter / meanPoints) + ""
-      addBar(fps)
+    const avg = Math.round(meanCounter / meanPoints)
+    text.innerHTML = avg + " FPS"
+    if (meanPoints >= 3) {
       meanPoints = 0
       meanCounter = 0
     }
   }
-}
 
-function FPSChart() {
-
-  useEffect(() => {
-    chart = document.querySelector("#fpschart")
-    text = document.querySelector("#fpstext")
-
-    let then = Date.now() / 1000 // get time in seconds
-    function refresh() {
-      const now = Date.now() / 1000 // get time in seconds
-
-      // compute time since last frame
-      const elapsedTime = now - then
-      then = now
-
-      // compute fps
-      if (elapsedTime > 0) {
-        const fps = Math.round(1 / elapsedTime)
-        updateAverage(fps)
-      }
-
-      requestAnimationFrame(refresh)
+  let begin = Date.now()
+  let frames = 0
+  function refresh() {
+    const now = Date.now()
+    frames += 1
+    if (now - begin >= 1000) {
+      updateAverage(frames)
+      begin = now
+      frames = 0
     }
+    requestAnimationFrame(refresh)
+  }
 
-    refresh()
-  }, [])
-
-  return (
-    <div id="fpschartwrapper" style={{
-      width: "125px",
-      display: "flex",
-      justifyContent: "space-between",
-      position: "fixed",
-      bottom: 10,
-      right: 10,
-    }}>
-      <div id="fpschart" style={{
-        display: "flex",
-        alignItems: "flex-end",
-        justifyContent: "flex-start",
-        width: "100px",
-        height: "30px",
-        background: "transparent",
-      }}/>
-      <div id="fpstext"/>
-    </div>
-  )
+  requestAnimationFrame(refresh)
 }
 
-FPSChart.displayName = "FPSChart"
-
-export default memo(FPSChart)

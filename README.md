@@ -36,11 +36,13 @@ Quartermaster deliberately avoids styled-components for performance and bundle s
 - [Form](#form)
 - [Grid](#grid)
 - [Grow](#grow)
+- [Heading](#heading)
 - [Icons](#icons)
 - [IconButton](#iconbutton)
 - [Label](#label)
 - [Menu](#menu)
 - [Modal](#modal)
+- [Paragraph](#paragraph)
 - [RadioButton](#radiobutton)
 - [RadioGroup](#radiogroup)
 - [Select](#select)
@@ -261,6 +263,18 @@ Here is an example:
   <div></div>
   <div></div>
 </Grid>
+```
+
+### Heading
+Creates consistent heading text tags such as `h1`, `h2`, etc... Note that if your heading text is simple, you can avoid unnecessary re-renders by specifying your text via the `text` prop instead of as a child element.
+
+```typescript
+interface HeadingProps {
+  children?: ReactNode
+  className?: string
+  size: 1 | 2 | 3 | 4 | 5 | 6
+  text?: string
+}
 ```
 
 ### Icons
@@ -485,6 +499,17 @@ interface RadioButtonProps {
 }
 ```
 
+### Paragraph
+Outputs a paragraph with common text styling, including margin at the bottom.
+
+```typescript
+interface ParagraphProps {
+  children?: React.ReactNode
+  className?: string
+  isSmaller?: boolean // Creates smaller text
+}
+```
+
 ### RadioGroup
 Creates a group of radio buttons that can be treated as a single value. Requires a `name` prop for specifying the group name and an array of `options` specifying the label and value for each radio option. It then takes a single `changeHandler` providing access to the event created by the radio button that triggered the change, and is controlled by a single `value` prop.
 
@@ -561,7 +586,7 @@ interface SpaceProps {
 
 // Where...
 
-type SpaceSize = "xs" | "s" | "m" | "l"
+type SpaceSize = "xs" | "s" | "m" | "i" | "l" | "xl"
 ```
 
 ### Text
@@ -572,10 +597,11 @@ interface Text {
   children?: React.ReactNode
   className?: string
   htmlFor?: string // In case you are creating a label
+  isBlock?: boolean // Sets the text to display:block
   isBold?: boolean
-  isSmaller?: boolean
+  isSmaller?: boolean // Creates smaller text
   isUppercase?: boolean
-  tag?: string // defaults to "span"
+  tag?: string // Defaults to "span"
   text?: string
   title?: string
 }

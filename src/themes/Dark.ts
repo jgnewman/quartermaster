@@ -21,7 +21,6 @@ export default {
 
     [DARKER_GRAY]: `
       .qmCheckboxOverlay,
-      .qmMenuContainer,
       .qmRadioOverlay,
       .qmSelectClickableWrapper,
       .qmTextFieldInputWrapper,
@@ -30,10 +29,14 @@ export default {
 
     [DARKEST_GRAY]: `
       .qmIconButtonEffect,
-      .qmMenuLink:hover,
-      .qmMenuSubmenuLink.isCollapsible:hover,
+      .qmMenuContainer,
       .qmSelectMenu,
       .qmSelectMenuOption
+    `,
+
+    [BLACK_FADE_LIGHT]: `
+      .qmMenuLink:hover,
+      .qmMenuSubmenuLink.isCollapsible:hover,
     `,
 
     [LIGHT_GRAY]: ".qmAvatarInitials",
@@ -101,6 +104,7 @@ export default {
 
     [WHITE]: `
       .qmButtonContent,
+      .qmHeading,
       .qmLabelContainer,
       .qmSelectDisplay,
       .qmTextFieldInput.isField,

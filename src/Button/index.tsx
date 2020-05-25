@@ -92,7 +92,7 @@ const Button = forwardRef(function ({
   dynamicProps.className = `qmButtonContainer ${containerClasses} ${className || ""}`
 
   const content = (
-    <Text className="qmButtonContent" text={text}>
+    <Text isBlock className="qmButtonContent" text={text}>
       {children}
     </Text>
   )

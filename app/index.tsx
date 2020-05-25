@@ -2,7 +2,7 @@ import "./styles.styl"
 import React from "react"
 import { render } from "react-dom"
 
-import FPSChart from "./FPSChart"
+import { createFPSChart } from "./FPSChart"
 
 import {
   Alert,
@@ -14,8 +14,10 @@ import {
   ConfirmButton,
   Form,
   Grid,
+  Heading,
   IconButton,
   Modal,
+  Paragraph,
   Plus,
   RadioButton,
   RadioGroup,
@@ -98,9 +100,14 @@ class App extends React.Component {
     return (
       <Theme data={this.state.darkThemeEnabled ? DarkTheme : null}>
         <div style={{ padding: "1em 1em 5em", maxWidth: "500px" }}>
-          <FPSChart />
 
-          <Align bottomSpace="l">
+          <Heading size={1} text="Welcome to Quartermaster!"/>
+          <Paragraph>
+            Quartermaster is a library of common components that
+            are useful in building React apps with Typescript.
+          </Paragraph>
+
+          <Align bottomSpace="l" topSpace="s">
             <Animation
               type="fadeIn"
               direction="left"
@@ -217,6 +224,15 @@ class App extends React.Component {
             This is a modal
           </Modal>
 
+          <Paragraph>
+            When you type inside one of the fields below, you will see your
+            text duplicated within the other field as well.
+          </Paragraph>
+
+          <Paragraph>
+            It will be pretty cool and I hope you like the effect when you see it.
+          </Paragraph>
+
           <Space bottom="l">
             <TextField
               changeHandler={this.setFieldVal}
@@ -249,9 +265,9 @@ class App extends React.Component {
             />
           </Space>
 
-          <div>
+          <Paragraph>
             Rendering checked state as {String(this.state.boxChecked)}
-          </div>
+          </Paragraph>
 
           <div>
             <Toggle
@@ -371,6 +387,6 @@ class App extends React.Component {
   }
 }
 
-render(
-  <App/>
- , document.querySelector("#app"))
+render(<App/>, document.querySelector("#app"))
+createFPSChart()
+

@@ -45,7 +45,7 @@ function Alert({
         </Grow>
 
         <Grow size={2} className="qmAlertContent">
-          {text && <Text>{text}</Text>}
+          {text && <Text isBlock>{text}</Text>}
           {children}
         </Grow>
 

@@ -13,6 +13,7 @@ export interface TextProps {
   children?: ReactNode
   className?: string
   htmlFor?: string
+  isBlock?: boolean
   isBold?: boolean
   isSmaller?: boolean
   isUppercase?: boolean
@@ -25,6 +26,7 @@ function Text({
   children,
   className,
   htmlFor,
+  isBlock,
   isBold,
   isSmaller,
   isUppercase,
@@ -44,6 +46,7 @@ function Text({
   }
 
   const containerClasses = buildClassNames({
+    isBlock,
     isBold,
     isSmaller,
     isUppercase,

@@ -32,6 +32,7 @@ function Label({
     <Text
       className={`qmLabelContainer ${containerClasses} ${className || ""}`}
       tag="label"
+      isBlock
       isBold
       isSmaller
       {...dynamicProps}>
