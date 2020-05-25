@@ -13,6 +13,7 @@ import React, {
 
 import { DynamicProps } from "../lib/helperTypes"
 
+import Text from "../Text"
 import Checkmark from "../icons/Checkmark"
 
 import {
@@ -117,11 +118,12 @@ const Checkbox = forwardRef(function ({
         </span>
 
         {label && (
-          <label
+          <Text
             className={`qmCheckboxLabel ${labelClasses}`}
+            tag="label"
             {...labelProps}>
             {label}
-          </label>
+          </Text>
         )}
 
       </span>

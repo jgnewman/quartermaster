@@ -8,6 +8,7 @@ import React, {
 import { buildClassNames } from "../lib/helpers"
 
 import Grid, { Grow } from "../Grid"
+import Text from "../Text"
 import Attn from "../icons/Attn"
 import Info from "../icons/Info"
 
@@ -44,7 +45,7 @@ function Alert({
         </Grow>
 
         <Grow size={2} className="qmAlertContent">
-          {text}
+          {text && <Text>{text}</Text>}
           {children}
         </Grow>
 

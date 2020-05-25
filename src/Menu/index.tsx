@@ -10,8 +10,8 @@ import React, {
 
 import { buildClassNames } from "../lib/helpers"
 import Animation, { AnimationProps } from "../Animation"
-import Triangle from "../icons/Triangle"
 import Space from "../Space"
+import Triangle from "../icons/Triangle"
 
 import {
  Data,

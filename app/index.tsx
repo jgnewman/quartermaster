@@ -23,6 +23,7 @@ import {
   Space,
   Spinner,
   Tag,
+  Text,
   TextField,
   Tiles,
   Theme,
@@ -115,6 +116,8 @@ class App extends React.Component {
               text={`${this.state.darkThemeEnabled ? "dark" : "light"} theme`}
               color="green"
             />
+
+            <Text text="Hello, world!"/>
           </Align>
 
           <Space bottom="l">

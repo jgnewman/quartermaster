@@ -3,6 +3,8 @@ import React, { memo } from "react"
 
 import { buildClassNames } from "../lib/helpers"
 
+import Text from "../Text"
+
 export interface TagProps {
   className?: string
   color?: "gray" | "red" | "orange" | "yellow" | "green" | "blue" | "purple"
@@ -20,9 +22,12 @@ function Tag({
   })
 
   return (
-    <span className={`qmTagContainer ${containerClasses} ${className || ""}`}>
-      {text}
-    </span>
+    <Text
+      className={`qmTagContainer ${containerClasses} ${className || ""}`}
+      text={text}
+      isBold
+      isUppercase
+    />
   )
 }
 

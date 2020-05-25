@@ -46,6 +46,7 @@ Quartermaster deliberately avoids styled-components for performance and bundle s
 - [Select](#select)
 - [Space](#space)
 - [Spinner](#spinner)
+- [Text](#text)
 - [TextField](#textfield)
 - [Theme](#theme)
 - [Toggle](#toggle)
@@ -561,6 +562,23 @@ interface SpaceProps {
 // Where...
 
 type SpaceSize = "xs" | "s" | "m" | "l"
+```
+
+### Text
+Generates an html wrapper applying common text styles to its content. If it only needs to wrap simple text content, consider placing that content on the `text` prop rather than writing it as a child element. This will help to avoid unnecessary re-rendering.
+
+```typescript
+interface Text {
+  children?: React.ReactNode
+  className?: string
+  htmlFor?: string // In case you are creating a label
+  isBold?: boolean
+  isSmaller?: boolean
+  isUppercase?: boolean
+  tag?: string // defaults to "span"
+  text?: string
+  title?: string
+}
 ```
 
 ### TextField

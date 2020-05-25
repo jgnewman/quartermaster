@@ -13,6 +13,7 @@ const BLACK_FADE_LIGHT = "rgba(0, 0, 0, 0.25)"
 
 const WHITE = "#FFFFFF"
 const HIGHLIGHTS = "#3C97FF"
+const ERRORS = "#f7364c"
 
 export default {
   "background": {
@@ -75,6 +76,8 @@ export default {
   },
 
   "color": {
+    [ERRORS]: ".qmTextContainer.qmLabelRequired",
+
     [LIGHT_GRAY]: `
       .qmCharLimitContainer.isDisabled .qmCharLimitText
       .qmSelectDisplay.isDisabled,
@@ -86,17 +89,18 @@ export default {
     `,
 
     [LIGHTEST_GRAY]: `
-      body,
       .qmCharLimitText,
       .qmCheckboxLabel,
       .qmMenuLink,
       .qmMenuSubmenuLink,
       .qmRadioLabel,
       .qmSelectMenuOption,
+      .qmTextContainer,
       .qmToggleLabel
     `,
 
     [WHITE]: `
+      .qmButtonContent,
       .qmLabelContainer,
       .qmSelectDisplay,
       .qmTextFieldInput.isField,

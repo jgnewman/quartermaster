@@ -4,6 +4,8 @@ import React, { memo } from "react"
 import { DynamicProps } from "../lib/helperTypes"
 import { buildClassNames } from "../lib/helpers"
 
+import Text from "../Text"
+
 export interface LabelProps {
   className?: string
   htmlFor?: string
@@ -27,11 +29,22 @@ function Label({
   const containerClasses = buildClassNames({ isRequired })
 
   return (
-    <label
+    <Text
       className={`qmLabelContainer ${containerClasses} ${className || ""}`}
+      tag="label"
+      isBold
+      isSmaller
       {...dynamicProps}>
-      {text}{isRequired && <span className="qmLabelRequired" title="Required field">*</span>}
-    </label>
+      {text}{isRequired && (
+        <Text
+          className="qmLabelRequired"
+          title="Required field"
+          text="*"
+          isBold
+          isSmaller
+        />
+      )}
+    </Text>
   )
 }
 

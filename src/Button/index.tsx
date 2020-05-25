@@ -16,6 +16,7 @@ import React, {
 import { DynamicProps } from "../lib/helperTypes"
 import { buildClassNames, mergeRefs } from "../lib/helpers"
 
+import Text from "../Text"
 import Spinner from "../Spinner"
 
 export interface ButtonProps {
@@ -91,10 +92,9 @@ const Button = forwardRef(function ({
   dynamicProps.className = `qmButtonContainer ${containerClasses} ${className || ""}`
 
   const content = (
-    <span className="qmButtonContent">
-      {text}
+    <Text className="qmButtonContent" text={text}>
       {children}
-    </span>
+    </Text>
   )
 
   const spinner = !isProcessing ? null : (

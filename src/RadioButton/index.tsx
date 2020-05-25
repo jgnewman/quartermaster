@@ -13,6 +13,7 @@ import React, {
 
 import { DynamicProps } from "../lib/helperTypes"
 
+import Text from "../Text"
 import Dot from "../icons/Dot"
 
 import {
@@ -124,11 +125,12 @@ const RadioButton = forwardRef(function ({
           </span>
 
           {label && (
-            <label
+            <Text
               className={`qmRadioLabel ${labelClasses}`}
+              tag="label"
               {...labelProps}>
               {label}
-            </label>
+            </Text>
           )}
 
         </span>
