@@ -6,6 +6,8 @@ import React, {
 let chart: HTMLElement | null = null
 let text: HTMLElement | null = null
 const bars: HTMLElement[] = []
+let meanCounter = 0
+let meanPoints = 0
 
 const BEST = "#52c02c"
 const BETTER = "#9cd426"
@@ -49,31 +51,43 @@ function addBar(fps: number) {
   }
 }
 
+function updateAverage(fps: number) {
+  if (text) {
+    meanPoints += 1
+    meanCounter += fps
+    if (meanPoints >= 10) {
+      text.innerHTML = Math.round(meanCounter / meanPoints) + ""
+      addBar(fps)
+      meanPoints = 0
+      meanCounter = 0
+    }
+  }
+}
+
 function FPSChart() {
 
   useEffect(() => {
     chart = document.querySelector("#fpschart")
     text = document.querySelector("#fpstext")
-    const times: number[] = []
-    let fps
 
-    function refreshLoop() {
-      window.requestAnimationFrame(() => {
-        const now = performance.now()
-        while (times.length > 0 && times[0] <= now - 1000) {
-          times.shift()
-        }
-        times.push(now)
-        fps = times.length
-        addBar(fps)
-        if (text) {
-          text.innerHTML = fps + ""
-        }
-        refreshLoop()
-      })
+    let then = Date.now() / 1000 // get time in seconds
+    function refresh() {
+      const now = Date.now() / 1000 // get time in seconds
+
+      // compute time since last frame
+      const elapsedTime = now - then
+      then = now
+
+      // compute fps
+      if (elapsedTime > 0) {
+        const fps = Math.round(1 / elapsedTime)
+        updateAverage(fps)
+      }
+
+      requestAnimationFrame(refresh)
     }
 
-    refreshLoop()
+    refresh()
   }, [])
 
   return (
