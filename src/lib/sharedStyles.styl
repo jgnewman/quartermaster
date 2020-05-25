@@ -1,3 +1,14 @@
+
+
+REM = 16px
+DOUBLE_REM = REM * 2
+HALF_REM = REM / 2
+EIGHTH_REM = REM / 8
+QUARTER_REM = REM / 4
+THREE_QUARTER_REM = QUARTER_REM * 3
+THIRD_REM = REM / 3
+TWO_THIRD_REM = THIRD_REM * 2
+
 HOVER_LIGHTNESS = 15%
 
 WHITE = #ffffff
@@ -86,13 +97,13 @@ BASE_TRANSITION = all .2s ease
 BLANK_OUTLINE = 0 0 0 transparent
 LIFTED_SHADOW = 0 3px 15px BLACK_FADE_FEATHER
 ERR_OUTLINE = 0 0 0 2px ERROR
-SMALLER_FONT = 0.85rem
+SMALLER_FONT = REM * 0.85
 SUBTLE_SHADOW = 0 0 5px BLACK_FADE_FEATHER
 
-LARGER_ELEM_HEIGHT = 48px
-SMALLER_ELEM_HEIGHT = 32px
+LARGER_ELEM_HEIGHT = REM * 3
+SMALLER_ELEM_HEIGHT = REM * 2
 
-GUTTER = 1.5rem
+GUTTER = REM * 1.5
 HALF_GUTTER = GUTTER / 2
 THIRD_GUTTER = GUTTER / 3
 
@@ -136,3 +147,18 @@ borders(b, r = 0)
   box-sizing: border-box
   border: b
   border-radius: r
+
+plus(x, y)
+  x + y
+
+minus(x, y)
+  x - y
+
+times(x, y)
+  x * y
+
+div(x, y)
+  x / y
+
+neg(x)
+  times(x, -1)

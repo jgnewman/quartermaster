@@ -6,15 +6,15 @@
 
 .qmButtonContainer
   @extend $vertMiddle
-  borders(0, 10rem)
+  borders(0, 10 * REM)
 
   position: relative
 
   background: HIGHLIGHTS
-  padding: 0.5rem 2.5rem 0.5rem
+  padding: HALF_REM times(2.5, REM) HALF_REM
   height: LARGER_ELEM_HEIGHT
 
-  line-height: 1em
+  line-height: 1
   font-size: 90%
 
   transition: BASE_TRANSITION
@@ -25,19 +25,19 @@
   .qmButtonSpinner
     position: absolute
     top: 50%
-    left: 0.75rem
-    margin-top: -10px
+    left: THREE_QUARTER_REM
+    margin-top: neg(HALF_REM + EIGHTH_REM)
 
     border-color: WHITE_FADE_LIGHT
     border-top-color: WHITE
 
   &.isCompact
     height: SMALLER_ELEM_HEIGHT
-    padding: 0.5rem 2rem 0.5rem
+    padding: HALF_REM DOUBLE_REM HALF_REM
 
     .qmButtonSpinner
-      left: 0.5rem
-      margin-top: -8px
+      left: HALF_REM
+      margin-top: neg(HALF_REM)
 
   &.isEnabled
     cursor: pointer

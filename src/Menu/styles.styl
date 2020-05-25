@@ -3,12 +3,12 @@
 .qmMenuContainer
   display: block
   background: BASE_BG
-  padding: 1.25rem 0
+  padding: add(REM, QUARTER_REM) 0
   position: relative
   z-index: 3
 
   &.isCompact
-    padding: 0.75rem 0
+    padding: THREE_QUARTER_REM 0
 
   &.isLifted
     box-shadow: LIFTED_SHADOW
@@ -43,23 +43,23 @@
 
 .qmMenuLinkText
   display: block
-  max-width: calc(100% - 2rem)
+  max-width: calc(100% - DOUBLE_REM)
 
 .qmMenuSubmenu.qmMenuContainer:not(.isCollapsible)
   padding-top: 0
   padding-bottom: 0
   box-shadow: none
-  margin-left: 1rem
+  margin-left: REM
 
 .qmMenuSubmenu.canAnimate
   position: absolute
   width: 100%
 
   &.isMenuLeft
-    right: 1rem
+    right: REM
 
   &.isMenuRight
-    left: 1rem
+    left: REM
 
   &.isMenuTop
     bottom: 100%
@@ -75,11 +75,11 @@
 .qmIcon.qmMenuSubmenuIcon
   position: absolute
   top: 50%
-  right: 1.5rem
+  right: REM + HALF_REM
   transform: translateY(-50%)
 
   &.isCompact
-    right: 1rem
+    right: REM
 
 .qmMenuSubmenuIcon.isFlipped
   transform: translateY(-50%) rotate(180deg)

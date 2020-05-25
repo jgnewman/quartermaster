@@ -7,7 +7,7 @@
   line-height: 1
 
 .qmSelectClickableWrapper
-  borders(BASE_BORDER, 0.25rem)
+  borders(BASE_BORDER, QUARTER_REM)
   height: LARGER_ELEM_HEIGHT
 
   display: flex
@@ -92,16 +92,16 @@
   transform: translateY(-50%)
 
   max-width: 100%
-  padding: 0 0 0 0.75rem
+  padding: 0 0 0 THREE_QUARTER_REM
 
 .qmSelectMenu
   size(100%, auto)
-  borders(BASE_BORDER, 0.25rem)
+  borders(BASE_BORDER, QUARTER_REM)
 
   display: block
   position: absolute
   left: 0
-  top: calc(100% + 0.25rem)
+  top: calc(100% + QUARTER_REM)
   z-index: 2
 
   overflow: hidden
@@ -113,7 +113,7 @@
   background: BASE_BG
   color: BASE_FONT
   text-align: left
-  padding: 0.5rem 0.75rem 0.66rem
+  padding: HALF_REM THREE_QUARTER_REM TWO_THIRD_REM
   transition: BASE_TRANSITION
 
   outline: solid transparent !important

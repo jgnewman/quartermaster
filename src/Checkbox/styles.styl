@@ -2,13 +2,13 @@
 
 .qmCheckboxContainer
   @extend $vertMiddle
-  padding: 0 HALF_GUTTER 0.33rem 0
+  padding: 0 HALF_GUTTER THIRD_REM 0
 
 .qmCheckboxLabel
   @extend $vertMiddle
   color: BASE_FONT
   transition: BASE_TRANSITION
-  margin-right: 0.33rem
+  margin-right: THIRD_REM
 
   &.isDisabled
     color: BASE_FONT_DISABLED
@@ -24,11 +24,11 @@
   size(18px)
 
   position: relative
-  margin-right: 0.33rem
+  margin-right: THIRD_REM
 
 .qmCheckboxOverlay
   @extend $absFill
-  borders(BASE_BORDER, 0.25rem)
+  borders(BASE_BORDER, QUARTER_REM)
 
   background: BASE_BG
   outline: solid transparent !important

@@ -14,10 +14,10 @@
 
 @keyframes qmFadeInDown
   0%
-    transform: translateX(0) translateY(-2rem)
+    transform: translateX(0) translateY(neg(DOUBLE_REM))
     opacity: 0
   1%
-    transform: translateX(0) translateY(-2rem)
+    transform: translateX(0) translateY(neg(DOUBLE_REM))
     opacity: 0
   100%
     opacity: 1
@@ -25,10 +25,10 @@
 
 @keyframes qmFadeInUp
   0%
-    transform: translateX(0) translateY(2rem)
+    transform: translateX(0) translateY(DOUBLE_REM)
     opacity: 0
   1%
-    transform: translateX(0) translateY(2rem)
+    transform: translateX(0) translateY(DOUBLE_REM)
     opacity: 0
   100%
     opacity: 1
@@ -36,10 +36,10 @@
 
 @keyframes qmFadeInLeft
   0%
-    transform: translateX(-2rem) translateY(0)
+    transform: translateX(neg(DOUBLE_REM)) translateY(0)
     opacity: 0
   1%
-    transform: translateX(-2rem) translateY(0)
+    transform: translateX(neg(DOUBLE_REM)) translateY(0)
     opacity: 0
   100%
     opacity: 1
@@ -47,10 +47,10 @@
 
 @keyframes qmFadeInRight
   0%
-    transform: translateX(2rem) translateY(0)
+    transform: translateX(DOUBLE_REM) translateY(0)
     opacity: 0
   1%
-    transform: translateX(2rem) translateY(0)
+    transform: translateX(DOUBLE_REM) translateY(0)
     opacity: 0
   100%
     opacity: 1
@@ -74,10 +74,10 @@
     transform: translateX(0) translateY(0)
   99%
     opacity: 0
-    transform: translateX(0) translateY(2rem)
+    transform: translateX(0) translateY(DOUBLE_REM)
   100%
     opacity: 0
-    transform: translateX(0) translateY(2rem)
+    transform: translateX(0) translateY(DOUBLE_REM)
 
 @keyframes qmFadeOutUp
   0%
@@ -85,10 +85,10 @@
     transform: translateX(0) translateY(0)
   99%
     opacity: 0
-    transform: translateX(0) translateY(-2rem)
+    transform: translateX(0) translateY(neg(DOUBLE_REM))
   100%
     opacity: 0
-    transform: translateX(0) translateY(-2rem)
+    transform: translateX(0) translateY(neg(DOUBLE_REM))
 
 @keyframes qmFadeOutLeft
   0%
@@ -96,10 +96,10 @@
     transform: translateX(0) translateY(0)
   99%
     opacity: 0
-    transform: translateX(-2rem) translateY(0)
+    transform: translateX(neg(DOUBLE_REM)) translateY(0)
   100%
     opacity: 0
-    transform: translateX(-2rem) translateY(0)
+    transform: translateX(neg(DOUBLE_REM)) translateY(0)
 
 @keyframes qmFadeOutRight
   0%
@@ -107,10 +107,10 @@
     transform: translateX(0) translateY(0)
   99%
     opacity: 0
-    transform: translateX(2rem) translateY(0)
+    transform: translateX(DOUBLE_REM) translateY(0)
   100%
     opacity: 0
-    transform: translateX(2rem) translateY(0)
+    transform: translateX(DOUBLE_REM) translateY(0)
 
 .qmAnimationContainer
   &.isOverrideShow

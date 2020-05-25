@@ -6,13 +6,13 @@ SLIDER_PADDING = 3px
 
 .qmToggleContainer
   @extend $vertMiddle
-  padding: 0 HALF_GUTTER 0.33rem 0
+  padding: 0 HALF_GUTTER THIRD_REM 0
 
 .qmToggleLabel
   @extend $vertMiddle
   color: BASE_FONT
   transition: BASE_TRANSITION
-  margin-right: 0.33rem
+  margin-right: THIRD_REM
 
   &.isDisabled
     color: BASE_FONT_DISABLED
@@ -28,11 +28,11 @@ SLIDER_PADDING = 3px
   size(TOGGLE_WIDTH, 24px)
 
   position: relative
-  margin-right: 0.33rem
+  margin-right: THIRD_REM
 
 .qmToggleOverlay
   @extend $absFill
-  borders(0, 10rem)
+  borders(0, times(10, REM))
 
   background: BLACK_FADE_FLY
   outline: solid transparent !important

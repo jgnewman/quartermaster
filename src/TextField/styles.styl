@@ -11,8 +11,8 @@
   font-size: 85%
 
   position: absolute
-  right: 0.5rem
-  bottom: 8px
+  right: HALF_REM
+  bottom: HALF_REM
 
   &.isField
     bottom: 50%
@@ -28,7 +28,7 @@
 
 .qmCharLimitBar
   size(100%, 5px)
-  borders(0, 0 0 0.25rem 0.25rem)
+  borders(0, 0 0 QUARTER_REM QUARTER_REM)
 
   position: absolute
   left: 0
@@ -79,7 +79,7 @@
   display: block
   position: relative
   background: BASE_BG
-  border-radius: 0.25rem
+  border-radius: QUARTER_REM
 
   &.isDisable .qmCharLimitContainer
     opacity: 0.25
@@ -93,10 +93,10 @@
 
   color: ERROR
   font-size: 75%
-  padding: 0.25rem 0 0.33rem
+  padding: QUARTER_REM 0 THIRD_REM
 
 $commonFieldProps
-  borders(BASE_BORDER, 0.25rem)
+  borders(BASE_BORDER, QUARTER_REM)
 
   position: relative
   z-index: 2
@@ -132,14 +132,14 @@ $commonFieldProps
   @extend $commonFieldProps
 
   height: LARGER_ELEM_HEIGHT * 3
-  padding: 0.66rem 0.75rem
+  padding: TWO_THIRD_REM THREE_QUARTER_REM
   resize: auto
 
   &.isCompact
     height: SMALLER_ELEM_HEIGHT * 3
 
   &.hasCharLimit
-    padding-bottom: 1.75rem
+    padding-bottom: add(REM, THREE_QUARTER_REM)
 
   &.noResize
     resize: none
@@ -147,7 +147,7 @@ $commonFieldProps
 .qmTextFieldInput.isField
   @extend $commonFieldProps
 
-  padding: 0.1rem 0.75rem
+  padding: times(0.1, REM) THREE_QUARTER_REM
   height: LARGER_ELEM_HEIGHT
 
   &.isCompact

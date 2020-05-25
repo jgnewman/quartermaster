@@ -1,14 +1,14 @@
 @import "../lib/sharedStyles"
 
 .qmTagContainer
-  borders(BASE_BORDER, 0.25rem)
+  borders(BASE_BORDER, QUARTER_REM)
   display: block
-  padding: 0.2rem 0.5rem
+  padding: times(0.2, REM) HALF_REM
 
   line-height: 1
   text-transform: uppercase
   font-weight: bold
-  font-size: .75rem
+  font-size: THREE_QUARTER_REM
 
   &.isGray
     background: rgba(GRAY, 0.15)
