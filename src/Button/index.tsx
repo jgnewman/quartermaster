@@ -5,16 +5,20 @@ import React, {
   MouseEventHandler,
   MutableRefObject,
   ReactNode,
+  RefObject,
   forwardRef,
   memo,
   useCallback,
-  useMemo,
   useRef,
-  useState,
 } from "react"
 
 import { DynamicProps } from "../lib/helperTypes"
-import { buildClassNames, mergeRefs } from "../lib/helpers"
+import { buildClassNames } from "../lib/helpers"
+
+import {
+  useFocusHandlers,
+  useMergedRefs,
+} from "../lib/hooks"
 
 import Text from "../Text"
 import Spinner from "../Spinner"
@@ -32,6 +36,20 @@ export interface ButtonProps {
   text?: string
 }
 
+function useClickHandler(
+  buttonRef: RefObject<HTMLAnchorElement | HTMLButtonElement>,
+  clickHandler?: MouseEventHandler,
+) {
+  return useCallback(function (evt: MouseEvent) {
+    const { current: currentRef } = buttonRef
+    currentRef && currentRef.blur()
+    clickHandler && clickHandler(evt)
+  }, [
+    buttonRef,
+    clickHandler,
+  ])
+}
+
 const Button = forwardRef(function ({
   children,
   className,
@@ -45,23 +63,20 @@ const Button = forwardRef(function ({
   text,
 }: ButtonProps, ref: MutableRefObject<HTMLAnchorElement | HTMLButtonElement>) {
 
-  const [isFocused, setIsFocused] = useState(false)
-  const handleFocus = useCallback(() => setIsFocused(true), [setIsFocused])
-  const handleBlur = useCallback(() => setIsFocused(false), [setIsFocused])
-
-  const buttonRef = useRef<HTMLAnchorElement | HTMLButtonElement>(null)
-  const mergedRef = useMemo(() => mergeRefs(ref, buttonRef), [ref, buttonRef])
-
-  const handleClick = useCallback((evt: MouseEvent) => {
-    const { current: currentRef } = buttonRef
-    currentRef && currentRef.blur()
-    clickHandler && clickHandler(evt)
-  }, [buttonRef, clickHandler])
-
   const isEnabled = !isDisabled && !isProcessing
   const isNegative = highlight === "negative"
   const isPositive = highlight === "positive"
   const shouldApplyClickHandler = !!clickHandler && !isDisabled && !isProcessing
+
+  const buttonRef = useRef<HTMLAnchorElement | HTMLButtonElement>(null)
+  const mergedRef = useMergedRefs(ref, buttonRef)
+  const handleClick = useClickHandler(buttonRef, clickHandler)
+
+  const {
+    isFocused,
+    handleFocus,
+    handleBlur,
+  } = useFocusHandlers()
 
   const dynamicProps: DynamicProps = {
     ref: mergedRef,

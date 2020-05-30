@@ -24,24 +24,16 @@ export interface AnimationProps {
   type: "fadeIn" | "fadeOut"
 }
 
-const Animation = forwardRef(function ({
-  children,
-  className,
-  displayNoneOnHide,
-  direction,
-  duration = DEFAULT_DURATION,
-  override,
-  style,
-  type,
-}: AnimationProps, ref: Ref<HTMLDivElement>) {
+function useDetachedElements(
+  displayNoneOnHide: boolean,
+  duration: number,
+  isOverrideHide: boolean,
+  type: AnimationProps['type'],
+): boolean {
 
-  const hasOverride = typeof override === "string"
-  const isOverrideHide = override === "hide"
-  const hasDirection = !!direction
   const [isDetached, setDetached] = useState(isOverrideHide)
 
-  useEffect(() => {
-
+  useEffect(function () {
     if (!isDetached && displayNoneOnHide) {
       if (isOverrideHide) {
         setDetached(true)
@@ -53,15 +45,39 @@ const Animation = forwardRef(function ({
     if (isDetached && (!displayNoneOnHide || type === "fadeIn")) {
       setDetached(false)
     }
-
   }, [
-    isDetached,
     displayNoneOnHide,
+    duration,
+    isDetached,
     isOverrideHide,
     setDetached,
     type,
-    duration,
   ])
+
+  return isDetached
+}
+
+const Animation = forwardRef(function ({
+  children,
+  className,
+  displayNoneOnHide = false,
+  direction,
+  duration = DEFAULT_DURATION,
+  override,
+  style,
+  type,
+}: AnimationProps, ref: Ref<HTMLDivElement>) {
+
+  const hasOverride = typeof override === "string"
+  const isOverrideHide = override === "hide"
+  const hasDirection = !!direction
+
+  const isDetached = useDetachedElements(
+    displayNoneOnHide,
+    duration,
+    isOverrideHide,
+    type,
+  )
 
   const animClasses = buildClassNames({
     isAnimating: !hasOverride,

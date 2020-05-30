@@ -1,6 +1,9 @@
 import "./styles.styl"
 import React, {
+  Dispatch,
   MouseEvent,
+  RefObject,
+  SetStateAction,
   memo,
   useCallback,
   useEffect,
@@ -43,6 +46,27 @@ interface SubmenuProps {
   type: "submenu"
 }
 
+function useSubmenuClickHandler(
+  isOpen: boolean,
+  menuKey: string | number,
+  menuState: MenuState,
+  setMenuState: SubmenuProps['setMenuState'],
+) {
+
+  return useCallback(function (evt: MouseEvent) {
+    evt.stopPropagation()
+    setMenuState({ ...menuState, [menuKey]: {
+      isOpen: !isOpen,
+      hasToggled: true,
+    }})
+  }, [
+    isOpen,
+    menuKey,
+    menuState,
+    setMenuState,
+  ])
+}
+
 const Submenu = memo(function ({
   animate,
   childIsLifted,
@@ -66,18 +90,12 @@ const Submenu = memo(function ({
   const smallPad = isCompact ? "xs" : "s"
   const largePad = isCompact ? "m" : "l"
 
-  const stopper = (evt: MouseEvent) => evt.stopPropagation()
-
-  const clickHandler = !isCollapsible ? stopper : (evt: MouseEvent) => {
-    stopper(evt)
-    setMenuState({
-      ...menuState,
-      [menuKey]: {
-        isOpen: !isOpen,
-        hasToggled: true,
-      },
-    })
-  }
+  const clickHandler = useSubmenuClickHandler(
+    isOpen,
+    menuKey,
+    menuState,
+    setMenuState,
+  )
 
   const animProps: boolean | AnimationProps = animate === true ? true : !animate ? false : {
     type: isOpen ? "fadeIn" : "fadeOut",
@@ -182,21 +200,12 @@ export interface MenuProps {
   minWidth?: string
 }
 
-function Menu({
-  animate,
-  className,
-  data,
-  isCompact,
-  isLifted,
-  isOpen,
-  minWidth,
-  maxWidth,
-}: MenuProps) {
-
-  const menuRef = useRef<HTMLDivElement>(null)
-  const [state, setState] = useState(getInitialSubmenuState(data))
-
-  const closeMenuOnClickAway = useCallback((evt: any) => {
+function useCloseMenuOnClickAway(
+  menuRef: RefObject<HTMLDivElement>,
+  setState: Dispatch<SetStateAction<MenuState>>,
+  state: MenuState,
+) {
+  const closeOnClickAway = useCallback(function (evt: any) {
     const { current: currentMenuRef } = menuRef
     const refExists = !!currentMenuRef
     const refInPath = refExists && evt.path.includes(currentMenuRef)
@@ -215,12 +224,39 @@ function Menu({
     })
 
     setState({ ...state, ...newState })
-  }, [menuRef, state, setState])
+  }, [
+    menuRef,
+    state,
+    setState,
+  ])
 
-  useEffect(() => {
-    document.addEventListener("click", closeMenuOnClickAway)
-    return () => { document.removeEventListener("click", closeMenuOnClickAway) }
-  }, [closeMenuOnClickAway])
+  useEffect(function () {
+    document.addEventListener("click", closeOnClickAway)
+    return function () {
+      document.removeEventListener("click", closeOnClickAway)
+    }
+  }, [closeOnClickAway])
+}
+
+function Menu({
+  animate,
+  className,
+  data,
+  isCompact,
+  isLifted,
+  isOpen,
+  minWidth,
+  maxWidth,
+}: MenuProps) {
+
+  const menuRef = useRef<HTMLDivElement>(null)
+  const [state, setState] = useState(getInitialSubmenuState(data))
+
+  useCloseMenuOnClickAway(
+    menuRef,
+    setState,
+    state,
+  )
 
   const animProps = genAnimProps(animate, isOpen)
 

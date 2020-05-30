@@ -5,23 +5,24 @@ import React, {
   MutableRefObject,
   forwardRef,
   memo,
-  useCallback,
-  useMemo,
   useRef,
-  useState,
 } from "react"
 
 import { DynamicProps } from "../lib/helperTypes"
 
-import Text from "../Text"
-import Dot from "../icons/Dot"
-
 import {
   buildClassNames,
   noopEvtHandler,
-  manuallyTickRadioButton,
-  mergeRefs,
 } from "../lib/helpers"
+
+import {
+  useFocusHandlers,
+  useInputChecker,
+  useMergedRefs,
+} from "../lib/hooks"
+
+import Text from "../Text"
+import Dot from "../icons/Dot"
 
 export interface RadioButtonProps {
   changeHandler?: ChangeEventHandler
@@ -48,16 +49,14 @@ const RadioButton = forwardRef(function ({
 }: RadioButtonProps, ref: MutableRefObject<HTMLInputElement>) {
 
   const inputRef = useRef<HTMLInputElement>(null)
-  const mergedRef = useMemo(() => mergeRefs(ref, inputRef), [ref, inputRef])
+  const mergedRef = useMergedRefs(ref, inputRef)
+  const handleOverlayClick = useInputChecker(inputRef)
 
-  const handleOverlayClick = useCallback(() => {
-    const { current: currentInput } = inputRef
-    currentInput && manuallyTickRadioButton(currentInput)
-  }, [inputRef])
-
-  const [isFocused, setIsFocused] = useState(false)
-  const handleFocus = useCallback(() => setIsFocused(true), [setIsFocused])
-  const handleBlur = useCallback(() => setIsFocused(false), [setIsFocused])
+  const {
+    isFocused,
+    handleFocus,
+    handleBlur,
+  } = useFocusHandlers()
 
   const isEnabled = !isDisabled
 

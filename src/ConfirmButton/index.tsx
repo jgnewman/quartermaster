@@ -9,9 +9,11 @@ import React, {
   memo,
   useCallback,
   useState,
+  useEffect,
 } from "react"
 
-import { noopEvtHandler, usePrevious } from "../lib/helpers"
+import { noopEvtHandler } from "../lib/helpers"
+import { usePrevious } from "../lib/hooks"
 
 import Align from "../Align"
 import Button, { ButtonProps } from "../Button"
@@ -28,6 +30,69 @@ export interface ConfirmButtonProps extends Exclude<ButtonProps, "highlight"> {
   useCompactModalButtons?: boolean
 }
 
+function useModalRenderLogic(skipConfirmation: boolean): boolean {
+  const [shouldRenderModal, setShouldRenderModal] = useState(!skipConfirmation)
+  const wasSkipConfirmation = usePrevious(skipConfirmation)
+
+  useEffect(function () {
+    if (!wasSkipConfirmation && skipConfirmation && shouldRenderModal) {
+      setTimeout(() => setShouldRenderModal(false), 500)
+    }
+
+    if (wasSkipConfirmation && !skipConfirmation && !shouldRenderModal) {
+      setShouldRenderModal(true)
+    }
+  }, [
+    wasSkipConfirmation,
+    skipConfirmation,
+    shouldRenderModal,
+  ])
+
+  return shouldRenderModal
+}
+
+function useOpenStateHandlers(
+  skipConfirmation: boolean,
+  clickHandler: MouseEventHandler | undefined,
+  postCancelHook: MouseEventHandler | undefined,
+) {
+  const [isOpen, setOpen] = useState(false)
+
+  const handleClick = useCallback(function (evt: MouseEvent) {
+    evt.preventDefault()
+    skipConfirmation ? (clickHandler && clickHandler(evt)) : setOpen(true)
+  }, [
+    clickHandler,
+    skipConfirmation,
+    setOpen,
+  ])
+
+  const handleContinue = useCallback(function (evt: MouseEvent) {
+    evt.preventDefault()
+    setOpen(false)
+    return (clickHandler || noopEvtHandler)(evt)
+  }, [
+    clickHandler,
+    setOpen,
+  ])
+
+  const handleCancel = useCallback(function (evt: MouseEvent) {
+    evt.preventDefault()
+    setOpen(false)
+    return (postCancelHook || noopEvtHandler)(evt)
+  }, [
+    setOpen,
+    postCancelHook,
+  ])
+
+  return {
+    isOpen,
+    handleClick,
+    handleContinue,
+    handleCancel,
+  }
+}
+
 const ConfirmButton = forwardRef(function ({
   cancelText,
   children,
@@ -36,44 +101,20 @@ const ConfirmButton = forwardRef(function ({
   continueText,
   disableHighlights,
   postCancelHook,
-  skipConfirmation,
+  skipConfirmation = false,
   useCompactModalButtons,
   ...rest
 }: ConfirmButtonProps, ref: MutableRefObject<HTMLAnchorElement | HTMLButtonElement>) {
 
-  const [renderModal, setRenderModal] = useState(!skipConfirmation)
-  const [isOpen, setOpen] = useState(false)
-  const wasSkipConfirmation = usePrevious(skipConfirmation)
 
-  if (!wasSkipConfirmation && skipConfirmation && renderModal) {
-    setTimeout(() => setRenderModal(false), 500)
-  }
+  const {
+    isOpen,
+    handleClick,
+    handleContinue,
+    handleCancel,
+  } = useOpenStateHandlers(skipConfirmation, clickHandler, postCancelHook)
 
-  if (wasSkipConfirmation && !skipConfirmation && !renderModal) {
-    setRenderModal(true)
-  }
-
-  const handleClick = useCallback((evt: MouseEvent) => {
-    evt.preventDefault()
-
-    if (skipConfirmation) {
-      clickHandler && clickHandler(evt)
-    } else {
-      setOpen(true)
-    }
-  }, [skipConfirmation, clickHandler, setOpen])
-
-  const handleContinue = useCallback((evt: MouseEvent) => {
-    evt.preventDefault()
-    setOpen(false)
-    return (clickHandler || noopEvtHandler)(evt)
-  }, [clickHandler, setOpen])
-
-  const handleCancel = useCallback((evt: MouseEvent) => {
-    evt.preventDefault()
-    setOpen(false)
-    return (postCancelHook || noopEvtHandler)(evt)
-  }, [postCancelHook, setOpen])
+  const shouldRenderModal = useModalRenderLogic(skipConfirmation)
 
   const buttonProps = {
     ...rest,
@@ -98,7 +139,7 @@ const ConfirmButton = forwardRef(function ({
         {children}
       </Button>
 
-      {renderModal && (
+      {shouldRenderModal && (
         <Modal
           className="qmConfButtonModal"
           hideCloseButton={true}

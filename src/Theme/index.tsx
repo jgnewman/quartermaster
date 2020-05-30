@@ -21,7 +21,9 @@
  * />
  */
 import React, {
+  Dispatch,
   ReactNode,
+  SetStateAction,
   memo,
   useCallback,
   useEffect,
@@ -30,7 +32,7 @@ import React, {
   useState,
 } from "react"
 
-import { usePrevious } from "../lib/helpers"
+import { usePrevious } from "../lib/hooks"
 
 interface ValueSpec {
   [key: string]: string
@@ -77,17 +79,15 @@ export interface ThemeProps {
   data: CSSData | null
 }
 
-function Theme({ children, data }: ThemeProps) {
+function useStyleUpdater(
+  data: CSSData | null,
+  prevData: CSSData | null,
+  prevStyles: string,
+  setPrevStyles: Dispatch<SetStateAction<string>>,
+  tag: HTMLStyleElement,
+) {
 
-  const prevData = usePrevious(data)
-  const { current: id } = useRef<string>(`qm-${String(Date.now()).slice(9)}-${String(Math.random()).slice(2, 6)}`)
-
-  const [stylesInjected, setStylesInjected] = useState(false)
-  const [prevStyles, setPrevStyles] = useState("")
-
-  const tag: HTMLStyleElement = useMemo(() => createStyleTag(id), [id])
-
-  const updateStyles = useCallback(() => {
+  return useCallback(function () {
     if (data === prevData) {
       return
     }
@@ -106,19 +106,58 @@ function Theme({ children, data }: ThemeProps) {
     tag,
   ])
 
+}
+
+function useKeepStylesUpdated(
+  data: CSSData | null,
+  updateStyles: ReturnType<typeof useStyleUpdater>,
+) {
+  useEffect(function () {
+    updateStyles()
+  }, [data, updateStyles])
+}
+
+function useRemoveStylesOnTagChange(tag: HTMLStyleElement) {
+  const prevTag = usePrevious(tag)
+
+  useEffect(function () {
+    return function () {
+      if (prevTag && prevTag !== tag) {
+        removeStyleTag(prevTag)
+      }
+    }
+  }, [prevTag, tag])
+}
+
+function Theme({ children, data }: ThemeProps) {
+
+  const prevData = usePrevious(data)
+  const { current: id } = useRef(`qm-${String(Date.now()).slice(9)}-${String(Math.random()).slice(2, 6)}`)
+  const tag: HTMLStyleElement = useMemo(() => createStyleTag(id), [id])
+
+  const [stylesInjected, setStylesInjected] = useState(false)
+  const [prevStyles, setPrevStyles] = useState("")
+
+  const updateStyles = useStyleUpdater(
+    data,
+    prevData,
+    prevStyles,
+    setPrevStyles,
+    tag,
+  )
+
   if (!stylesInjected) {
     document.head.appendChild(tag)
     updateStyles()
     setStylesInjected(true)
   }
 
-  useEffect(() => {
-    updateStyles()
-  }, [data, updateStyles])
+  useKeepStylesUpdated(
+    data,
+    updateStyles,
+  )
 
-  useEffect(() => () => {
-    removeStyleTag(tag)
-  }, [tag])
+  useRemoveStylesOnTagChange(tag)
 
   if (!stylesInjected) {
     return null

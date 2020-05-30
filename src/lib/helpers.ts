@@ -1,13 +1,6 @@
 import {
-  MutableRefObject,
-  useEffect,
-  useRef,
-} from "react"
-
-import {
   DynamicProps,
   InputElem,
-  RefFunction,
 } from "./helperTypes"
 
 export function noopEvtHandler() { return }
@@ -72,52 +65,5 @@ export function enableScrolling() {
     body.style.height = originalBodyHeight
     body.style.overflow = originalBodyOverflow
     scrollingEnabled = true
-  }
-}
-
-export function usePrevious(value: any) {
-  const ref = useRef()
-  useEffect(() => { ref.current = value })
-  return ref.current
-}
-
-type RefArray<T> = T[]
-type RefArrayAdder<T> = (item: T) => void
-type RefArrayResetter = () => void
-
-export function useRefArray<T>(value: T[] = []): [RefArray<T>, RefArrayAdder<T>, RefArrayResetter] {
-  const ref = useRef<T[]>(value)
-  const shouldReset = useRef<boolean>(false)
-  const toAdd: T[] = []
-
-  useEffect(() => {
-    if (toAdd.length) {
-      ref.current.push(...toAdd)
-      toAdd.length = 0
-    }
-
-    if (shouldReset.current) {
-      toAdd.length = 0
-      ref.current = []
-      shouldReset.current = false
-    }
-  })
-
-  return [
-    ref.current,
-    (item: T) => { toAdd.push(item) }, // Add an item
-    () => { shouldReset.current = true }, // Reset items
-  ]
-}
-
-type NullableRefObject = MutableRefObject<any> | null
-
-export function mergeRefs(...refs: NullableRefObject[]): RefFunction {
-  return (value: HTMLElement | null) => {
-    refs.forEach(ref => {
-      if (ref) {
-        ref.current = value
-      }
-    })
   }
 }

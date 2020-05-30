@@ -15,6 +15,7 @@ function ThemeExtension({
   data,
   children,
 }: ThemeExtensionProps) {
+
   return (
     <Theme data={data}>
       <Theme data={base}>

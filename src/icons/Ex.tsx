@@ -12,11 +12,11 @@ const Ex = forwardRef(function (props: IconProps, ref: Ref<SVGSVGElement>) {
     <IconWrapper ref={ref} title={props.title || "Ex icon"} {...props}>
       <path
         d="M4,0.464466094 L4,7.53553391"
-        transform="translate(4.000000, 4.000000) rotate(45.000000) translate(-4.000000, -4.000000) ">
+        transform="translate(4.000000, 4.000000) rotate(45.000000) translate(-4.000000, -4.000000)">
       </path>
       <path
         d="M4,0.464466094 L4,7.53553391"
-        transform="translate(4.000000, 4.000000) rotate(-45.000000) translate(-4.000000, -4.000000) ">
+        transform="translate(4.000000, 4.000000) rotate(-45.000000) translate(-4.000000, -4.000000)">
       </path>
     </IconWrapper>
   )

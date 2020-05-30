@@ -1,12 +1,18 @@
 import "./styles.styl"
-import React, { memo } from "react"
+
+import React, {
+  memo,
+  useMemo,
+} from "react"
 
 import { DynamicProps } from "../lib/helperTypes"
 import { buildClassNames } from "../lib/helpers"
 
-function getInitials(rawName: string) {
-  const [chunk1, chunk2]: string[] = rawName.split(/\s+/)
-  return `${chunk1[0]?.toUpperCase() || ""}${(chunk2 ? chunk2[0] : chunk1[1])?.toUpperCase() || ""}`
+function useInitials(rawName: string) {
+  return useMemo(function () {
+    const [chunk1, chunk2]: string[] = rawName.split(/\s+/)
+    return `${chunk1[0]?.toUpperCase() || ""}${(chunk2 ? chunk2[0] : chunk1[1])?.toUpperCase() || ""}`
+  }, [rawName])
 }
 
 export interface AvatarProps {
@@ -33,12 +39,13 @@ function Avatar({
     style.backgroundImage = `url(${url})`
   }
 
+  const initials = useInitials(name)
   const compactClass = buildClassNames({ isCompact })
 
   return (
     <div className={`qmAvatarContainer ${compactClass} ${className || ""}`}>
       <span className="qmAvatarContent">
-        <span className="qmAvatarInitials">{ getInitials(name) }</span>
+        <span className="qmAvatarInitials">{ initials }</span>
         {url && <span className="qmAvatarImg" style={style}></span>}
       </span>
       {showActivity && <span className={`qmAvatarIndicator ${compactClass} ${isActive ? "isActive" : ""}`}></span>}

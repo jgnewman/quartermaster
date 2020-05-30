@@ -5,23 +5,24 @@ import React, {
   MutableRefObject,
   forwardRef,
   memo,
-  useCallback,
-  useMemo,
   useRef,
-  useState,
 } from "react"
 
 import { DynamicProps } from "../lib/helperTypes"
 
-import Text from "../Text"
-import Checkmark from "../icons/Checkmark"
-
 import {
   buildClassNames,
   noopEvtHandler,
-  manuallyTickCheckbox,
-  mergeRefs,
 } from "../lib/helpers"
+
+import {
+  useFocusHandlers,
+  useInputChecker,
+  useMergedRefs,
+} from  "../lib/hooks"
+
+import Text from "../Text"
+import Checkmark from "../icons/Checkmark"
 
 export interface CheckboxProps {
   changeHandler?: ChangeEventHandler
@@ -46,16 +47,14 @@ const Checkbox = forwardRef(function ({
 }: CheckboxProps, ref: MutableRefObject<HTMLInputElement>) {
 
   const inputRef = useRef<HTMLInputElement>(null)
-  const mergedRef = useMemo(() => mergeRefs(ref, inputRef), [ref, inputRef])
+  const mergedRef = useMergedRefs(ref, inputRef)
+  const handleOverlayClick = useInputChecker(inputRef)
 
-  const handleOverlayClick = useCallback(() => {
-    const { current: currentInput } = inputRef
-    currentInput && manuallyTickCheckbox(currentInput)
-  }, [inputRef])
-
-  const [isFocused, setIsFocused] = useState(false)
-  const handleFocus = useCallback(() => setIsFocused(true), [setIsFocused])
-  const handleBlur = useCallback(() => setIsFocused(false), [setIsFocused])
+  const {
+    isFocused,
+    handleFocus,
+    handleBlur,
+  } = useFocusHandlers()
 
   const isEnabled = !isDisabled
 

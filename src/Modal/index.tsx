@@ -4,16 +4,14 @@ import React, {
   MouseEventHandler,
   ReactNode,
   memo,
-  useCallback,
-  useEffect,
 } from "react"
 
 import {
   buildClassNames,
-  disableScrolling,
-  enableScrolling,
   noopEvtHandler,
 } from "../lib/helpers"
+
+import { useScrollHandling } from "../lib/hooks"
 
 import IconButton from "../IconButton"
 import Ex from "../icons/Ex"
@@ -34,16 +32,9 @@ function Modal({
   isOpen,
 }: ModalProps) {
 
-  const handleScrolling = useCallback(() => {
-    isOpen ? disableScrolling() : enableScrolling()
-  }, [isOpen])
-
-  useEffect(() => {
-    handleScrolling()
-    return () => { handleScrolling() }
-  }, [handleScrolling])
-
   const isClosed = !isOpen
+
+  useScrollHandling(isOpen)
 
   const containerClasses = buildClassNames({
     isClosed,

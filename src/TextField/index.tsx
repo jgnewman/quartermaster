@@ -1,4 +1,5 @@
 import "./styles.styl"
+
 import React, {
   ChangeEvent,
   ChangeEventHandler,
@@ -11,9 +12,7 @@ import React, {
   memo,
   useCallback,
   useEffect,
-  useMemo,
   useRef,
-  useState,
 } from "react"
 
 import {
@@ -24,14 +23,18 @@ import {
 import {
   manuallySetFieldValue,
   buildClassNames,
-  mergeRefs,
-  usePrevious,
 } from "../lib/helpers"
+
+import {
+  useFocusHandlers,
+  useMergedRefs,
+  usePrevious,
+} from "../lib/hooks"
 
 import Label from "../Label"
 import CharLimitCounter from "./CharLimitCounter"
 
-function scrollToBottom(type = "", inputRef: RefObject<HTMLInputElement | HTMLTextAreaElement>) {
+function scrollToEnd(type = "", inputRef: RefObject<HTMLInputElement | HTMLTextAreaElement>) {
   const { current: currentInputRef } = inputRef
   if (currentInputRef) {
     if (type === "textarea") {
@@ -69,69 +72,56 @@ export interface TextFieldProps {
   value?: string
 }
 
-const TextField = forwardRef(function ({
-  changeHandler,
-  charLimit,
-  charLimitIsMinimum,
-  children,
-  className,
-  dangerouslyAutoTruncateLimitBreakingValues,
-  defaultValue,
-  enableTextAreaResize,
-  errorText,
-  hasError,
-  hideCharLimitProgress,
-  hideCharLimitText,
-  id,
-  ignoreLastPass,
-  isCompact,
-  isDisabled,
-  isRequired,
-  keyUpHandler,
-  label,
-  placeholder,
-  preventInputAtLimit,
-  tabIndex,
-  type,
-  value,
-}: TextFieldProps, ref: MutableRefObject<HTMLInputElement | HTMLTextAreaElement>) {
-
-  const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null)
-  const mergedRef = useMemo(() => mergeRefs(ref, inputRef), [ref, inputRef])
-
-  const prevVal = usePrevious(value)
-  const [isFocused, setIsFocused] = useState(false)
-  const handleFocus = useCallback(() => setIsFocused(true), [setIsFocused])
-  const handleBlur = useCallback(() => setIsFocused(false), [setIsFocused])
-
-  const shouldPreventInput = useCallback((evtTarget: InputElem) => {
-    const curVal = value || ""
+function usePreventInputDecision(
+  charLimit: number | undefined,
+  charLimitIsMinimum: boolean,
+  preventInputAtLimit: boolean,
+  value = "",
+) {
+  return useCallback(function (evtTarget: InputElem) {
     const newValue = evtTarget.value
 
     return typeof charLimit !== "undefined"
       && !charLimitIsMinimum
       && preventInputAtLimit
-      && curVal.length >= charLimit
-      && newValue.length > curVal.length
-  }, [charLimit, charLimitIsMinimum, preventInputAtLimit, value])
+      && value.length >= charLimit
+      && newValue.length > value.length
 
-  const maybeTruncateValue = useCallback(() => {
+  }, [
+    charLimit,
+    charLimitIsMinimum,
+    preventInputAtLimit,
+    value,
+  ])
+}
+
+function useTruncateValueDecision(
+  inputRef: RefObject<HTMLInputElement | HTMLTextAreaElement>,
+  charLimit: number | undefined,
+  dangerouslyAutoTruncateLimitBreakingValues: boolean,
+  charLimitIsMinimum: boolean,
+  preventInputAtLimit: boolean,
+  type: string | undefined,
+  value = "",
+) {
+  return useCallback(function () {
+
     const { current: currentInputRef } = inputRef
-    const valueStr = value || ""
 
     const shouldAutoTrunc = charLimit &&
                             !charLimitIsMinimum &&
                             preventInputAtLimit &&
                             dangerouslyAutoTruncateLimitBreakingValues &&
-                            valueStr.length > (charLimit || 0)
+                            value.length > (charLimit || 0)
 
     // In case a value is passed in that is greater than our limit,
     // we want to trigger a keyup/change event with a truncated value.
     if (currentInputRef && shouldAutoTrunc) {
-      const newValue = valueStr.slice(0, charLimit)
+      const newValue = value.slice(0, charLimit)
       const isTextArea = type === "textarea"
       manuallySetFieldValue(currentInputRef, newValue, isTextArea, ["keyup", "change"])
     }
+
   }, [
     inputRef,
     charLimit,
@@ -141,8 +131,16 @@ const TextField = forwardRef(function ({
     type,
     value,
   ])
+}
 
-  const handleChange = useCallback((evt: ChangeEvent) => {
+function useChangeHandler(
+  type: string | undefined,
+  changeHandler: TextFieldProps['changeHandler'],
+  inputRef: RefObject<HTMLInputElement | HTMLTextAreaElement>,
+  shouldPreventInput: ReturnType<typeof usePreventInputDecision>,
+) {
+
+  return useCallback(function (evt: ChangeEvent) {
     const { current: currentInputRef } = inputRef
     const target = evt.target as InputElem
     const preventInput = shouldPreventInput(target)
@@ -158,9 +156,21 @@ const TextField = forwardRef(function ({
     if (changeHandler) {
       changeHandler(evt)
     }
-  }, [type, changeHandler, inputRef, shouldPreventInput])
+  }, [
+    type,
+    changeHandler,
+    inputRef,
+    shouldPreventInput,
+  ])
 
-  const handleKeyUp = useCallback((evt: KeyboardEvent) => {
+}
+
+function useKeyUpHandler(
+  keyUpHandler: TextFieldProps['keyUpHandler'],
+  shouldPreventInput: ReturnType<typeof usePreventInputDecision>,
+) {
+
+  return useCallback(function (evt: KeyboardEvent) {
     if (keyUpHandler) {
       if (shouldPreventInput(evt.target as InputElem)) {
         return
@@ -168,12 +178,109 @@ const TextField = forwardRef(function ({
 
       keyUpHandler(evt)
     }
-  }, [keyUpHandler, shouldPreventInput])
 
-  useEffect(() => {
+  }, [
+    keyUpHandler,
+    shouldPreventInput,
+  ])
+}
+
+function useCleanupField(
+  inputRef: RefObject<HTMLInputElement | HTMLTextAreaElement>,
+  maybeTruncateValue: ReturnType<typeof useTruncateValueDecision>,
+  prevVal: string | undefined,
+  type: string | undefined,
+  value: string | undefined,
+) {
+
+  useEffect(function () {
     maybeTruncateValue()
-    prevVal !== value && scrollToBottom(type, inputRef)
-  }, [type, prevVal, value, maybeTruncateValue])
+    prevVal !== value && scrollToEnd(type, inputRef)
+
+  }, [
+    inputRef,
+    maybeTruncateValue,
+    prevVal,
+    type,
+    value,
+  ])
+
+}
+
+const TextField = forwardRef(function ({
+  changeHandler,
+  charLimit,
+  charLimitIsMinimum = false,
+  children,
+  className,
+  dangerouslyAutoTruncateLimitBreakingValues = false,
+  defaultValue,
+  enableTextAreaResize,
+  errorText,
+  hasError,
+  hideCharLimitProgress,
+  hideCharLimitText,
+  id,
+  ignoreLastPass,
+  isCompact,
+  isDisabled,
+  isRequired,
+  keyUpHandler,
+  label,
+  placeholder,
+  preventInputAtLimit = false,
+  tabIndex,
+  type,
+  value,
+}: TextFieldProps, ref: MutableRefObject<HTMLInputElement | HTMLTextAreaElement>) {
+
+  const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null)
+  const mergedRef = useMergedRefs(ref, inputRef)
+  const prevVal = usePrevious(value)
+
+  const {
+    isFocused,
+    handleFocus,
+    handleBlur,
+  } = useFocusHandlers()
+
+  const shouldPreventInput = usePreventInputDecision(
+    charLimit,
+    charLimitIsMinimum,
+    preventInputAtLimit,
+    value,
+  )
+
+  const maybeTruncateValue = useTruncateValueDecision(
+    inputRef,
+    charLimit,
+    dangerouslyAutoTruncateLimitBreakingValues,
+    charLimitIsMinimum,
+    preventInputAtLimit,
+    type,
+    value,
+  )
+
+  const handleChange = useChangeHandler(
+    type,
+    changeHandler,
+    inputRef,
+    shouldPreventInput,
+  )
+
+  const handleKeyUp = useKeyUpHandler(
+    keyUpHandler,
+    shouldPreventInput,
+  )
+
+  useCleanupField(
+    inputRef,
+    maybeTruncateValue,
+    prevVal,
+    type,
+    value,
+  )
+
 
   const isTextArea = type === "textarea"
   const isEnabled = !isDisabled

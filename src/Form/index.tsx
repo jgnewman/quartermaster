@@ -29,32 +29,24 @@ export interface FormProps {
   initialState: SimpleObject
 }
 
-function Form({
-  children,
-  initialState,
-}: FormProps) {
-
+function useFormState(initialState: SimpleObject): FormUtils {
   const [state, setState] = useState({ ...initialState })
+  const formState = { ...state }
 
-  const setFormState: SetFormState = useCallback((vals) => {
+  function setFormStateCallback(vals: SimpleObject) {
     setState({ ...state, ...vals })
-  }, [state, setState])
+  }
 
-  const updateValueFor: UpdateValueFor = useCallback((name) => {
-    return (evt) => {
-      let val;
-
-      if (typeof evt === "string" || evt === null) {
-        val = evt
-      } else {
-        val = (evt.target as InputElem).value
-      }
-
+  function updateValueForCallback(name: string) {
+    return (evt: ChangeEvent | string | null) => {
+      const val = (typeof evt === "string" || evt === null)
+        ? evt
+        : (evt.target as InputElem).value
       setState({ ...state, [name]: val })
     }
-  }, [state, setState])
+  }
 
-  const toggleCheckedFor: ToggleCheckedFor = useCallback((name) => {
+  function toggleCheckedForCallback(name: string) {
     return () => {
       if (typeof state[name] !== "boolean") {
         throw new Error(`
@@ -63,7 +55,24 @@ function Form({
       }
       setState({ ...state, [name]: !state[name] })
     }
-  }, [state, setState])
+  }
+
+  const setFormState: SetFormState = useCallback(setFormStateCallback, [state, setState])
+  const updateValueFor: UpdateValueFor = useCallback(updateValueForCallback, [state, setState])
+  const toggleCheckedFor: ToggleCheckedFor = useCallback(toggleCheckedForCallback, [state, setState])
+
+  return {
+    formState,
+    setFormState,
+    updateValueFor,
+    toggleCheckedFor,
+  }
+}
+
+function Form({
+  children,
+  initialState,
+}: FormProps) {
 
   if (typeof children !== "function") {
     throw new Error("Quartermaster Form component must take a single function child.")
@@ -71,12 +80,7 @@ function Form({
 
   return (
     <div className="qmFormContainer">
-      {children({
-        formState: { ...state },
-        setFormState: setFormState,
-        updateValueFor: updateValueFor,
-        toggleCheckedFor: toggleCheckedFor,
-      })}
+      {children(useFormState(initialState))}
     </div>
   )
 }
