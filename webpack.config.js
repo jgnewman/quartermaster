@@ -132,31 +132,16 @@ if (process.env.NODE_ENV === "production") {
   config.plugins.push(new OptimizeCssAssetsPlugin())
   config.plugins.push(new BundleAnalyzerPlugin({ openAnalyzer: true }))
 
-  // config.optimization = {
-  //   splitChunks: {
-  //     minSize: 1,
-  //     maxSize: 10,
-  //     cacheGroups: {
-  //       vendors: {
-  //         maxSize: Infinity,
-  //         test: /node_modules/,
-  //         chunks: "all",
-  //       },
-  //     },
-  //   },
-  // }
-
   config.optimization = {
     splitChunks: {
+      minSize: 1,
+      maxSize: 10,
       cacheGroups: {
         vendors: {
+          maxSize: Infinity,
           test: /node_modules/,
           chunks: "all",
         },
-        styles: {
-          test: /\.css$/,
-          chunks: "all",
-        }
       },
     },
   }

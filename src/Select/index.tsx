@@ -1,16 +1,8 @@
 import "./styles.styl"
 
 import React, {
-  Dispatch,
-  FocusEvent,
-  KeyboardEvent,
-  MouseEvent,
   ReactNodeArray,
-  RefObject,
-  SetStateAction,
   memo,
-  useCallback,
-  useEffect,
   useMemo,
   useRef,
   useState,
@@ -30,162 +22,27 @@ import Label from "../Label"
 import Ex from "../icons/Ex"
 import Caret from "../icons/Caret"
 
-interface SelectOption {
-  label: string
-  value: string
-}
+import type {
+  SelectOption,
+  SelectProps,
+} from "./types"
 
-export interface SelectProps {
-  changeHandler?: (value: string | null) => void
-  className?: string
-  id?: string
-  isRequired?: boolean
-  isCompact?: boolean
-  isDisabled?: boolean
-  label?: string
-  options: SelectOption[]
-  placeholder?: string
-  value: string | null
-}
+import {
+  ValueSelector,
+  useValueSelector,
+  useCloseSelectOnClickAway,
+  useKeyDownHandler,
+  useClickOptionHandler,
+  useSiblingOptionFocuser,
+  useOptionKeyDownHandler,
+  useFocusHandler,
+  useBlurHandler,
+  useClearButtonHandler,
+  useClearButtonFocuser,
 
-type ValueSelector = (newValue: string | null) => void
+} from "./hooks"
 
-function useValueSelector(
-  isOpen: boolean,
-  setIsOpen: Dispatch<SetStateAction<boolean>>,
-  changeHandler: SelectProps['changeHandler'],
-): ValueSelector {
-  return useCallback(function (newValue: string | null) {
-    isOpen && setIsOpen(false)
-    changeHandler && changeHandler(newValue)
-  }, [
-    changeHandler,
-    isOpen,
-    setIsOpen,
-  ])
-}
-
-function useCloseSelectOnClickAway(
-  wrapperRef: RefObject<HTMLDivElement>,
-  setIsOpen: Dispatch<SetStateAction<boolean>>,
-) {
-
-  const closeOnClickAway = useCallback(function (evt: any) {
-    const { current: currentWrapperRef } = wrapperRef
-    if (currentWrapperRef && !evt.path.includes(currentWrapperRef)) {
-      setIsOpen(false)
-    }
-  }, [
-    wrapperRef,
-    setIsOpen,
-  ])
-
-  useEffect(function () {
-    document.addEventListener("click", closeOnClickAway)
-    return function () {
-      document.removeEventListener("click", closeOnClickAway)
-    }
-  }, [closeOnClickAway])
-
-}
-
-function useSelectedOption(
-  value: string | null,
-  currentOptions: RefArray<HTMLSpanElement>,
-) {
-  return useCallback(function (): HTMLSpanElement | null {
-    let selectedOption = currentOptions[0]
-
-    currentOptions.some(option => {
-      if (option.getAttribute("data-value") === value) {
-        selectedOption = option
-        return true
-      }
-      return false
-    })
-
-    return selectedOption || null
-  }, [
-    value,
-    currentOptions,
-  ])
-}
-
-function useSelectedOptionFocuser(
-  value: string | null,
-  currentOptions: RefArray<HTMLSpanElement>,
-) {
-  const getSelectedOption = useSelectedOption(value, currentOptions)
-  return useCallback(function () {
-    getSelectedOption()?.focus()
-  }, [getSelectedOption])
-}
-
-function useKeydownHandler(
-  value: string | null,
-  currentOptions: RefArray<HTMLSpanElement>,
-) {
-  const focusSelectedOption = useSelectedOptionFocuser(value, currentOptions)
-  return useCallback(function (evt: KeyboardEvent) {
-    const { key } = evt
-    if (key === " " || key === "ArrowDown") {
-      focusSelectedOption()
-    }
-  }, [focusSelectedOption])
-}
-
-function useClickOptionHandler(selectValue: ValueSelector) {
-  return useCallback(function (evt: MouseEvent) {
-    const target = evt.target as HTMLElement
-    const newValue = target.getAttribute("data-value") as string
-    selectValue(newValue)
-  }, [selectValue])
-}
-
-type SiblingOptionFocuser = (focusedElem: HTMLSpanElement, direction: "prev" | "next") => void
-
-function useSiblingOptionFocuser(
-  currentOptions: RefArray<HTMLSpanElement>,
-): SiblingOptionFocuser {
-  return useCallback(function (focusedElem: HTMLSpanElement, direction: "prev" | "next") {
-    const focusIndex = currentOptions.indexOf(focusedElem)
-
-    let elemToFocus: HTMLSpanElement
-    if (direction === "prev") {
-      elemToFocus = focusIndex < 1 ? currentOptions[currentOptions.length - 1] : currentOptions[focusIndex - 1]
-    } else {
-      elemToFocus = (focusIndex >= currentOptions.length - 1) ? currentOptions[0] : currentOptions[focusIndex + 1]
-    }
-
-    elemToFocus.focus()
-  }, [currentOptions])
-}
-
-function useOptionKeyDownHandler(
-  focusSiblingOption: SiblingOptionFocuser,
-  selectValue: ValueSelector,
-) {
-  return useCallback(function (evt: KeyboardEvent) {
-    const { key } = evt
-    const target = evt.target as HTMLSpanElement
-
-    switch (key) {
-
-      case "ArrowUp":
-        return focusSiblingOption(target, "prev")
-
-      case "ArrowDown":
-        return focusSiblingOption(target, "next")
-
-      case " ":
-      case "Enter":
-        return selectValue(target.getAttribute("data-value"))
-    }
-  }, [
-    focusSiblingOption,
-    selectValue,
-  ])
-}
+export { SelectProps } from "./types"
 
 function useOptionsArray(
   addOptionRef: RefArrayAdder<HTMLSpanElement>,
@@ -237,37 +94,6 @@ function useOptionsArray(
   ])
 }
 
-function useFocusHandler(
-  setIsFocused: Dispatch<SetStateAction<boolean>>,
-  setIsOpen: Dispatch<SetStateAction<boolean>>,
-) {
-  return useCallback(function () {
-    setIsFocused(true)
-    setIsOpen(true)
-  }, [
-    setIsFocused,
-    setIsOpen,
-  ])
-}
-
-function useBlurHandler(setIsFocused: Dispatch<SetStateAction<boolean>>) {
-  return useCallback(function () {
-    setIsFocused(false)
-  }, [setIsFocused])
-}
-
-function useClearButtonHandler(isDisabled: boolean, selectValue: ValueSelector) {
-  return useCallback(function () {
-    !isDisabled && selectValue(null)
-  }, [isDisabled, selectValue])
-}
-
-function useClearButtonFocuser() {
-  return useCallback(function (evt: FocusEvent) {
-    evt.stopPropagation()
-  }, [])
-}
-
 function Select({
   changeHandler,
   className,
@@ -287,7 +113,7 @@ function Select({
   const [currentOptions, addOptionRef, resetOptionRefs] = useRefArray<HTMLSpanElement>([])
 
   const selectValue = useValueSelector(isOpen, setIsOpen, changeHandler)
-  const handleKeyDownSelect = useKeydownHandler(value, currentOptions)
+  const handleKeyDownSelect = useKeyDownHandler(value, currentOptions)
   const handleFocusSelect = useFocusHandler(setIsFocused, setIsOpen)
   const handleBlurSelect = useBlurHandler(setIsFocused)
   const handleClickClearButton = useClearButtonHandler(isDisabled, selectValue)
