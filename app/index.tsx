@@ -368,6 +368,7 @@ class App extends React.Component {
                     isCompact={false}
                     isDisabled={false}
                     isRequired={true}
+                    position="top"
                     value={formState.myselect}
                     changeHandler={updateValueFor("myselect")}
                   />

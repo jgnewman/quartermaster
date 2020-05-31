@@ -548,6 +548,7 @@ interface SelectProps {
   label?: string
   options: SelectOption[]
   placeholder?: string
+  position?: "top" | "bottom" // Defaults to bottom. Whether the menu opens at the top or bottom.
   value: string | null
 }
 

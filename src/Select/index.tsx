@@ -104,6 +104,7 @@ function Select({
   label,
   options,
   placeholder = "Select...",
+  position = "bottom",
   value,
 }: SelectProps) {
 
@@ -178,6 +179,11 @@ function Select({
     isEnabled,
   })
 
+  const positionClasses = buildClassNames({
+    isTop: position === "top",
+    isBottom: position === "bottom",
+  })
+
   return (
     <div className={`qmSelectContainer ${containerClasses} ${className || ""}`}>
 
@@ -214,7 +220,7 @@ function Select({
 
           <div className={`qmSelectOpenIconWrapper ${buttonClasses}`}>
             <Caret
-              className="qmSelectIcon qmSelectOpenIcon"
+              className={`qmSelectIcon qmSelectOpenIcon ${positionClasses}`}
               size="s"
               title="Open"
             />
@@ -223,7 +229,7 @@ function Select({
         </div>
 
         {isOpen && (
-          <div className="qmSelectMenu" role="list" aria-expanded={isOpen}>
+          <div className={`qmSelectMenu ${positionClasses}`} role="list" aria-expanded={isOpen}>
             {menuOptionsArray}
           </div>
         )}

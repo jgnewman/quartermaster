@@ -13,5 +13,6 @@ export interface SelectProps {
   label?: string
   options: SelectOption[]
   placeholder?: string
+  position?: "top" | "bottom"
   value: string | null
 }
