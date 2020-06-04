@@ -2,7 +2,7 @@ import "./styles.styl"
 import React from "react"
 import { render } from "react-dom"
 
-import { createFPSChart } from "./FPSChart"
+// import { createFPSChart } from "./FPSChart"
 
 import {
   Alert,
@@ -12,6 +12,7 @@ import {
   Button,
   Checkbox,
   ConfirmButton,
+  DatePicker,
   Form,
   Grid,
   Heading,
@@ -39,6 +40,7 @@ interface AppState {
   modalOpen: boolean
   counter: number
   fieldVal: string
+  dateVal: number | null
   boxChecked: boolean
   toggleChecked: boolean
   radioVal: string
@@ -51,6 +53,7 @@ class App extends React.Component {
   public state: AppState = {
     modalOpen: false,
     counter: 0,
+    dateVal: Date.now(),
     fieldVal: "",
     boxChecked: false,
     toggleChecked: false,
@@ -234,6 +237,14 @@ class App extends React.Component {
           </Paragraph>
 
           <Space bottom="l">
+            <input type="date" />
+            <DatePicker
+              label="Pick a date!"
+              value={this.state.dateVal}
+            />
+          </Space>
+
+          <Space bottom="l">
             <TextField
               changeHandler={this.setFieldVal}
               charLimit={25}
@@ -389,5 +400,5 @@ class App extends React.Component {
 }
 
 render(<App/>, document.querySelector("#app"))
-createFPSChart()
+// createFPSChart()
 

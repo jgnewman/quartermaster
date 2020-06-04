@@ -1,0 +1,41 @@
+@import "../lib/sharedStyles"
+
+.qmDatePickerContainer
+  position: relative
+
+.qmDatePickerFieldWrapper
+  position: relative
+
+.qmDatePickerOverlay
+  @extends $absFill
+  opacity: 0
+  z-index: 2
+
+.qmDatePickerDialog
+  @extends $dialogBox
+
+  &.isBottom
+    top: "calc(100% + %s)" % (QUARTER_REM)
+
+  &.isTop
+    bottom: "calc(100% + %s)" % (QUARTER_REM)
+
+.qmDatePickerHeader
+  padding: QUARTER_REM
+
+.qmDatePickerTitle
+  text-align: center
+
+.qmDatePickerMonthLeftWrapper
+  text-align: left
+
+.qmDatePickerMonthRightWrapper
+  text-align: right
+
+.qmDatePickerDays
+  padding: QUARTER_REM
+  width: 100%
+
+  button
+    display: block
+    width: 100%
