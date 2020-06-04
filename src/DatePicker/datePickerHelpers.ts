@@ -22,8 +22,8 @@ interface Day {
   date: Date
 }
 
-export function getCalendarDataForMonth(refStamp: number): Day[][] {
-  const refDay = new Date(refStamp)
+export function getCalendarDataForMonth(referenceDateStamp: number): Day[][] {
+  const refDay = new Date(referenceDateStamp)
   const month = refDay.getMonth()
   const year = refDay.getFullYear()
   const totalDaysOfThisMonth = getDayTotalForMonth(month, year)

@@ -2,6 +2,8 @@ import "./styles.styl"
 
 import React, {
   ChangeEventHandler,
+  Dispatch,
+  SetStateAction,
   memo,
   useState,
 } from "react"
@@ -23,6 +25,53 @@ import {
   useDateStamp,
   useDateString,
 } from "./hooks"
+
+interface DatePickerButtonProps {
+  isDisabled: boolean
+  date: Date
+  pickerValue: number | null
+  setPickerValue: Dispatch<SetStateAction<number | null>>
+}
+
+const DatePickerButton = memo(function({
+  isDisabled,
+  date,
+  pickerValue,
+  setPickerValue,
+}: DatePickerButtonProps) {
+
+  const buttonDay = date.getDate()
+  const buttonMonth = date.getMonth()
+  const buttonYear = date.getFullYear()
+  const buttonStamp = date.getTime()
+
+  const pickerDate = pickerValue ? new Date(pickerValue) : null
+  const pickerDay = pickerDate ? pickerDate.getDate() : null
+  const pickerMonth = pickerDate ? pickerDate.getMonth() : null
+  const pickerYear = pickerDate ? pickerDate.getFullYear() : null
+
+  const isSelected = pickerDay === buttonDay && pickerMonth === buttonMonth && pickerYear === buttonYear
+
+  const buttonClasses = buildClassNames({
+    isSelected,
+    isDisabled,
+  })
+
+  const selectValue = React.useCallback(() => {
+    setPickerValue(buttonStamp) // TODO: Replace this with the change handler
+  }, [buttonStamp, setPickerValue])
+
+  return (
+    <button
+      className={`qmDatePickerDay ${buttonClasses}`}
+      disabled={isDisabled}
+      onClick={selectValue}>
+      {buttonDay}
+    </button>
+  )
+})
+
+DatePickerButton.displayName = "DatePickerButton"
 
 export interface DatePickerProps {
   changeHandler?: ChangeEventHandler
@@ -55,9 +104,12 @@ function DatePicker({
   value,
 }: DatePickerProps) {
 
-  const [isOpen, setIsOpen] = useState(false)
   const dateStamp = useDateStamp(value)
   const dateString = useDateString(dateStamp)
+
+  const [isOpen, setIsOpen] = useState(false)
+  const [pickerValue, setPickerValue] = useState(dateStamp)
+  console.log(pickerValue)
 
   const calendarRows = getCalendarDataForMonth(dateStamp || Date.now())
 
@@ -135,9 +187,12 @@ function DatePicker({
                     {
                       row.map(({ isDisabled, date }, dayIndex) => (
                         <td key={`${rowIndex}${dayIndex}`}>
-                          <button disabled={isDisabled}>
-                            {date.getDate()}
-                          </button>
+                          <DatePickerButton
+                            isDisabled={isDisabled}
+                            pickerValue={pickerValue}
+                            setPickerValue={setPickerValue}
+                            date={date}
+                          />
                         </td>
                       ))
                     }

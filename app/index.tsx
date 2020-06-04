@@ -2,8 +2,6 @@ import "./styles.styl"
 import React from "react"
 import { render } from "react-dom"
 
-// import { createFPSChart } from "./FPSChart"
-
 import {
   Alert,
   Align,
@@ -35,6 +33,9 @@ import {
 } from "../src/index"
 
 import DarkTheme from "../src/themes/Dark"
+
+import { createFPSChart } from "./FPSChart"
+createFPSChart()
 
 interface AppState {
   modalOpen: boolean
@@ -400,5 +401,4 @@ class App extends React.Component {
 }
 
 render(<App/>, document.querySelector("#app"))
-// createFPSChart()
 
