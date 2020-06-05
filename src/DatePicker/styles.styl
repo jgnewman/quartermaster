@@ -39,3 +39,30 @@
   button
     display: block
     width: 100%
+
+.qmDatePickerTHead
+  font-size: 90%;
+
+.qmDatePickerDay
+  borders(1px solid transparent, QUARTER_REM)
+  outline: solid transparent !important
+
+  display: block
+  background: BLACK_FADE_MIN
+  font-size: 90%
+  padding: QUARTER_REM
+  transition: BASE_TRANSITION
+
+  &:not(.isDisabled):hover
+    background: BLACK_FADE_FLY
+
+  &.isToday,
+  &:focus
+    border-color: HIGHLIGHTS
+    box-shadow: inset 0 0 0 2px HIGHLIGHTS
+
+  &.isSelected,
+  &.isSelected:hover
+    background: HIGHLIGHTS
+    color: WHITE
+

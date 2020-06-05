@@ -13,6 +13,50 @@ const dayTotalMap = {
   11: 31,
 }
 
+export function decrementMonth(referenceDateStamp: number): number {
+  const date = new Date(referenceDateStamp)
+  const month = date.getMonth()
+  const year = date.getFullYear()
+
+  if (month === 0) {
+    date.setMonth(11)
+    date.setFullYear(year - 1)
+  } else {
+    date.setMonth(month - 1)
+  }
+
+  return date.getTime()
+}
+
+export function incrementMonth(referenceDateStamp: number): number {
+  const date = new Date(referenceDateStamp)
+  const month = date.getMonth()
+  const year = date.getFullYear()
+
+  if (month === 11) {
+    date.setMonth(0)
+    date.setFullYear(year + 1)
+  } else {
+    date.setMonth(month + 1)
+  }
+
+  return date.getTime()
+}
+
+export function isSameDay(a: number, b: number): boolean {
+  const aDate = new Date(a)
+  const aDay = aDate.getDate()
+  const aMonth = aDate.getMonth()
+  const aYear = aDate.getFullYear()
+
+  const bDate = new Date(b)
+  const bDay = bDate.getDate()
+  const bMonth = bDate.getMonth()
+  const bYear = bDate.getFullYear()
+
+  return aYear === bYear && aMonth === bMonth && aDay === bDay
+}
+
 export function getDayTotalForMonth(month: number, fullYear: number): number {
   return (month === 1 && fullYear % 4 === 0) ? 29 : dayTotalMap[month]
 }

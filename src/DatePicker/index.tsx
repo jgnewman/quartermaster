@@ -1,14 +1,16 @@
 import "./styles.styl"
 
 import React, {
-  ChangeEventHandler,
-  Dispatch,
-  SetStateAction,
   memo,
+  useRef,
   useState,
 } from "react"
 
-import type { DynamicProps } from "../lib/helperTypes"
+import type {
+  DynamicProps,
+  FauxChangeEventHandler,
+} from "../lib/helperTypes"
+
 import { buildClassNames } from "../lib/helpers"
 
 import Grid from "../Grid"
@@ -17,49 +19,57 @@ import Label from "../Label"
 import IconButton from "../IconButton"
 import Triangle from "../icons/Triangle"
 
-import {
-  getCalendarDataForMonth,
-} from "./datePickerHelpers"
+import { isSameDay } from "./datePickerHelpers"
 
 import {
+  useCalendarData,
+  useCalendarState,
+  useCalendarTitle,
+  useCloseCalendarOnClickAway,
   useDateStamp,
-  useDateString,
+  useFieldValue,
+  useMonthDecrementor,
+  useMonthIncrementor,
+  useValueSelector,
 } from "./hooks"
 
 interface DatePickerButtonProps {
+  closeCalendar: () => void
+  closeOnChange: boolean
+  changeHandler?: FauxChangeEventHandler
+  dateStamp: number
   isDisabled: boolean
-  date: Date
   pickerValue: number | null
-  setPickerValue: Dispatch<SetStateAction<number | null>>
 }
 
 const DatePickerButton = memo(function({
+  closeCalendar,
+  closeOnChange,
+  changeHandler,
+  dateStamp,
   isDisabled,
-  date,
   pickerValue,
-  setPickerValue,
 }: DatePickerButtonProps) {
 
-  const buttonDay = date.getDate()
-  const buttonMonth = date.getMonth()
-  const buttonYear = date.getFullYear()
-  const buttonStamp = date.getTime()
+  const now = Date.now()
+  const buttonDay = (new Date(dateStamp)).getDate()
 
-  const pickerDate = pickerValue ? new Date(pickerValue) : null
-  const pickerDay = pickerDate ? pickerDate.getDate() : null
-  const pickerMonth = pickerDate ? pickerDate.getMonth() : null
-  const pickerYear = pickerDate ? pickerDate.getFullYear() : null
+  const isSelected = pickerValue ? isSameDay(pickerValue, dateStamp) : false
+  const isToday = isSameDay(now, dateStamp)
 
-  const isSelected = pickerDay === buttonDay && pickerMonth === buttonMonth && pickerYear === buttonYear
+  const selectValue = useValueSelector(
+    changeHandler,
+    closeCalendar,
+    closeOnChange,
+    dateStamp,
+    isSelected,
+  )
 
   const buttonClasses = buildClassNames({
-    isSelected,
     isDisabled,
+    isSelected,
+    isToday,
   })
-
-  const selectValue = React.useCallback(() => {
-    setPickerValue(buttonStamp) // TODO: Replace this with the change handler
-  }, [buttonStamp, setPickerValue])
 
   return (
     <button
@@ -74,7 +84,8 @@ const DatePickerButton = memo(function({
 DatePickerButton.displayName = "DatePickerButton"
 
 export interface DatePickerProps {
-  changeHandler?: ChangeEventHandler
+  changeHandler?: FauxChangeEventHandler
+  closeOnChange?: boolean
   className?: string
   errorText?: string
   hasError?: boolean
@@ -90,7 +101,9 @@ export interface DatePickerProps {
 }
 
 function DatePicker({
+  changeHandler,
   className,
+  closeOnChange = false,
   errorText,
   hasError,
   id,
@@ -104,14 +117,29 @@ function DatePicker({
   value,
 }: DatePickerProps) {
 
+  // TODO: MAKE SURE THIS WORKS WITH THE FORM COMPONENT
+  // TODO: APPEARS TOO HIGH WHEN POSITION IS TOP
+  // TODO: JUMP TO TODAY
+  // TODO: STYLE FOR DARK MODE
+
   const dateStamp = useDateStamp(value)
-  const dateString = useDateString(dateStamp)
+  const calendarRef = useRef(null)
 
-  const [isOpen, setIsOpen] = useState(false)
-  const [pickerValue, setPickerValue] = useState(dateStamp)
-  console.log(pickerValue)
+  const { isOpen, closeCalendar, toggleCalendar } = useCalendarState(false)
+  const [currentView, setCurrentView] = useState(dateStamp || Date.now())
 
-  const calendarRows = getCalendarDataForMonth(dateStamp || Date.now())
+  const fieldValue = useFieldValue(dateStamp)
+  const calendarTitle = useCalendarTitle(currentView)
+  const calendarRows = useCalendarData(currentView)
+
+  const decrementView = useMonthDecrementor(currentView, setCurrentView)
+  const incrementView = useMonthIncrementor(currentView, setCurrentView)
+
+  useCloseCalendarOnClickAway(
+    calendarRef,
+    closeCalendar,
+    isOpen,
+  )
 
   const labelProps: DynamicProps = {
     className: "qmTextFieldLabel",
@@ -134,7 +162,7 @@ function DatePicker({
 
       <div
         className="qmDatePickerFieldWrapper"
-        onClick={() => setIsOpen(true)}>
+        onClick={toggleCalendar}>
 
         <TextField
           className="qmDatePickerField"
@@ -148,31 +176,37 @@ function DatePicker({
           placeholder={placeholder}
           tabIndex={tabIndex}
           type="text"
-          value={dateString}
+          value={fieldValue}
         />
         <div className="qmDatePickerOverlay"></div>
 
       </div>
 
       {isOpen && (
-        <div className={`qmDatePickerDialog ${positionClasses}`} role="list" aria-expanded={isOpen}>
+        <div
+          className={`qmDatePickerDialog ${positionClasses}`}
+          ref={calendarRef}
+          role="list"
+          aria-expanded={isOpen}>
 
           <header className="qmDatePickerHeader">
             <Grid>
               <div className="qmDatePickerMonthLeftWrapper">
                 <IconButton
-                  className="qmDatePickerMonthLeft">
+                  className="qmDatePickerMonthLeft"
+                  clickHandler={decrementView}>
                   <Triangle size="s" rotate={90} title="Previous month" />
                 </IconButton>
               </div>
 
               <div className="qmDatePickerTitle">
-                May 2020
+                {calendarTitle}
               </div>
 
               <div className="qmDatePickerMonthRightWrapper">
                 <IconButton
-                  className="qmDatePickerMonthRight">
+                  className="qmDatePickerMonthRight"
+                  clickHandler={incrementView}>
                   <Triangle size="s" rotate={270} title="Next month" />
                 </IconButton>
               </div>
@@ -180,6 +214,17 @@ function DatePicker({
           </header>
 
           <table className="qmDatePickerDays">
+            <thead className="qmDatePickerTHead">
+              <tr>
+                <th>S</th>
+                <th>M</th>
+                <th>T</th>
+                <th>W</th>
+                <th>T</th>
+                <th>F</th>
+                <th>S</th>
+              </tr>
+            </thead>
             <tbody>
               {
                 calendarRows.map((row, rowIndex) => (
@@ -188,10 +233,12 @@ function DatePicker({
                       row.map(({ isDisabled, date }, dayIndex) => (
                         <td key={`${rowIndex}${dayIndex}`}>
                           <DatePickerButton
+                            closeCalendar={closeCalendar}
+                            closeOnChange={closeOnChange}
+                            changeHandler={changeHandler}
+                            dateStamp={date.getTime()}
                             isDisabled={isDisabled}
-                            pickerValue={pickerValue}
-                            setPickerValue={setPickerValue}
-                            date={date}
+                            pickerValue={dateStamp}
                           />
                         </td>
                       ))

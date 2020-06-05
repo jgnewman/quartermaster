@@ -34,8 +34,8 @@ import {
 
 import DarkTheme from "../src/themes/Dark"
 
-import { createFPSChart } from "./FPSChart"
-createFPSChart()
+// import { createFPSChart } from "./FPSChart"
+// createFPSChart()
 
 interface AppState {
   modalOpen: boolean
@@ -54,7 +54,7 @@ class App extends React.Component {
   public state: AppState = {
     modalOpen: false,
     counter: 0,
-    dateVal: Date.now(),
+    dateVal: null,
     fieldVal: "",
     boxChecked: false,
     toggleChecked: false,
@@ -80,6 +80,10 @@ class App extends React.Component {
 
   setFieldVal = (evt: React.ChangeEvent) => {
     this.setState({ fieldVal: (evt.target as HTMLInputElement).value })
+  }
+
+  setDateVal = (evt: React.ChangeEvent) => {
+    this.setState({ dateVal: (evt.target as HTMLInputElement).value })
   }
 
   toggleCheckbox = (evt: React.ChangeEvent) => {
@@ -238,10 +242,11 @@ class App extends React.Component {
           </Paragraph>
 
           <Space bottom="l">
-            <input type="date" />
             <DatePicker
               label="Pick a date!"
               value={this.state.dateVal}
+              changeHandler={this.setDateVal}
+              placeholder="Pick a date!"
             />
           </Space>
 
