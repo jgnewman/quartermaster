@@ -18,6 +18,7 @@ import TextField from "../TextField"
 import Label from "../Label"
 import IconButton from "../IconButton"
 import Triangle from "../icons/Triangle"
+import Reload from "../icons/Reload"
 
 import { isSameDay } from "./datePickerHelpers"
 
@@ -30,6 +31,7 @@ import {
   useFieldValue,
   useMonthDecrementor,
   useMonthIncrementor,
+  useMonthResetter,
   useValueSelector,
 } from "./hooks"
 
@@ -117,6 +119,7 @@ function DatePicker({
   value,
 }: DatePickerProps) {
 
+  // TODO: RESET BUTTON GOES TO WRONG MONTH??
   // TODO: MAKE SURE THIS WORKS WITH THE FORM COMPONENT
   // TODO: APPEARS TOO HIGH WHEN POSITION IS TOP
   // TODO: JUMP TO TODAY
@@ -134,6 +137,7 @@ function DatePicker({
 
   const decrementView = useMonthDecrementor(currentView, setCurrentView)
   const incrementView = useMonthIncrementor(currentView, setCurrentView)
+  const resetView = useMonthResetter(setCurrentView)
 
   useCloseCalendarOnClickAway(
     calendarRef,
@@ -201,6 +205,11 @@ function DatePicker({
 
               <div className="qmDatePickerTitle">
                 {calendarTitle}
+                <IconButton
+                  className="qmDatePickerReset"
+                  clickHandler={resetView}>
+                  <Reload size="s" rotate={315} title="Reset" />
+                </IconButton>
               </div>
 
               <div className="qmDatePickerMonthRightWrapper">

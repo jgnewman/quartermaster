@@ -102,6 +102,12 @@ export function useMonthIncrementor(
   }, [currentView, setCurrentView])
 }
 
+export function useMonthResetter(setCurrentView: Dispatch<SetStateAction<number>>) {
+  return useCallback(function () {
+    setCurrentView(incrementMonth(Date.now()))
+  }, [setCurrentView])
+}
+
 export function useCalendarData(currentView: number) {
   return useMemo(function () {
     return getCalendarDataForMonth(currentView)
