@@ -628,6 +628,7 @@ interface TextFieldProps {
   ignoreLastPass?: boolean
   isCompact?: boolean
   isDisabled?: boolean
+  isReadOnly?: boolean
   isRequired?: boolean
   keyUpHandler?: React.KeyboardEventHandler
   label?: string

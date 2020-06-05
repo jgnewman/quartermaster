@@ -55,6 +55,7 @@ const DatePickerButton = memo(function({
 
   const now = Date.now()
   const buttonDay = (new Date(dateStamp)).getDate()
+  const buttonTitle = useFieldValue(dateStamp)
 
   const isSelected = pickerValue ? isSameDay(pickerValue, dateStamp) : false
   const isToday = isSameDay(now, dateStamp)
@@ -76,6 +77,7 @@ const DatePickerButton = memo(function({
   return (
     <button
       className={`qmDatePickerDay ${buttonClasses}`}
+      title={buttonTitle}
       disabled={isDisabled}
       onClick={selectValue}>
       {buttonDay}
@@ -119,11 +121,13 @@ function DatePicker({
   value,
 }: DatePickerProps) {
 
-  // TODO: RESET BUTTON GOES TO WRONG MONTH??
   // TODO: MAKE SURE THIS WORKS WITH THE FORM COMPONENT
   // TODO: APPEARS TOO HIGH WHEN POSITION IS TOP
-  // TODO: JUMP TO TODAY
   // TODO: STYLE FOR DARK MODE
+  // TODO: TABBING THROUGH THE PAGE FOCUSES ON THE TEXT FIELD
+  //       Let's create a ref for the text field. When we click the picker, let's focus the ref.
+  //       When the user tabs through the page, they'll focus the ref.
+  //       When the ref is focused, that's when we'll open the calendar.
 
   const dateStamp = useDateStamp(value)
   const calendarRef = useRef(null)
@@ -176,6 +180,7 @@ function DatePicker({
           ignoreLastPass={true}
           isCompact={isCompact}
           isDisabled={isDisabled}
+          isReadOnly={true}
           isRequired={isRequired}
           placeholder={placeholder}
           tabIndex={tabIndex}

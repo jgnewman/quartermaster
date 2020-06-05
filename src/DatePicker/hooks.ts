@@ -104,7 +104,7 @@ export function useMonthIncrementor(
 
 export function useMonthResetter(setCurrentView: Dispatch<SetStateAction<number>>) {
   return useCallback(function () {
-    setCurrentView(incrementMonth(Date.now()))
+    setCurrentView(Date.now())
   }, [setCurrentView])
 }
 
@@ -119,6 +119,7 @@ export function useCalendarState(initialState: boolean) {
   return {
     isOpen,
     closeCalendar: useCallback(() => setIsOpen(false), [setIsOpen]),
+    openCalendar: useCallback(() => setIsOpen(true), [setIsOpen]),
     toggleCalendar: useCallback(() => setIsOpen(!isOpen), [isOpen, setIsOpen]),
   }
 }

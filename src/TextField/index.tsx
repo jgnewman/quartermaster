@@ -52,6 +52,7 @@ export interface TextFieldProps {
   ignoreLastPass?: boolean
   isCompact?: boolean
   isDisabled?: boolean
+  isReadOnly?: boolean
   isRequired?: boolean
   keyUpHandler?: KeyboardEventHandler
   label?: string
@@ -79,6 +80,7 @@ const TextField = forwardRef(function ({
   ignoreLastPass,
   isCompact,
   isDisabled,
+  isReadOnly,
   isRequired,
   keyUpHandler,
   label,
@@ -210,6 +212,7 @@ const TextField = forwardRef(function ({
     isEnabled,
     isField,
     isFocused,
+    isReadOnly,
     isTextArea,
     noResize,
   })
@@ -230,6 +233,7 @@ const TextField = forwardRef(function ({
             onFocus={handleFocus}
             onBlur={handleBlur}
             placeholder={placeholder || ""}
+            readOnly={!!isReadOnly}
             ref={mergedRef}
             {...dynamicProps}>
           </textarea>
@@ -244,6 +248,7 @@ const TextField = forwardRef(function ({
             onFocus={handleFocus}
             onBlur={handleBlur}
             placeholder={placeholder || ""}
+            readOnly={!!isReadOnly}
             ref={mergedRef}
             type={type || "text"}
             style={fieldStyle}
