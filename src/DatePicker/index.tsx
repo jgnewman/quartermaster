@@ -20,10 +20,9 @@ import IconButton from "../IconButton"
 import Triangle from "../icons/Triangle"
 import Reload from "../icons/Reload"
 
-import { isSameDay } from "./datePickerHelpers"
+import DatePickerCalendar from "./DatePickerCalendar"
 
 import {
-  useCalendarData,
   useCalendarState,
   useCalendarTitle,
   useCloseCalendarOnClickAway,
@@ -33,60 +32,7 @@ import {
   useMonthDecrementor,
   useMonthIncrementor,
   useMonthResetter,
-  useValueSelector,
 } from "./hooks"
-
-interface DatePickerButtonProps {
-  closeCalendar: () => void
-  closeOnChange: boolean
-  changeHandler?: FauxChangeEventHandler
-  dateStamp: number
-  isDisabled: boolean
-  pickerValue: number | null
-}
-
-const DatePickerButton = memo(function({
-  closeCalendar,
-  closeOnChange,
-  changeHandler,
-  dateStamp,
-  isDisabled,
-  pickerValue,
-}: DatePickerButtonProps) {
-
-  const now = Date.now()
-  const buttonDay = (new Date(dateStamp)).getDate()
-  const buttonTitle = useFieldValue(dateStamp)
-
-  const isSelected = pickerValue ? isSameDay(pickerValue, dateStamp) : false
-  const isToday = isSameDay(now, dateStamp)
-
-  const selectValue = useValueSelector(
-    changeHandler,
-    closeCalendar,
-    closeOnChange,
-    dateStamp,
-    isSelected,
-  )
-
-  const buttonClasses = buildClassNames({
-    isDisabled,
-    isSelected,
-    isToday,
-  })
-
-  return (
-    <button
-      className={`qmDatePickerDay ${buttonClasses}`}
-      title={buttonTitle}
-      disabled={isDisabled}
-      onClick={selectValue}>
-      {buttonDay}
-    </button>
-  )
-})
-
-DatePickerButton.displayName = "DatePickerButton"
 
 export interface DatePickerProps {
   changeHandler?: FauxChangeEventHandler
@@ -135,7 +81,6 @@ function DatePicker({
 
   const fieldValue = useFieldValue(dateStamp)
   const calendarTitle = useCalendarTitle(currentView)
-  const calendarRows = useCalendarData(currentView)
 
   const decrementView = useMonthDecrementor(currentView, setCurrentView)
   const incrementView = useMonthIncrementor(currentView, setCurrentView)
@@ -225,41 +170,13 @@ function DatePicker({
               </Grid>
             </header>
 
-            <table className="qmDatePickerDays">
-              <thead className="qmDatePickerTHead">
-                <tr>
-                  <th>S</th>
-                  <th>M</th>
-                  <th>T</th>
-                  <th>W</th>
-                  <th>T</th>
-                  <th>F</th>
-                  <th>S</th>
-                </tr>
-              </thead>
-              <tbody>
-                {
-                  calendarRows.map((row, rowIndex) => (
-                    <tr key={rowIndex}>
-                      {
-                        row.map(({ isDisabled, date }, dayIndex) => (
-                          <td key={`${rowIndex}${dayIndex}`}>
-                            <DatePickerButton
-                              closeCalendar={closeCalendar}
-                              closeOnChange={closeOnChange}
-                              changeHandler={changeHandler}
-                              dateStamp={date.getTime()}
-                              isDisabled={isDisabled}
-                              pickerValue={dateStamp}
-                            />
-                          </td>
-                        ))
-                      }
-                    </tr>
-                  ))
-                }
-              </tbody>
-            </table>
+            <DatePickerCalendar
+              closeCalendar={closeCalendar}
+              closeOnChange={closeOnChange}
+              changeHandler={changeHandler}
+              currentView={currentView}
+              dateStamp={dateStamp}
+            />
 
           </div>
         )}

@@ -102,6 +102,7 @@ class App extends React.Component {
     return (
       <Theme data={this.state.darkThemeEnabled ? DarkTheme : null}>
         <div style={{ padding: "1em 1em 5em", maxWidth: "500px" }}>
+          <input type="date"/>
 
           <Heading size={1} text="Welcome to Quartermaster!"/>
           <Paragraph>

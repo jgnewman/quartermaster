@@ -7,6 +7,8 @@ import React, {
 
 import { buildClassNames } from "../lib/helpers"
 
+// TODO: Allow user to control gutter spacing (vert & horiz)
+
 export interface GrowProps {
   children?: ReactNode
   className?: string
