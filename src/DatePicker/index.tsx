@@ -73,9 +73,8 @@ function DatePicker({
   value,
 }: DatePickerProps) {
 
-  // TODO: MAYBE A RED X BUTTON TO CLEAR DATE
-  // TODO: MAYBE A CARET ICON TO INDICATE OPENING AND CLOSING
-  // TODO: STYLE FOR DARK MODE
+  // TODO: A CALENDAR ICON THAT TURNS INTO AN EX ICON TO CLEAR A VALUE
+  // TODO: WHAT ELSE CAN WE DO FOR ACCESSIBILITY?
 
   const dateStamp = useDateStamp(value)
   const calendarRef = useRef(null)
@@ -150,7 +149,7 @@ function DatePicker({
               <Grid>
                 <div className="qmDatePickerMonthLeftWrapper">
                   <IconButton
-                    className="qmDatePickerMonthLeft"
+                    className="qmDatePickerButton qmDatePickerMonthLeft"
                     clickHandler={decrementView}>
                     <Triangle size="s" rotate={90} title="Previous month" />
                   </IconButton>
@@ -159,7 +158,7 @@ function DatePicker({
                 <div className="qmDatePickerTitle">
                   {calendarTitle}
                   <IconButton
-                    className="qmDatePickerReset"
+                    className="qmDatePickerButton qmDatePickerReset"
                     clickHandler={resetView}>
                     <Reload size="s" rotate={315} title="Reset" />
                   </IconButton>
@@ -167,7 +166,7 @@ function DatePicker({
 
                 <div className="qmDatePickerMonthRightWrapper">
                   <IconButton
-                    className="qmDatePickerMonthRight"
+                    className="qmDatePickerButton qmDatePickerMonthRight"
                     clickHandler={incrementView}>
                     <Triangle size="s" rotate={270} title="Next month" />
                   </IconButton>

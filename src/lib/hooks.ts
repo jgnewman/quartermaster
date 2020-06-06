@@ -20,7 +20,7 @@ import {
 } from "./helpers"
 
 export function usePrevious<T>(value: T) {
-  const ref = useRef<T>(value)
+  const ref = useRef<T>(null) as MutableRefObject<T>
   useEffect(() => { ref.current = value })
   return ref.current
 }
