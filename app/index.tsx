@@ -41,7 +41,6 @@ interface AppState {
   modalOpen: boolean
   counter: number
   fieldVal: string
-  dateVal: number | null
   boxChecked: boolean
   toggleChecked: boolean
   radioVal: string
@@ -54,7 +53,6 @@ class App extends React.Component {
   public state: AppState = {
     modalOpen: false,
     counter: 0,
-    dateVal: null,
     fieldVal: "",
     boxChecked: false,
     toggleChecked: false,
@@ -80,10 +78,6 @@ class App extends React.Component {
 
   setFieldVal = (evt: React.ChangeEvent) => {
     this.setState({ fieldVal: (evt.target as HTMLInputElement).value })
-  }
-
-  setDateVal = (evt: React.ChangeEvent) => {
-    this.setState({ dateVal: (evt.target as HTMLInputElement).value })
   }
 
   toggleCheckbox = (evt: React.ChangeEvent) => {
@@ -242,15 +236,6 @@ class App extends React.Component {
           </Paragraph>
 
           <Space bottom="l">
-            <DatePicker
-              label="Pick a date!"
-              value={this.state.dateVal}
-              changeHandler={this.setDateVal}
-              placeholder="Pick a date!"
-            />
-          </Space>
-
-          <Space bottom="l">
             <TextField
               changeHandler={this.setFieldVal}
               charLimit={25}
@@ -326,7 +311,12 @@ class App extends React.Component {
             />
           </div>
 
-          <Form initialState={{ mytext: "", mygroup: "foo", myselect: null }}>
+          <Form initialState={{
+            mytext: "",
+            mygroup: "foo",
+            myselect: null,
+            mydate: null,
+          }}>
             {({ formState, updateValueFor }) => (
               <>
                 <Space bottom="l">
@@ -336,6 +326,15 @@ class App extends React.Component {
                     placeholder="Say something here"
                     value={formState.mytext}
                     changeHandler={updateValueFor("mytext")}
+                  />
+                </Space>
+
+                <Space bottom="l">
+                  <DatePicker
+                    label="Pick a date!"
+                    value={formState.mydate}
+                    changeHandler={updateValueFor("mydate")}
+                    placeholder="Pick a date!"
                   />
                 </Space>
 

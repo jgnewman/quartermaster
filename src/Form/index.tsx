@@ -7,14 +7,17 @@ import React, {
   useState,
 } from "react"
 
-import { InputElem } from "../lib/helperTypes"
+import type {
+  FauxChangeEvent,
+  InputElem,
+} from "../lib/helperTypes"
 
 interface SimpleObject {
   [key: string]: string | number | boolean | null
 }
 
 type SetFormState = (vals: SimpleObject) => void
-type UpdateValueFor = (name: string) => (evt: ChangeEvent | string | null) => void
+type UpdateValueFor = (name: string) => (evt: ChangeEvent | FauxChangeEvent | string | null) => void
 type ToggleCheckedFor = (name: string) => () => void
 
 interface FormUtils {

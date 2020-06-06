@@ -156,3 +156,11 @@ export function useCloseCalendarOnClickAway(
     }
   }, [closeOnClickAway])
 }
+
+export function useFieldFocuser(ref: RefObject<HTMLInputElement>) {
+  return useCallback(function () {
+    if (ref.current) {
+      ref.current.focus()
+    }
+  }, [ref])
+}

@@ -2,6 +2,7 @@ import "./styles.styl"
 
 import React, {
   ChangeEventHandler,
+  FocusEventHandler,
   KeyboardEventHandler,
   MutableRefObject,
   ReactNode,
@@ -36,6 +37,7 @@ import {
 } from "./hooks"
 
 export interface TextFieldProps {
+  blurHandler?: FocusEventHandler
   changeHandler?: ChangeEventHandler
   charLimit?: number
   charLimitIsMinimum?: boolean
@@ -45,6 +47,7 @@ export interface TextFieldProps {
   defaultValue?: string
   enableTextAreaResize?: boolean
   errorText?: string
+  focusHandler?: FocusEventHandler
   hasError?: boolean
   hideCharLimitProgress?: boolean
   hideCharLimitText?: boolean
@@ -64,6 +67,7 @@ export interface TextFieldProps {
 }
 
 const TextField = forwardRef(function ({
+  blurHandler,
   changeHandler,
   charLimit,
   charLimitIsMinimum = false,
@@ -73,6 +77,7 @@ const TextField = forwardRef(function ({
   defaultValue,
   enableTextAreaResize,
   errorText,
+  focusHandler,
   hasError,
   hideCharLimitProgress,
   hideCharLimitText,
@@ -99,7 +104,7 @@ const TextField = forwardRef(function ({
     isFocused,
     handleFocus,
     handleBlur,
-  } = useFocusHandlers()
+  } = useFocusHandlers(focusHandler, blurHandler)
 
   const shouldPreventInput = usePreventInputDecision(
     charLimit,

@@ -613,6 +613,7 @@ Generates an input field or textarea as specified by props. Allows capturing the
 
 ```typescript
 interface TextFieldProps {
+  blurHandler?: React.FocusEventHandler
   changeHandler?: React.ChangeEventHandler
   charLimit?: number // Enables a CharLimitCounter component on the field
   charLimitIsMinimum?: boolean
@@ -621,6 +622,7 @@ interface TextFieldProps {
   defaultValue?: string
   enableTextAreaResize?: boolean
   errorText?: string
+  focusHandler?: React.FocusEventHandler
   hasError?: boolean
   hideCharLimitProgress?: boolean
   hideCharLimitText?: boolean

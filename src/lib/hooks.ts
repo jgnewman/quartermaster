@@ -1,4 +1,6 @@
 import {
+  FocusEvent,
+  FocusEventHandler,
   MutableRefObject,
   RefObject,
   useEffect,
@@ -66,12 +68,23 @@ export function useMergedRefs(refA: NullableRefObject, refB: NullableRefObject):
   }, [refA, refB])
 }
 
-export function useFocusHandlers() {
+export function useFocusHandlers(
+  focusHandler?: FocusEventHandler,
+  blurHandler?: FocusEventHandler,
+) {
   const [isFocused, setIsFocused] = useState(false)
   return {
     isFocused,
-    handleFocus: useCallback(function () { setIsFocused(true) }, [setIsFocused]),
-    handleBlur: useCallback(function () { setIsFocused(false) }, [setIsFocused]),
+
+    handleFocus: useCallback(function (evt: FocusEvent) {
+      setIsFocused(true)
+      focusHandler && focusHandler(evt)
+    }, [setIsFocused, focusHandler]),
+
+    handleBlur: useCallback(function (evt: FocusEvent) {
+      setIsFocused(false)
+      blurHandler && blurHandler(evt)
+    }, [setIsFocused, blurHandler]),
   }
 }
 

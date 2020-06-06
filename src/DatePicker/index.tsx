@@ -28,6 +28,7 @@ import {
   useCalendarTitle,
   useCloseCalendarOnClickAway,
   useDateStamp,
+  useFieldFocuser,
   useFieldValue,
   useMonthDecrementor,
   useMonthIncrementor,
@@ -121,18 +122,15 @@ function DatePicker({
   value,
 }: DatePickerProps) {
 
-  // TODO: MAKE SURE THIS WORKS WITH THE FORM COMPONENT
-  // TODO: APPEARS TOO HIGH WHEN POSITION IS TOP
+  // TODO: ALLOW ENABLING TIME SELECTOR
+  // TODO: MAYBE A RED X BUTTON TO CLEAR DATE
   // TODO: STYLE FOR DARK MODE
-  // TODO: TABBING THROUGH THE PAGE FOCUSES ON THE TEXT FIELD
-  //       Let's create a ref for the text field. When we click the picker, let's focus the ref.
-  //       When the user tabs through the page, they'll focus the ref.
-  //       When the ref is focused, that's when we'll open the calendar.
 
   const dateStamp = useDateStamp(value)
   const calendarRef = useRef(null)
+  const fieldRef = useRef(null)
 
-  const { isOpen, closeCalendar, toggleCalendar } = useCalendarState(false)
+  const { isOpen, closeCalendar, openCalendar } = useCalendarState(false)
   const [currentView, setCurrentView] = useState(dateStamp || Date.now())
 
   const fieldValue = useFieldValue(dateStamp)
@@ -142,6 +140,7 @@ function DatePicker({
   const decrementView = useMonthDecrementor(currentView, setCurrentView)
   const incrementView = useMonthIncrementor(currentView, setCurrentView)
   const resetView = useMonthResetter(setCurrentView)
+  const focusTextField = useFieldFocuser(fieldRef)
 
   useCloseCalendarOnClickAway(
     calendarRef,
@@ -168,13 +167,12 @@ function DatePicker({
 
       {label && <Label text={label} {...labelProps} />}
 
-      <div
-        className="qmDatePickerFieldWrapper"
-        onClick={toggleCalendar}>
+      <div className="qmDatePickerFieldWrapper">
 
         <TextField
           className="qmDatePickerField"
           errorText={errorText}
+          focusHandler={openCalendar}
           hasError={hasError}
           id={id}
           ignoreLastPass={true}
@@ -183,88 +181,90 @@ function DatePicker({
           isReadOnly={true}
           isRequired={isRequired}
           placeholder={placeholder}
+          ref={fieldRef}
           tabIndex={tabIndex}
           type="text"
           value={fieldValue}
         />
-        <div className="qmDatePickerOverlay"></div>
+
+        <div className="qmDatePickerOverlay" onClick={focusTextField}></div>
+
+        {isOpen && (
+          <div
+            className={`qmDatePickerDialog ${positionClasses}`}
+            ref={calendarRef}
+            role="list"
+            aria-expanded={isOpen}>
+
+            <header className="qmDatePickerHeader">
+              <Grid>
+                <div className="qmDatePickerMonthLeftWrapper">
+                  <IconButton
+                    className="qmDatePickerMonthLeft"
+                    clickHandler={decrementView}>
+                    <Triangle size="s" rotate={90} title="Previous month" />
+                  </IconButton>
+                </div>
+
+                <div className="qmDatePickerTitle">
+                  {calendarTitle}
+                  <IconButton
+                    className="qmDatePickerReset"
+                    clickHandler={resetView}>
+                    <Reload size="s" rotate={315} title="Reset" />
+                  </IconButton>
+                </div>
+
+                <div className="qmDatePickerMonthRightWrapper">
+                  <IconButton
+                    className="qmDatePickerMonthRight"
+                    clickHandler={incrementView}>
+                    <Triangle size="s" rotate={270} title="Next month" />
+                  </IconButton>
+                </div>
+              </Grid>
+            </header>
+
+            <table className="qmDatePickerDays">
+              <thead className="qmDatePickerTHead">
+                <tr>
+                  <th>S</th>
+                  <th>M</th>
+                  <th>T</th>
+                  <th>W</th>
+                  <th>T</th>
+                  <th>F</th>
+                  <th>S</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  calendarRows.map((row, rowIndex) => (
+                    <tr key={rowIndex}>
+                      {
+                        row.map(({ isDisabled, date }, dayIndex) => (
+                          <td key={`${rowIndex}${dayIndex}`}>
+                            <DatePickerButton
+                              closeCalendar={closeCalendar}
+                              closeOnChange={closeOnChange}
+                              changeHandler={changeHandler}
+                              dateStamp={date.getTime()}
+                              isDisabled={isDisabled}
+                              pickerValue={dateStamp}
+                            />
+                          </td>
+                        ))
+                      }
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+
+          </div>
+        )}
 
       </div>
-
-      {isOpen && (
-        <div
-          className={`qmDatePickerDialog ${positionClasses}`}
-          ref={calendarRef}
-          role="list"
-          aria-expanded={isOpen}>
-
-          <header className="qmDatePickerHeader">
-            <Grid>
-              <div className="qmDatePickerMonthLeftWrapper">
-                <IconButton
-                  className="qmDatePickerMonthLeft"
-                  clickHandler={decrementView}>
-                  <Triangle size="s" rotate={90} title="Previous month" />
-                </IconButton>
-              </div>
-
-              <div className="qmDatePickerTitle">
-                {calendarTitle}
-                <IconButton
-                  className="qmDatePickerReset"
-                  clickHandler={resetView}>
-                  <Reload size="s" rotate={315} title="Reset" />
-                </IconButton>
-              </div>
-
-              <div className="qmDatePickerMonthRightWrapper">
-                <IconButton
-                  className="qmDatePickerMonthRight"
-                  clickHandler={incrementView}>
-                  <Triangle size="s" rotate={270} title="Next month" />
-                </IconButton>
-              </div>
-            </Grid>
-          </header>
-
-          <table className="qmDatePickerDays">
-            <thead className="qmDatePickerTHead">
-              <tr>
-                <th>S</th>
-                <th>M</th>
-                <th>T</th>
-                <th>W</th>
-                <th>T</th>
-                <th>F</th>
-                <th>S</th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                calendarRows.map((row, rowIndex) => (
-                  <tr key={rowIndex}>
-                    {
-                      row.map(({ isDisabled, date }, dayIndex) => (
-                        <td key={`${rowIndex}${dayIndex}`}>
-                          <DatePickerButton
-                            closeCalendar={closeCalendar}
-                            closeOnChange={closeOnChange}
-                            changeHandler={changeHandler}
-                            dateStamp={date.getTime()}
-                            isDisabled={isDisabled}
-                            pickerValue={dateStamp}
-                          />
-                        </td>
-                      ))
-                    }
-                  </tr>
-                ))
-              }
-            </tbody>
-          </table>
-
-        </div>
-      )}
     </div>
   )
 }
