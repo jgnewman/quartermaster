@@ -335,8 +335,10 @@ class App extends React.Component {
                     label="Pick a date!"
                     value={formState.mydate}
                     changeHandler={updateValueFor("mydate")}
+                    disablePast={true}
                     placeholder="Pick a date!"
                     showTimes={true}
+                    timesIncrement={30}
                   />
                 </Space>
 

@@ -37,8 +37,8 @@ import {
 
 export interface DatePickerProps {
   changeHandler?: FauxChangeEventHandler
-  closeOnChange?: boolean
   className?: string
+  disablePast?: boolean
   errorText?: string
   hasError?: boolean
   id?: string
@@ -57,7 +57,7 @@ export interface DatePickerProps {
 function DatePicker({
   changeHandler,
   className,
-  closeOnChange = false,
+  disablePast = false,
   errorText,
   hasError,
   id,
@@ -67,15 +67,14 @@ function DatePicker({
   label,
   placeholder,
   position = "bottom",
-  showTimes,
+  showTimes = false,
   tabIndex,
   timesIncrement = 60,
   value,
 }: DatePickerProps) {
 
-  // TODO: CONTINUE WORK ON ENABLING TIME SELECTOR
-  // TODO: ALLOW DISABLING DAYS/TIMES BEFORE NOW
   // TODO: MAYBE A RED X BUTTON TO CLEAR DATE
+  // TODO: MAYBE A CARET ICON TO INDICATE OPENING AND CLOSING
   // TODO: STYLE FOR DARK MODE
 
   const dateStamp = useDateStamp(value)
@@ -85,7 +84,7 @@ function DatePicker({
   const { isOpen, closeCalendar, openCalendar } = useCalendarState(false)
   const [currentView, setCurrentView] = useState(dateStamp || Date.now())
 
-  const fieldValue = useFieldValue(dateStamp)
+  const fieldValue = useFieldValue(dateStamp, showTimes)
   const calendarTitle = useCalendarTitle(currentView)
 
   const decrementView = useMonthDecrementor(currentView, setCurrentView)
@@ -178,16 +177,19 @@ function DatePicker({
 
             <div className="qmDatePickerSelectorsWrapper">
               <DatePickerCalendar
-                closeCalendar={closeCalendar}
-                closeOnChange={closeOnChange}
                 changeHandler={changeHandler}
                 currentView={currentView}
                 dateStamp={dateStamp}
+                disablePast={disablePast}
+                showTimes={showTimes}
+                timesIncrement={timesIncrement}
               />
 
               {showTimes && (
                 <DatePickerTimes
+                  changeHandler={changeHandler}
                   dateStamp={dateStamp}
+                  disablePast={disablePast}
                   timesIncrement={timesIncrement}
                 />
               )}

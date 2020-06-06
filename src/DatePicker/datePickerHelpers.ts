@@ -57,6 +57,21 @@ export function isSameDay(a: number, b: number): boolean {
   return aYear === bYear && aMonth === bMonth && aDay === bDay
 }
 
+export function isSameTime(a: number, b: number): boolean {
+  if (isSameDay(a, b)) {
+    const aDate = new Date(a)
+    const aHour = aDate.getHours()
+    const aMin = aDate.getMinutes()
+
+    const bDate = new Date(b)
+    const bHour = bDate.getHours()
+    const bMin = bDate.getMinutes()
+
+    return aHour === bHour && aMin === bMin
+  }
+  return false
+}
+
 export function getDayTotalForMonth(month: number, fullYear: number): number {
   return (month === 1 && fullYear % 4 === 0) ? 29 : dayTotalMap[month]
 }
@@ -66,7 +81,17 @@ interface Day {
   date: Date
 }
 
-export function getCalendarDataForMonth(referenceDateStamp: number): Day[][] {
+export function setDateToMidnight(date: Date) {
+  date.setHours(0)
+  date.setMinutes(0)
+  date.setSeconds(0)
+  date.setMilliseconds(0)
+}
+
+export function getCalendarDataForMonth(referenceDateStamp: number, disablePast: boolean): Day[][] {
+  const now = new Date()
+  setDateToMidnight(now)
+
   const refDay = new Date(referenceDateStamp)
   const month = refDay.getMonth()
   const year = refDay.getFullYear()
@@ -103,7 +128,9 @@ export function getCalendarDataForMonth(referenceDateStamp: number): Day[][] {
 
   x = 1
   while (x <= totalDaysOfThisMonth) {
-    curRow.push({ isDisabled: false, date: new Date(`${year}/${month + 1}/${x}`) })
+    const date = new Date(`${year}/${month + 1}/${x}`)
+    const isDisabled = disablePast ? date < now : false
+    curRow.push({ isDisabled, date })
     x += 1
     if (curRow.length === 7) {
       rows.push(curRow)
@@ -124,12 +151,9 @@ export function getCalendarDataForMonth(referenceDateStamp: number): Day[][] {
 export function getHoursForDay(dateStamp: number, increment: number): number[] {
   const inc = increment || 60
   const hours: number[] = []
-  const referenceDate = new Date(dateStamp)
 
-  referenceDate.setHours(0)
-  referenceDate.setMinutes(0)
-  referenceDate.setSeconds(0)
-  referenceDate.setMilliseconds(0)
+  const referenceDate = new Date(dateStamp)
+  setDateToMidnight(referenceDate)
 
   let referenceTime = referenceDate.getTime()
   let totalHours = 24 * (60 / inc)

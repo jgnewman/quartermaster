@@ -6,22 +6,24 @@ import DatePickerDay from "./DatePickerDay"
 import { useCalendarData } from "./hooks"
 
 interface DatePickerCalendarProps {
-  closeCalendar: () => void
-  closeOnChange: boolean
   changeHandler?: FauxChangeEventHandler
   currentView: number
   dateStamp: number | null
+  disablePast: boolean
+  showTimes: boolean
+  timesIncrement: 5 | 10 | 15 | 30 | 60
 }
 
 function DatePickerCalendar({
-  closeCalendar,
-  closeOnChange,
   changeHandler,
   currentView,
   dateStamp,
+  disablePast,
+  showTimes,
+  timesIncrement,
 }: DatePickerCalendarProps) {
 
-  const calendarRows = useCalendarData(currentView)
+  const calendarRows = useCalendarData(currentView, disablePast)
 
   return (
     <div className="qmDatePickerCalendar">
@@ -45,12 +47,13 @@ function DatePickerCalendar({
                   row.map(({ isDisabled, date }, dayIndex) => (
                     <td key={`${rowIndex}${dayIndex}`}>
                       <DatePickerDay
-                        closeCalendar={closeCalendar}
-                        closeOnChange={closeOnChange}
                         changeHandler={changeHandler}
                         dateStamp={date.getTime()}
+                        disablePast={disablePast}
                         isDisabled={isDisabled}
                         pickerValue={dateStamp}
+                        showTimes={showTimes}
+                        timesIncrement={timesIncrement}
                       />
                     </td>
                   ))

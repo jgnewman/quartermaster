@@ -9,13 +9,14 @@ import {
 } from "react"
 
 import type {
-  FauxChangeEventHandler,
+  FauxChangeEventHandler, FauxChangeEvent,
 } from "../lib/helperTypes"
 
 import {
   decrementMonth,
   getCalendarDataForMonth,
   incrementMonth,
+  isSameDay,
 } from "./datePickerHelpers"
 
 export function useDateStamp(value?: Date | number | string | null): number | null {
@@ -36,19 +37,26 @@ export function useDateStamp(value?: Date | number | string | null): number | nu
   }, [value])
 }
 
-export function useFieldValue(stamp: number | null): string {
+export function useFieldValue(stamp: number | null, showTimes?: boolean): string {
   return useMemo(function () {
     if (!stamp) {
       return ""
     }
 
-    return new Intl.DateTimeFormat("default", {
+    const formatOptions: Intl.DateTimeFormatOptions = {
       year: "numeric",
       month: "long",
       day: "numeric",
-    }).format(new Date(stamp))
+    }
 
-  }, [stamp])
+    if (showTimes) {
+      formatOptions.hour = "numeric"
+      formatOptions.minute = "2-digit"
+    }
+
+    return new Intl.DateTimeFormat("default", formatOptions).format(new Date(stamp))
+
+  }, [stamp, showTimes])
 }
 
 export function useCalendarTitle(stamp: number | null): string {
@@ -67,20 +75,58 @@ export function useCalendarTitle(stamp: number | null): string {
 
 export function useValueSelector(
   changeHandler: FauxChangeEventHandler | undefined,
-  closeCalendar: () => void,
-  closeOnChange: boolean,
   dateStamp: number,
+  disablePast: boolean,
   isSelected: boolean,
+  showTimes: boolean,
+  timesIncrement: number,
 ) {
   return useCallback(() => {
-    changeHandler && changeHandler({ target: { value: isSelected ? null : dateStamp } })
-    closeOnChange && closeCalendar()
+    if (changeHandler) {
+      const fauxEvent: FauxChangeEvent = {
+        target: {
+          value: null,
+        },
+      }
+
+      if (isSelected) {
+        changeHandler(fauxEvent)
+      } else {
+
+        // Let's say it's noon, we are showing times, and we have the past disabled.
+        // We click on today, but have not yet selected a time.
+        // By default, we will have selected midnight today, which
+        // ought to be disabled. So if the past is disabled, and the
+        // day we selected is today, we need to select the first
+        // time increment in the future.
+
+        const now = Date.now()
+        let value: number
+
+        if (disablePast && showTimes && isSameDay(dateStamp, now)) {
+          let date = (new Date(dateStamp)).setMinutes(0)
+
+          while (date < now) {
+            date = date + (1000 * 60 * timesIncrement)
+          }
+
+          value = date
+
+        } else {
+          value = dateStamp
+        }
+
+        fauxEvent.target.value = value
+        changeHandler(fauxEvent)
+      }
+    }
   }, [
     changeHandler,
-    closeCalendar,
-    closeOnChange,
     dateStamp,
+    disablePast,
     isSelected,
+    showTimes,
+    timesIncrement,
   ])
 }
 
@@ -108,10 +154,10 @@ export function useMonthResetter(setCurrentView: Dispatch<SetStateAction<number>
   }, [setCurrentView])
 }
 
-export function useCalendarData(currentView: number) {
+export function useCalendarData(currentView: number, disablePast: boolean) {
   return useMemo(function () {
-    return getCalendarDataForMonth(currentView)
-  }, [currentView])
+    return getCalendarDataForMonth(currentView, disablePast)
+  }, [currentView, disablePast])
 }
 
 export function useCalendarState(initialState: boolean) {
@@ -163,4 +209,28 @@ export function useFieldFocuser(ref: RefObject<HTMLInputElement>) {
       ref.current.focus()
     }
   }, [ref])
+}
+
+export function useScrollToSelectedTime(
+  enabledButtonIndexRef: RefObject<number>,
+  firstEnabledButtonRef: RefObject<HTMLButtonElement>,
+  scrollAreaRef: RefObject<HTMLDivElement>,
+  totalHours: number,
+) {
+  useEffect(() => {
+    const { current: scrollArea } = scrollAreaRef
+    const { current: firstEnabledButton } = firstEnabledButtonRef
+    const { current: enabledButtonIndex } = enabledButtonIndexRef
+
+    if (scrollArea && firstEnabledButton) {
+      const segments = scrollArea.scrollHeight / totalHours
+      const scrollPos = segments * (enabledButtonIndex || 0)
+      scrollArea.scrollTop = scrollPos
+    }
+  }, [
+    enabledButtonIndexRef,
+    firstEnabledButtonRef,
+    scrollAreaRef,
+    totalHours,
+  ])
 }

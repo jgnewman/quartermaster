@@ -10,21 +10,23 @@ import {
 } from "./hooks"
 
 interface DatePickerButtonProps {
-  closeCalendar: () => void
-  closeOnChange: boolean
   changeHandler?: FauxChangeEventHandler
   dateStamp: number
+  disablePast: boolean
   isDisabled: boolean
   pickerValue: number | null
+  showTimes: boolean
+  timesIncrement: 5 | 10 | 15 | 30 | 60
 }
 
 function DatePickerButton({
-  closeCalendar,
-  closeOnChange,
   changeHandler,
   dateStamp,
+  disablePast,
   isDisabled,
   pickerValue,
+  showTimes,
+  timesIncrement,
 }: DatePickerButtonProps) {
 
   const now = Date.now()
@@ -36,10 +38,11 @@ function DatePickerButton({
 
   const selectValue = useValueSelector(
     changeHandler,
-    closeCalendar,
-    closeOnChange,
     dateStamp,
+    disablePast,
     isSelected,
+    showTimes,
+    timesIncrement,
   )
 
   const buttonClasses = buildClassNames({
