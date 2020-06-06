@@ -336,6 +336,7 @@ class App extends React.Component {
                     value={formState.mydate}
                     changeHandler={updateValueFor("mydate")}
                     placeholder="Pick a date!"
+                    showTimes={true}
                   />
                 </Space>
 

@@ -120,3 +120,25 @@ export function getCalendarDataForMonth(referenceDateStamp: number): Day[][] {
   rows.push(curRow)
   return rows
 }
+
+export function getHoursForDay(dateStamp: number, increment: number): number[] {
+  const inc = increment || 60
+  const hours: number[] = []
+  const referenceDate = new Date(dateStamp)
+
+  referenceDate.setHours(0)
+  referenceDate.setMinutes(0)
+  referenceDate.setSeconds(0)
+  referenceDate.setMilliseconds(0)
+
+  let referenceTime = referenceDate.getTime()
+  let totalHours = 24 * (60 / inc)
+
+  while (totalHours > 0) {
+    totalHours -= 1
+    hours.push(referenceTime)
+    referenceTime = referenceTime + (1000 * 60 * inc)
+  }
+
+  return hours
+}

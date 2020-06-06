@@ -21,6 +21,7 @@ import Triangle from "../icons/Triangle"
 import Reload from "../icons/Reload"
 
 import DatePickerCalendar from "./DatePickerCalendar"
+import DatePickerTimes from "./DatePickerTimes"
 
 import {
   useCalendarState,
@@ -47,7 +48,9 @@ export interface DatePickerProps {
   label?: string
   placeholder?: string
   position?: "top" | "bottom"
+  showTimes?: boolean
   tabIndex?: number
+  timesIncrement?: 5 | 10 | 15 | 30 | 60
   value?: Date | number | string | null
 }
 
@@ -64,11 +67,14 @@ function DatePicker({
   label,
   placeholder,
   position = "bottom",
+  showTimes,
   tabIndex,
+  timesIncrement = 60,
   value,
 }: DatePickerProps) {
 
-  // TODO: ALLOW ENABLING TIME SELECTOR
+  // TODO: CONTINUE WORK ON ENABLING TIME SELECTOR
+  // TODO: ALLOW DISABLING DAYS/TIMES BEFORE NOW
   // TODO: MAYBE A RED X BUTTON TO CLEAR DATE
   // TODO: STYLE FOR DARK MODE
 
@@ -170,14 +176,22 @@ function DatePicker({
               </Grid>
             </header>
 
-            <DatePickerCalendar
-              closeCalendar={closeCalendar}
-              closeOnChange={closeOnChange}
-              changeHandler={changeHandler}
-              currentView={currentView}
-              dateStamp={dateStamp}
-            />
+            <div className="qmDatePickerSelectorsWrapper">
+              <DatePickerCalendar
+                closeCalendar={closeCalendar}
+                closeOnChange={closeOnChange}
+                changeHandler={changeHandler}
+                currentView={currentView}
+                dateStamp={dateStamp}
+              />
 
+              {showTimes && (
+                <DatePickerTimes
+                  dateStamp={dateStamp}
+                  timesIncrement={timesIncrement}
+                />
+              )}
+            </div>
           </div>
         )}
 

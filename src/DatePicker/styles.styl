@@ -35,22 +35,35 @@
 .qmDatePickerMonthRightWrapper
   text-align: right
 
-.qmDatePickerDays
+.qmDatePickerSelectorsWrapper
+  display: flex
+  justify-content: space-between
+  flex-wrap: wrap
+
+.qmDatePickerCalendar
+  flex-grow: 10
+
+.qmDatePickerDayTable
   padding: QUARTER_REM
   width: 100%
 
-  button
-    display: block
-    width: 100%
+  border-collapse: separate
+  border-spacing: div(QUARTER_REM, 2)
+
+  th, td
+    border: 0
 
 .qmDatePickerTHead
-  font-size: 90%;
+  font-size: 90%
+  font-weight: BOLD
 
-.qmDatePickerDay
+.qmDatePickerDay,
+.qmDatePickerHour
   borders(1px solid transparent, QUARTER_REM)
   outline: solid transparent !important
 
   display: block
+  width: 100%
   background: BLACK_FADE_MIN
   font-size: 90%
   padding: QUARTER_REM
@@ -68,4 +81,24 @@
   &.isSelected:hover
     background: HIGHLIGHTS
     color: WHITE
+
+.qmDatePickerTimes
+  padding: QUARTER_REM
+  text-align: center
+  flex-grow: 1
+
+.qmDatePickerTimeTitle
+  font-weight: BOLD
+  font-size: 90%
+
+.qmDatePickerHours
+  display: flex
+  flex-wrap: wrap
+  flex-flow: column
+  max-height: REM * 9.25
+  overflow-y: auto
+
+.qmDatePickerHour
+  margin: plus(div(QUARTER_REM, 2), 1) auto 0
+  min-width: REM * 4
 
