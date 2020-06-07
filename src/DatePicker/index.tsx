@@ -171,7 +171,7 @@ function DatePicker({
             aria-expanded={isOpen}>
 
             <header className="qmDatePickerHeader">
-              <Grid>
+              <Grid gutterW="s">
                 <div className="qmDatePickerMonthLeftWrapper">
                   <IconButton
                     className="qmDatePickerButton qmDatePickerMonthLeft"

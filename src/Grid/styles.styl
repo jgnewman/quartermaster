@@ -1,12 +1,58 @@
 @import "../lib/sharedStyles"
 
+SMALL_GRID_GUTTER = 0.5em
+SMALL_GRID_HALF_GUTTER = SMALL_GRID_GUTTER / 2
+
+MEDIUM_GRID_GUTTER = 1em
+MEDIUM_GRID_HALF_GUTTER = MEDIUM_GRID_GUTTER / 2
+
+LARGE_GRID_GUTTER = 1em * 1.5
+LARGE_GRID_HALF_GUTTER = LARGE_GRID_GUTTER / 2
+
 .qmGridContainer
   display: flex
   align-items: center
   align-content: center
+  margin: 0 auto
 
-  margin-left: -1 * HALF_GUTTER
-  margin-right: -1 * HALF_GUTTER
+  > *
+    flex-grow: 1
+    margin: 0
+
+  &.isGutterWS
+    margin: 0 (-1 * SMALL_GRID_HALF_GUTTER)
+
+  &.isGutterWS > *
+    margin-left: SMALL_GRID_HALF_GUTTER
+    margin-right: SMALL_GRID_HALF_GUTTER
+
+  &.isGutterWM
+    margin: 0 (-1 * MEDIUM_GRID_HALF_GUTTER)
+
+  &.isGutterWM > *
+    margin-left: MEDIUM_GRID_HALF_GUTTER
+    margin-right: MEDIUM_GRID_HALF_GUTTER
+
+  &.isGutterWL
+    margin: 0 (-1 * LARGE_GRID_HALF_GUTTER)
+
+  &.isGutterWL > *
+    margin-left: LARGE_GRID_HALF_GUTTER
+    margin-right: LARGE_GRID_HALF_GUTTER
+
+  &.isGutterHS > *
+    margin-bottom: SMALL_GRID_GUTTER
+
+  &.isGutterHM > *
+    margin-bottom: MEDIUM_GRID_GUTTER
+
+  &.isGutterHL > *
+    margin-bottom: LARGE_GRID_GUTTER
+
+  &.isGutterHS > *:last-child,
+  &.isGutterHM > *:last-child,
+  &.isGutterHL > *:last-child
+    margin-bottom: 0
 
   &.isAround
     justify-content: space-around
@@ -31,10 +77,6 @@
 
   &.isStretch
     align-items: stretch
-
-  > *
-    flex-grow: 1
-    margin: 0 HALF_GUTTER GUTTER
 
 .qmGrowContainer
 

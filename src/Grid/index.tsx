@@ -6,8 +6,7 @@ import React, {
 } from "react"
 
 import { buildClassNames } from "../lib/helpers"
-
-// TODO: Allow user to control gutter spacing (vert & horiz)
+import Space, { SpaceSize } from "../Space"
 
 export interface GrowProps {
   children?: ReactNode
@@ -40,16 +39,28 @@ Grow.displayName = "Grow"
 export interface GridProps {
   children?: ReactNode
   className?: string
+  gutterH?: "s" | "m" | "l"
+  gutterW?: "s" | "m" | "l"
   justify?: "start" | "end" | "center" | "even" | "between" | "around"
   equalHeight?: boolean
   wrap?: boolean
+  bottomSpace?: SpaceSize
+  leftSpace?: SpaceSize
+  rightSpace?: SpaceSize
+  topSpace?: SpaceSize
 }
 
 function Grid({
+  bottomSpace,
   children,
   className,
-  justify = "between",
   equalHeight,
+  gutterH,
+  gutterW,
+  justify = "between",
+  leftSpace,
+  rightSpace,
+  topSpace,
   wrap,
 }: GridProps) {
 
@@ -60,14 +71,27 @@ function Grid({
     isCenter: justify === "center",
     isEnd: justify === "end",
     isEven: justify === "even",
+    isGutterHL: gutterH === "l",
+    isGutterHM: gutterH === "m",
+    isGutterHS: gutterH === "s",
+    isGutterWL: gutterW === "l",
+    isGutterWM: gutterW === "m",
+    isGutterWS: gutterW === "s",
     isStart: justify === "start",
     isStretch: equalHeight,
   })
 
   return (
-    <div className={`qmGridContainer ${containerClasses} ${className || ""}`}>
-      {children}
-    </div>
+    <Space
+      bottom={bottomSpace}
+      left={leftSpace}
+      right={rightSpace}
+      top={topSpace}
+      className="qmGridSpacer">
+      <div className={`qmGridContainer ${containerClasses} ${className || ""}`}>
+        {children}
+      </div>
+    </Space>
   )
 }
 

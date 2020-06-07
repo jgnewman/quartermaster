@@ -190,11 +190,11 @@ interface DatePickerProps {
   value?: Date | number | string | null
 }
 
-// where...
+// Where...
 
 type FauxChangeEventHandler<T = Element> = (event: ChangeEvent<T> | FauxChangeEvent) => void
 
-// where...
+// Where...
 
 interface FauxChangeEvent {
   target: {
@@ -268,9 +268,17 @@ interface GridProps {
   children?: React.ReactNode
   className?: string
   equalHeight?: boolean
+  gutterH?: "s" | "m" | "l" // Specifies size of a gutter width between grid items
+  gutterW?: "s" | "m" | "l" // Specifies size of a gutter height between grid items
   justify?: "start" | "end" | "center" | "even" | "between" | "around"
   wrap?: boolean
+  bottomSpace?: SpaceSize
+  leftSpace?: SpaceSize
+  rightSpace?: SpaceSize
+  topSpace?: SpaceSize
 }
+
+// Where `SpaceSize` is defined in the Space component
 ```
 
 Here is an example:

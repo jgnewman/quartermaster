@@ -342,7 +342,7 @@ class App extends React.Component {
                   />
                 </Space>
 
-                <Grid wrap>
+                <Grid wrap gutterW="l" gutterH="l" bottomSpace="l">
                   <RadioGroup
                     name="mygroup"
                     changeHandler={updateValueFor("mygroup")}
