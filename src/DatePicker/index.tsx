@@ -77,9 +77,6 @@ function DatePicker({
   value,
 }: DatePickerProps) {
 
-  // TODO: ADD AN EX ICON LIKE ON SELECT MENU FOR CLEARING THE VALUE, MAKE SURE DARK MODE WORKS FOR ICONS
-  // TODO: WHAT ELSE CAN WE DO FOR ACCESSIBILITY?
-
   const dateStamp = useDateStamp(value)
   const calendarRef = useRef(null)
   const fieldRef = useRef(null)
@@ -158,7 +155,7 @@ function DatePicker({
             </button>
           )}
 
-          <div className="qmDatePickerIconWrapper" onClick={focusTextField}>
+          <div className="qmDatePickerIconWrapper" role="button" onClick={focusTextField}>
             <Calendar
               className="qmDatePickerIcon qmDatePickerDateIcon"
               size="s"
@@ -171,7 +168,6 @@ function DatePicker({
           <div
             className={`qmDatePickerDialog ${positionClasses}`}
             ref={calendarRef}
-            role="list"
             aria-expanded={isOpen}>
 
             <header className="qmDatePickerHeader">
