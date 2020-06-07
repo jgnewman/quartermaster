@@ -10,6 +10,38 @@
   @extends $absFill
   z-index: 2
 
+.qmDatePickerIconWrapper
+  position: absolute
+  top: 50%
+  right: 0
+  transform: translateY(-50%)
+  z-index: 2
+
+  padding: 0.5em 0.66em
+
+  &::before
+    content: ""
+    display: block
+    position: absolute
+    left: 0
+    top: 50%
+    width: 1px
+    height: 50%
+    transform: translateY(-50%)
+    background: LIGHTEST_GRAY
+
+.qmDatePickerIcon
+  stroke: LIGHTEST_GRAY
+
+  .qmPathIsFilled
+    fill: LIGHTEST_GRAY
+
+  &:hover
+    stroke: HIGHLIGHTS
+
+    .qmPathIsFilled
+      fill: HIGHLIGHTS
+
 .qmDatePickerDialog
   @extends $dialogBox
 
@@ -24,8 +56,10 @@
 
 .qmDatePickerTitle
   text-align: center
-  vertical-align: middle
   font-weight: BOLD
+
+.qmDatePickerTitleText
+  vertical-align: middle
 
 .qmDatePickerReset
   margin-left: QUARTER_REM

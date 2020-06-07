@@ -14,11 +14,13 @@ import type {
 import { buildClassNames } from "../lib/helpers"
 
 import Grid from "../Grid"
-import TextField from "../TextField"
-import Label from "../Label"
 import IconButton from "../IconButton"
-import Triangle from "../icons/Triangle"
+import Label from "../Label"
+import TextField from "../TextField"
+
+import Calendar from "../icons/Calendar"
 import Reload from "../icons/Reload"
+import Triangle from "../icons/Triangle"
 
 import DatePickerCalendar from "./DatePickerCalendar"
 import DatePickerTimes from "./DatePickerTimes"
@@ -73,7 +75,7 @@ function DatePicker({
   value,
 }: DatePickerProps) {
 
-  // TODO: A CALENDAR ICON THAT TURNS INTO AN EX ICON TO CLEAR A VALUE
+  // TODO: ADD AN EX ICON LIKE ON SELECT MENU FOR CLEARING THE VALUE, MAKE SURE DARK MODE WORKS FOR ICONS
   // TODO: WHAT ELSE CAN WE DO FOR ACCESSIBILITY?
 
   const dateStamp = useDateStamp(value)
@@ -138,6 +140,10 @@ function DatePicker({
 
         <div className="qmDatePickerOverlay" onClick={focusTextField}></div>
 
+        <div className="qmDatePickerIconWrapper" onClick={focusTextField}>
+          <Calendar className="qmDatePickerIcon" size="m" title="Pick a date"/>
+        </div>
+
         {isOpen && (
           <div
             className={`qmDatePickerDialog ${positionClasses}`}
@@ -156,11 +162,11 @@ function DatePicker({
                 </div>
 
                 <div className="qmDatePickerTitle">
-                  {calendarTitle}
+                  <span className="qmDatePickerTitleText">{calendarTitle}</span>
                   <IconButton
                     className="qmDatePickerButton qmDatePickerReset"
                     clickHandler={resetView}>
-                    <Reload size="s" rotate={315} title="Reset" />
+                    <Reload size="s" title="Back to today" />
                   </IconButton>
                 </div>
 

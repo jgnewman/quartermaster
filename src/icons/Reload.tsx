@@ -8,18 +8,19 @@ import type { IconProps } from "./iconTypes"
 import IconWrapper from "./IconWrapper"
 
 const pathData = [
-  "M2.2,6.4 C1.4,5.78343913 1,4.98343913 1,4 C1,2.52484131 2.16165161,1 4,1",
-  "C5.83834839,1 7,2.53674316 7,4 C7,4.97550456 6.59838867,5.77550456 5.79516602,6.4",
+  "M1.75,7.13 C0.75,6.34823973 0.25,5.38823973 0.25,4.25 C0.25,2.5426404",
+  "1.60526021,0.75 3.75,0.75 C5.89473979,0.75 7.25,2.5564157 7.25,4.25",
+  "C7.25,5.9435843 6.25,6.75 5.59,7.25",
 ].join(" ")
 
 const Reload = forwardRef(function (props: IconProps, ref: Ref<SVGSVGElement>) {
   return (
     <IconWrapper ref={ref} title={props.title || "Reload icon"} {...props}>
-      <path d={pathData}></path>
-      <polyline
-        transform="translate(5.690990, 6.340990) rotate(45.000000) translate(-5.690990, -6.340990)"
-        points="4.19099026 5.59099026 5.69099026 7.09099026 7.19099026 5.59099026"
-      ></polyline>
+      <path
+        d={pathData}
+        transform="translate(3.750000, 4.000000) rotate(-90.000000) translate(-3.750000, -4.000000)"
+      ></path>
+      <polyline points="7.5 0.5 7.5 2.5 5.5 2.5"></polyline>
     </IconWrapper>
   )
 })

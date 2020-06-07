@@ -103,7 +103,7 @@ export function useValueSelector(
         const now = Date.now()
         let value: number
 
-        if (disablePast && showTimes && isSameDay(dateStamp, now)) {
+        if (disablePast && showTimes && isSameDay(dateStamp, now) && dateStamp < now) {
           let date = (new Date(dateStamp)).setMinutes(0)
 
           while (date < now) {

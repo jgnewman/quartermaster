@@ -34,8 +34,8 @@ import {
 
 import DarkTheme from "../src/themes/Dark"
 
-// import { createFPSChart } from "./FPSChart"
-// createFPSChart()
+import { createFPSChart } from "./FPSChart"
+createFPSChart()
 
 interface AppState {
   modalOpen: boolean
@@ -100,7 +100,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <Theme data={DarkTheme}>
+      <Theme data={this.state.darkThemeEnabled ? DarkTheme : null}>
         <div style={{ padding: "1em 1em 5em", maxWidth: "500px" }}>
 
           <Heading size={1} text="Welcome to Quartermaster!"/>

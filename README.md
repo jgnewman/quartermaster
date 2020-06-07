@@ -53,6 +53,8 @@ Quartermaster deliberately avoids styled-components for performance and bundle s
 - [Theme](#theme)
 - [Toggle](#toggle)
 
+TODO: Toast (allow multi-toast)
+
 ### Alert
 Places a colored box with an alert icon in one of three forms: `info`, `danger`, or `warning`. The content of the alert box can be specified with either `text` or `children`.
 

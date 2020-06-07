@@ -1,4 +1,5 @@
 export { default as Attn } from "./Attn"
+export { default as Calendar } from "./Calendar"
 export { default as Caret } from "./Caret"
 export { default as Checkmark } from "./Checkmark"
 export { default as Dot } from "./Dot"
