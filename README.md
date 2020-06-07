@@ -33,6 +33,7 @@ Quartermaster deliberately avoids styled-components for performance and bundle s
 - [Button](#button)
 - [Checkbox](#checkbox)
 - [ConfirmButton](#confirmbutton)
+- [DatePicker](#datepicker)
 - [Form](#form)
 - [Grid](#grid)
 - [Grow](#grow)
@@ -155,7 +156,7 @@ interface CheckboxProps {
 Behaves similarly to `Button` but intercepts the click handler with a confirmation modal allowing the user to confirm or cancel the action taken before firing the initial click handler. If the action is canceled, the click handler is not fired and the modal is closed. You can specify the confirmation text as well as the text on both the confirm or cancel buttons, all of which have defaults. If you don't want to display the confirmation message, for example if you only need confirmation on an action once, you can enable `skipConfirmation` to bypass the confirmation message.
 
 ```typescript
-export interface ConfirmButtonProps extends Exclude<ButtonProps, "highlight"> {
+interface ConfirmButtonProps extends Exclude<ButtonProps, "highlight"> {
   cancelText?: string
   confirmationText?: string
   continueText?: string
@@ -163,6 +164,42 @@ export interface ConfirmButtonProps extends Exclude<ButtonProps, "highlight"> {
   postCancelHook?: React.MouseEventHandler
   skipConfirmation?: boolean
   useCompactModalButtons?: boolean // affects yes/no button size
+}
+```
+
+### DatePicker
+Allows you to click a field, exposing a calendar from which you can select a date. You can enable the ability to select specific times in the day with the `showTimes` option. You can also turn off the ability to select any date in the past by way of the `disablePast` option. Note that `target.value` on the faux change event passed to the `changeHandler` will always return a number or null.
+
+```typescript
+interface DatePickerProps {
+  changeHandler?: FauxChangeEventHandler
+  className?: string
+  disablePast?: boolean
+  errorText?: string
+  hasError?: boolean
+  id?: string
+  isCompact?: boolean
+  isDisabled?: boolean
+  isRequired?: boolean
+  label?: string
+  placeholder?: string
+  position?: "top" | "bottom" // Defaults to "bottom". Whether the calendar opens up or down from the field.
+  showTimes?: boolean
+  tabIndex?: number
+  timesIncrement?: 5 | 10 | 15 | 30 | 60 // Defaults to 60. Determines the granularity of selectable times.
+  value?: Date | number | string | null
+}
+
+// where...
+
+type FauxChangeEventHandler<T = Element> = (event: ChangeEvent<T> | FauxChangeEvent) => void
+
+// where...
+
+interface FauxChangeEvent {
+  target: {
+    value: string | number | null
+  }
 }
 ```
 
