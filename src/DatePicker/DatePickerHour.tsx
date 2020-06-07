@@ -13,6 +13,7 @@ interface DatePickerHourProps {
   changeHandler?: FauxChangeEventHandler
   dateStamp: number
   disablePast: boolean
+  isCompact: boolean
   isDisabled: boolean
   pickerValue: number | null
   timesIncrement: 5 | 10 | 15 | 30 | 60
@@ -22,6 +23,7 @@ const DatePickerHour = forwardRef(function ({
   changeHandler,
   dateStamp,
   disablePast,
+  isCompact,
   isDisabled,
   pickerValue,
   timesIncrement,
@@ -45,6 +47,7 @@ const DatePickerHour = forwardRef(function ({
   )
 
   const buttonClasses = buildClassNames({
+    isCompact,
     isDisabled,
     isSelected,
   })

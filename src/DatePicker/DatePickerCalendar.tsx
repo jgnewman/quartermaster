@@ -10,6 +10,7 @@ interface DatePickerCalendarProps {
   currentView: number
   dateStamp: number | null
   disablePast: boolean
+  isCompact: boolean
   showTimes: boolean
   timesIncrement: 5 | 10 | 15 | 30 | 60
 }
@@ -19,6 +20,7 @@ function DatePickerCalendar({
   currentView,
   dateStamp,
   disablePast,
+  isCompact,
   showTimes,
   timesIncrement,
 }: DatePickerCalendarProps) {
@@ -50,6 +52,7 @@ function DatePickerCalendar({
                         changeHandler={changeHandler}
                         dateStamp={date.getTime()}
                         disablePast={disablePast}
+                        isCompact={isCompact}
                         isDisabled={isDisabled}
                         pickerValue={dateStamp}
                         showTimes={showTimes}

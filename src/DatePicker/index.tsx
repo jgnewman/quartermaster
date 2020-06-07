@@ -19,6 +19,7 @@ import Label from "../Label"
 import TextField from "../TextField"
 
 import Calendar from "../icons/Calendar"
+import Ex from "../icons/Ex"
 import Reload from "../icons/Reload"
 import Triangle from "../icons/Triangle"
 
@@ -35,6 +36,7 @@ import {
   useMonthDecrementor,
   useMonthIncrementor,
   useMonthResetter,
+  useValueResetter,
 } from "./hooks"
 
 export interface DatePickerProps {
@@ -92,6 +94,7 @@ function DatePicker({
   const incrementView = useMonthIncrementor(currentView, setCurrentView)
   const resetView = useMonthResetter(setCurrentView)
   const focusTextField = useFieldFocuser(fieldRef)
+  const clearValue = useValueResetter(changeHandler)
 
   useCloseCalendarOnClickAway(
     calendarRef,
@@ -113,6 +116,10 @@ function DatePicker({
     isBottom: position === "bottom",
   })
 
+  const fieldClasses = buildClassNames({
+    hasValue: !!value,
+  })
+
   return (
     <div className={`qmDatePickerContainer ${className || ""}`}>
 
@@ -121,7 +128,7 @@ function DatePicker({
       <div className="qmDatePickerFieldWrapper">
 
         <TextField
-          className="qmDatePickerField"
+          className={`qmDatePickerField ${fieldClasses}`}
           errorText={errorText}
           focusHandler={openCalendar}
           hasError={hasError}
@@ -140,8 +147,24 @@ function DatePicker({
 
         <div className="qmDatePickerOverlay" onClick={focusTextField}></div>
 
-        <div className="qmDatePickerIconWrapper" onClick={focusTextField}>
-          <Calendar className="qmDatePickerIcon" size="m" title="Pick a date"/>
+        <div className="qmDatePickerIcons">
+          {value && (
+            <button className={`qmDatePickerClearButton`} onClick={clearValue}>
+              <Ex
+                className="qmDatePickerIcon qmDatePickerClearIcon"
+                size="s"
+                title="Clear date"
+              />
+            </button>
+          )}
+
+          <div className="qmDatePickerIconWrapper" onClick={focusTextField}>
+            <Calendar
+              className="qmDatePickerIcon qmDatePickerDateIcon"
+              size="s"
+              title="Pick a date"
+            />
+          </div>
         </div>
 
         {isOpen && (
@@ -186,6 +209,7 @@ function DatePicker({
                 currentView={currentView}
                 dateStamp={dateStamp}
                 disablePast={disablePast}
+                isCompact={isCompact}
                 showTimes={showTimes}
                 timesIncrement={timesIncrement}
               />
@@ -195,6 +219,7 @@ function DatePicker({
                   changeHandler={changeHandler}
                   dateStamp={dateStamp}
                   disablePast={disablePast}
+                  isCompact={isCompact}
                   timesIncrement={timesIncrement}
                 />
               )}

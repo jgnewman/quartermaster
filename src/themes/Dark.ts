@@ -14,7 +14,7 @@ const BLACK_FADE_LIGHT = "rgba(0, 0, 0, 0.25)"
 
 const WHITE = "#FFFFFF"
 const HIGHLIGHTS = "#3C97FF"
-const ERRORS = "#f7364c"
+const RED = "#f7364c"
 
 export default {
   "background": {
@@ -52,7 +52,12 @@ export default {
     `,
 
     [LIGHT_GRAY]: ".qmAvatarInitials",
-    [LIGHTER_GRAY]: "qmSelectOpenIconWrapper::before",
+
+    [LIGHTER_GRAY]: `
+      .qmDatePickerIconWrapper::before,
+      .qmSelectOpenIconWrapper::before
+    `,
+
     [LIGHTEST_GRAY]: ".qmToggleSlider",
     [TRANSPARENCY]: ".qmCharLimitBar",
     [WHITE]: ".qmToggleSlider.isChecked",
@@ -97,7 +102,7 @@ export default {
   },
 
   "color": {
-    [ERRORS]: ".qmTextContainer.qmLabelRequired",
+    [RED]: ".qmTextContainer.qmLabelRequired",
 
     [LIGHT_GRAY]: `
       .qmCharLimitContainer.isDisabled .qmCharLimitText
@@ -140,7 +145,11 @@ export default {
   },
 
   "fill": {
-    [LIGHTER_GRAY]: ".qmIcon.qmMenuSubmenuIcon",
+    [LIGHTER_GRAY]: `
+      .qmIcon.qmDatePickerIcon .qmPathIsFilled,
+      .qmIcon.qmMenuSubmenuIcon
+    `,
+
     [WHITE]: ".qmPathIsFilled",
   },
 
@@ -153,6 +162,7 @@ export default {
 
   "stroke": {
     [LIGHTER_GRAY]: `
+      .qmIcon.qmDatePickerIcon,
       .qmIcon.qmSelectOpenIcon,
       .qmIcon.qmSelectClearIcon
     `,
@@ -162,7 +172,6 @@ export default {
 
   "opacity": {
     "0.2": ".qmCharLimitBarFill",
-    "0.33": ".qmSelectOpenIconWrapper::before",
 
     "0.5": `
       .qmSelectOpenIconWrapper.isDisabled,

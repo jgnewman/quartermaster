@@ -4,6 +4,8 @@ import React, {
 } from "react"
 
 import type { FauxChangeEventHandler } from "../lib/helperTypes"
+import { buildClassNames } from "../lib/helpers"
+
 import { getHoursForDay } from "./datePickerHelpers"
 import { useScrollToSelectedTime } from "./hooks"
 import DatePickerHour from "./DatePickerHour"
@@ -12,6 +14,7 @@ interface DatePickerTimesProps {
   changeHandler?: FauxChangeEventHandler
   dateStamp: number | null
   disablePast: boolean
+  isCompact: boolean
   timesIncrement: 5 | 10 | 15 | 30 | 60
 }
 
@@ -19,6 +22,7 @@ function DatePickerTimes({
   changeHandler,
   dateStamp,
   disablePast,
+  isCompact,
   timesIncrement,
 }: DatePickerTimesProps) {
 
@@ -38,10 +42,14 @@ function DatePickerTimes({
     totalHours,
   )
 
+  const scrollAreaClasses = buildClassNames({
+    isCompact,
+  })
+
   return (
     <div className="qmDatePickerTimes">
       <span className="qmDatePickerTimeTitle">Time</span>
-      <div className="qmDatePickerHours" ref={scrollAreaRef}>
+      <div className={`qmDatePickerHours ${scrollAreaClasses}`} ref={scrollAreaRef}>
         {
           hours.map((hour, index) => {
             const isBeforeNow = hour < now
@@ -60,6 +68,7 @@ function DatePickerTimes({
                 changeHandler={changeHandler}
                 dateStamp={hour}
                 disablePast={disablePast}
+                isCompact={isCompact}
                 isDisabled={isDisabled}
                 pickerValue={dateStamp}
                 timesIncrement={timesIncrement}

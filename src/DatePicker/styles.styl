@@ -6,18 +6,27 @@
 .qmDatePickerFieldWrapper
   position: relative
 
+.qmDatePickerField .qmTextFieldInput.isField
+  padding-right: REM * 3
+
+.qmDatePickerField.hasValue .qmTextFieldInput.isField
+  padding-right: REM * 4.5
+
 .qmDatePickerOverlay
   @extends $absFill
   z-index: 2
 
-.qmDatePickerIconWrapper
+.qmDatePickerIcons
   position: absolute
   top: 50%
   right: 0
   transform: translateY(-50%)
   z-index: 2
+  display: flex
 
-  padding: 0.5em 0.66em
+.qmDatePickerIconWrapper
+  position: relative
+  padding: 0.5em 0.75em
 
   &::before
     content: ""
@@ -30,17 +39,26 @@
     transform: translateY(-50%)
     background: LIGHTEST_GRAY
 
-.qmDatePickerIcon
+.qmIcon.qmDatePickerIcon
   stroke: LIGHTEST_GRAY
 
   .qmPathIsFilled
     fill: LIGHTEST_GRAY
 
-  &:hover
-    stroke: HIGHLIGHTS
+.qmIcon.qmDatePickerDateIcon:hover
+  stroke: HIGHLIGHTS
 
-    .qmPathIsFilled
-      fill: HIGHLIGHTS
+  .qmPathIsFilled
+    fill: HIGHLIGHTS
+
+.qmDatePickerClearButton
+  border: 0
+  background: transparent
+  outline: solid transparent !important
+  padding: 0.5em 0.66em
+
+  &:hover .qmDatePickerClearIcon
+    stroke: RED
 
 .qmDatePickerDialog
   @extends $dialogBox
@@ -104,6 +122,9 @@
   padding: QUARTER_REM
   transition: BASE_TRANSITION
 
+  &.isCompact
+    padding: EIGHTH_REM
+
   &:not(.isDisabled):hover
     background: BLACK_FADE_FLY
 
@@ -132,6 +153,9 @@
   flex-flow: column
   max-height: REM * 9.25
   overflow-y: auto
+
+  &.isCompact
+    max-height: REM * 8
 
 .qmDatePickerHour
   margin: plus(div(QUARTER_REM, 2), 1) auto 0

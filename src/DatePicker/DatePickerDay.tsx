@@ -13,6 +13,7 @@ interface DatePickerButtonProps {
   changeHandler?: FauxChangeEventHandler
   dateStamp: number
   disablePast: boolean
+  isCompact: boolean
   isDisabled: boolean
   pickerValue: number | null
   showTimes: boolean
@@ -23,6 +24,7 @@ function DatePickerButton({
   changeHandler,
   dateStamp,
   disablePast,
+  isCompact,
   isDisabled,
   pickerValue,
   showTimes,
@@ -46,6 +48,7 @@ function DatePickerButton({
   )
 
   const buttonClasses = buildClassNames({
+    isCompact,
     isDisabled,
     isSelected,
     isToday,

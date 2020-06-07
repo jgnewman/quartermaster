@@ -335,6 +335,7 @@ class App extends React.Component {
                     value={formState.mydate}
                     changeHandler={updateValueFor("mydate")}
                     disablePast={true}
+                    isCompact={false}
                     placeholder="Pick a date!"
                     showTimes={true}
                     timesIncrement={30}

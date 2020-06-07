@@ -73,6 +73,12 @@ export function useCalendarTitle(stamp: number | null): string {
   }, [stamp])
 }
 
+export function useValueResetter(changeHandler: FauxChangeEventHandler | undefined) {
+  return useCallback(() => {
+    changeHandler && changeHandler({ target: { value: null } })
+  }, [changeHandler])
+}
+
 export function useValueSelector(
   changeHandler: FauxChangeEventHandler | undefined,
   dateStamp: number,
@@ -166,7 +172,6 @@ export function useCalendarState(initialState: boolean) {
     isOpen,
     closeCalendar: useCallback(() => setIsOpen(false), [setIsOpen]),
     openCalendar: useCallback(() => setIsOpen(true), [setIsOpen]),
-    toggleCalendar: useCallback(() => setIsOpen(!isOpen), [isOpen, setIsOpen]),
   }
 }
 
