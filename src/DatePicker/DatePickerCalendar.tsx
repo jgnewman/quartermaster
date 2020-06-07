@@ -1,8 +1,9 @@
 import React, { memo } from "react"
 
 import type { FauxChangeEventHandler } from "../lib/helperTypes"
-import DatePickerDay from "./DatePickerDay"
+import Text from "../Text"
 
+import DatePickerDay from "./DatePickerDay"
 import { useCalendarData } from "./hooks"
 
 interface DatePickerCalendarProps {
@@ -32,13 +33,11 @@ function DatePickerCalendar({
       <table className="qmDatePickerDayTable">
         <thead className="qmDatePickerTHead">
           <tr>
-            <th>S</th>
-            <th>M</th>
-            <th>T</th>
-            <th>W</th>
-            <th>T</th>
-            <th>F</th>
-            <th>S</th>
+            {
+              ["S", "M", "T", "W", "T", "F", "S"].map((letter, index) => (
+                <th key={index}><Text isBold isSmaller>{letter}</Text></th>
+              ))
+            }
           </tr>
         </thead>
         <tbody>

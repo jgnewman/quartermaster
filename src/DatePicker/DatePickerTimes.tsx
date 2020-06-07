@@ -5,6 +5,7 @@ import React, {
 
 import type { FauxChangeEventHandler } from "../lib/helperTypes"
 import { buildClassNames } from "../lib/helpers"
+import Text from "../Text"
 
 import { getHoursForDay } from "./datePickerHelpers"
 import { useScrollToSelectedTime } from "./hooks"
@@ -48,7 +49,7 @@ function DatePickerTimes({
 
   return (
     <div className="qmDatePickerTimes">
-      <span className="qmDatePickerTimeTitle">Time</span>
+      <Text className="qmDatePickerTimeTitle" isBold isSmaller>Time</Text>
       <div className={`qmDatePickerHours ${scrollAreaClasses}`} ref={scrollAreaRef}>
         {
           hours.map((hour, index) => {

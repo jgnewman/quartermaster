@@ -16,6 +16,7 @@ import { buildClassNames } from "../lib/helpers"
 import Grid from "../Grid"
 import IconButton from "../IconButton"
 import Label from "../Label"
+import Text from "../Text"
 import TextField from "../TextField"
 
 import Calendar from "../icons/Calendar"
@@ -181,7 +182,7 @@ function DatePicker({
                 </div>
 
                 <div className="qmDatePickerTitle">
-                  <span className="qmDatePickerTitleText">{calendarTitle}</span>
+                  <Text className="qmDatePickerTitleText" isBold>{calendarTitle}</Text>
                   <IconButton
                     className="qmDatePickerButton qmDatePickerReset"
                     clickHandler={resetView}>

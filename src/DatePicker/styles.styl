@@ -76,9 +76,6 @@
   text-align: center
   font-weight: BOLD
 
-.qmDatePickerTitleText
-  vertical-align: middle
-
 .qmDatePickerReset
   margin-left: QUARTER_REM
 
@@ -106,10 +103,6 @@
   th, td
     border: 0
 
-.qmDatePickerTHead
-  font-size: 90%
-  font-weight: BOLD
-
 .qmDatePickerDay,
 .qmDatePickerHour
   borders(1px solid transparent, QUARTER_REM)
@@ -118,7 +111,7 @@
   display: block
   width: 100%
   background: BLACK_FADE_MIN
-  font-size: 90%
+  font-size: SMALLER_FONT
   padding: QUARTER_REM
   transition: BASE_TRANSITION
 
@@ -144,18 +137,17 @@
   flex-grow: 1
 
 .qmDatePickerTimeTitle
-  font-weight: BOLD
-  font-size: 90%
+  padding: 2px 0 // Using px here to align with table spacing
 
 .qmDatePickerHours
   display: flex
   flex-wrap: wrap
   flex-flow: column
-  max-height: REM * 9.25
+  max-height: REM * 9
   overflow-y: auto
 
   &.isCompact
-    max-height: REM * 8
+    max-height: REM * 7.75
 
 .qmDatePickerHour
   margin: plus(div(QUARTER_REM, 2), 1) auto 0
