@@ -99,19 +99,30 @@ class App extends React.Component {
     this.setState({ darkThemeEnabled: !this.state.darkThemeEnabled })
   }
 
+  fireToast = () => {
+    const showToast = getToastArea()
+    showToast({
+      body: "Here is your toast!",
+      duration: 10000,
+      isDismissible: true,
+    })
+  }
+
   launchToasts() {
     const showToast = getToastArea()
 
     setTimeout(() => {
       showToast({
-        body: "This is my toast!",
+        body: "Hi there! I hope you're having a good day. Feel free to stick around and explore!",
         duration: 10000,
         isDismissible: true,
       })
     }, 1000)
 
     setTimeout(() => {
-      showToast({ body: "Another toast!" })
+      showToast({
+        body: "And don't forget to subscribe!",
+      })
     }, 2000)
   }
 
@@ -148,6 +159,12 @@ class App extends React.Component {
             />
 
             <Text text="Hello, world!"/>
+
+            <Button
+              text="10s Toast"
+              isCompact={true}
+              clickHandler={this.fireToast}
+            />
           </Align>
 
           <Space bottom="l">

@@ -3,6 +3,10 @@ import React, {
   useState,
 } from "react"
 
+import {
+  buildClassNames,
+} from "../lib/helpers"
+
 import Animation from "../Animation"
 import Ex from "../icons/Ex"
 import IconButton from "../IconButton"
@@ -13,12 +17,13 @@ import {
 } from "./types"
 
 import {
-  removeMessageFromAreaMessages,
-} from "./helpers"
+  useMessageRemover,
+} from "./hooks"
 
 const DEFAULT_DURATION = 3000
 
 function Toast({
+  alignment,
   id,
   body,
   duration = DEFAULT_DURATION,
@@ -34,24 +39,41 @@ function Toast({
   const slideOut = isBottom ? "down" : "up"
   const animDirection = shouldShow ? slideIn : slideOut
 
-  setTimeout(() => {
-    setShouldShow(false)
-    removeMessageFromAreaMessages(eventName, id)
-  }, duration)
+  const removeMessage = useMessageRemover(
+    eventName,
+    id,
+    duration,
+    setShouldShow,
+  )
+
+  const alignClasses = buildClassNames({
+    isLX: alignment === "left",
+    isCX: alignment === "center",
+    isRX: alignment === "right",
+  })
 
   return (
     <Animation
-      className="qmToast"
+      className={`qmToast ${alignClasses}`}
       type={animType}
       direction={animDirection}
-      removeOnHide={true}>
-      <Text>{body}</Text>
+      removeOnHide={true}
+    >
+      <div className="qmToastContentWrapper">
+        <div className="qmToastContent">
+          <Text className="qmToastText">
+            {body}
+          </Text>
 
-      {isDismissible && (
-        <IconButton>
-          <Ex size="s" />
-        </IconButton>
-      )}
+          {isDismissible && (
+            <IconButton
+              className="qmToastClearButton"
+              clickHandler={removeMessage}>
+              <Ex size="s" />
+            </IconButton>
+          )}
+        </div>
+      </div>
     </Animation>
   )
 }

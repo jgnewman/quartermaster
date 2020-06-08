@@ -25,17 +25,19 @@ function ToastList({
   return (
     <div className={`qmToastList`}>
       {messages.map(({
-        id,
+        alignment,
         body,
         duration,
+        id,
         isDismissible,
       }) => (
         <Toast
           key={id}
-          id={id}
+          alignment={alignment}
           body={body}
           duration={duration}
           eventName={eventName}
+          id={id}
           isBottom={isBottom}
           isDismissible={isDismissible}
         />

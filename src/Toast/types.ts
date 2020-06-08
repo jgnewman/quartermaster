@@ -1,3 +1,6 @@
+export type XPos = "left" | "center" | "right"
+export type YPos = "top" | "bottom"
+
 export interface PublishableMessage {
   body: string
   duration?: number
@@ -6,6 +9,7 @@ export interface PublishableMessage {
 
 export interface ToastMessage extends PublishableMessage {
   id: string
+  alignment: XPos
 }
 
 export interface ToastProps extends ToastMessage {
@@ -27,6 +31,4 @@ export interface AreaMessages {
   [key: string]: ToastMessage[]
 }
 
-export type XPos = "left" | "center" | "right"
-export type YPos = "top" | "bottom"
 export type Listener = (messages: ToastMessage[]) => void

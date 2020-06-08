@@ -56,34 +56,13 @@ function assertToastAreaMounted(x: XPos, y: YPos) {
 
 export default function getToastArea(x: XPos = "right", y: YPos = "top") {
   assertToastAreaMounted(x, y)
-
   const eventName = x + y
+
   return function (msg: PublishableMessage) {
-    const publishData: ToastMessage = { ...msg, id: createId() }
+    const publishData: ToastMessage = { ...msg, id: createId(), alignment: x }
     publish(eventName, publishData)
   }
 }
 
-/*
+// TODO: WRAP IN ALERT COMPONENT & DOCUMENT CHANGE
 
-TODO: WRAP IN ALERT COMPONENT
-TODO: DOCUMENT IN README
-TODO: MAKE DISMISSABLE
-TODO: DURATION CUSTOMIZATION
-
-function Foo(props) {
-  const showToast = getToastArea("right", "top")
-
-  if (props.error) {
-    showToast({
-      id: "error",
-      body: "Something went wrong!"
-    })
-  }
-
-  return (
-    <div></div>
-  )
-}
-
-*/

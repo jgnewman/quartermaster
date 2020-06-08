@@ -52,9 +52,8 @@ Quartermaster deliberately avoids styled-components for performance and bundle s
 - [Text](#text)
 - [TextField](#textfield)
 - [Theme](#theme)
+- [Toast](#toast)
 - [Toggle](#toggle)
-
-TODO: Toast (allow multi-toast)
 
 ### Alert
 Places a colored box with an alert icon in one of three forms: `info`, `danger`, or `warning`. The content of the alert box can be specified with either `text` or `children`.
@@ -776,6 +775,34 @@ import { ThemeExtension } from "quartermaster"
   data={{ background: { red: ".qmTextFieldInputWrapper" } }}>
   <App />
 <ThemeExtension>
+```
+
+### Toast
+Toasts allow you to display quick, hovering messages to the user designed to animate on screen and then animate away again. Toast functionality is a bit different from other components because toasts might be triggered anywhere within your application tree and you may need to have more than one toast on-screen at the same time, which means that toasts need to be aware of each other. Because of this, rather than importing a `Toast` component, you will import the `getToastArea` function. Calling this function returns another function that triggers a toast within the chosen area when called.
+
+There are 6 available toast areas on the screen. They appear at either the top or bottom of the screen, and either to the left, center, or right. Choose a toast area by specifying your `x` and `y` locations when calling `getToastArea`.
+
+```typescript
+import { getToastArea } from "quartermaster"
+// or import getToastArea from "quartermaster/Toast
+
+const showToast = getToastArea("center", "bottom")
+```
+
+Then, to trigger a toast message, just call the `showToast` function.
+
+```typescript
+showToast({ body: "This is my toast!" })
+```
+
+When triggering a toast message, you have the following options available to you:
+
+```typescript
+interface PublishableMessage {
+  body: string
+  duration?: number // Defaults to 3000. The toast will disappear after this time limit.
+  isDismissible?: boolean // If true, allows the user to click an "x" icon to clear the message.
+}
 ```
 
 ### Toggle

@@ -21,13 +21,37 @@
     transform: translateX(-50%)
 
 .qmToast
-  borders(0, QUARTER_REM)
-  display: flex
-  align-items: center
-
-  padding: times(0.1, REM) THREE_QUARTER_REM
   margin-bottom: HALF_GUTTER
-  min-height: LARGER_ELEM_HEIGHT
+  max-width: 350px
+
+  &.isLX
+    text-align: left
+
+  &.isCX
+    text-align: center
+
+  &.isRX
+    text-align: right
+
+.qmToastContentWrapper
+  display: inline-block
+  text-align: left
+
+.qmToastContent
+  borders(0, QUARTER_REM)
+  box-sizing: border-box
 
   background: BASE_BG
   box-shadow: LIFTED_SHADOW
+
+  display: flex
+  align-items: center
+  padding-right: THREE_QUARTER_REM
+  min-height: LARGER_ELEM_HEIGHT
+
+.qmToastText
+  padding: THREE_QUARTER_REM REM
+
+.qmToastClearButton
+  flex-shrink: 0
+

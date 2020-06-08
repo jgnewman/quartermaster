@@ -38,7 +38,8 @@ export default {
       .qmIconButtonEffect,
       .qmMenuContainer,
       .qmSelectMenu,
-      .qmSelectMenuOption
+      .qmSelectMenuOption,
+      .qmToastContent
     `,
 
     [BLACK_FADE_LIGHT]: `
@@ -64,7 +65,8 @@ export default {
 
     [WHITE_FADE_FLY]: `
       .qmDatePickerDay,
-      .qmDatePickerHour
+      .qmDatePickerHour,
+      .qmToastClearButton .qmIconButtonEffect
     `,
 
   },
