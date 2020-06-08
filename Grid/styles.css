@@ -1,0 +1,82 @@
+.qmGridContainer {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  margin: 0 auto;
+}
+.qmGridContainer > * {
+  flex-grow: 1;
+  margin: 0;
+}
+.qmGridContainer.isGutterWS {
+  margin: 0 -0.25em;
+}
+.qmGridContainer.isGutterWS > * {
+  margin-left: 0.25em;
+  margin-right: 0.25em;
+}
+.qmGridContainer.isGutterWM {
+  margin: 0 -0.5em;
+}
+.qmGridContainer.isGutterWM > * {
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+.qmGridContainer.isGutterWL {
+  margin: 0 -0.75em;
+}
+.qmGridContainer.isGutterWL > * {
+  margin-left: 0.75em;
+  margin-right: 0.75em;
+}
+.qmGridContainer.isGutterHS > * {
+  margin-bottom: 0.5em;
+}
+.qmGridContainer.isGutterHM > * {
+  margin-bottom: 1em;
+}
+.qmGridContainer.isGutterHL > * {
+  margin-bottom: 1.5em;
+}
+.qmGridContainer.isGutterHS > *:last-child,
+.qmGridContainer.isGutterHM > *:last-child,
+.qmGridContainer.isGutterHL > *:last-child {
+  margin-bottom: 0;
+}
+.qmGridContainer.isAround {
+  justify-content: space-around;
+}
+.qmGridContainer.isBetween {
+  justify-content: space-between;
+}
+.qmGridContainer.isCenter {
+  justify-content: center;
+}
+.qmGridContainer.isEnd {
+  justify-content: flex-end;
+}
+.qmGridContainer.isEven {
+  justify-content: space-evenly;
+}
+.qmGridContainer.isStart {
+  justify-content: flex-start;
+}
+.qmGridContainer.hasWrap {
+  flex-wrap: wrap;
+}
+.qmGridContainer.isStretch {
+  align-items: stretch;
+}
+.qmGrowContainer.isStatic {
+  flex-grow: 0;
+}
+.qmGrowContainer.isSingle {
+  flex-grow: 1;
+}
+.qmGrowContainer.isDouble {
+  flex-grow: 2;
+}
+.qmGrowContainer.isTriple {
+  flex-grow: 3;
+}
+

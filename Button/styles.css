@@ -1,0 +1,70 @@
+.qmButtonContainer {
+  display: inline-block;
+  vertical-align: middle;
+}
+.qmButtonContent {
+  transition: all 0.2s ease;
+  color: #fff;
+}
+.qmButtonContainer {
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 160px;
+  position: relative;
+  background: #3c97ff;
+  padding: 8px 40px 8px;
+  height: 48px;
+  line-height: 1;
+  transition: all 0.2s ease;
+  cursor: default;
+  opacity: 0.5;
+  outline: solid transparent !important;
+}
+.qmButtonContainer .qmButtonSpinner {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  margin-top: -10px;
+  border-color: rgba(255,255,255,0.25);
+  border-top-color: #fff;
+}
+.qmButtonContainer.isCompact {
+  height: 32px;
+  padding: 0 24px 2px;
+}
+.qmButtonContainer.isCompact .qmButtonSpinner {
+  left: 8px;
+  margin-top: -8px;
+}
+.qmButtonContainer.isEnabled {
+  cursor: pointer;
+  opacity: 1;
+}
+.qmButtonContainer.isEnabled:hover {
+  background: #59a7ff;
+}
+.qmButtonContainer.isEnabled:hover .qmButtonContent {
+  color: #fff;
+}
+.qmButtonContainer.isPositive {
+  background: #52c02c;
+}
+.qmButtonContainer.isPositive.isEnabled:hover {
+  background: #67d442;
+}
+.qmButtonContainer.isNegative {
+  background: #f7364c;
+}
+.qmButtonContainer.isNegative.isEnabled:hover {
+  background: #f85467;
+}
+.qmButtonContainer.isDisabled {
+  opacity: 0.5;
+}
+.qmButtonContainer.isEnabled.isFocused {
+  transform: scale(1.1);
+}
+.qmButtonContainer.isEnabled:active {
+  transform: scale(0.95);
+}
+

@@ -1,0 +1,33 @@
+import "./styles.css";
+import React, { ChangeEventHandler, FocusEventHandler, KeyboardEventHandler, ReactNode } from "react";
+export interface TextFieldProps {
+    blurHandler?: FocusEventHandler;
+    changeHandler?: ChangeEventHandler;
+    charLimit?: number;
+    charLimitIsMinimum?: boolean;
+    children?: ReactNode;
+    className?: string;
+    dangerouslyAutoTruncateLimitBreakingValues?: boolean;
+    defaultValue?: string;
+    enableTextAreaResize?: boolean;
+    errorText?: string;
+    focusHandler?: FocusEventHandler;
+    hasError?: boolean;
+    hideCharLimitProgress?: boolean;
+    hideCharLimitText?: boolean;
+    id?: string;
+    ignoreLastPass?: boolean;
+    isCompact?: boolean;
+    isDisabled?: boolean;
+    isReadOnly?: boolean;
+    isRequired?: boolean;
+    keyUpHandler?: KeyboardEventHandler;
+    label?: string;
+    placeholder?: string;
+    preventInputAtLimit?: boolean;
+    tabIndex?: number;
+    type?: string;
+    value?: string;
+}
+declare const _default: React.MemoExoticComponent<React.ForwardRefExoticComponent<TextFieldProps & React.RefAttributes<import("../lib/helperTypes").InputElem>>>;
+export default _default;

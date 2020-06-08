@@ -1,0 +1,97 @@
+.qmToggleOverlay {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+.qmIcon.qmToggleCheckmark {
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+.qmToggleContainer,
+.qmToggleLabel,
+.qmToggleFauxWrapper,
+.qmToggleCheckWrapper {
+  display: inline-block;
+  vertical-align: middle;
+}
+.qmToggleContainer {
+  padding: 0 12px 5.333333333333333px 0;
+}
+.qmToggleLabel {
+  color: #333;
+  transition: all 0.2s ease;
+  margin-right: 5.333333333333333px;
+}
+.qmToggleLabel.isDisabled {
+  color: #bdbdbd;
+}
+.qmToggleFauxWrapper:hover .qmToggleLabel.isEnabled {
+  color: #3c97ff;
+}
+.qmToggleCheckWrapper {
+  width: 45px;
+  height: 24px;
+  position: relative;
+  margin-right: 5.333333333333333px;
+}
+.qmToggleOverlay {
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 160px;
+  background: rgba(0,0,0,0.1);
+  outline: solid transparent !important;
+  transition: all 0.2s ease;
+  box-shadow: 0 0 0 transparent;
+}
+.qmToggleOverlay.isChecked {
+  background: #3c97ff;
+  border-color: #3c97ff;
+}
+.qmToggleOverlay.isFocused {
+  box-shadow: 0 0 0 2px #3c97ff;
+  border-color: #3c97ff;
+}
+.qmToggleSlider {
+  width: 18px;
+  height: 18px;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 50%;
+  content: "";
+  display: block;
+  position: absolute;
+  left: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
+}
+.qmToggleSlider.isChecked {
+  left: calc(45px - 18px - 3px);
+}
+.qmIcon.qmToggleCheckmark {
+  left: 30%;
+  opacity: 0;
+  transition: all 0.2s ease;
+  transform: translateX(-50%) translateY(-50%) scale(0);
+  stroke: #fff;
+}
+.qmIcon.qmToggleCheckmark.isChecked {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-50%) scale(1);
+}
+.qmToggleNative {
+  display: block;
+  position: absolute;
+  left: -1000vw;
+  top: 0;
+  border: 0;
+}
+

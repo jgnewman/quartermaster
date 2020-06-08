@@ -1,0 +1,88 @@
+.qmMenuContainer {
+  display: block;
+  background: #fff;
+  padding: 20px 0;
+  position: relative;
+  z-index: 3;
+}
+.qmMenuContainer.isCompact {
+  padding: 12px 0;
+}
+.qmMenuContainer.isLifted {
+  box-shadow: 0 3px 15px rgba(0,0,0,0.2);
+}
+.qmMenuLabel {
+  padding-bottom: 0;
+}
+.qmMenuLink,
+.qmMenuSubmenuLink {
+  display: block;
+  color: #333;
+  text-decoration: none;
+  line-height: 1.2;
+  transition: all 0.2s ease;
+  position: relative;
+}
+.qmMenuLink:hover,
+.qmMenuSubmenuLink.isCollapsible:hover {
+  color: #3c97ff;
+  background-color: rgba(0,0,0,0.05);
+}
+.qmMenuSubmenuLink {
+  border: 0;
+  background: transparent;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  overflow: visible;
+  outline: solid transparent !important;
+}
+.qmMenuLinkText {
+  display: block;
+  max-width: calc(100% - 32px);
+}
+.qmMenuSubmenu.qmMenuContainer:not(.isCollapsible) {
+  padding-top: 0;
+  padding-bottom: 0;
+  box-shadow: none;
+  margin-left: 16px;
+}
+.qmMenuSubmenu.canAnimate {
+  position: absolute;
+  width: 100%;
+}
+.qmMenuSubmenu.canAnimate.isMenuLeft {
+  right: 16px;
+}
+.qmMenuSubmenu.canAnimate.isMenuRight {
+  left: 16px;
+}
+.qmMenuSubmenu.canAnimate.isMenuTop {
+  bottom: 100%;
+}
+.qmMenuSubmenu.canAnimate.isMenuBottom {
+  top: 100%;
+}
+.qmMenuSeparator {
+  border: 0;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+.qmIcon.qmMenuActiveIcon,
+.qmIcon.qmMenuSubmenuIcon {
+  position: absolute;
+  top: 50%;
+  right: 24px;
+  transform: translateY(-50%);
+}
+.qmIcon.qmMenuActiveIcon.isCompact,
+.qmIcon.qmMenuSubmenuIcon.isCompact {
+  right: 16px;
+}
+.qmMenuSubmenuIcon.isFlipped {
+  transform: translateY(-50%) rotate(180deg);
+}
+.qmIcon.qmMenuActiveIcon {
+  stroke: #52c02c;
+}
+

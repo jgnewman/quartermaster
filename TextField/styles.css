@@ -1,0 +1,157 @@
+.qmCharLimitContainer {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+.qmCharLimitContainer {
+  text-align: right;
+  overflow: hidden;
+}
+.qmCharLimitText {
+  color: #bdbdbd;
+  font-size: 85%;
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+}
+.qmCharLimitText.isField {
+  bottom: 50%;
+  transform: translateY(50%);
+}
+.qmCharLimitCount.hasError {
+  font-weight: bold;
+  color: #f7364c;
+}
+.qmCharLimitCount.reachedMin {
+  font-weight: bold;
+  color: #52c02c;
+}
+.qmCharLimitBar {
+  width: 100%;
+  height: 5px;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 0 0 4px 4px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  display: block;
+  background: rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+.qmCharLimitBar.isCompact {
+  width: 100%;
+  height: 3px;
+}
+.qmCharLimitBarFill {
+  width: 0;
+  height: 100%;
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: all 0.2s ease;
+}
+.qmCharLimitBarFill.empty {
+  background: transparent;
+}
+.qmCharLimitBarFill.worst {
+  background: #f7364c;
+}
+.qmCharLimitBarFill.worse {
+  background: #ff8933;
+}
+.qmCharLimitBarFill.decent {
+  background: #f3b709;
+}
+.qmCharLimitBarFill.better {
+  background: #aabb19;
+}
+.qmCharLimitBarFill.best {
+  background: #52c02c;
+}
+.qmCharLimitBarFill.error {
+  background: #f7364c;
+}
+.qmTextFieldContainer {
+  position: relative;
+}
+.qmTextFieldInputWrapper {
+  display: block;
+  position: relative;
+  background: #fff;
+  border-radius: 4px;
+}
+.qmTextFieldInputWrapper.isDisable .qmCharLimitContainer {
+  opacity: 0.25;
+}
+.qmTextFieldError {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: 100%;
+  color: #f7364c;
+  font-size: 75%;
+  padding: 4px 0 5.333333333333333px;
+}
+.qmTextFieldInput.isTextArea,
+.qmTextFieldInput.isField {
+  box-sizing: border-box;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 4px;
+  position: relative;
+  z-index: 2;
+  display: block;
+  margin: 0;
+  color: #333;
+  background: transparent;
+  line-height: 1;
+  width: 100%;
+  outline: solid transparent !important;
+  box-shadow: 0 0 0 transparent;
+  transition: all 0.2s ease;
+}
+.qmTextFieldInput.isTextArea::placeholder,
+.qmTextFieldInput.isField::placeholder {
+  color: #777;
+}
+.qmTextFieldInput.isTextArea.isFocused,
+.qmTextFieldInput.isField.isFocused {
+  box-shadow: 0 0 0 2px #3c97ff;
+  border-color: #3c97ff;
+}
+.qmTextFieldInput.isTextArea.hasError,
+.qmTextFieldInput.isField.hasError {
+  box-shadow: 0 0 0 2px #f7364c;
+  border-color: #f7364c;
+}
+.qmTextFieldInput.isTextArea.isDisabled::placeholder,
+.qmTextFieldInput.isField.isDisabled::placeholder {
+  color: #bdbdbd;
+}
+.qmTextFieldInput.isTextArea {
+  height: 144px;
+  padding: 10.666666666666666px 12px;
+  resize: auto;
+}
+.qmTextFieldInput.isTextArea.isCompact {
+  height: 96px;
+}
+.qmTextFieldInput.isTextArea.hasCharLimit {
+  padding-bottom: 28px;
+}
+.qmTextFieldInput.isTextArea.noResize {
+  resize: none;
+}
+.qmTextFieldInput.isField {
+  padding: 1.6px 12px;
+  height: 48px;
+}
+.qmTextFieldInput.isField.isCompact {
+  height: 32px;
+}
+

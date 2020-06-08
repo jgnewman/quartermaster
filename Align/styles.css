@@ -1,0 +1,23 @@
+.qmAlignItem {
+  display: inline-block;
+  vertical-align: middle;
+}
+.qmAlignContainer.isLeft {
+  text-align: left;
+}
+.qmAlignContainer.isCenter {
+  text-align: center;
+}
+.qmAlignContainer.isRight {
+  text-align: right;
+}
+.qmAlignItem {
+  padding: 0 8px;
+}
+.qmAlignItem:first-child {
+  padding-left: 0;
+}
+.qmAlignItem:last-child {
+  padding-right: 0;
+}
+

@@ -1,0 +1,9 @@
+.qmLabelContainer {
+  padding: 0 0 8px 0;
+  text-align: left;
+}
+.qmLabelRequired {
+  color: #f7364c;
+  padding: 0 2px;
+}
+

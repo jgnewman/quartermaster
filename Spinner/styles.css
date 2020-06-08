@@ -1,0 +1,42 @@
+.qmSpinnerContainer {
+  display: block;
+  box-sizing: border-box;
+  border-radius: 50%;
+  border-style: solid;
+  border-color: rgba(0,0,0,0.1);
+  border-top-color: #3c97ff;
+  animation: qmSpin 1s linear infinite;
+}
+@-moz-keyframes qmSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes qmSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@-o-keyframes qmSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes qmSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+

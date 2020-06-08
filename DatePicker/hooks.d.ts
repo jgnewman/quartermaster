@@ -1,0 +1,20 @@
+import { Dispatch, RefObject, SetStateAction } from "react";
+import type { FauxChangeEventHandler } from "../lib/helperTypes";
+import { Day } from "./helpers";
+export declare function useDateStamp(value?: Date | number | string | null): number | null;
+export declare function useFieldValue(stamp: number | null, showTimes?: boolean): string;
+export declare function useCalendarTitle(stamp: number | null): string;
+export declare function useValueResetter(changeHandler: FauxChangeEventHandler | undefined): () => void;
+export declare function useValueSelector(changeHandler: FauxChangeEventHandler | undefined, dateStamp: number, disablePast: boolean, isSelected: boolean, showTimes: boolean, timesIncrement: number): () => void;
+export declare function useMonthDecrementor(currentView: number, setCurrentView: Dispatch<SetStateAction<number>>): () => void;
+export declare function useMonthIncrementor(currentView: number, setCurrentView: Dispatch<SetStateAction<number>>): () => void;
+export declare function useMonthResetter(setCurrentView: Dispatch<SetStateAction<number>>): () => void;
+export declare function useCalendarData(currentView: number, disablePast: boolean): Day[][];
+export declare function useCalendarState(initialState: boolean): {
+    isOpen: boolean;
+    closeCalendar: () => void;
+    openCalendar: () => void;
+};
+export declare function useCloseCalendarOnClickAway(calendarRef: RefObject<HTMLDivElement>, closeCalendar: () => void, isOpen: boolean): void;
+export declare function useFieldFocuser(ref: RefObject<HTMLInputElement>): () => void;
+export declare function useScrollToSelectedTime(enabledButtonIndexRef: RefObject<number>, firstEnabledButtonRef: RefObject<HTMLButtonElement>, scrollAreaRef: RefObject<HTMLDivElement>, totalHours: number): void;
