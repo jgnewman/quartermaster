@@ -16,10 +16,7 @@ const pathData = [
 const Reload = forwardRef(function (props: IconProps, ref: Ref<SVGSVGElement>) {
   return (
     <IconWrapper ref={ref} title={props.title || "Reload icon"} {...props}>
-      <path
-        d={pathData}
-        transform="translate(3.750000, 4.000000) rotate(-90.000000) translate(-3.750000, -4.000000)"
-      ></path>
+      <path d={pathData} transform="translate(3.75, 4) rotate(-90) translate(-3.75, -4)"></path>
       <polyline points="7.5 0.5 7.5 2.5 5.5 2.5"></polyline>
     </IconWrapper>
   )

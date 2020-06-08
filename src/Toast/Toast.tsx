@@ -8,7 +8,11 @@ import {
 } from "../lib/helpers"
 
 import Animation from "../Animation"
+import Attn from "../icons/Attn"
 import Ex from "../icons/Ex"
+import Err from "../icons/Err"
+import Info from "../icons/Info"
+import Success from "../icons/Success"
 import IconButton from "../IconButton"
 import Text from "../Text"
 
@@ -30,6 +34,7 @@ function Toast({
   eventName,
   isBottom,
   isDismissible,
+  type,
 }: ToastProps) {
 
   const [shouldShow, setShouldShow] = useState(true)
@@ -39,12 +44,31 @@ function Toast({
   const slideOut = isBottom ? "down" : "up"
   const animDirection = shouldShow ? slideIn : slideOut
 
+  const isSuccess = type === "success"
+  const isError = type === "error"
+  const isWarning = type === "warning"
+  const isInfo = type === "info"
+
+  const Icon = isSuccess ? Success
+             : isError   ? Err
+             : isWarning ? Attn
+             : isInfo    ? Info
+             : null
+
+
   const removeMessage = useMessageRemover(
     eventName,
     id,
     duration,
     setShouldShow,
   )
+
+  const typeClasses = buildClassNames({
+    isSuccess,
+    isError,
+    isWarning,
+    isInfo,
+  })
 
   const alignClasses = buildClassNames({
     isLX: alignment === "left",
@@ -54,13 +78,17 @@ function Toast({
 
   return (
     <Animation
-      className={`qmToast ${alignClasses}`}
+      className={`qmToast ${alignClasses} ${typeClasses}`}
       type={animType}
       direction={animDirection}
       removeOnHide={true}
     >
       <div className="qmToastContentWrapper">
-        <div className="qmToastContent">
+        <div className={`qmToastContent ${typeClasses}`}>
+          {Icon && (
+            <Icon className={`qmToastIcon ${typeClasses}`} size="l" />
+          )}
+
           <Text className="qmToastText">
             {body}
           </Text>

@@ -30,6 +30,7 @@ function ToastList({
         duration,
         id,
         isDismissible,
+        type,
       }) => (
         <Toast
           key={id}
@@ -40,6 +41,7 @@ function ToastList({
           id={id}
           isBottom={isBottom}
           isDismissible={isDismissible}
+          type={type}
         />
       ))}
     </div>

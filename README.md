@@ -357,14 +357,18 @@ type IconSize = "xxs" | "xs" | "s" | "m" | "i" | "l" | "xl" | "xxl"
 The current list of icons includes:
 
 - `Attn` - A triangle with an exclamation point in the center.
+- `Calendar` - Resembles a spiral bound calendar.
 - `Caret` - Resembles an angle bracket pointing up.
 - `Checkmark` - A checkmark.
 - `Dot` - A small circle.
+- `Err` - A circle around two crossing lines in the shape of the letter "x".
 - `Ex` - Two crossing lines in the shape of the letter "x".
 - `Hamburger` - Three stacked, horizontal lines.
 - `Info` - A circle with a letter "i" in the center.
 - `Meatballs` - Three small circles in a horizontal line.
 - `Plus` - An addition sign.
+- `Reload` - An arrow in the shape of a circle.
+- `Success` - A circle around a checkmark.
 - `Tiles` - 4 small squares, arranged like window panes.
 - `Triangle` - A small triangle.
 
@@ -802,6 +806,7 @@ interface PublishableMessage {
   body: string
   duration?: number // Defaults to 3000. The toast will disappear after this time limit.
   isDismissible?: boolean // If true, allows the user to click an "x" icon to clear the message.
+  type?: "success" | "error" | "info" | "warning" // If provided, will add an icon and some color to the toast.
 }
 ```
 

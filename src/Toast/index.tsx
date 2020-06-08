@@ -64,5 +64,4 @@ export default function getToastArea(x: XPos = "right", y: YPos = "top") {
   }
 }
 
-// TODO: WRAP IN ALERT COMPONENT & DOCUMENT CHANGE
 

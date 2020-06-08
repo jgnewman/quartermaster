@@ -35,7 +35,7 @@ function Alert({
 
   return (
     <div className={`qmAlertContainer ${typeClass} ${className || ""}`}>
-      <Grid className={`qmAlertGrid ${typeClass}`}>
+      <Grid className={`qmAlertGrid ${typeClass}`} gutterW="m">
 
         <Grow size={0} className="qmAlertIconWrapper">
           <IconComponent

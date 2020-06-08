@@ -81,6 +81,8 @@ export default {
       .qmTextFieldInput.isTextArea,
       .qmToggleOverlay
     `,
+
+    [`1px solid ${WHITE_FADE_FLY}`]: ".qmToastContent",
   },
 
   "border-color": {

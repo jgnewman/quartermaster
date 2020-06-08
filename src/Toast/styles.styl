@@ -49,6 +49,39 @@
   padding-right: THREE_QUARTER_REM
   min-height: LARGER_ELEM_HEIGHT
 
+  &.isSuccess
+    border-left: 3px solid GREEN
+
+  &.isWarning
+    border-left: 3px solid YELLOW
+
+  &.isError
+    border-left: 3px solid ERROR
+
+  &.isInfo
+    border-left: 3px solid HIGHLIGHTS
+
+.qmToastIcon
+  margin-left: THREE_QUARTER_REM
+
+  &.isSuccess
+    stroke: GREEN
+
+  &.isError
+    stroke: ERROR
+
+  &.isWarning
+    stroke: YELLOW
+
+    .qmPathIsFilled
+      fill: YELLOW
+
+  &.isInfo
+    stroke: HIGHLIGHTS
+
+    .qmPathIsFilled
+      fill: HIGHLIGHTS
+
 .qmToastText
   padding: THREE_QUARTER_REM REM
 

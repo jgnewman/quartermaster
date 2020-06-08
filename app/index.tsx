@@ -105,6 +105,7 @@ class App extends React.Component {
       body: "Here is your toast!",
       duration: 10000,
       isDismissible: true,
+      type: "success",
     })
   }
 

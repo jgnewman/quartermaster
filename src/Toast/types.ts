@@ -1,10 +1,12 @@
 export type XPos = "left" | "center" | "right"
 export type YPos = "top" | "bottom"
+export type ToastType = "error" | "info" | "warning" | "success"
 
 export interface PublishableMessage {
   body: string
   duration?: number
   isDismissible?: boolean
+  type?: ToastType
 }
 
 export interface ToastMessage extends PublishableMessage {
