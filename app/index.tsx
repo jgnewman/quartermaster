@@ -15,6 +15,7 @@ import {
   Grid,
   Heading,
   IconButton,
+  Menu,
   Modal,
   Paragraph,
   Plus,
@@ -28,9 +29,8 @@ import {
   TextField,
   Tiles,
   Theme,
-  Toast,
   Toggle,
-  Menu,
+  getToastArea,
 } from "../src/index"
 
 import DarkTheme from "../src/themes/Dark"
@@ -99,11 +99,26 @@ class App extends React.Component {
     this.setState({ darkThemeEnabled: !this.state.darkThemeEnabled })
   }
 
+  launchToasts() {
+    const showToast = getToastArea()
+
+    setTimeout(() => {
+      showToast({ id: "foo", body: "This is my toast!" })
+    }, 3000)
+
+    setTimeout(() => {
+      showToast({ id: "bar", body: "Another toast!" })
+    }, 4000)
+  }
+
+  componentDidMount() {
+    this.launchToasts()
+  }
+
   render() {
     return (
       <Theme data={this.state.darkThemeEnabled ? DarkTheme : null}>
         <div style={{ padding: "1em 1em 5em", maxWidth: "500px" }}>
-          <Toast />
 
           <Heading size={1} text="Welcome to Quartermaster!"/>
           <Paragraph>

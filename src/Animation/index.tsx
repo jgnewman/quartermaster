@@ -5,11 +5,10 @@ import React, {
   ReactNode,
   forwardRef,
   memo,
-  useEffect,
-  useState,
 } from "react"
 
 import { buildClassNames } from "../lib/helpers"
+import { useDetachedElements } from "./hooks"
 
 const DEFAULT_DURATION = 200
 
@@ -20,41 +19,9 @@ export interface AnimationProps {
   displayNoneOnHide?: boolean
   duration?: number
   override?: "hide" | "show" | null
+  removeOnHide?: boolean
   style?: any
   type: "fadeIn" | "fadeOut"
-}
-
-function useDetachedElements(
-  displayNoneOnHide: boolean,
-  duration: number,
-  isOverrideHide: boolean,
-  type: AnimationProps['type'],
-): boolean {
-
-  const [isDetached, setDetached] = useState(isOverrideHide)
-
-  useEffect(function () {
-    if (!isDetached && displayNoneOnHide) {
-      if (isOverrideHide) {
-        setDetached(true)
-      } else if (type === "fadeOut") {
-        setTimeout(() => setDetached(true), duration)
-      }
-    }
-
-    if (isDetached && (!displayNoneOnHide || type === "fadeIn")) {
-      setDetached(false)
-    }
-  }, [
-    displayNoneOnHide,
-    duration,
-    isDetached,
-    isOverrideHide,
-    setDetached,
-    type,
-  ])
-
-  return isDetached
 }
 
 const Animation = forwardRef(function ({
@@ -64,6 +31,7 @@ const Animation = forwardRef(function ({
   direction,
   duration = DEFAULT_DURATION,
   override,
+  removeOnHide = false,
   style,
   type,
 }: AnimationProps, ref: Ref<HTMLDivElement>) {
@@ -72,12 +40,17 @@ const Animation = forwardRef(function ({
   const isOverrideHide = override === "hide"
   const hasDirection = !!direction
 
-  const isDetached = useDetachedElements(
+  const [isDetached, isRemoved] = useDetachedElements(
     displayNoneOnHide,
     duration,
     isOverrideHide,
+    removeOnHide,
     type,
   )
+
+  if (isRemoved) {
+    return null
+  }
 
   const animClasses = buildClassNames({
     isAnimating: !hasOverride,

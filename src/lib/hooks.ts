@@ -105,3 +105,9 @@ export function useScrollHandling(shouldBeDisabled: boolean) {
     return handler
   }, [shouldBeDisabled])
 }
+
+export function useId() {
+  return useMemo(function () {
+    return `qm-${String(Date.now()).slice(9)}-${String(Math.random()).slice(2, 6)}`
+  }, [])
+}

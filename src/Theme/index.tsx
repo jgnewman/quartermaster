@@ -28,11 +28,13 @@ import React, {
   useCallback,
   useEffect,
   useMemo,
-  useRef,
   useState,
 } from "react"
 
-import { usePrevious } from "../lib/hooks"
+import {
+  useId,
+  usePrevious,
+} from "../lib/hooks"
 
 interface ValueSpec {
   [key: string]: string
@@ -132,7 +134,7 @@ function useRemoveStylesOnTagChange(tag: HTMLStyleElement) {
 function Theme({ children, data }: ThemeProps) {
 
   const prevData = usePrevious(data)
-  const { current: id } = useRef(`qm-${String(Date.now()).slice(9)}-${String(Math.random()).slice(2, 6)}`)
+  const id = useId()
   const tag: HTMLStyleElement = useMemo(() => createStyleTag(id), [id])
 
   const [stylesInjected, setStylesInjected] = useState(false)

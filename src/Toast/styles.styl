@@ -1,4 +1,34 @@
 @import "../lib/sharedStyles"
 
-.qmToastContainer
-  display: block
+.qmToastAreaContainer
+  position: fixed
+  z-index: 99999
+
+  &.isBottom
+    bottom: REM
+
+  &.isTop
+    top: REM
+
+  &.isLeft
+    left: REM
+
+  &.isRight
+    right: REM
+
+  &.isCenter
+    left: 50%
+    transform: translateX(-50%)
+
+.qmToast
+  borders(0, QUARTER_REM)
+  display: flex
+  align-items: center
+
+  padding: times(0.1, REM) THREE_QUARTER_REM
+  margin-bottom: HALF_GUTTER
+  min-height: LARGER_ELEM_HEIGHT
+  width: 150px
+
+  background: BASE_BG
+  box-shadow: LIFTED_SHADOW

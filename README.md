@@ -97,6 +97,7 @@ interface AnimationProps {
   duration?: number // defaults to 200
   elemRef?: React.Ref<HTMLDivElement> // either a Ref object or a Ref callback
   override?: "hide" | "show" | null
+  removeOnHide?: // Removes the element from the DOM entirely when hidden
   style?: any
   type: "fadeIn" | "fadeOut"
 }
