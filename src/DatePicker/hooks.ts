@@ -13,6 +13,7 @@ import type {
 } from "../lib/helperTypes"
 
 import {
+  Day,
   decrementMonth,
   getCalendarDataForMonth,
   incrementMonth,
@@ -160,7 +161,7 @@ export function useMonthResetter(setCurrentView: Dispatch<SetStateAction<number>
   }, [setCurrentView])
 }
 
-export function useCalendarData(currentView: number, disablePast: boolean) {
+export function useCalendarData(currentView: number, disablePast: boolean): Day[][] {
   return useMemo(function () {
     return getCalendarDataForMonth(currentView, disablePast)
   }, [currentView, disablePast])

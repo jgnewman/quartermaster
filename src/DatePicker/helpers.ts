@@ -76,7 +76,7 @@ export function getDayTotalForMonth(month: number, fullYear: number): number {
   return (month === 1 && fullYear % 4 === 0) ? 29 : dayTotalMap[month]
 }
 
-interface Day {
+export interface Day {
   isDisabled: boolean
   date: Date
 }
