@@ -1,8 +1,8 @@
 import "./styles.styl"
 import React, { memo } from "react"
 
-import { sizeMap } from "../icons/iconHelpers"
-import type { IconSize } from "../icons/iconTypes"
+import { sizeMap } from "../icons/helpers"
+import type { IconSize } from "../icons/types"
 
 export interface SpinnerProps {
   className?: string

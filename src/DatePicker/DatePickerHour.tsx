@@ -6,7 +6,7 @@ import React, {
 
 import type { FauxChangeEventHandler } from "../lib/helperTypes"
 import { buildClassNames } from "../lib/helpers"
-import { isSameTime } from "./datePickerHelpers"
+import { isSameTime } from "./helpers"
 import { useValueSelector } from "./hooks"
 
 interface DatePickerHourProps {

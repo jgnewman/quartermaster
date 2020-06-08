@@ -103,12 +103,16 @@ class App extends React.Component {
     const showToast = getToastArea()
 
     setTimeout(() => {
-      showToast({ id: "foo", body: "This is my toast!" })
-    }, 3000)
+      showToast({
+        body: "This is my toast!",
+        duration: 10000,
+        isDismissible: true,
+      })
+    }, 1000)
 
     setTimeout(() => {
-      showToast({ id: "bar", body: "Another toast!" })
-    }, 4000)
+      showToast({ body: "Another toast!" })
+    }, 2000)
   }
 
   componentDidMount() {

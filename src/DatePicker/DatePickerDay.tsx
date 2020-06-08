@@ -2,7 +2,7 @@ import React, { memo } from "react"
 
 import type { FauxChangeEventHandler } from "../lib/helperTypes"
 import { buildClassNames } from "../lib/helpers"
-import { isSameDay } from "./datePickerHelpers"
+import { isSameDay } from "./helpers"
 
 import {
   useFieldValue,

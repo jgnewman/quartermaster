@@ -4,7 +4,7 @@ import React, {
   memo,
 } from "react"
 
-import type { IconProps } from "./iconTypes"
+import type { IconProps } from "./types"
 import IconWrapper from "./IconWrapper"
 
 const Meatballs = forwardRef(function (props: IconProps, ref: Ref<SVGSVGElement>) {

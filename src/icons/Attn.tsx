@@ -4,8 +4,8 @@ import React, {
   memo,
 } from "react"
 
-import type { IconProps } from "./iconTypes"
-import { radiusMap } from "./iconHelpers"
+import type { IconProps } from "./types"
+import { radiusMap } from "./helpers"
 import IconWrapper from "./IconWrapper"
 
 const Attn = forwardRef(function (props: IconProps, ref: Ref<SVGSVGElement>) {

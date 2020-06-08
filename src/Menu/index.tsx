@@ -20,9 +20,9 @@ import {
  Data,
  MenuState,
  SubAnimate,
-} from "./menuTypes"
+} from "./types"
 
-import { getInitialSubmenuState, genAnimProps } from "./menuHelpers"
+import { getInitialSubmenuState, genAnimProps } from "./helpers"
 import MenuLabel from "./MenuLabel"
 import MenuLink from "./MenuLink"
 import MenuSeparator from "./MenuSeparator"

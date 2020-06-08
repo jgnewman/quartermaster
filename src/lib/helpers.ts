@@ -44,6 +44,10 @@ export function buildClassNames(options: DynamicProps): string {
   return classes.join(" ")
 }
 
+export function createId() {
+  return `qm-${String(Date.now()).slice(9)}-${String(Math.random()).slice(2, 6)}`
+}
+
 const body: HTMLElement = window.document.body
 let scrollingEnabled = true
 let originalBodyHeight: string = body.style.height

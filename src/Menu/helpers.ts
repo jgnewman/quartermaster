@@ -3,7 +3,7 @@ import type { AnimationProps } from "../Animation"
 import {
   Data,
   MenuState,
-} from "./menuTypes"
+} from "./types"
 
 export function getInitialSubmenuState(data: Data[], state: MenuState = {}): MenuState {
   data.forEach(item => {

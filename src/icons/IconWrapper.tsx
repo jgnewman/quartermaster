@@ -6,8 +6,8 @@ import React, {
   memo,
 } from "react"
 
-import { sizeMap, strokeMap } from "./iconHelpers"
-import type { IconProps } from "./iconTypes"
+import { sizeMap, strokeMap } from "./helpers"
+import type { IconProps } from "./types"
 
 interface SVGStyle {
   transform?: string

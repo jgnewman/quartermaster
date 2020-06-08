@@ -7,7 +7,7 @@ import type { FauxChangeEventHandler } from "../lib/helperTypes"
 import { buildClassNames } from "../lib/helpers"
 import Text from "../Text"
 
-import { getHoursForDay } from "./datePickerHelpers"
+import { getHoursForDay } from "./helpers"
 import { useScrollToSelectedTime } from "./hooks"
 import DatePickerHour from "./DatePickerHour"
 
