@@ -11,7 +11,9 @@ import {
   noopEvtHandler,
 } from "../lib/helpers"
 
-import { useScrollHandling } from "../lib/hooks"
+import {
+  useScrollHandling,
+} from "../lib/internalHooks"
 
 import IconButton from "../IconButton"
 import Ex from "../icons/Ex"

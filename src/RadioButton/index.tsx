@@ -8,7 +8,9 @@ import React, {
   useRef,
 } from "react"
 
-import { DynamicProps } from "../lib/helperTypes"
+import {
+  DynamicProps,
+} from "../lib/helperTypes"
 
 import {
   buildClassNames,
@@ -18,8 +20,11 @@ import {
 import {
   useFocusHandlers,
   useInputChecker,
+} from "../lib/internalHooks"
+
+import {
   useMergedRefs,
-} from "../lib/hooks"
+} from "../hooks"
 
 import Text from "../Text"
 import Dot from "../icons/Dot"

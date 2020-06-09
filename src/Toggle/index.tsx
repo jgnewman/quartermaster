@@ -20,8 +20,11 @@ import {
 import {
   useFocusHandlers,
   useInputChecker,
+} from "../lib/internalHooks"
+
+import {
   useMergedRefs,
-} from "../lib/hooks"
+} from "../hooks"
 
 export interface ToggleProps {
   changeHandler?: ChangeEventHandler

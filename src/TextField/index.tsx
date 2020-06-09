@@ -11,19 +11,14 @@ import React, {
   useRef,
 } from "react"
 
-import type {
-  DynamicProps,
-} from "../lib/helperTypes"
+import type { DynamicProps } from "../lib/helperTypes"
+import { buildClassNames } from "../lib/helpers"
+import { useFocusHandlers } from "../lib/internalHooks"
 
 import {
-  buildClassNames,
-} from "../lib/helpers"
-
-import {
-  useFocusHandlers,
   useMergedRefs,
   usePrevious,
-} from "../lib/hooks"
+} from "../hooks"
 
 import Label from "../Label"
 import CharLimitCounter from "./CharLimitCounter"

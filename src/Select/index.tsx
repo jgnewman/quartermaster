@@ -16,7 +16,7 @@ import {
   RefArrayAdder,
   RefArrayResetter,
   useRefArray,
-} from "../lib/hooks"
+} from "../lib/internalHooks"
 
 import Label from "../Label"
 import Ex from "../icons/Ex"

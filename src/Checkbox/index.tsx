@@ -18,8 +18,11 @@ import {
 import {
   useFocusHandlers,
   useInputChecker,
+} from "../lib/internalHooks"
+
+import {
   useMergedRefs,
-} from  "../lib/hooks"
+} from "../hooks"
 
 import Text from "../Text"
 import Checkmark from "../icons/Checkmark"

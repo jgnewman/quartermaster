@@ -15,7 +15,7 @@ import {
 
 import {
   usePrevious,
-} from "../lib/hooks"
+} from "../hooks"
 
 export function useModalRenderLogic(skipConfirmation: boolean): boolean {
   const [shouldRenderModal, setShouldRenderModal] = useState(!skipConfirmation)

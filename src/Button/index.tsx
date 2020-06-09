@@ -14,11 +14,8 @@ import React, {
 
 import { DynamicProps } from "../lib/helperTypes"
 import { buildClassNames } from "../lib/helpers"
-
-import {
-  useFocusHandlers,
-  useMergedRefs,
-} from "../lib/hooks"
+import { useFocusHandlers } from "../lib/internalHooks"
+import { useMergedRefs } from "../hooks"
 
 import Text from "../Text"
 import Spinner from "../Spinner"

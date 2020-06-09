@@ -1,30 +1,19 @@
 import {
   FocusEvent,
   FocusEventHandler,
-  MutableRefObject,
   RefObject,
   useEffect,
   useCallback,
-  useMemo,
   useRef,
   useState,
 } from "react"
 
-import { RefFunction } from "./helperTypes"
-
 import {
-  createId,
   disableScrolling,
   enableScrolling,
   manuallyTickCheckbox,
   manuallyTickRadioButton,
 } from "./helpers"
-
-export function usePrevious<T>(value: T) {
-  const ref = useRef<T>(null) as MutableRefObject<T>
-  useEffect(() => { ref.current = value })
-  return ref.current
-}
 
 export type RefArray<T> = T[]
 export type RefArrayAdder<T> = (item: T) => void
@@ -53,20 +42,6 @@ export function useRefArray<T>(value: T[] = []): [RefArray<T>, RefArrayAdder<T>,
     (item: T) => { toAdd.push(item) }, // Add an item
     () => { shouldReset.current = true }, // Reset items
   ]
-}
-
-type NullableRefObject = MutableRefObject<any> | null
-
-export function useMergedRefs(refA: NullableRefObject, refB: NullableRefObject): RefFunction {
-  return useMemo(function () {
-    return function (value: HTMLElement | null) {
-      [refA, refB].forEach(ref => {
-        if (ref) {
-          ref.current = value
-        }
-      })
-    }
-  }, [refA, refB])
 }
 
 export function useFocusHandlers(
@@ -107,8 +82,3 @@ export function useScrollHandling(shouldBeDisabled: boolean) {
   }, [shouldBeDisabled])
 }
 
-export function useId() {
-  return useMemo(function () {
-    return createId()
-  }, [])
-}

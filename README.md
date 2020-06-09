@@ -38,6 +38,7 @@ Quartermaster deliberately avoids styled-components for performance and bundle s
 - [Grid](#grid)
 - [Grow](#grow)
 - [Heading](#heading)
+- [Hooks](#hooks)
 - [Icons](#icons)
 - [IconButton](#iconbutton)
 - [Label](#label)
@@ -321,6 +322,60 @@ interface HeadingProps {
   className?: string
   size: 1 | 2 | 3 | 4 | 5 | 6
   text?: string
+}
+```
+
+### Hooks
+Quartermaster is built entirely using React function components with hooks. As such, there are a few extremely useful hooks that are exported for your convenience so that you don't have to re-write them yourself. To import a hook, run either of the following:
+
+```javascript
+import { usePrevious } from "quartermaster
+// or
+import { usePrevious } from "quartermaster/hooks"
+```
+
+Here are your available hooks:
+
+#### `useId`
+
+Creates a memoized ID string on the fly using simple date calculations.
+
+```typescript
+// Type signature:
+() => string
+
+// Example usage:
+useId() //=> qm-2416-3743
+```
+
+#### `useMergedRefs`
+
+Combines two refs into a memoized, single ref functions.
+
+```typescript
+// Type signature:
+(refA: NullableRefObject, refB: NullableRefObject) => (elem: HTMLElement | null) => void
+
+// where...
+type NullableRefObject = React.MutableRefObject<any> | null
+
+// Example usage:
+<div ref={useMergedRef(refA, refB)}></div>
+```
+
+#### `usePrevious`
+
+Takes a value and returns the last value it was called with. Useful for checking whether a component prop has changed between renders.
+
+```typescript
+// Type signature:
+<T>(value: T) => T | undefined
+
+// Example usage:
+const prevProp = usePrevious(currentProp)
+
+if (prevProp !== currentProp) {
+  console.log("Prop has changed!")
 }
 ```
 

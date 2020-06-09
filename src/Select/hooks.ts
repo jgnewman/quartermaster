@@ -11,7 +11,7 @@ import {
 
 import {
   RefArray,
-} from "../lib/hooks"
+} from "../lib/internalHooks"
 
 import type {
   SelectProps,

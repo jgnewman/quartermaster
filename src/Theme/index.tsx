@@ -34,7 +34,7 @@ import React, {
 import {
   useId,
   usePrevious,
-} from "../lib/hooks"
+} from "../hooks"
 
 interface ValueSpec {
   [key: string]: string
@@ -142,7 +142,7 @@ function Theme({ children, data }: ThemeProps) {
 
   const updateStyles = useStyleUpdater(
     data,
-    prevData,
+    prevData ?? null,
     prevStyles,
     setPrevStyles,
     tag,

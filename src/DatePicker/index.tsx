@@ -78,6 +78,8 @@ function DatePicker({
   value,
 }: DatePickerProps) {
 
+  // TODO: Can we reduce date conversions?
+
   const dateStamp = useDateStamp(value)
   const calendarRef = useRef(null)
   const fieldRef = useRef(null)
