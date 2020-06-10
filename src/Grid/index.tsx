@@ -36,11 +36,13 @@ export const Grow = memo(function ({
 
 Grow.displayName = "Grow"
 
+export type GutterSize = "xs" | "s" | "m" | "i" | "l" | "xl"
+
 export interface GridProps {
   children?: ReactNode
   className?: string
-  gutterH?: "s" | "m" | "l"
-  gutterW?: "s" | "m" | "l"
+  gutterH?: GutterSize
+  gutterW?: GutterSize
   justify?: "start" | "end" | "center" | "even" | "between" | "around"
   equalHeight?: boolean
   wrap?: boolean
@@ -71,12 +73,18 @@ function Grid({
     isCenter: justify === "center",
     isEnd: justify === "end",
     isEven: justify === "even",
+    isGutterHXL: gutterH === "xl",
     isGutterHL: gutterH === "l",
+    isGutterHI: gutterH === "i",
     isGutterHM: gutterH === "m",
     isGutterHS: gutterH === "s",
+    isGutterHXS: gutterH === "xs",
+    isGutterWXL: gutterW === "xl",
     isGutterWL: gutterW === "l",
+    isGutterWI: gutterW === "i",
     isGutterWM: gutterW === "m",
     isGutterWS: gutterW === "s",
+    isGutterWXS: gutterW === "xs",
     isStart: justify === "start",
     isStretch: equalHeight,
   })

@@ -269,8 +269,8 @@ interface GridProps {
   children?: React.ReactNode
   className?: string
   equalHeight?: boolean
-  gutterH?: "s" | "m" | "l" // Specifies size of a gutter width between grid items
-  gutterW?: "s" | "m" | "l" // Specifies size of a gutter height between grid items
+  gutterH?: GutterSize // Specifies size of a gutter width between grid items
+  gutterW?: GutterSize // Specifies size of a gutter height between grid items
   justify?: "start" | "end" | "center" | "even" | "between" | "around"
   wrap?: boolean
   bottomSpace?: SpaceSize
@@ -279,7 +279,9 @@ interface GridProps {
   topSpace?: SpaceSize
 }
 
-// Where `SpaceSize` is defined in the Space component
+// Where `SpaceSize` is defined in the Space component and...
+
+type GutterSize = "xs" | "s" | "m" | "i" | "l" | "xl"
 ```
 
 Here is an example:

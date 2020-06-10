@@ -1,13 +1,22 @@
 @import "../lib/sharedStyles"
 
+XSMALL_GRID_GUTTER = 0.25em
+XSMALL_GRID_HALF_GUTTER = XSMALL_GRID_GUTTER / 2
+
 SMALL_GRID_GUTTER = 0.5em
 SMALL_GRID_HALF_GUTTER = SMALL_GRID_GUTTER / 2
 
 MEDIUM_GRID_GUTTER = 1em
 MEDIUM_GRID_HALF_GUTTER = MEDIUM_GRID_GUTTER / 2
 
-LARGE_GRID_GUTTER = 1em * 1.5
+INTERMEDIATE_GRID_GUTTER = 1em
+INTERMEDIATE_GRID_HALF_GUTTER = INTERMEDIATE_GRID_GUTTER / 2
+
+LARGE_GRID_GUTTER = 2em
 LARGE_GRID_HALF_GUTTER = LARGE_GRID_GUTTER / 2
+
+XLARGE_GRID_GUTTER = 3em
+XLARGE_GRID_HALF_GUTTER = XLARGE_GRID_GUTTER / 2
 
 .qmGridContainer
   display: flex
@@ -18,6 +27,13 @@ LARGE_GRID_HALF_GUTTER = LARGE_GRID_GUTTER / 2
   > *
     flex-grow: 1
     margin: 0
+
+  &.isGutterWXS
+    margin: 0 (-1 * XSMALL_GRID_HALF_GUTTER)
+
+  &.isGutterWXS > *
+    margin-left: XSMALL_GRID_HALF_GUTTER
+    margin-right: XSMALL_GRID_HALF_GUTTER
 
   &.isGutterWS
     margin: 0 (-1 * SMALL_GRID_HALF_GUTTER)
@@ -33,6 +49,13 @@ LARGE_GRID_HALF_GUTTER = LARGE_GRID_GUTTER / 2
     margin-left: MEDIUM_GRID_HALF_GUTTER
     margin-right: MEDIUM_GRID_HALF_GUTTER
 
+  &.isGutterWI
+    margin: 0 (-1 * INTERMEDIATE_GRID_HALF_GUTTER)
+
+  &.isGutterWI > *
+    margin-left: INTERMEDIATE_GRID_HALF_GUTTER
+    margin-right: INTERMEDIATE_GRID_HALF_GUTTER
+
   &.isGutterWL
     margin: 0 (-1 * LARGE_GRID_HALF_GUTTER)
 
@@ -40,18 +63,37 @@ LARGE_GRID_HALF_GUTTER = LARGE_GRID_GUTTER / 2
     margin-left: LARGE_GRID_HALF_GUTTER
     margin-right: LARGE_GRID_HALF_GUTTER
 
+  &.isGutterWXL
+    margin: 0 (-1 * XLARGE_GRID_HALF_GUTTER)
+
+  &.isGutterWXL > *
+    margin-left: XLARGE_GRID_HALF_GUTTER
+    margin-right: XLARGE_GRID_HALF_GUTTER
+
+  &.isGutterHXS > *
+    margin-bottom: XSMALL_GRID_GUTTER
+
   &.isGutterHS > *
     margin-bottom: SMALL_GRID_GUTTER
 
   &.isGutterHM > *
     margin-bottom: MEDIUM_GRID_GUTTER
 
+  &.isGutterHM > *
+    margin-bottom: INTERMEDIATE_GRID_GUTTER
+
   &.isGutterHL > *
     margin-bottom: LARGE_GRID_GUTTER
 
+  &.isGutterHXL > *
+    margin-bottom: XLARGE_GRID_GUTTER
+
+  &.isGutterHXS > *:last-child,
   &.isGutterHS > *:last-child,
   &.isGutterHM > *:last-child,
-  &.isGutterHL > *:last-child
+  &.isGutterHI > *:last-child,
+  &.isGutterHL > *:last-child,
+  &.isGutterHXL > *:last-child
     margin-bottom: 0
 
   &.isAround
