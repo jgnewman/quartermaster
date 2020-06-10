@@ -67,7 +67,7 @@ function DatePickerTimes({
                 key={hour}
                 ref={isFirstEnabledButton ? firstEnabledButtonRef : null}
                 changeHandler={changeHandler}
-                dateStamp={hour}
+                hourStamp={hour}
                 disablePast={disablePast}
                 isCompact={isCompact}
                 isDisabled={isDisabled}
