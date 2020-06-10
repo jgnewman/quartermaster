@@ -411,6 +411,7 @@ type IconSize = "xxs" | "xs" | "s" | "m" | "i" | "l" | "xl" | "xxl"
 
 The current list of icons includes:
 
+- `Arrow` - An arrow.
 - `Attn` - A triangle with an exclamation point in the center.
 - `Calendar` - Resembles a spiral bound calendar.
 - `Caret` - Resembles an angle bracket pointing up.

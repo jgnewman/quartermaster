@@ -1,3 +1,4 @@
+export { default as Arrow } from "./Arrow"
 export { default as Attn } from "./Attn"
 export { default as Calendar } from "./Calendar"
 export { default as Caret } from "./Caret"
