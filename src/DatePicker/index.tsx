@@ -31,7 +31,7 @@ import {
   useCalendarState,
   useCalendarTitle,
   useCloseCalendarOnClickAway,
-  useDateStamp,
+  useDateFromProp,
   useFieldFocuser,
   useFieldValue,
   useMonthDecrementor,
@@ -78,16 +78,16 @@ function DatePicker({
   value,
 }: DatePickerProps) {
 
-  // TODO: Can we reduce date conversions?
+  const now = new Date()
+  const date = useDateFromProp(value)
 
-  const dateStamp = useDateStamp(value)
   const calendarRef = useRef(null)
   const fieldRef = useRef(null)
 
   const { isOpen, closeCalendar, openCalendar } = useCalendarState(false)
-  const [currentView, setCurrentView] = useState(dateStamp || Date.now())
+  const [currentView, setCurrentView] = useState(date || new Date())
 
-  const fieldValue = useFieldValue(dateStamp, showTimes)
+  const fieldValue = useFieldValue(date, showTimes)
   const calendarTitle = useCalendarTitle(currentView)
 
   const decrementView = useMonthDecrementor(currentView, setCurrentView)
@@ -206,9 +206,10 @@ function DatePicker({
               <DatePickerCalendar
                 changeHandler={changeHandler}
                 currentView={currentView}
-                dateStamp={dateStamp}
                 disablePast={disablePast}
                 isCompact={isCompact}
+                now={now}
+                pickerValue={date}
                 showTimes={showTimes}
                 timesIncrement={timesIncrement}
               />
@@ -216,8 +217,9 @@ function DatePicker({
               {showTimes && (
                 <DatePickerTimes
                   changeHandler={changeHandler}
-                  dateStamp={dateStamp}
+                  pickerValue={date}
                   disablePast={disablePast}
+                  now={now}
                   isCompact={isCompact}
                   timesIncrement={timesIncrement}
                 />

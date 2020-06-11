@@ -13,22 +13,23 @@ import DatePickerHour from "./DatePickerHour"
 
 interface DatePickerTimesProps {
   changeHandler?: FauxChangeEventHandler
-  dateStamp: number | null
+  pickerValue: Date | null
   disablePast: boolean
   isCompact: boolean
+  now: Date
   timesIncrement: 5 | 10 | 15 | 30 | 60
 }
 
 function DatePickerTimes({
   changeHandler,
-  dateStamp,
+  pickerValue,
   disablePast,
   isCompact,
+  now,
   timesIncrement,
 }: DatePickerTimesProps) {
 
-  const now = Date.now()
-  const hours = getHoursForDay(dateStamp || now, timesIncrement)
+  const hours = getHoursForDay(pickerValue || now, timesIncrement)
   const totalHours = hours.length
 
   const scrollAreaRef = useRef<HTMLDivElement>(null)
@@ -64,14 +65,14 @@ function DatePickerTimes({
 
             return (
               <DatePickerHour
-                key={hour}
+                key={index}
                 ref={isFirstEnabledButton ? firstEnabledButtonRef : null}
                 changeHandler={changeHandler}
-                hourStamp={hour}
+                hour={hour}
                 disablePast={disablePast}
                 isCompact={isCompact}
                 isDisabled={isDisabled}
-                pickerValue={dateStamp}
+                pickerValue={pickerValue}
                 timesIncrement={timesIncrement}
               />
             )

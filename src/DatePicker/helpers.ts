@@ -13,8 +13,8 @@ const dayTotalMap = {
   11: 31,
 }
 
-export function decrementMonth(referenceDateStamp: number): number {
-  const date = new Date(referenceDateStamp)
+export function decrementMonth(referenceDate: Date): Date {
+  const date = new Date(referenceDate)
   const month = date.getMonth()
   const year = date.getFullYear()
 
@@ -25,11 +25,11 @@ export function decrementMonth(referenceDateStamp: number): number {
     date.setMonth(month - 1)
   }
 
-  return date.getTime()
+  return date
 }
 
-export function incrementMonth(referenceDateStamp: number): number {
-  const date = new Date(referenceDateStamp)
+export function incrementMonth(referenceDate: Date): Date {
+  const date = new Date(referenceDate)
   const month = date.getMonth()
   const year = date.getFullYear()
 
@@ -40,32 +40,28 @@ export function incrementMonth(referenceDateStamp: number): number {
     date.setMonth(month + 1)
   }
 
-  return date.getTime()
+  return date
 }
 
-export function isSameDay(a: number, b: number): boolean {
-  const aDate = new Date(a)
-  const aDay = aDate.getDate()
-  const aMonth = aDate.getMonth()
-  const aYear = aDate.getFullYear()
+export function isSameDay(a: Date, b: Date): boolean {
+  const aDay = a.getDate()
+  const aMonth = a.getMonth()
+  const aYear = a.getFullYear()
 
-  const bDate = new Date(b)
-  const bDay = bDate.getDate()
-  const bMonth = bDate.getMonth()
-  const bYear = bDate.getFullYear()
+  const bDay = b.getDate()
+  const bMonth = b.getMonth()
+  const bYear = b.getFullYear()
 
   return aYear === bYear && aMonth === bMonth && aDay === bDay
 }
 
-export function isSameTime(a: number, b: number): boolean {
+export function isSameTime(a: Date, b: Date): boolean {
   if (isSameDay(a, b)) {
-    const aDate = new Date(a)
-    const aHour = aDate.getHours()
-    const aMin = aDate.getMinutes()
+    const aHour = a.getHours()
+    const aMin = a.getMinutes()
 
-    const bDate = new Date(b)
-    const bHour = bDate.getHours()
-    const bMin = bDate.getMinutes()
+    const bHour = b.getHours()
+    const bMin = b.getMinutes()
 
     return aHour === bHour && aMin === bMin
   }
@@ -88,13 +84,12 @@ export function setDateToMidnight(date: Date) {
   date.setMilliseconds(0)
 }
 
-export function getCalendarDataForMonth(referenceDateStamp: number, disablePast: boolean): Day[][] {
+export function getCalendarDataForMonth(referenceDate: Date, disablePast: boolean): Day[][] {
   const now = new Date()
   setDateToMidnight(now)
 
-  const refDay = new Date(referenceDateStamp)
-  const month = refDay.getMonth()
-  const year = refDay.getFullYear()
+  const month = referenceDate.getMonth()
+  const year = referenceDate.getFullYear()
   const totalDaysOfThisMonth = getDayTotalForMonth(month, year)
 
   const prevMonth = month === 0 ? 11 : month - 1
@@ -148,11 +143,11 @@ export function getCalendarDataForMonth(referenceDateStamp: number, disablePast:
   return rows
 }
 
-export function getHoursForDay(dateStamp: number, increment: number): number[] {
+export function getHoursForDay(date: Date, increment: number): Date[] {
   const inc = increment || 60
-  const hours: number[] = []
+  const hours: Date[] = []
 
-  const referenceDate = new Date(dateStamp)
+  const referenceDate = new Date(date)
   setDateToMidnight(referenceDate)
 
   let referenceTime = referenceDate.getTime()
@@ -160,7 +155,7 @@ export function getHoursForDay(dateStamp: number, increment: number): number[] {
 
   while (totalHours > 0) {
     totalHours -= 1
-    hours.push(referenceTime)
+    hours.push(new Date(referenceTime))
     referenceTime = referenceTime + (1000 * 60 * inc)
   }
 

@@ -8,10 +8,11 @@ import { useCalendarData } from "./hooks"
 
 interface DatePickerCalendarProps {
   changeHandler?: FauxChangeEventHandler
-  currentView: number
-  dateStamp: number | null
+  currentView: Date
   disablePast: boolean
   isCompact: boolean
+  now: Date
+  pickerValue: Date | null
   showTimes: boolean
   timesIncrement: 5 | 10 | 15 | 30 | 60
 }
@@ -19,9 +20,10 @@ interface DatePickerCalendarProps {
 function DatePickerCalendar({
   changeHandler,
   currentView,
-  dateStamp,
   disablePast,
   isCompact,
+  now,
+  pickerValue,
   showTimes,
   timesIncrement,
 }: DatePickerCalendarProps) {
@@ -49,11 +51,12 @@ function DatePickerCalendar({
                     <td key={`${rowIndex}${dayIndex}`}>
                       <DatePickerDay
                         changeHandler={changeHandler}
-                        dateStamp={date.getTime()}
+                        date={date}
                         disablePast={disablePast}
                         isCompact={isCompact}
                         isDisabled={isDisabled}
-                        pickerValue={dateStamp}
+                        now={now}
+                        pickerValue={pickerValue}
                         showTimes={showTimes}
                         timesIncrement={timesIncrement}
                       />

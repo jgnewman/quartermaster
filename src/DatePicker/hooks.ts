@@ -20,27 +20,24 @@ import {
   isSameDay,
 } from "./helpers"
 
-export function useDateStamp(value?: Date | number | string | null): number | null {
+export function useDateFromProp(value?: Date | number | string | null): Date | null {
   return useMemo(function () {
     if (!value) {
       return null
     }
 
-    if (typeof value === "number") {
+    if (value instanceof Date) {
       return value
     }
 
-    if (value instanceof Date) {
-      return value.getTime()
-    }
+    return new Date(value)
 
-    return (new Date(value)).getTime()
   }, [value])
 }
 
-export function useFieldValue(stamp: number | null, showTimes?: boolean): string {
+export function useFieldValue(date: Date | null, showTimes?: boolean): string {
   return useMemo(function () {
-    if (!stamp) {
+    if (!date) {
       return ""
     }
 
@@ -55,23 +52,23 @@ export function useFieldValue(stamp: number | null, showTimes?: boolean): string
       formatOptions.minute = "2-digit"
     }
 
-    return new Intl.DateTimeFormat("default", formatOptions).format(new Date(stamp))
+    return new Intl.DateTimeFormat("default", formatOptions).format(date)
 
-  }, [stamp, showTimes])
+  }, [date, showTimes])
 }
 
-export function useCalendarTitle(stamp: number | null): string {
+export function useCalendarTitle(date: Date | null): string {
   return useMemo(function () {
-    if (!stamp) {
+    if (!date) {
       return ""
     }
 
     return new Intl.DateTimeFormat("default", {
       year: "numeric",
       month: "long",
-    }).format(new Date(stamp))
+    }).format(date)
 
-  }, [stamp])
+  }, [date])
 }
 
 export function useValueResetter(changeHandler: FauxChangeEventHandler | undefined) {
@@ -82,7 +79,7 @@ export function useValueResetter(changeHandler: FauxChangeEventHandler | undefin
 
 export function useValueSelector(
   changeHandler: FauxChangeEventHandler | undefined,
-  dateStamp: number,
+  date: Date,
   disablePast: boolean,
   isSelected: boolean,
   showTimes: boolean,
@@ -107,20 +104,21 @@ export function useValueSelector(
         // day we selected is today, we need to select the first
         // time increment in the future.
 
-        const now = Date.now()
+        const now = new Date()
         let value: number
 
-        if (disablePast && showTimes && isSameDay(dateStamp, now) && dateStamp < now) {
-          let date = (new Date(dateStamp)).setMinutes(0)
+        if (disablePast && showTimes && isSameDay(date, now) && date < now) {
+          let future = (new Date(date)).setMinutes(0)
+          const nowTime = now.getTime()
 
-          while (date < now) {
-            date = date + (1000 * 60 * timesIncrement)
+          while (future < nowTime) {
+            future = future + (1000 * 60 * timesIncrement)
           }
 
-          value = date
+          value = future
 
         } else {
-          value = dateStamp
+          value = date.getTime()
         }
 
         fauxEvent.target.value = value
@@ -129,7 +127,7 @@ export function useValueSelector(
     }
   }, [
     changeHandler,
-    dateStamp,
+    date,
     disablePast,
     isSelected,
     showTimes,
@@ -138,8 +136,8 @@ export function useValueSelector(
 }
 
 export function useMonthDecrementor(
-  currentView: number,
-  setCurrentView: Dispatch<SetStateAction<number>>,
+  currentView: Date,
+  setCurrentView: Dispatch<SetStateAction<Date>>,
 ) {
   return useCallback(function () {
     setCurrentView(decrementMonth(currentView))
@@ -147,21 +145,21 @@ export function useMonthDecrementor(
 }
 
 export function useMonthIncrementor(
-  currentView: number,
-  setCurrentView: Dispatch<SetStateAction<number>>,
+  currentView: Date,
+  setCurrentView: Dispatch<SetStateAction<Date>>,
 ) {
   return useCallback(function () {
     setCurrentView(incrementMonth(currentView))
   }, [currentView, setCurrentView])
 }
 
-export function useMonthResetter(setCurrentView: Dispatch<SetStateAction<number>>) {
+export function useMonthResetter(setCurrentView: Dispatch<SetStateAction<Date>>) {
   return useCallback(function () {
-    setCurrentView(Date.now())
+    setCurrentView(new Date())
   }, [setCurrentView])
 }
 
-export function useCalendarData(currentView: number, disablePast: boolean): Day[][] {
+export function useCalendarData(currentView: Date, disablePast: boolean): Day[][] {
   return useMemo(function () {
     return getCalendarDataForMonth(currentView, disablePast)
   }, [currentView, disablePast])

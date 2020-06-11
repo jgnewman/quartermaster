@@ -11,17 +11,17 @@ import { useValueSelector } from "./hooks"
 
 interface DatePickerHourProps {
   changeHandler?: FauxChangeEventHandler
-  hourStamp: number
+  hour: Date
   disablePast: boolean
   isCompact: boolean
   isDisabled: boolean
-  pickerValue: number | null
+  pickerValue: Date | null
   timesIncrement: 5 | 10 | 15 | 30 | 60
 }
 
 const DatePickerHour = forwardRef(function ({
   changeHandler,
-  hourStamp,
+  hour,
   disablePast,
   isCompact,
   isDisabled,
@@ -32,14 +32,14 @@ const DatePickerHour = forwardRef(function ({
   const timeText = new Intl.DateTimeFormat("default", {
     hour: "numeric",
     minute: "2-digit",
-  }).format(new Date(hourStamp))
+  }).format(hour)
 
-  const isSelected = pickerValue ? isSameTime(pickerValue, hourStamp) : false
+  const isSelected = pickerValue ? isSameTime(pickerValue, hour) : false
   const showTimes = true
 
   const selectValue = useValueSelector(
     changeHandler,
-    hourStamp,
+    hour,
     disablePast,
     isSelected,
     showTimes,

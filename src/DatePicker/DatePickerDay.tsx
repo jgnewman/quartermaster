@@ -11,36 +11,37 @@ import {
 
 interface DatePickerButtonProps {
   changeHandler?: FauxChangeEventHandler
-  dateStamp: number
+  date: Date
   disablePast: boolean
   isCompact: boolean
   isDisabled: boolean
-  pickerValue: number | null
+  now: Date
+  pickerValue: Date | null
   showTimes: boolean
   timesIncrement: 5 | 10 | 15 | 30 | 60
 }
 
 function DatePickerButton({
   changeHandler,
-  dateStamp,
+  date,
   disablePast,
   isCompact,
   isDisabled,
+  now,
   pickerValue,
   showTimes,
   timesIncrement,
 }: DatePickerButtonProps) {
 
-  const now = Date.now()
-  const buttonDay = (new Date(dateStamp)).getDate()
-  const buttonTitle = useFieldValue(dateStamp)
+  const buttonDay = date.getDate()
+  const buttonTitle = useFieldValue(date)
 
-  const isSelected = pickerValue ? isSameDay(pickerValue, dateStamp) : false
-  const isToday = isSameDay(now, dateStamp)
+  const isSelected = pickerValue ? isSameDay(pickerValue, date) : false
+  const isToday = isSameDay(now, date)
 
   const selectValue = useValueSelector(
     changeHandler,
-    dateStamp,
+    date,
     disablePast,
     isSelected,
     showTimes,
