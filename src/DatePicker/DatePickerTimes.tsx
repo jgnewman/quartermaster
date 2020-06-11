@@ -50,35 +50,52 @@ function DatePickerTimes({
 
   return (
     <div className="qmDatePickerTimes">
-      <Text className="qmDatePickerTimeTitle" isBold isSmaller>Time</Text>
-      <div className={`qmDatePickerHours ${scrollAreaClasses}`} ref={scrollAreaRef}>
-        {
-          hours.map((hour, index) => {
-            const isBeforeNow = hour < now
-            const isDisabled = disablePast ? isBeforeNow : false
-            const isFirstEnabledButton = !isBeforeNow && !isDisabled && !foundEnabledButton
+      <table className="qmDatePickerTimeTable">
 
-            if (isFirstEnabledButton) {
-              foundEnabledButton = true
-              enabledButtonIndexRef.current = index
-            }
+        <thead className="qmDatePickerTHead">
+          <tr>
+            <th>
+              <Text isBold isSmaller>Time</Text>
+            </th>
+          </tr>
+        </thead>
 
-            return (
-              <DatePickerHour
-                key={index}
-                ref={isFirstEnabledButton ? firstEnabledButtonRef : null}
-                changeHandler={changeHandler}
-                hour={hour}
-                disablePast={disablePast}
-                isCompact={isCompact}
-                isDisabled={isDisabled}
-                pickerValue={pickerValue}
-                timesIncrement={timesIncrement}
-              />
-            )
-          })
-        }
-      </div>
+        <tbody>
+          <tr>
+            <td>
+              <div className={`qmDatePickerHours ${scrollAreaClasses}`} ref={scrollAreaRef}>
+                {
+                  hours.map((hour, index) => {
+                    const isBeforeNow = hour < now
+                    const isDisabled = disablePast ? isBeforeNow : false
+                    const isFirstEnabledButton = !isBeforeNow && !isDisabled && !foundEnabledButton
+
+                    if (isFirstEnabledButton) {
+                      foundEnabledButton = true
+                      enabledButtonIndexRef.current = index
+                    }
+
+                    return (
+                      <DatePickerHour
+                        key={index}
+                        ref={isFirstEnabledButton ? firstEnabledButtonRef : null}
+                        changeHandler={changeHandler}
+                        hour={hour}
+                        disablePast={disablePast}
+                        isCompact={isCompact}
+                        isDisabled={isDisabled}
+                        pickerValue={pickerValue}
+                        timesIncrement={timesIncrement}
+                      />
+                    )
+                  })
+                }
+              </div>
+            </td>
+          </tr>
+        </tbody>
+
+      </table>
     </div>
   )
 }
