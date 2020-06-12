@@ -69,7 +69,15 @@ export function isSameTime(a: Date, b: Date): boolean {
 }
 
 export function getDayTotalForMonth(month: number, fullYear: number): number {
-  return (month === 1 && fullYear % 4 === 0) ? 29 : dayTotalMap[month]
+  if (month === 1) {
+    const isDivBy4 = fullYear % 4 === 0
+    const isDivBy100 = isDivBy4 && fullYear % 100 === 0
+    const isDivBy400 = isDivBy100 && fullYear % 400 === 0
+
+    const isLeapYear = isDivBy4 && (isDivBy100 ? (isDivBy400 ? true : false) : true)
+    return isLeapYear ? 29 : 28
+  }
+  return dayTotalMap[month]
 }
 
 export interface Day {
