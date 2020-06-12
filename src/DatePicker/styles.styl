@@ -56,6 +56,10 @@
   background: transparent
   outline: solid transparent !important
   padding: 0.5em 0.66em
+  display: none
+
+  &.hasValue
+    display: block
 
   &:hover .qmDatePickerClearIcon
     stroke: RED
@@ -93,30 +97,42 @@
 .qmDatePickerCalendar
   flex-grow: 10
 
-.qmDatePickerDayTable
+.qmDatePickerDayTable,
+.qmDatePickerTimeTable
   padding: QUARTER_REM
   width: 100%
 
   border-collapse: separate
-  border-spacing: div(QUARTER_REM, 2)
+  border-spacing: 0
 
   th, td
     border: 0
+    padding: 0
+
+    &.isCompact
+      font-size: SMALLEST_FONT
 
 .qmDatePickerDay,
 .qmDatePickerHour
-  borders(1px solid transparent, QUARTER_REM)
+  borders(1px solid transparent, 10 * REM)
   outline: solid transparent !important
 
   display: block
-  width: 100%
-  background: BLACK_FADE_MIN
+  margin: div(QUARTER_REM, 2) auto
+  width: DOUBLE_REM
+  height: DOUBLE_REM
+  padding: 0
+
+  background: transparent
   font-size: SMALLER_FONT
-  padding: QUARTER_REM
+  text-align: center
+  line-height: REM
   transition: BASE_TRANSITION
 
   &.isCompact
-    padding: EIGHTH_REM
+    width: times(REM, 1.5)
+    height: times(REM, 1.5)
+    font-size: SMALLEST_FONT
 
   &:not(.isDisabled):hover
     background: BLACK_FADE_FLY
@@ -132,7 +148,6 @@
     color: WHITE
 
 .qmDatePickerTimes
-  padding: QUARTER_REM
   text-align: center
   flex-grow: 1
 
@@ -140,15 +155,21 @@
   display: flex
   flex-wrap: wrap
   flex-flow: column
-  max-height: REM * 8.8
+  max-height: REM * 11
   overflow-y: auto
+  padding-top: 2px
+  box-sizing: border-box
 
   &.isCompact
-    max-height: REM * 7.6
+    max-height: REM * 9
 
 .qmDatePickerHour
   margin: 0 auto 4px
-  min-width: REM * 4
+  min-width: REM * 5
+  min-height: DOUBLE_REM
+
+  &.isCompact
+    min-height: times(REM, 1.5)
 
   &:last-child
     margin-bottom: 0

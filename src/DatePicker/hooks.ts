@@ -9,8 +9,13 @@ import {
 } from "react"
 
 import type {
-  FauxChangeEventHandler, FauxChangeEvent,
+  FauxChangeEventHandler,
+  FauxChangeEvent,
 } from "../lib/helperTypes"
+
+import {
+  elemInEventPath,
+} from "../lib/helpers"
 
 import {
   Day,
@@ -176,18 +181,18 @@ export function useCalendarState(initialState: boolean) {
 
 export function useCloseCalendarOnClickAway(
   calendarRef: RefObject<HTMLDivElement>,
+  clearRef: RefObject<HTMLButtonElement>,
   closeCalendar: () => void,
   isOpen: boolean,
 ) {
   const closeOnClickAway = useCallback(function (evt: any) {
-
     const { current: currentCalendarElem } = calendarRef
-    const refExists = !!currentCalendarElem
-    const refInPath = refExists && evt.path.includes(currentCalendarElem)
+    const { current: currentClearElem } = clearRef
 
-    if (refInPath) {
+    if (elemInEventPath(currentCalendarElem, evt) || elemInEventPath(currentClearElem, evt)) {
       return
     }
+
 
     if (isOpen) {
       closeCalendar()
@@ -195,6 +200,7 @@ export function useCloseCalendarOnClickAway(
 
   }, [
     calendarRef,
+    clearRef,
     closeCalendar,
     isOpen,
   ])
@@ -229,7 +235,7 @@ export function useScrollToSelectedTime(
     if (scrollArea && firstEnabledButton) {
       const segments = scrollArea.scrollHeight / totalHours
       const scrollPos = segments * (enabledButtonIndex || 0)
-      scrollArea.scrollTop = scrollPos
+      scrollArea.scrollTop = scrollPos + 2
     }
   }, [
     enabledButtonIndexRef,

@@ -16,6 +16,7 @@ export interface TextProps {
   isBlock?: boolean
   isBold?: boolean
   isSmaller?: boolean
+  isSmallest?: boolean
   isUppercase?: boolean
   tag?: string
   text?: string
@@ -29,6 +30,7 @@ function Text({
   isBlock,
   isBold,
   isSmaller,
+  isSmallest,
   isUppercase,
   tag = "span",
   text,
@@ -48,8 +50,8 @@ function Text({
   const containerClasses = buildClassNames({
     isBlock,
     isBold,
-    isSmaller,
     isUppercase,
+    [isSmallest ? "isSmallest" : "isSmaller"] : isSmallest || isSmaller,
   })
 
   return createElement(tag, {

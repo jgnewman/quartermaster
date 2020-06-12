@@ -11,7 +11,11 @@ import React, {
   useState,
 } from "react"
 
-import { buildClassNames } from "../lib/helpers"
+import {
+  buildClassNames,
+  elemInEventPath,
+} from "../lib/helpers"
+
 import Animation, { AnimationProps } from "../Animation"
 import Space from "../Space"
 import Triangle from "../icons/Triangle"
@@ -207,10 +211,8 @@ function useCloseMenuOnClickAway(
 ) {
   const closeOnClickAway = useCallback(function (evt: any) {
     const { current: currentMenuRef } = menuRef
-    const refExists = !!currentMenuRef
-    const refInPath = refExists && evt.path.includes(currentMenuRef)
 
-    if (refInPath) {
+    if (elemInEventPath(currentMenuRef, evt)) {
       return
     }
 

@@ -82,6 +82,7 @@ function DatePicker({
   const date = useDateFromProp(value)
 
   const calendarRef = useRef(null)
+  const clearRef = useRef(null)
   const fieldRef = useRef(null)
 
   const { isOpen, closeCalendar, openCalendar } = useCalendarState(false)
@@ -98,6 +99,7 @@ function DatePicker({
 
   useCloseCalendarOnClickAway(
     calendarRef,
+    clearRef,
     closeCalendar,
     isOpen,
   )
@@ -119,6 +121,8 @@ function DatePicker({
   const fieldClasses = buildClassNames({
     hasValue: !!value,
   })
+
+  const clearClasses = fieldClasses
 
   return (
     <div className={`qmDatePickerContainer ${className || ""}`}>
@@ -148,15 +152,16 @@ function DatePicker({
         <div className="qmDatePickerOverlay" onClick={focusTextField}></div>
 
         <div className="qmDatePickerIcons">
-          {value && (
-            <button className={`qmDatePickerClearButton`} onClick={clearValue}>
-              <Ex
-                className="qmDatePickerIcon qmDatePickerClearIcon"
-                size="s"
-                title="Clear date"
-              />
-            </button>
-          )}
+          <button
+            className={`qmDatePickerClearButton ${clearClasses}`}
+            ref={clearRef}
+            onClick={clearValue}>
+            <Ex
+              className="qmDatePickerIcon qmDatePickerClearIcon"
+              size="s"
+              title="Clear date"
+            />
+          </button>
 
           <div className="qmDatePickerIconWrapper" role="button" onClick={focusTextField}>
             <Calendar
@@ -184,7 +189,11 @@ function DatePicker({
                 </div>
 
                 <div className="qmDatePickerTitle">
-                  <Text className="qmDatePickerTitleText" isBold>{calendarTitle}</Text>
+                  <Text
+                    className="qmDatePickerTitleText"
+                    isBold>
+                    {calendarTitle}
+                  </Text>
                   <IconButton
                     className="qmDatePickerButton qmDatePickerReset"
                     clickHandler={resetView}>

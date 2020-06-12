@@ -29,6 +29,7 @@ function DatePickerCalendar({
 }: DatePickerCalendarProps) {
 
   const calendarRows = useCalendarData(currentView, disablePast)
+  const headerSize = { [isCompact ? "isSmallest" : "isSmaller"]: true }
 
   return (
     <div className="qmDatePickerCalendar">
@@ -37,7 +38,7 @@ function DatePickerCalendar({
           <tr>
             {
               ["S", "M", "T", "W", "T", "F", "S"].map((letter, index) => (
-                <th key={index}><Text isBold isSmaller>{letter}</Text></th>
+                <th key={index}><Text isBold {...headerSize}>{letter}</Text></th>
               ))
             }
           </tr>

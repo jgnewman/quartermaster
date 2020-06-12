@@ -44,6 +44,8 @@ function DatePickerTimes({
     totalHours,
   )
 
+  const headerSize = { [isCompact ? "isSmallest" : "isSmaller"]: true }
+
   const scrollAreaClasses = buildClassNames({
     isCompact,
   })
@@ -55,7 +57,7 @@ function DatePickerTimes({
         <thead className="qmDatePickerTHead">
           <tr>
             <th>
-              <Text isBold isSmaller>Time</Text>
+              <Text isBold {...headerSize}>Time</Text>
             </th>
           </tr>
         </thead>

@@ -71,3 +71,8 @@ export function enableScrolling() {
     scrollingEnabled = true
   }
 }
+
+export function elemInEventPath(elem: HTMLElement | null | undefined, evt: any): boolean {
+  const elemExists = !!elem
+  return elemExists && evt?.path?.includes(elem)
+}
