@@ -38,3 +38,9 @@ export function usePrevious<T>(value: T) {
   useEffect(() => { ref.current = value })
   return ref.current
 }
+
+export function useSyncRef<T>(value: T) {
+  const ref = useRef<T>()
+  ref.current = value
+  return ref
+}

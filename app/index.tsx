@@ -10,7 +10,7 @@ import {
   Button,
   Checkbox,
   ConfirmButton,
-  DatePicker,
+  DatePickerLegacy,
   Form,
   Grid,
   Heading,
@@ -22,6 +22,7 @@ import {
   RadioButton,
   RadioGroup,
   Select,
+  Slider,
   Space,
   Spinner,
   Tag,
@@ -355,6 +356,7 @@ class App extends React.Component {
             mygroup: "foo",
             myselect: null,
             mydate: null,
+            myslider: 50,
           }}>
             {({ formState, updateValueFor }) => (
               <>
@@ -369,7 +371,7 @@ class App extends React.Component {
                 </Space>
 
                 <Space bottom="l">
-                  <DatePicker
+                  <DatePickerLegacy
                     label="Pick a date!"
                     value={formState.mydate}
                     changeHandler={updateValueFor("mydate")}
@@ -430,6 +432,17 @@ class App extends React.Component {
                     position="top"
                     value={formState.myselect}
                     changeHandler={updateValueFor("myselect")}
+                  />
+                </Space>
+
+                <Space bottom="l">
+                  <Slider
+                    label="This is my slider"
+                    changeHandler={updateValueFor("myslider")}
+                    min={1}
+                    max={100}
+                    value={formState.myslider}
+                    formatValue={n => `${n} units`}
                   />
                 </Space>
 

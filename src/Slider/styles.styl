@@ -1,0 +1,60 @@
+@import "../lib/sharedStyles"
+
+TOGGLE_SIZE = 18px
+BAR_HEIGHT = 5px
+
+.qmSliderContainer
+  display: block
+
+.qmSliderLabelWrapper
+  display: flex
+  justify-content: space-between
+  align-items: center
+  flex-direction: row-reverse
+
+.qmSliderInputWrapper
+  position: relative
+  height: TOGGLE_SIZE
+
+.qmSliderInput
+  borders(0, REM)
+  outline: solid transparent !important
+
+  display: block
+  width: 100%
+  height: BAR_HEIGHT
+
+  position: absolute
+  top: 50%
+  left: 0
+  transform: translateY(-50%)
+
+  background: BLACK_FADE_FLY
+
+  -webkit-appearance: none
+  appearance: none
+
+.qmSliderInput::-webkit-slider-thumb
+  size(TOGGLE_SIZE)
+  borders(0, 50%)
+
+  background: BASE_BG
+  box-shadow: 0 0 0 1px BLACK_FADE_FLY
+  transition: BASE_TRANSITION
+
+  -webkit-appearance: none
+  appearance: none
+
+.qmSliderInput::-moz-range-thumb
+  size(TOGGLE_SIZE)
+  borders(0, 50%)
+
+  background: BASE_BG
+  box-shadow: 0 0 0 1px BLACK_FADE_FLY
+  transition: BASE_TRANSITION
+
+.qmSliderInput:focus::-webkit-slider-thumb
+  box-shadow: 0 0 0 2px HIGHLIGHTS
+
+.qmSliderInput:focus::-moz-range-thumb
+  box-shadow: 0 0 0 2px HIGHLIGHTS

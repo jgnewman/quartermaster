@@ -381,6 +381,23 @@ if (prevProp !== currentProp) {
 }
 ```
 
+#### `useSyncRef`
+
+Creates a ref object whose value is updated immediately rather than after the render. This is useful if you want to use a value as a dependency of `useCallback` but you don't want to actually regenerate a new function every time this value changes.
+
+```typescript
+// Type signature:
+<T>(value: T) => MutableRefObject<T | undefined>
+
+// Example usage:
+const valueSyncRef = useSyncRef(value)
+
+const eventHandler = useCallback(() => {
+  const { current: currentValue } = valueSyncRef
+  doSomethingWith(currentValue)
+}, [valueSyncRef])
+```
+
 ### Icons
 Quartermaster's icons are importable from a the top level of the library as are all other components, however they must be accessed individually from a directory called `/icons`. This makes importing individual icons slightly different from importing other components. To illustrate, let's compare the `Checkmark` icon to the `Button` component.
 
