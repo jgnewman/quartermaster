@@ -8,16 +8,21 @@ import React, {
 } from "react"
 
 import type {
-  FauxChangeEvent,
   InputElem,
 } from "../lib/helperTypes"
 
+import type {
+  ValidValueRange,
+} from "../DatePicker/types"
+
+type SimpleValue = string | number | boolean | null
+
 interface SimpleObject {
-  [key: string]: string | number | boolean | null
+  [key: string]: SimpleValue | ValidValueRange
 }
 
 type SetFormState = (vals: SimpleObject) => void
-type UpdateValueFor = (name: string) => (evt: ChangeEvent | FauxChangeEvent | string | null) => void
+type UpdateValueFor = (name: string) => (evt: ChangeEvent | SimpleValue | ValidValueRange) => void
 type ToggleCheckedFor = (name: string) => () => void
 
 interface FormUtils {
@@ -41,11 +46,23 @@ function useFormState(initialState: SimpleObject): FormUtils {
   }
 
   function updateValueForCallback(name: string) {
-    return (evt: ChangeEvent | string | null) => {
-      const val = (typeof evt === "string" || evt === null)
-        ? evt
-        : (evt.target as InputElem).value
-      setState({ ...state, [name]: val })
+    return (evt: ChangeEvent | SimpleValue | ValidValueRange) => {
+      switch (typeof evt) {
+
+        case "string":
+        case "number":
+        case "boolean":
+          setState({ ...state, [name]: evt })
+          break
+
+        default:
+          if (Array.isArray(evt) || evt === null) {
+            setState({ ...state, [name]: evt })
+          } else {
+            setState({ ...state, [name]: (evt.target as InputElem).value })
+          }
+
+      }
     }
   }
 

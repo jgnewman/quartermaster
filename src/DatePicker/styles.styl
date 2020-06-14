@@ -1,4 +1,193 @@
 @import "../lib/sharedStyles"
 
-.qmDatePickerContainer
+.qmDatePickerContent
+  borders(BASE_BORDER, QUARTER_REM)
   display: block
+  position: relative
+  box-shadow: BLANK_OUTLINE
+
+  &.isOpen
+    border-color: transparent
+
+.qmDatePickerInput
+  @extend $ellipsisText
+  borders(0, QUARTER_REM)
+
+  position: relative
+  z-index: 4
+
+  display: block
+  margin: 0
+  padding: times(0.1, REM) 3em times(0.1, REM) THREE_QUARTER_REM
+
+  color: BASE_FONT
+  background: transparent
+  line-height: 1
+  cursor: default
+
+  width: 100%
+  height: LARGER_ELEM_HEIGHT
+  outline: solid transparent !important
+  transition: BASE_TRANSITION
+
+  &::placeholder
+    color: BASE_PLACEHOLDER
+
+  &[disabled]::placeholder
+    color: BASE_FONT_DISABLED
+
+  &.isCompact
+    height: SMALLER_ELEM_HEIGHT
+
+  &.isOpen
+    padding-right: 4.25em
+
+.qmDatePickerError
+  @extend $fieldErrorText
+
+.qmDatePickerControls
+  position: absolute
+  top: 50%
+  right: 0
+  transform: translateY(-50%)
+  z-index: 4
+
+.qmDatePickerCalIconWrapper
+  padding: .5em .75em
+  position: relative
+
+  &::after
+    content: ""
+    display: block
+    position: absolute
+    left: 0
+    top: 50%
+    width: 1px
+    height: 50%
+    transform: translateY(-50%)
+    background: LIGHTEST_GRAY
+
+.qmIcon.qmDatePickerCalIcon
+  stroke: LIGHTEST_GRAY
+
+  .qmPathIsFilled
+    fill: LIGHTEST_GRAY
+
+.qmDatePickerControl
+  outline: solid transparent !important
+  background: transparent
+  border: 0
+  padding: .5em .5em
+
+  &.isCheck
+    margin-right: .25em
+
+  .qmIcon.qmDatePickerControlIcon
+    stroke: LIGHTEST_GRAY
+    transition: BASE_TRANSITION
+
+  &:hover .qmIcon.isEx
+    stroke: RED
+
+  &:hover .qmIcon.isCheck
+    stroke: GREEN
+
+.qmDatePickerSelectors
+  borders(BASE_BORDER, QUARTER_REM)
+  box-shadow: SUBTLE_SHADOW
+  background: BASE_BG
+
+  position: absolute
+  left: 0
+  z-index: 3
+
+  width: calc(100% + 2px)
+  margin: -1px
+
+  padding-left: THREE_QUARTER_REM
+  padding-right: THREE_QUARTER_REM
+
+  &.isBottom
+    top: 0
+    padding-top: LARGER_ELEM_HEIGHT
+
+  &.isBottom.isCompact
+    padding-top: SMALLER_ELEM_HEIGHT
+
+  &.isTop
+    bottom: 0
+    padding-bottom: LARGER_ELEM_HEIGHT
+
+  &.isTop.isCompact
+    padding-bottom: SMALLER_ELEM_HEIGHT
+
+.qmDatePickerCalHead,
+.qmDatePickerCalBody
+  display: flex
+  justify-content: start
+  flex-wrap: wrap
+
+.qmDatePickerCalColHead,
+.qmDatePickerCalDay
+  flex-basis: calc(100% / 7)
+  text-align: center
+  margin: div(QUARTER_REM, 2) 0
+
+.qmDatePickerCalDay
+  position: relative
+
+  &.isInRange
+    background: HIGHLIGHTS_FADE_BANTAM
+
+  &.isStartDate::before,
+  &.isEndDate::before
+    size(50%, 100%)
+    background: HIGHLIGHTS_FADE_BANTAM
+
+    display: block
+    content: ""
+    position: absolute
+    top: 0
+    z-index: 1
+
+  &.isStartDate::before
+    right: 0
+
+  &.isEndDate::before
+    left: 0
+
+.qmDatePickerCalBtn
+  borders(2px solid transparent, 50%)
+  size(DOUBLE_REM)
+
+  position: relative
+  z-index: 2
+
+  outline: solid transparent !important
+
+  background: transparent
+  color: BASE_FONT
+
+  text-align: center
+  display: block
+  margin: 0 auto
+  transition: BASE_TRANSITION
+
+  &:hover
+    background: BLACK_FADE_FLY
+
+  &:focus
+    border-color: HIGHLIGHTS
+
+  &.isDisabled
+    background: transparent
+    color: BASE_FONT_DISABLED
+
+  &.isSelected
+    border: 0
+    background: HIGHLIGHTS
+    color: WHITE
+
+  &.isToday
+    border-color: LIGHTEST_GRAY
+

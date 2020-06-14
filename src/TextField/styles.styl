@@ -85,15 +85,7 @@
     opacity: 0.25
 
 .qmTextFieldError
-  display: block
-  position: absolute
-  left: 0
-  top: 100%
-  width: 100%
-
-  color: ERROR
-  font-size: 75%
-  padding: QUARTER_REM 0 THIRD_REM
+  @extend $fieldErrorText
 
 $commonFieldProps
   borders(BASE_BORDER, QUARTER_REM)

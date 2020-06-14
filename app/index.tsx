@@ -10,7 +10,7 @@ import {
   Button,
   Checkbox,
   ConfirmButton,
-  DatePickerLegacy,
+  DatePicker,
   Form,
   Grid,
   Heading,
@@ -355,7 +355,7 @@ class App extends React.Component {
             mytext: "",
             mygroup: "foo",
             myselect: null,
-            mydate: null,
+            mydate: [Date.now(), Date.now() + (1000 * 60 * 60 * 24 * 5)],
             myslider: 50,
           }}>
             {({ formState, updateValueFor }) => (
@@ -371,15 +371,17 @@ class App extends React.Component {
                 </Space>
 
                 <Space bottom="l">
-                  <DatePickerLegacy
-                    label="Pick a date!"
+                  <DatePicker
+                    label="Pick a date v2!"
+                    enableRange
                     value={formState.mydate}
                     changeHandler={updateValueFor("mydate")}
                     disablePast={true}
                     isCompact={false}
+                    isRequired={true}
                     placeholder="Pick a date!"
-                    showTimes={true}
-                    timesIncrement={30}
+                    // showTimes={true}
+                    // timesIncrement={30}
                   />
                 </Space>
 
