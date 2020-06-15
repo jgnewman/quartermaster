@@ -36,6 +36,7 @@ import DatePickerTimes from "./DatePickerTimes"
 
 /*
 TODO:
+- Create compact version
 - Allow showing/selecting times
 - Make as accessible as possible
   - Tabbing to the field should open the calendar
@@ -141,6 +142,7 @@ function DatePicker({
 
   const selectorsClasses = buildClassNames({
     isBottom,
+    isCompact,
     isTop,
   })
 
@@ -169,6 +171,7 @@ function DatePicker({
         <DatePickerControls
           changeHandler={changeHandler}
           enableRange={enableRange}
+          isCompact={isCompact}
           isOpen={isOpen}
           setOpen={setOpen}
           ref={confirmRef}
@@ -185,6 +188,7 @@ function DatePicker({
               disablePast={disablePast}
               enableRange={enableRange}
               endDate={endDate}
+              isCompact={isCompact}
               now={now}
               setCurrentView={setCurrentView}
               startDate={startDate}
@@ -196,6 +200,7 @@ function DatePicker({
                 changeHandler={changeHandler}
                 enableRange={enableRange}
                 endDate={endDate}
+                isCompact={isCompact}
                 startDate={startDate}
               />
             )}

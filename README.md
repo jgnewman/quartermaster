@@ -56,6 +56,7 @@ Quartermaster deliberately avoids styled-components for performance and bundle s
 - [Toast](#toast)
 - [Toggle](#toggle)
 
+TODO: Document Slider
 TODO: Better outline state for tabbing through menu items
 TODO: Can we open submenus when tabbing to them?
 

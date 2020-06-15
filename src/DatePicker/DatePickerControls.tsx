@@ -6,6 +6,10 @@ import React, {
   memo,
 } from "react"
 
+import {
+  buildClassNames,
+} from "../lib/helpers"
+
 import Calendar from "../icons/Calendar"
 import Checkmark from "../icons/Checkmark"
 import Ex from "../icons/Ex"
@@ -22,6 +26,7 @@ import {
 interface DatePickerControls {
   changeHandler?: DatePickerChangeHandler
   enableRange?: boolean
+  isCompact?: boolean
   isOpen: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
 }
@@ -29,12 +34,20 @@ interface DatePickerControls {
 const DatePickerControls = forwardRef(function ({
   changeHandler,
   enableRange,
+  isCompact,
   isOpen,
   setOpen,
 }: DatePickerControls, ref: RefObject<HTMLButtonElement>) {
 
   const handleClickEx = useClearValue(changeHandler, enableRange)
   const handleClickCheck = useConfirmValue(setOpen)
+
+  const controlClasses = buildClassNames({
+    isCompact,
+  })
+
+  const exClasses = `isEx ${controlClasses}`
+  const checkClasses = `isCheck ${controlClasses}`
 
   return (
     <div className="qmDatePickerControls">
@@ -47,13 +60,13 @@ const DatePickerControls = forwardRef(function ({
       {isOpen && (
         <>
           <button
-            className="qmDatePickerControl isEx"
+            className={`qmDatePickerControl ${exClasses}`}
             onClick={handleClickEx}>
             <Ex className="qmDatePickerControlIcon isEx" size="s" title="Clear value" />
           </button>
 
           <button
-            className="qmDatePickerControl isCheck"
+            className={`qmDatePickerControl ${checkClasses}`}
             onClick={handleClickCheck}
             ref={ref}>
             <Checkmark className="qmDatePickerControlIcon isCheck" size="s" title="Done" />

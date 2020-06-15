@@ -4,6 +4,10 @@ import React, {
   memo,
 } from "react"
 
+import {
+  buildClassNames,
+} from "../lib/helpers"
+
 import type {
   DatePickerChangeHandler,
 } from "./types"
@@ -24,6 +28,7 @@ interface DatePickerCalendarProps {
   disablePast?: boolean
   enableRange?: boolean
   endDate: Date | null
+  isCompact?: boolean
   now: Date
   setCurrentView: Dispatch<SetStateAction<Date>>
   startDate: Date | null
@@ -36,6 +41,7 @@ function DatePickerCalendar({
   disablePast,
   enableRange,
   endDate,
+  isCompact,
   now,
   setCurrentView,
   startDate,
@@ -54,11 +60,18 @@ function DatePickerCalendar({
     weekStartsOnMonday,
   )
 
+  const wrapperClasses = buildClassNames({
+    isCompact,
+  })
+
+  const colHeadClasses = wrapperClasses
+
   return (
-    <div className="qmDatePickerCal">
+    <div className={`qmDatePickerCal ${wrapperClasses}`}>
       <DatePickerCalNav
         currentView={currentView}
         disablePast={disablePast}
+        isCompact={isCompact}
         now={now}
         setCurrentView={setCurrentView}
       />
@@ -66,12 +79,12 @@ function DatePickerCalendar({
       <section className="qmDatePickerCalHead">
         {
           titles.map((letter, index) => (
-            <span key={index} className="qmDatePickerCalColHead">{letter}</span>
+            <span key={index} className={`qmDatePickerCalColHead ${colHeadClasses}`}>{letter}</span>
           ))
         }
       </section>
 
-      <section className="qmDatePickerCalBody">
+      <section className="qmDatePickerCalBody" role="list" aria-expanded={true}>
         {
           calendarData.map((row, rowIndex) => row.map(({ isDisabled, date }, dayIndex) => (
             <DatePickerDay
@@ -80,8 +93,9 @@ function DatePickerCalendar({
               date={date}
               enableRange={enableRange}
               endDate={endDate}
-              now={now}
+              isCompact={isCompact}
               isDisabled={isDisabled}
+              now={now}
               startDate={startDate}
             />
           )))

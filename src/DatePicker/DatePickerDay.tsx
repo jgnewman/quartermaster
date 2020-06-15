@@ -25,8 +25,9 @@ interface DatePickerDayProps {
   date: Date
   enableRange?: boolean
   endDate: Date | null
-  now: Date
+  isCompact?: boolean
   isDisabled: boolean
+  now: Date
   startDate: Date | null
 }
 
@@ -35,8 +36,9 @@ function DatePickerDay({
   date,
   enableRange,
   endDate,
-  now,
+  isCompact,
   isDisabled,
+  now,
   startDate,
 }: DatePickerDayProps) {
 
@@ -67,6 +69,7 @@ function DatePickerDay({
   )
 
   const wrapperClasses = buildClassNames({
+    isCompact,
     isDisabled,
     isEndDate: isEndDate && !!startDate,
     isInRange,
@@ -75,6 +78,7 @@ function DatePickerDay({
   })
 
   const buttonClasses = buildClassNames({
+    isCompact,
     isDisabled,
     isSelected,
     isToday,

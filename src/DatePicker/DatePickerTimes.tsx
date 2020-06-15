@@ -21,6 +21,7 @@ interface DatePickerTimesProps {
   changeHandler?: DatePickerChangeHandler
   enableRange?: boolean
   endDate: Date | null
+  isCompact?: boolean
   startDate: Date | null
 }
 
@@ -28,6 +29,7 @@ function DatePickerTimes({
   changeHandler,
   enableRange,
   endDate,
+  isCompact,
   startDate,
 }: DatePickerTimesProps) {
 
@@ -42,6 +44,7 @@ function DatePickerTimes({
     changeHandler,
     enableRange,
     endDate,
+    isCompact,
     startDate,
   })
 
@@ -49,8 +52,9 @@ function DatePickerTimes({
     <div className={`qmDatePickerTimes ${wrapperClasses}`}>
       <Slider
         changeHandler={() => { return }}
-        className="qmDatePickerSlider"
+        className="qmDatePickerSlider isStartDate"
         id={startId}
+        isCompact={isCompact}
         isDisabled={!startDate}
         label={startLabel}
         max={10}
@@ -61,8 +65,9 @@ function DatePickerTimes({
       {enableRange && (
         <Slider
           changeHandler={() => { return }}
-          className="qmDatePickerSlider"
+          className="qmDatePickerSlider isEndDate"
           id={endId}
+          isCompact={isCompact}
           isDisabled={!endDate}
           label={endLabel}
           max={10}

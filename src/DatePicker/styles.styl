@@ -79,6 +79,9 @@
   border: 0
   padding: .5em .5em
 
+  &.isCompact
+    padding: .5em .33em
+
   &.isCheck
     margin-right: .25em
 
@@ -86,10 +89,12 @@
     stroke: LIGHTEST_GRAY
     transition: BASE_TRANSITION
 
-  &:hover .qmIcon.isEx
+  &:hover .qmIcon.isEx,
+  &:focus .qmIcon.isEx
     stroke: RED
 
-  &:hover .qmIcon.isCheck
+  &:hover .qmIcon.isCheck,
+  &:focus .qmIcon.isCheck
     stroke: GREEN
 
 $separatorLine
@@ -137,20 +142,28 @@ $separatorLine
 
   &.isBottom.isCompact::before
     top: SMALLER_ELEM_HEIGHT
+    width: "calc(100% - %s)" % (REM * 1.5)
 
   &.isTop::before
     bottom: LARGER_ELEM_HEIGHT
 
   &.isTop.isCompact::before
     bottom: SMALLER_ELEM_HEIGHT
+    width: "calc(100% - %s)" % (REM * 1.5)
 
 .qmDatePickerCal
   padding-bottom: THREE_QUARTER_REM
+
+  &.isCompact
+    padding-bottom: HALF_REM
 
 .qmDatePickerCalNav
   display: flex
   justify-content: space-between
   padding: THREE_QUARTER_REM 0 THREE_QUARTER_REM
+
+  &.isCompact
+    padding: QUARTER_REM 0 QUARTER_REM
 
 .qmDatePickerCalTitle
   flex-grow: 2
@@ -170,7 +183,8 @@ $separatorLine
 .qmDatePickerMonthBtn .qmIcon
   stroke: LIGHTEST_GRAY
 
-.qmDatePickerMonthBtn:hover .qmIcon
+.qmDatePickerMonthBtn:hover .qmIcon,
+.qmDatePickerMonthBtn:focus .qmIcon
   stroke: HIGHLIGHTS
 
 .qmDatePickerCalHead,
@@ -224,6 +238,7 @@ $separatorLine
 
   background: transparent
   color: BASE_FONT
+  padding: 0
 
   text-align: center
   display: block
@@ -235,6 +250,9 @@ $separatorLine
 
   &:focus
     border-color: HIGHLIGHTS
+
+  &.isCompact
+    size(REM * 1.5)
 
   &.isDisabled
     background: transparent
@@ -257,5 +275,14 @@ $separatorLine
     @extend $separatorLine
     top: 0
 
+  &.isCompact
+    padding: HALF_REM THREE_QUARTER_REM THREE_QUARTER_REM
+
+  &.isCompact::before
+    width: "calc(100% - %s)" % (REM * 1.5)
+
 .qmDatePickerSlider .qmSliderValue
   font-size: SMALLER_FONT
+
+.qmDatePickerSlider.isEndDate
+  margin-top: HALF_REM

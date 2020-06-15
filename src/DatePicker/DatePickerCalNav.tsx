@@ -4,6 +4,10 @@ import React, {
   memo,
 } from "react"
 
+import {
+  buildClassNames,
+} from "../lib/helpers"
+
 import Align from "../Align"
 import Text from "../Text"
 import Caret from "../icons/Caret"
@@ -20,6 +24,7 @@ import {
 interface DatePickerCalNavProps {
   currentView: Date
   disablePast?: boolean
+  isCompact?: boolean
   now: Date
   setCurrentView: Dispatch<SetStateAction<Date>>
 }
@@ -27,6 +32,7 @@ interface DatePickerCalNavProps {
 function DatePickerCalNav({
   currentView,
   disablePast,
+  isCompact,
   now,
   setCurrentView,
 }: DatePickerCalNavProps) {
@@ -37,8 +43,12 @@ function DatePickerCalNav({
   const handleClickRight = useIncrementMonth(currentView, setCurrentView)
   const shouldEnableLeftButton = useEnableLeftButton(currentView, disablePast, now)
 
+  const navClasses = buildClassNames({
+    isCompact,
+  })
+
   return (
-    <header className="qmDatePickerCalNav">
+    <header className={`qmDatePickerCalNav ${navClasses}`}>
       <div className="qmDatePickerCalBtnWrapper">
         {shouldEnableLeftButton && (
           <button

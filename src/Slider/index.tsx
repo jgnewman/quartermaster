@@ -8,6 +8,10 @@ import type {
   DynamicProps,
 } from "../lib/helperTypes"
 
+import {
+  buildClassNames,
+} from "../lib/helpers"
+
 import Label from "../Label"
 import Text from "../Text"
 
@@ -20,6 +24,7 @@ export interface SliderProps {
   className?: string
   formatValue?: (n: number) => string
   id?: string
+  isCompact?: boolean
   isDisabled?: boolean
   isRequired?: boolean
   label?: string
@@ -34,6 +39,7 @@ function Slider({
   className,
   formatValue,
   id,
+  isCompact,
   isDisabled,
   isRequired,
   label,
@@ -49,7 +55,6 @@ function Slider({
   )
 
   const labelProps: DynamicProps = {
-    className: "qmSliderLabel",
     isRequired,
   }
 
@@ -72,17 +77,24 @@ function Slider({
     inputProps.onChange = changeHandler
   }
 
+  const labelClasses = buildClassNames({
+    isCompact,
+  })
+
+  const inputWrapperClasses = labelClasses
+  const inputClasses = labelClasses
+
   return (
     <div className={`qmSliderContainer ${className || ""}`}>
 
       <div className="qmSliderLabelWrapper">
         <Text className="qmSliderValue" text={formattedValue} />
-        {label && <Label text={label} {...labelProps} />}
+        {label && <Label className={`qmSliderLabel ${labelClasses}`} text={label} {...labelProps} />}
       </div>
 
-      <div className="qmSliderInputWrapper">
+      <div className={`qmSliderInputWrapper ${inputWrapperClasses}`}>
         <input
-          className="qmSliderInput"
+          className={`qmSliderInput ${inputClasses}`}
           max={max}
           min={min}
           type="range"
