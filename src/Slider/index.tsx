@@ -76,7 +76,7 @@ function Slider({
     <div className={`qmSliderContainer ${className || ""}`}>
 
       <div className="qmSliderLabelWrapper">
-        <Text className="qmSliderValue">{formattedValue}</Text>
+        <Text className="qmSliderValue" text={formattedValue} />
         {label && <Label text={label} {...labelProps} />}
       </div>
 

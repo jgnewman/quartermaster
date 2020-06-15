@@ -8,6 +8,7 @@ import React, {
   useRef,
 } from "react"
 
+import Text from "../Text"
 import Checkmark from "../icons/Checkmark"
 
 import { DynamicProps } from "../lib/helperTypes"
@@ -122,11 +123,12 @@ const Toggle = forwardRef(function ({
         </span>
 
         {label && (
-          <label
+          <Text
             className={`qmToggleLabel ${labelClasses}`}
-            {...labelProps}>
-            {label}
-          </label>
+            tag="label"
+            text={label}
+            {...labelProps}
+          />
         )}
 
       </span>

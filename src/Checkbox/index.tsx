@@ -123,9 +123,9 @@ const Checkbox = forwardRef(function ({
           <Text
             className={`qmCheckboxLabel ${labelClasses}`}
             tag="label"
-            {...labelProps}>
-            {label}
-          </Text>
+            text={label}
+            {...labelProps}
+          />
         )}
 
       </span>

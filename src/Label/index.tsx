@@ -35,7 +35,8 @@ function Label({
       isBlock
       isBold
       isSmaller
-      {...dynamicProps}>
+      {...dynamicProps}
+    >
       {text}{isRequired && (
         <Text
           className="qmLabelRequired"

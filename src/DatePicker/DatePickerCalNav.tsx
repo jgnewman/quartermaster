@@ -5,6 +5,7 @@ import React, {
 } from "react"
 
 import Align from "../Align"
+import Text from "../Text"
 import Caret from "../icons/Caret"
 import Reload from "../icons/Reload"
 
@@ -49,7 +50,7 @@ function DatePickerCalNav({
       </div>
 
       <Align className="qmDatePickerCalTitle" justify="center">
-        <span className="qmDatePickerCalTitleText">{monthName}</span>
+        <Text className="qmDatePickerCalTitleText" text={monthName} />
         <button
           className="qmDatePickerMonthBtn isReload"
           onClick={handleClickReload}>

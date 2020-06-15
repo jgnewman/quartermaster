@@ -132,9 +132,9 @@ const RadioButton = forwardRef(function ({
             <Text
               className={`qmRadioLabel ${labelClasses}`}
               tag="label"
-              {...labelProps}>
-              {label}
-            </Text>
+              text={label}
+              {...labelProps}
+            />
           )}
 
         </span>

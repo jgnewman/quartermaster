@@ -89,9 +89,7 @@ function Toast({
             <Icon className={`qmToastIcon ${typeClasses}`} size="l" />
           )}
 
-          <Text className="qmToastText">
-            {body}
-          </Text>
+          <Text className="qmToastText" text={body} />
 
           {isDismissible && (
             <IconButton
