@@ -57,8 +57,7 @@ Quartermaster deliberately avoids styled-components for performance and bundle s
 - [Toggle](#toggle)
 
 TODO: Better outline state for tabbing through menu items
-TODO: Are we using the correct default font color for all elements?
-TODO: When we tab to certain elements, the page scrolls to weird places
+TODO: Can we open submenus when tabbing to them?
 
 ### Alert
 Places a colored box with an alert icon in one of three forms: `info`, `danger`, or `warning`. The content of the alert box can be specified with either `text` or `children`.

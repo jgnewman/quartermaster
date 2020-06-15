@@ -38,6 +38,9 @@ import DatePickerTimes from "./DatePickerTimes"
 TODO:
 - Allow showing/selecting times
 - Make as accessible as possible
+  - Tabbing to the field should open the calendar
+  - The calendar should be marked with aria attrs as an openable dialog
+  - Blurring the calendar should close the calendar
 - Make compatible with dark mode
 */
 
