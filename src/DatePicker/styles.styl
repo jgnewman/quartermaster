@@ -92,6 +92,17 @@
   &:hover .qmIcon.isCheck
     stroke: GREEN
 
+$separatorLine
+  display: block
+  content: ""
+  position: absolute
+  left: 50%
+  transform: translateX(-50%)
+
+  background: BLACK_FADE_FLY
+  height: 1px
+  width: "calc(100% - %s)" % (DOUBLE_REM)
+
 .qmDatePickerSelectors
   borders(BASE_BORDER, QUARTER_REM)
   box-shadow: SUBTLE_SHADOW
@@ -119,15 +130,7 @@
     padding-bottom: SMALLER_ELEM_HEIGHT
 
   &::before
-    display: block
-    content: ""
-    position: absolute
-    left: 50%
-    transform: translateX(-50%)
-
-    background: BLACK_FADE_FLY
-    height: 1px
-    width: "calc(100% - %s)" % (DOUBLE_REM)
+    @extend $separatorLine
 
   &.isBottom::before
     top: LARGER_ELEM_HEIGHT
@@ -147,7 +150,7 @@
 .qmDatePickerCalNav
   display: flex
   justify-content: space-between
-  padding: THREE_QUARTER_REM 0 REM
+  padding: THREE_QUARTER_REM 0 THREE_QUARTER_REM
 
 .qmDatePickerCalTitle
   flex-grow: 2
@@ -245,3 +248,13 @@
     border-color: LIGHTEST_GRAY
     border-width: 1px
 
+.qmDatePickerTimes
+  padding: THREE_QUARTER_REM REM REM
+  position: relative
+
+  &::before
+    @extend $separatorLine
+    top: 0
+
+.qmDatePickerSlider .qmSliderValue
+  font-size: SMALLER_FONT

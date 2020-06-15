@@ -6,9 +6,16 @@ import {
   buildClassNames,
 } from "../lib/helpers"
 
-import {
+import Slider from "../Slider"
+
+import type {
   DatePickerChangeHandler,
 } from "./types"
+
+import {
+  useSliderIds,
+  useSliderLabels,
+} from "./hooks"
 
 interface DatePickerTimesProps {
   changeHandler?: DatePickerChangeHandler
@@ -24,6 +31,13 @@ function DatePickerTimes({
   startDate,
 }: DatePickerTimesProps) {
 
+  // TODO: Create mappings between selectable times and units on the sliders
+  // TODO: Create label formatters for showing the slider times
+  // TODO: Create handlers that update the slider times
+
+  const [startId, endId] = useSliderIds(enableRange)
+  const [startLabel, endLabel] = useSliderLabels(enableRange, endDate, startDate)
+
   const wrapperClasses = buildClassNames({
     changeHandler,
     enableRange,
@@ -33,7 +47,29 @@ function DatePickerTimes({
 
   return (
     <div className={`qmDatePickerTimes ${wrapperClasses}`}>
+      <Slider
+        changeHandler={() => { return }}
+        className="qmDatePickerSlider"
+        id={startId}
+        isDisabled={!startDate}
+        label={startLabel}
+        max={10}
+        min={1}
+        value={5}
+      />
 
+      {enableRange && (
+        <Slider
+          changeHandler={() => { return }}
+          className="qmDatePickerSlider"
+          id={endId}
+          isDisabled={!endDate}
+          label={endLabel}
+          max={10}
+          min={1}
+          value={5}
+        />
+      )}
     </div>
   )
 }

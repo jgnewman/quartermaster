@@ -4,21 +4,15 @@ import React, {
   memo,
 } from "react"
 
-import {
+import type {
   DatePickerChangeHandler,
 } from "./types"
 
 import {
   useCalendarData,
-  useCalendarMonthName,
-  useDecrementMonth,
-  useIncrementMonth,
-  useRefreshView,
 } from "./hooks"
 
-import Align from "../Align"
-import Caret from "../icons/Caret"
-import Reload from "../icons/Reload"
+import DatePickerCalNav from "./DatePickerCalNav"
 import DatePickerDay from "./DatePickerDay"
 
 const sunTitles = ["S", "M", "T", "W", "T", "F", "S"]
@@ -53,8 +47,6 @@ function DatePickerCalendar({
   const referenceYear = currentView.getFullYear()
   const referenceMonth = currentView.getMonth()
 
-  const monthName = useCalendarMonthName(currentView)
-
   const calendarData = useCalendarData(
     disablePast,
     referenceMonth,
@@ -62,38 +54,14 @@ function DatePickerCalendar({
     weekStartsOnMonday,
   )
 
-  const handleClickReload = useRefreshView(now, setCurrentView)
-  const handleClickLeft = useDecrementMonth(currentView, setCurrentView)
-  const handleClickRight = useIncrementMonth(currentView, setCurrentView)
-
   return (
     <div className="qmDatePickerCal">
-      <header className="qmDatePickerCalNav">
-        <div className="qmDatePickerCalBtnWrapper">
-          <button
-            className="qmDatePickerMonthBtn isLeft"
-            onClick={handleClickLeft}>
-            <Caret size="s" rotate={90} />
-          </button>
-        </div>
-
-        <Align className="qmDatePickerCalTitle" justify="center">
-          <span className="qmDatePickerCalTitleText">{monthName}</span>
-          <button
-            className="qmDatePickerMonthBtn isReload"
-            onClick={handleClickReload}>
-            <Reload size="s"/>
-          </button>
-        </Align>
-
-        <div className="qmDatePickerCalBtnWrapper">
-          <button
-            className="qmDatePickerMonthBtn isRight"
-            onClick={handleClickRight}>
-            <Caret size="s" rotate={270} />
-          </button>
-        </div>
-      </header>
+      <DatePickerCalNav
+        currentView={currentView}
+        disablePast={disablePast}
+        now={now}
+        setCurrentView={setCurrentView}
+      />
 
       <section className="qmDatePickerCalHead">
         {

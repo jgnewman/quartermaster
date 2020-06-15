@@ -372,16 +372,16 @@ class App extends React.Component {
 
                 <Space bottom="l">
                   <DatePicker
-                    label="Pick a date v2!"
-                    enableRange
-                    value={formState.mydate}
                     changeHandler={updateValueFor("mydate")}
                     disablePast={true}
+                    enableRange={true}
+                    enableTimes={true}
                     isCompact={false}
                     isRequired={true}
+                    label="Pick a date v2!"
                     placeholder="Pick a date!"
                     position="bottom"
-                    // showTimes={true}
+                    value={formState.mydate}
                     // timesIncrement={30}
                   />
                 </Space>

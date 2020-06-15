@@ -18,15 +18,10 @@ const RED = "#f7364c"
 
 export default {
   "background": {
-    [DARK_GRAY]: `
-      body,
-      .qmDatePickerButton .qmIconButtonEffect
-    `,
+    [DARK_GRAY]: "body",
 
     [DARKER_GRAY]: `
       .qmCheckboxOverlay,
-      .qmDatePickerDay.isDisabled,
-      .qmDatePickerHour.isDisabled,
       .qmRadioOverlay,
       .qmSelectClickableWrapper,
       .qmTextFieldInputWrapper,
@@ -34,7 +29,6 @@ export default {
     `,
 
     [DARKEST_GRAY]: `
-      .qmDatePickerDialog,
       .qmIconButtonEffect,
       .qmMenuContainer,
       .qmSelectMenu,
@@ -47,27 +41,12 @@ export default {
       .qmMenuSubmenuLink.isCollapsible:hover,
     `,
 
-    [HIGHLIGHTS]: `
-      .qmDatePickerDay:not(.isDisabled):hover,
-      .qmDatePickerHour:not(.isDisabled):hover
-    `,
-
     [LIGHT_GRAY]: ".qmAvatarInitials",
-
-    [LIGHTER_GRAY]: `
-      .qmDatePickerIconWrapper::before,
-      .qmSelectOpenIconWrapper::before
-    `,
-
+    [LIGHTER_GRAY]: ".qmSelectOpenIconWrapper::before",
     [LIGHTEST_GRAY]: ".qmToggleSlider",
     [TRANSPARENCY]: ".qmCharLimitBar",
     [WHITE]: ".qmToggleSlider.isChecked",
-
-    [WHITE_FADE_FLY]: `
-      .qmDatePickerDay,
-      .qmDatePickerHour,
-      .qmToastClearButton .qmIconButtonEffect
-    `,
+    [WHITE_FADE_FLY]: ".qmToastClearButton .qmIconButtonEffect",
 
   },
 
@@ -110,8 +89,6 @@ export default {
 
     [LIGHT_GRAY]: `
       .qmCharLimitContainer.isDisabled .qmCharLimitText
-      .qmDatePickerDay.isDisabled,
-      .qmDatePickerHour.isDisabled,
       .qmSelectDisplay.isDisabled,
       .qmSelectDisplay.isDisabled.isPlaceholder,
       .qmTextFieldInput.isField.isDisabled,
@@ -123,10 +100,6 @@ export default {
     [LIGHTEST_GRAY]: `
       .qmCharLimitText,
       .qmCheckboxLabel,
-      .qmDatePickerDay,
-      .qmDatePickerHour,
-      .qmDatePickerTHead,
-      .qmDatePickerTimeTitle,
       .qmMenuLink,
       .qmMenuSubmenuLink,
       .qmRadioLabel,
@@ -137,9 +110,6 @@ export default {
 
     [WHITE]: `
       .qmButtonContent,
-      .qmDatePickerDay:not(.isDisabled):hover,
-      .qmDatePickerHour:not(.isDisabled):hover,
-      .qmDatePickerTitle,
       .qmHeading,
       .qmLabelContainer,
       .qmSelectDisplay,
@@ -149,11 +119,7 @@ export default {
   },
 
   "fill": {
-    [LIGHTER_GRAY]: `
-      .qmIcon.qmDatePickerIcon .qmPathIsFilled,
-      .qmIcon.qmMenuSubmenuIcon
-    `,
-
+    [LIGHTER_GRAY]: ".qmIcon.qmMenuSubmenuIcon",
     [WHITE]: ".qmPathIsFilled",
   },
 
@@ -166,7 +132,6 @@ export default {
 
   "stroke": {
     [LIGHTER_GRAY]: `
-      .qmIcon.qmDatePickerIcon,
       .qmIcon.qmSelectOpenIcon,
       .qmIcon.qmSelectClearIcon
     `,

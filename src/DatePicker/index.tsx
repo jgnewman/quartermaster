@@ -36,9 +36,8 @@ import DatePickerTimes from "./DatePickerTimes"
 
 /*
 TODO:
-- Disable left, right, and re-center buttons based on disablePast
 - Allow showing/selecting times
-- Remove old date picker from dark mode
+- Make as accessible as possible
 - Make compatible with dark mode
 */
 

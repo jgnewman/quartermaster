@@ -9,6 +9,7 @@ import {
 } from "react"
 
 import {
+  createId,
   elemInEventPath,
 } from "../lib/helpers"
 
@@ -28,6 +29,30 @@ import {
   isSameDay,
   updatedDateFromValue,
 } from "./helpers"
+
+const MONTH_FORMAT_OPTIONS = {
+  year: "numeric",
+  month: "long",
+}
+
+const DAY_FORMAT_OPTIONS = {
+  ...MONTH_FORMAT_OPTIONS,
+  day: "numeric",
+}
+
+const TIME_FORMAT_OPTIONS = {
+  hour: "numeric",
+  minute: "2-digit",
+}
+
+const DAY_TIME_FORMAT_OPTIONS = {
+  ...DAY_FORMAT_OPTIONS,
+  ...TIME_FORMAT_OPTIONS,
+}
+
+const MonthFormatter = new Intl.DateTimeFormat("default", MONTH_FORMAT_OPTIONS)
+const DayFormatter = new Intl.DateTimeFormat("default", DAY_FORMAT_OPTIONS)
+const DayTimeFormatter = new Intl.DateTimeFormat("default", DAY_TIME_FORMAT_OPTIONS)
 
 export function useDateRangeFromValue(
   enableRange: boolean | undefined,
@@ -153,30 +178,9 @@ export function useFieldValue(
       return ""
     }
 
-    const formatOptions: Intl.DateTimeFormatOptions = {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    }
-
-    if (enableTimes) {
-      formatOptions.hour = "numeric"
-      formatOptions.minute = "2-digit"
-    }
-
-    const startDateFormat = new Intl.DateTimeFormat("default", formatOptions).format(startDate)
-
-    if (enableRange) {
-      if (!endDate) {
-        return startDateFormat
-      } else {
-        const endDateFormat = new Intl.DateTimeFormat("default", formatOptions).format(endDate)
-        return `${startDateFormat} — ${endDateFormat}`
-      }
-
-    } else {
-      return startDateFormat
-    }
+    const formatter = enableTimes ? DayTimeFormatter: DayFormatter
+    const startDateFormat = formatter.format(startDate)
+    return (!enableRange || !endDate) ? startDateFormat : `${startDateFormat} – ${formatter.format(endDate)}`
 
   }, [
     enableRange,
@@ -209,15 +213,7 @@ export function useCalendarData(
 
 export function useDayTitle(date: Date) {
   return useMemo(function () {
-
-    const formatOptions: Intl.DateTimeFormatOptions = {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    }
-
-    return new Intl.DateTimeFormat("default", formatOptions).format(date)
-
+    return DayFormatter.format(date)
   }, [date])
 }
 
@@ -303,9 +299,62 @@ export function useIncrementMonth(
 
 export function useCalendarMonthName(currentView: Date) {
   return useMemo(function () {
-    return new Intl.DateTimeFormat("default", {
-      year: "numeric",
-      month: "long",
-    }).format(currentView)
+    return MonthFormatter.format(currentView)
   }, [currentView])
+}
+
+export function useEnableLeftButton(
+  currentView: Date,
+  disablePast: boolean | undefined,
+  now: Date,
+) {
+  return useMemo(function () {
+    if (!disablePast) {
+      return true
+    }
+
+    const nowYear = now.getFullYear()
+    const viewYear = currentView.getFullYear()
+
+    if (viewYear < nowYear) {
+      return false
+    }
+
+    if (viewYear > nowYear) {
+      return true
+    }
+
+    const nowMonth = now.getMonth()
+    const viewMonth = currentView.getMonth()
+
+    return viewMonth > nowMonth
+
+  }, [
+    currentView,
+    disablePast,
+    now,
+  ])
+}
+
+export function useSliderIds(enableRange: boolean | undefined) {
+  return useMemo(function () {
+    return [createId(), enableRange ? createId() : ""]
+  }, [enableRange])
+}
+
+export function useSliderLabels(
+  enableRange: boolean | undefined,
+  endDate: Date | null,
+  startDate: Date | null,
+) {
+  return useMemo(function () {
+    return [
+      startDate ? DayFormatter.format(startDate) : "Awaiting start date...",
+      (enableRange && endDate) ? DayFormatter.format(endDate) : "Awaiting end date...",
+    ]
+  }, [
+    enableRange,
+    endDate,
+    startDate,
+  ])
 }

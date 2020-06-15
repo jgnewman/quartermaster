@@ -6,7 +6,7 @@ import {
   buildClassNames,
 } from "../lib/helpers"
 
-import {
+import type {
   DatePickerChangeHandler,
 } from "./types"
 
