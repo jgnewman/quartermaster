@@ -85,7 +85,7 @@ const ConfirmButton = forwardRef(function ({
           </h2>
 
           <div className="qmConfButtonOptions">
-            <Align>
+            <Align gutterSpace="m">
               <Button
                 className="qmConfButtonContinue"
                 clickHandler={handleContinue}

@@ -269,3 +269,43 @@ export function useValueSetter(
     startDate,
   ])
 }
+
+export function useRefreshView(
+  now: Date,
+  setCurrentView: Dispatch<SetStateAction<Date>>,
+) {
+  return useCallback(function () {
+    setCurrentView(now)
+  }, [now, setCurrentView])
+}
+
+export function useDecrementMonth(
+  currentView: Date,
+  setCurrentView: Dispatch<SetStateAction<Date>>,
+) {
+  return useCallback(function () {
+    const newDate = new Date(currentView)
+    newDate.setMonth(newDate.getMonth() - 1)
+    setCurrentView(newDate)
+  }, [currentView, setCurrentView])
+}
+
+export function useIncrementMonth(
+  currentView: Date,
+  setCurrentView: Dispatch<SetStateAction<Date>>,
+) {
+  return useCallback(function () {
+    const newDate = new Date(currentView)
+    newDate.setMonth(newDate.getMonth() + 1)
+    setCurrentView(newDate)
+  }, [currentView, setCurrentView])
+}
+
+export function useCalendarMonthName(currentView: Date) {
+  return useMemo(function () {
+    return new Intl.DateTimeFormat("default", {
+      year: "numeric",
+      month: "long",
+    }).format(currentView)
+  }, [currentView])
+}

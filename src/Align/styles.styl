@@ -13,8 +13,25 @@
 
 .qmAlignItem
   @extend $vertMiddle
+  padding: 0
 
-  padding: 0 THIRD_GUTTER
+  &.isXS
+    padding: 0 EIGHTH_GUTTER
+
+  &.isS
+    padding: 0 SIXTH_GUTTER
+
+  &.isM
+    padding: 0 FOURTH_GUTTER
+
+  &.isI
+    padding: 0 THIRD_GUTTER
+
+  &.isL
+    padding: 0 HALF_GUTTER
+
+  &.isXL
+    padding: 0 GUTTER
 
   &:first-child
     padding-left: 0

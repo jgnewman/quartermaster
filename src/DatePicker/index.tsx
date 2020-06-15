@@ -36,10 +36,10 @@ import DatePickerTimes from "./DatePickerTimes"
 
 /*
 TODO:
-- Go forward a month
-- Go back a month
-- Re-center on today
+- Disable left, right, and re-center buttons based on disablePast
 - Allow showing/selecting times
+- Remove old date picker from dark mode
+- Make compatible with dark mode
 */
 
 export interface DatePickerProps {
@@ -84,7 +84,14 @@ function DatePicker({
   const isBottom = !isTop
   const now = new Date()
 
+  const [startDate, endDate] = useDateRangeFromValue(
+    enableRange,
+    value,
+  )
+
+  const [currentView, setCurrentView] = useState(startDate || now)
   const [isOpen, setOpen] = useState(false)
+
   const contentRef = useRef<HTMLDivElement>(null)
   const selectorsRef = useRef<HTMLDivElement>(null)
   const confirmRef = useRef<HTMLButtonElement>(null)
@@ -96,11 +103,6 @@ function DatePicker({
 
   const handleFocusInput = useFocusInput(
     setOpen,
-  )
-
-  const [startDate, endDate] = useDateRangeFromValue(
-    enableRange,
-    value,
   )
 
   const fieldValue = useFieldValue(
@@ -177,10 +179,12 @@ function DatePicker({
           >
             <DatePickerCalendar
               changeHandler={changeHandler}
+              currentView={currentView}
               disablePast={disablePast}
               enableRange={enableRange}
               endDate={endDate}
               now={now}
+              setCurrentView={setCurrentView}
               startDate={startDate}
               weekStartsOnMonday={weekStartsOnMonday}
             />

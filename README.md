@@ -77,6 +77,7 @@ interface AlignProps {
   className?: string
   justify?: "left" | "center" | "right"
   bottomSpace?: SpaceSize
+  gutterSpace?: SpaceSize // The size of the space between items
   leftSpace?: SpaceSize
   rightSpace?: SpaceSize
   topSpace?: SpaceSize

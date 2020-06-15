@@ -14,6 +14,7 @@ export interface AlignProps {
   className?: string
   justify?: "left" | "center" | "right"
   bottomSpace?: SpaceSize
+  gutterSpace?: SpaceSize
   leftSpace?: SpaceSize
   rightSpace?: SpaceSize
   topSpace?: SpaceSize
@@ -24,6 +25,7 @@ function Align({
   className,
   justify = "left",
   bottomSpace,
+  gutterSpace,
   leftSpace,
   rightSpace,
   topSpace,
@@ -37,6 +39,15 @@ function Align({
     isRight: justify === "right",
   })
 
+  const itemClasses = buildClassNames({
+    isXS: gutterSpace === "xs",
+    isS: gutterSpace === "s",
+    isM: gutterSpace === "m",
+    isI: gutterSpace === "i",
+    isL: gutterSpace === "l",
+    isXL: gutterSpace === "xl",
+  })
+
   return (
     <Space
       bottom={bottomSpace}
@@ -45,7 +56,7 @@ function Align({
       top={topSpace}
       className={`qmAlignContainer ${justifyClasses} ${className || ""}`}>
       {childArray.map((child, index) => (
-        <div className="qmAlignItem" key={index}>
+        <div className={`qmAlignItem ${itemClasses}`} key={index}>
           {child}
         </div>
       ))}

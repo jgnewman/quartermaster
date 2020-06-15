@@ -104,9 +104,6 @@
   width: calc(100% + 2px)
   margin: -1px
 
-  padding-left: THREE_QUARTER_REM
-  padding-right: THREE_QUARTER_REM
-
   &.isBottom
     top: 0
     padding-top: LARGER_ELEM_HEIGHT
@@ -121,6 +118,58 @@
   &.isTop.isCompact
     padding-bottom: SMALLER_ELEM_HEIGHT
 
+  &::before
+    display: block
+    content: ""
+    position: absolute
+    left: 50%
+    transform: translateX(-50%)
+
+    background: BLACK_FADE_FLY
+    height: 1px
+    width: "calc(100% - %s)" % (DOUBLE_REM)
+
+  &.isBottom::before
+    top: LARGER_ELEM_HEIGHT
+
+  &.isBottom.isCompact::before
+    top: SMALLER_ELEM_HEIGHT
+
+  &.isTop::before
+    bottom: LARGER_ELEM_HEIGHT
+
+  &.isTop.isCompact::before
+    bottom: SMALLER_ELEM_HEIGHT
+
+.qmDatePickerCal
+  padding-bottom: THREE_QUARTER_REM
+
+.qmDatePickerCalNav
+  display: flex
+  justify-content: space-between
+  padding: THREE_QUARTER_REM 0 REM
+
+.qmDatePickerCalTitle
+  flex-grow: 2
+
+.qmDatePickerCalBtnWrapper
+  width: calc(100% / 7)
+  text-align: center
+
+.qmDatePickerMonthBtn
+  borders(0)
+
+  display: inline-block
+  background: transparent
+  outline: solid transparent !important
+  padding: HALF_REM
+
+.qmDatePickerMonthBtn .qmIcon
+  stroke: LIGHTEST_GRAY
+
+.qmDatePickerMonthBtn:hover .qmIcon
+  stroke: HIGHLIGHTS
+
 .qmDatePickerCalHead,
 .qmDatePickerCalBody
   display: flex
@@ -132,6 +181,10 @@
   flex-basis: calc(100% / 7)
   text-align: center
   margin: div(QUARTER_REM, 2) 0
+  font-size: SMALLER_FONT
+
+.qmDatePickerCalColHead
+  font-weight: BOLD
 
 .qmDatePickerCalDay
   position: relative
@@ -190,4 +243,5 @@
 
   &.isToday
     border-color: LIGHTEST_GRAY
+    border-width: 1px
 

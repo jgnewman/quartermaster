@@ -143,7 +143,7 @@ class App extends React.Component {
             are useful in building React apps with Typescript.
           </Paragraph>
 
-          <Align bottomSpace="l" topSpace="s">
+          <Align bottomSpace="l" topSpace="s" gutterSpace="i">
             <Animation
               type="fadeIn"
               direction="left"
@@ -214,7 +214,7 @@ class App extends React.Component {
             />
           </Space>
 
-          <Align bottomSpace="l">
+          <Align bottomSpace="l" gutterSpace="i">
             <Spinner size="i" />
 
             <Tiles
@@ -380,6 +380,7 @@ class App extends React.Component {
                     isCompact={false}
                     isRequired={true}
                     placeholder="Pick a date!"
+                    position="bottom"
                     // showTimes={true}
                     // timesIncrement={30}
                   />
