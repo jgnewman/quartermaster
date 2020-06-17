@@ -23,6 +23,10 @@ import type {
 } from "./types"
 
 import {
+  setDateToNextIncrement,
+} from "./helpers"
+
+import {
   useClickPicker,
   useDateRangeFromValue,
   useFocusInput,
@@ -84,13 +88,20 @@ function DatePicker({
   weekStartsOnMonday,
 }: DatePickerProps) {
 
+  // TODO: What if past is disabled and we manually pass in a start date before today?
+  //   - probably just throw an error
+
   const isTop = position === "top"
   const isBottom = !isTop
+
   const now = new Date()
+  enableTimes && setDateToNextIncrement(now, timeIncrement)
 
   const [startDate, endDate] = useDateRangeFromValue(
+    disablePast,
     enableRange,
     enableTimes,
+    now,
     timeIncrement,
     value,
   )

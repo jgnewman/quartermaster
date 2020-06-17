@@ -66,9 +66,17 @@ export function setDateToMidnight(date: Date) {
   date.setMilliseconds(0)
 }
 
-export function setDateToNextIncrement(date: Date, increment: number) {
+export function setDateToNextIncrement(date: Date, increment: number, from?: Date) {
+  if (from && from > date) {
+    date.setTime(from.getTime())
+  }
+
   const curMinutes = date.getMinutes()
-  const minutesToAdd = increment - (curMinutes % increment)
+  const incMod = curMinutes % increment
+
+  // Don't jump to next increment if current minutes are already divisible by the increment
+  const minutesToAdd = !incMod ? 0 : increment - incMod
+
   date.setMinutes(curMinutes + minutesToAdd)
   date.setSeconds(0)
   date.setMilliseconds(0)
@@ -162,6 +170,26 @@ export function isSameDay(a: Date | null, b: Date | null): boolean {
   return aYear === bYear && aMonth === bMonth && aDay === bDay
 }
 
+export function isEarlierDayThan(a: Date | null, b: Date | null): boolean {
+  if (a === null || b === null) {
+    return false
+  }
+
+  if (b < a) {
+    return false
+  }
+
+  const aDay = a.getDate()
+  const aMonth = a.getMonth()
+  const aYear = a.getFullYear()
+
+  const bDay = b.getDate()
+  const bMonth = b.getMonth()
+  const bYear = b.getFullYear()
+
+  return aYear < bYear || aMonth < bMonth || aDay < bDay
+}
+
 export function getTimeMapFromDate(
   date: Date,
   disablePast: boolean | undefined,
@@ -169,8 +197,18 @@ export function getTimeMapFromDate(
   timeIncrement: number,
 ): TimeMap {
 
-  const firstPossibleTimeDate = new Date((date < now && disablePast) ? now : date)
-  !disablePast ? setDateToMidnight(firstPossibleTimeDate) : setDateToNextIncrement(firstPossibleTimeDate, timeIncrement)
+  const dateIsToday = isSameDay(date, now)
+  const firstPossibleTimeDate = new Date(now)
+
+  // if past is disabled and date is today, set to next increment from now
+  // if past is disabled and date is before today, we should expect to have adjusted it to today
+  // if past is disabled and date is in future (else case), set to midnight
+  if (disablePast && dateIsToday) {
+    setDateToNextIncrement(firstPossibleTimeDate, timeIncrement, now)
+  } else {
+    setDateToMidnight(firstPossibleTimeDate)
+  }
+
   const firstPossibleTime = firstPossibleTimeDate.getTime()
 
   const lastPossibleTimeDate = new Date(firstPossibleTimeDate)

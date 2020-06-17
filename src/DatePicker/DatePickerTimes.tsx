@@ -44,7 +44,8 @@ function DatePickerTimes({
   timeIncrement,
 }: DatePickerTimesProps) {
 
-  // TODO: Why are the sliders broken?
+  // TODO: Why does start slider stop only a couple hours in the future?
+  // TODO: Why does end slider start at midnight when the end date is clearly not set to midnight?
 
   const [startId, endId] = useSliderIds(enableRange)
   const [startLabel, endLabel] = useSliderLabels(enableRange, endDate, startDate)

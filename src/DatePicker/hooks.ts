@@ -29,6 +29,7 @@ import type {
 import {
   getCalendarData,
   getTimeMapFromDate,
+  isEarlierDayThan,
   isSameDay,
   setDateToNextIncrement,
   updatedDateFromValue,
@@ -59,9 +60,33 @@ const DayFormatter = new Intl.DateTimeFormat("default", DAY_FORMAT_OPTIONS)
 const DayTimeFormatter = new Intl.DateTimeFormat("default", DAY_TIME_FORMAT_OPTIONS)
 const TimeFormatter = new Intl.DateTimeFormat("default", TIME_FORMAT_OPTIONS)
 
+export function useInvalidDateError(
+  disablePast: boolean | undefined,
+  endDate: Date | null,
+  now: Date,
+  startDate: Date | null,
+) {
+  return useMemo(function () {
+    if (!disablePast) {
+      return
+    }
+
+    if (isEarlierDayThan(startDate, now) || isEarlierDayThan(endDate, now)) {
+      throw new Error("DatePicker does not accept a date in the past as a value when `disablePast` is true.")
+    }
+  }, [
+    disablePast,
+    endDate,
+    now,
+    startDate,
+  ])
+}
+
 export function useDateRangeFromValue(
+  disablePast: boolean | undefined,
   enableRange: boolean | undefined,
   enableTimes: boolean | undefined,
+  now: Date,
   timeIncrement: number,
   value: ValidValue | ValidValueRange,
 ): DateRange {
@@ -101,6 +126,15 @@ export function useDateRangeFromValue(
     currentArray[0] && setDateToNextIncrement(currentArray[0], timeIncrement)
     currentArray[1] && setDateToNextIncrement(currentArray[1], timeIncrement)
   }
+
+  const [startDate, endDate] = currentArray
+
+  useInvalidDateError(
+    disablePast,
+    endDate,
+    now,
+    startDate,
+  )
 
   return currentArray
 }
