@@ -7,3 +7,10 @@ export interface Day {
   isDisabled: boolean
   date: Date
 }
+
+export interface TimeMap {
+  [timeValue: string]: {
+    slideValue: number
+    timeValue: number
+  }
+}

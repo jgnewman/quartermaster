@@ -1,5 +1,6 @@
-import {
+import type {
   Day,
+  TimeMap,
 } from "./types"
 
 const dayTotalMap = {
@@ -63,6 +64,21 @@ export function setDateToMidnight(date: Date) {
   date.setMinutes(0)
   date.setSeconds(0)
   date.setMilliseconds(0)
+}
+
+export function setDateToNextIncrement(date: Date, increment: number) {
+  const curMinutes = date.getMinutes()
+  const minutesToAdd = increment - (curMinutes % increment)
+  date.setMinutes(curMinutes + minutesToAdd)
+  date.setSeconds(0)
+  date.setMilliseconds(0)
+}
+
+export function setDateToLastMS(date: Date) {
+  date.setHours(23)
+  date.setMinutes(59)
+  date.setSeconds(59)
+  date.setMilliseconds(999)
 }
 
 export function getCalendarData(
@@ -144,4 +160,32 @@ export function isSameDay(a: Date | null, b: Date | null): boolean {
   const bYear = b.getFullYear()
 
   return aYear === bYear && aMonth === bMonth && aDay === bDay
+}
+
+export function getTimeMapFromDate(
+  date: Date,
+  disablePast: boolean | undefined,
+  now: Date,
+  timeIncrement: number,
+): TimeMap {
+
+  const firstPossibleTimeDate = new Date((date < now && disablePast) ? now : date)
+  !disablePast ? setDateToMidnight(firstPossibleTimeDate) : setDateToNextIncrement(firstPossibleTimeDate, timeIncrement)
+  const firstPossibleTime = firstPossibleTimeDate.getTime()
+
+  const lastPossibleTimeDate = new Date(firstPossibleTimeDate)
+  setDateToLastMS(lastPossibleTimeDate)
+  const lastPossibleTime = lastPossibleTimeDate.getTime()
+
+  const timeMap: TimeMap = {}
+  let time = firstPossibleTime
+  let index = 0
+
+  while (time < lastPossibleTime) {
+    timeMap[index] = { slideValue: index, timeValue: time }
+    index += 1
+    time += (1000 * 60 * timeIncrement)
+  }
+
+  return timeMap
 }

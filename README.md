@@ -48,6 +48,7 @@ Quartermaster deliberately avoids styled-components for performance and bundle s
 - [RadioButton](#radiobutton)
 - [RadioGroup](#radiogroup)
 - [Select](#select)
+- [Slider](#slider)
 - [Space](#space)
 - [Spinner](#spinner)
 - [Text](#text)
@@ -56,9 +57,9 @@ Quartermaster deliberately avoids styled-components for performance and bundle s
 - [Toast](#toast)
 - [Toggle](#toggle)
 
-TODO: Document Slider
 TODO: Better outline state for tabbing through menu items
 TODO: Can we open submenus when tabbing to them?
+TODO: When DatePicker is done, update documentation.
 
 ### Alert
 Places a colored box with an alert icon in one of three forms: `info`, `danger`, or `warning`. The content of the alert box can be specified with either `text` or `children`.
@@ -688,6 +689,26 @@ interface SelectProps {
 interface SelectOption {
   label: string
   value: string
+}
+```
+
+### Slider
+Generates a draggable slider input field. Is controlled by a `value`, and its increment is controlled by a `min` and `max` prop. Takes a `changeHandler` for capturing value updates. If `isCompact` is true, it will generate a smaller version of the component. Optionally you can provide a `formatValue` function that controls how the slider's current value is displayed.
+
+```typescript
+interface SliderProps {
+  changeHandler?: React.ChangeEventHandler
+  className?: string
+  formatValue?: (n: number) => string
+  id?: string
+  isCompact?: boolean
+  isDisabled?: boolean
+  isRequired?: boolean
+  label?: string
+  max: number
+  min: number
+  tabIndex?: number
+  value: number
 }
 ```
 

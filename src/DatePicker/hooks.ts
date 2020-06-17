@@ -1,4 +1,5 @@
 import {
+  ChangeEvent,
   Dispatch,
   RefObject,
   SetStateAction,
@@ -20,13 +21,16 @@ import {
 import type {
   DatePickerChangeHandler,
   DateRange,
+  TimeMap,
   ValidValue,
   ValidValueRange,
 } from "./types"
 
 import {
   getCalendarData,
+  getTimeMapFromDate,
   isSameDay,
+  setDateToNextIncrement,
   updatedDateFromValue,
 } from "./helpers"
 
@@ -53,9 +57,12 @@ const DAY_TIME_FORMAT_OPTIONS = {
 const MonthFormatter = new Intl.DateTimeFormat("default", MONTH_FORMAT_OPTIONS)
 const DayFormatter = new Intl.DateTimeFormat("default", DAY_FORMAT_OPTIONS)
 const DayTimeFormatter = new Intl.DateTimeFormat("default", DAY_TIME_FORMAT_OPTIONS)
+const TimeFormatter = new Intl.DateTimeFormat("default", TIME_FORMAT_OPTIONS)
 
 export function useDateRangeFromValue(
   enableRange: boolean | undefined,
+  enableTimes: boolean | undefined,
+  timeIncrement: number,
   value: ValidValue | ValidValueRange,
 ): DateRange {
 
@@ -88,6 +95,11 @@ export function useDateRangeFromValue(
 
   if (onlyHasEndDate || datesAreBackward) {
     currentArray.reverse()
+  }
+
+  if (enableTimes) {
+    currentArray[0] && setDateToNextIncrement(currentArray[0], timeIncrement)
+    currentArray[1] && setDateToNextIncrement(currentArray[1], timeIncrement)
   }
 
   return currentArray
@@ -355,6 +367,116 @@ export function useSliderLabels(
   }, [
     enableRange,
     endDate,
+    startDate,
+  ])
+}
+
+export function useTimeMappings(
+  disablePast: boolean | undefined,
+  enableRange: boolean | undefined,
+  endDate: Date | null,
+  now: Date,
+  startDate: Date | null,
+  timeIncrement: number,
+): [TimeMap, TimeMap] {
+  return useMemo(function () {
+
+    const startDateMap = !startDate ? {} : getTimeMapFromDate(
+      startDate,
+      disablePast,
+      now,
+      timeIncrement,
+    )
+
+    const endDateMap = (!enableRange || !endDate) ? {} : getTimeMapFromDate(
+      endDate,
+      disablePast,
+      now,
+      timeIncrement,
+    )
+
+    return [startDateMap, endDateMap]
+
+  }, [
+    disablePast,
+    enableRange,
+    endDate,
+    now,
+    startDate,
+    timeIncrement,
+  ])
+}
+
+export function useSliderValues(date: Date | null, timesMap: TimeMap): [number, number, number] {
+  return useMemo(function () {
+    const time = date ? date.getTime() : null
+    const mapKeys = Object.keys(timesMap).sort()
+
+    const min: number = parseInt(mapKeys[0], 10)
+    const max: number = parseInt(mapKeys[mapKeys.length - 1], 10)
+    let value = 0
+
+    mapKeys.some(key => {
+      const timeValue = timesMap[key].timeValue
+      if (timeValue === time) {
+        value = timesMap[key].slideValue
+        return true
+      }
+      return false
+    })
+
+    return [value, min, max]
+  }, [date, timesMap])
+}
+
+export function useValueFormatter(timeMap: TimeMap) {
+  return useCallback(function (slideValue: number) {
+    const timeValue = timeMap[slideValue]?.timeValue
+
+    if (!timeValue) {
+      return ""
+    }
+
+    return TimeFormatter.format(timeValue)
+  }, [timeMap])
+}
+
+export function useStartTimeSetter(
+  changeHandler: DatePickerChangeHandler | undefined,
+  enableRange: boolean | undefined,
+  endDate: Date | null,
+  startDate: Date | null,
+  startTimesMap: TimeMap,
+) {
+  return useCallback(function (evt: ChangeEvent<HTMLInputElement>) {
+    const slideValue = evt.target.value
+    const startTime = startTimesMap[slideValue]?.timeValue || (startDate ? startDate.getTime() : null)
+    const endTime = enableRange ? (endDate ? endDate.getTime() : null) : null
+    changeHandler && changeHandler(enableRange ? [startTime, endTime] : startTime)
+  }, [
+    changeHandler,
+    enableRange,
+    endDate,
+    startDate,
+    startTimesMap,
+  ])
+}
+
+export function useEndTimeSetter(
+  changeHandler: DatePickerChangeHandler | undefined,
+  endDate: Date | null,
+  endTimesMap: TimeMap,
+  startDate: Date | null,
+) {
+  return useCallback(function (evt: ChangeEvent<HTMLInputElement>) {
+    const slideValue = evt.target.value
+    const startTime = startDate ? startDate.getTime() : null
+    const endTime = endTimesMap[slideValue]?.timeValue || (endDate ? endDate.getTime() : null)
+    changeHandler && changeHandler([startTime, endTime])
+  }, [
+    changeHandler,
+    endDate,
+    endTimesMap,
     startDate,
   ])
 }

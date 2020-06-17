@@ -381,8 +381,8 @@ class App extends React.Component {
                     label="Pick a date v2!"
                     placeholder="Pick a date!"
                     position="bottom"
+                    timeIncrement={15}
                     value={formState.mydate}
-                    // timesIncrement={30}
                   />
                 </Space>
 

@@ -36,7 +36,6 @@ import DatePickerTimes from "./DatePickerTimes"
 
 /*
 TODO:
-- Create compact version
 - Allow showing/selecting times
 - Make as accessible as possible
   - Tabbing to the field should open the calendar
@@ -46,8 +45,8 @@ TODO:
 */
 
 export interface DatePickerProps {
-  className?: string
   changeHandler?: DatePickerChangeHandler
+  className?: string
   disablePast?: boolean
   enableRange?: boolean
   enableTimes?: boolean
@@ -60,13 +59,14 @@ export interface DatePickerProps {
   label?: string
   placeholder?: string
   position?: "top" | "bottom"
+  timeIncrement?: 5 | 10 | 15 | 30 | 60
   value?: ValidValue | ValidValueRange
   weekStartsOnMonday?: boolean
 }
 
 function DatePicker({
-  className,
   changeHandler,
+  className,
   disablePast,
   enableRange,
   enableTimes,
@@ -79,6 +79,7 @@ function DatePicker({
   label,
   placeholder,
   position = "bottom",
+  timeIncrement = 60,
   value = null,
   weekStartsOnMonday,
 }: DatePickerProps) {
@@ -89,6 +90,8 @@ function DatePicker({
 
   const [startDate, endDate] = useDateRangeFromValue(
     enableRange,
+    enableTimes,
+    timeIncrement,
     value,
   )
 
@@ -198,10 +201,13 @@ function DatePicker({
             {enableTimes && (
               <DatePickerTimes
                 changeHandler={changeHandler}
+                disablePast={disablePast}
                 enableRange={enableRange}
                 endDate={endDate}
                 isCompact={isCompact}
+                now={now}
                 startDate={startDate}
+                timeIncrement={timeIncrement}
               />
             )}
 
