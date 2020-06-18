@@ -134,7 +134,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <Theme data={this.state.darkThemeEnabled ? DarkTheme : null}>
+      <Theme data={this.state.darkThemeEnabled ? DarkTheme : DarkTheme}>
         <div style={{ padding: "1em 1em 5em", maxWidth: "500px" }}>
 
           <Heading size={1} text="Welcome to Quartermaster!"/>
@@ -377,11 +377,12 @@ class App extends React.Component {
                     enableRange={true}
                     enableTimes={true}
                     isCompact={false}
+                    isDisabled={false}
                     isRequired={true}
                     label="Pick a date v2!"
                     placeholder="Pick a date!"
                     position="bottom"
-                    timeIncrement={15}
+                    timeIncrement={30}
                     value={formState.mydate}
                   />
                 </Space>
@@ -445,7 +446,7 @@ class App extends React.Component {
                     hasTicks={true}
                     min={1}
                     max={10}
-                    isCompact={true}
+                    isCompact={false}
                     value={formState.myslider}
                     formatValue={n => `${n} units`}
                   />

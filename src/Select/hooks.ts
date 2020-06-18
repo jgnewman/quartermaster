@@ -163,13 +163,17 @@ export function useOptionKeyDownHandler(
 }
 
 export function useFocusHandler(
+  isDisabled: boolean | undefined,
   setIsFocused: Dispatch<SetStateAction<boolean>>,
   setIsOpen: Dispatch<SetStateAction<boolean>>,
 ) {
   return useCallback(function () {
-    setIsFocused(true)
-    setIsOpen(true)
+    if (!isDisabled) {
+      setIsFocused(true)
+      setIsOpen(true)
+    }
   }, [
+    isDisabled,
     setIsFocused,
     setIsOpen,
   ])

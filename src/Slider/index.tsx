@@ -111,6 +111,7 @@ function Slider({
     isCompact,
   })
 
+  const valueClasses = labelClasses
   const inputWrapperClasses = labelClasses
   const inputClasses = labelClasses
 
@@ -119,7 +120,7 @@ function Slider({
       {hasTicks && <Ticks max={max} min={min} />}
 
       <div className="qmSliderLabelWrapper">
-        <Text className="qmSliderValue" text={formattedValue} />
+        <Text className={`qmSliderValue ${valueClasses}`} text={formattedValue} />
         {label && <Label className={`qmSliderLabel ${labelClasses}`} text={label} {...labelProps} />}
       </div>
 

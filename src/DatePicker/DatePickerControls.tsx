@@ -27,6 +27,7 @@ interface DatePickerControls {
   changeHandler?: DatePickerChangeHandler
   enableRange?: boolean
   isCompact?: boolean
+  isDisabled?: boolean
   isOpen: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
 }
@@ -35,12 +36,17 @@ const DatePickerControls = forwardRef(function ({
   changeHandler,
   enableRange,
   isCompact,
+  isDisabled,
   isOpen,
   setOpen,
 }: DatePickerControls, ref: RefObject<HTMLButtonElement>) {
 
   const handleClickEx = useClearValue(changeHandler, enableRange)
   const handleClickCheck = useConfirmValue(setOpen)
+
+  const calWrapperClasses = buildClassNames({
+    isDisabled,
+  })
 
   const controlClasses = buildClassNames({
     isCompact,
@@ -52,7 +58,7 @@ const DatePickerControls = forwardRef(function ({
   return (
     <div className="qmDatePickerControls">
       {!isOpen && (
-        <div className="qmDatePickerCalIconWrapper">
+        <div className={`qmDatePickerCalIconWrapper ${calWrapperClasses}`}>
           <Calendar className="qmDatePickerCalIcon" size="s"/>
         </div>
       )}

@@ -7,9 +7,7 @@ BAR_HEIGHT = 5px
 .qmSliderContainer
   display: block
   position: relative
-
-  &.hasTicks
-    padding-bottom: QUARTER_REM
+  padding-bottom: QUARTER_REM
 
 .qmSliderTicks
   position: absolute
@@ -51,11 +49,17 @@ BAR_HEIGHT = 5px
 .qmSliderLabelWrapper
   display: flex
   justify-content: space-between
-  align-items: center
+  align-items: flex-end
   flex-direction: row-reverse
 
 .qmSliderLabel.isCompact
   padding-bottom: QUARTER_REM
+
+.qmSliderValue
+  padding-bottom: HALF_REM
+
+  &.isCompact
+    padding-bottom: QUARTER_REM
 
 .qmSliderInputWrapper
   position: relative

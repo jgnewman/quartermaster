@@ -141,9 +141,14 @@ export function useDateRangeFromValue(
 
 export function useClickPicker(
   confirmRef: RefObject<HTMLButtonElement>,
+  isDisabled: boolean | undefined,
   setOpen: Dispatch<SetStateAction<boolean>>,
 ) {
   return useCallback(function (evt) {
+    if (isDisabled) {
+      return
+    }
+
     const { current: currentConfirmBtn } = confirmRef
 
     if (elemInEventPath(currentConfirmBtn, evt.nativeEvent)) {
@@ -151,7 +156,7 @@ export function useClickPicker(
     }
 
     setOpen(true)
-  }, [confirmRef, setOpen])
+  }, [confirmRef, isDisabled, setOpen])
 }
 
 export function useFocusInput(
@@ -395,8 +400,8 @@ export function useSliderLabels(
 ) {
   return useMemo(function () {
     return [
-      startDate ? DayFormatter.format(startDate) : "Awaiting start date...",
-      (enableRange && endDate) ? DayFormatter.format(endDate) : "Awaiting end date...",
+      startDate ? DayFormatter.format(startDate) : "Select start date...",
+      (enableRange && endDate) ? DayFormatter.format(endDate) : "Select end date...",
     ]
   }, [
     enableRange,
@@ -515,4 +520,30 @@ export function useEndTimeSetter(
     endTimesMap,
     startDate,
   ])
+}
+
+export function useCloseOnBlurContainer(
+  containerRef: RefObject<HTMLDivElement>,
+  isOpen: boolean,
+  setOpen: Dispatch<SetStateAction<boolean>>,
+) {
+
+  const focusWatcher = useCallback(function () {
+    const { current: currentContainer } = containerRef
+
+    if (!isOpen || !currentContainer) {
+      return
+    }
+
+    if (!currentContainer.contains(document.activeElement)) {
+      setOpen(false)
+    }
+  }, [containerRef, isOpen, setOpen])
+
+  return useEffect(function () {
+    document.addEventListener('focusin', focusWatcher)
+    return function () {
+      document.removeEventListener('focusin', focusWatcher)
+    }
+  }, [containerRef, focusWatcher, isOpen, setOpen])
 }

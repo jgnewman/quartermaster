@@ -18,10 +18,16 @@ const RED = "#f7364c"
 
 export default {
   "background": {
+    [BLACK_FADE_FEATHER]: `
+      .qmDatePickerSelectors::before,
+      .qmDatePickerTimes::before
+    `,
+
     [DARK_GRAY]: "body",
 
     [DARKER_GRAY]: `
       .qmCheckboxOverlay,
+      .qmDatePickerInput,
       .qmRadioOverlay,
       .qmSelectClickableWrapper,
       .qmTextFieldInputWrapper,
@@ -32,6 +38,7 @@ export default {
     [DARKEST_GRAY]: `
       .qmIconButtonEffect,
       .qmMenuContainer,
+      .qmDatePickerSelectors,
       .qmSelectMenu,
       .qmSelectMenuOption,
       .qmToastContent
@@ -43,14 +50,23 @@ export default {
     `,
 
     [LIGHT_GRAY]: ".qmAvatarInitials",
-    [LIGHTER_GRAY]: ".qmSelectOpenIconWrapper::before",
+
+    [LIGHTER_GRAY]: `
+      .qmDatePickerCalIconWrapper::after,
+      .qmDatePickerSlider .qmSliderTick::after,
+      .qmSelectOpenIconWrapper::before
+    `,
 
     [LIGHTEST_GRAY]: `
       .qmSliderTick::after,
       .qmToggleSlider
     `,
 
-    [TRANSPARENCY]: ".qmCharLimitBar",
+    [TRANSPARENCY]: `
+      .qmCharLimitBar,
+      .qmDatePickerInput.isOpen,
+    `,
+
     [WHITE]: ".qmToggleSlider.isChecked",
     [WHITE_FADE_FLY]: ".qmToastClearButton .qmIconButtonEffect",
 
@@ -59,6 +75,9 @@ export default {
   "border": {
     "0" : `
       .qmCheckboxOverlay,
+      .qmDatePickerContent,
+      .qmDatePickerInput,
+      .qmDatePickerSelectors,
       .qmRadioOverlay,
       .qmSelectClickableWrapper,
       .qmSelectMenu,
@@ -73,6 +92,7 @@ export default {
   "border-color": {
     [BLACK_FADE_FEATHER]: ".qmMenuSeparator",
     [DARK_GRAY]: ".qmAvatarIndicator",
+    [LIGHTER_GRAY]: ".qmDatePickerCalBtn.isToday",
     [WHITE_FADE_BANTAM]: ".qmSpinnerContainer",
   },
 
@@ -94,7 +114,9 @@ export default {
     [RED]: ".qmTextContainer.qmLabelRequired",
 
     [LIGHT_GRAY]: `
-      .qmCharLimitContainer.isDisabled .qmCharLimitText
+      .qmCharLimitContainer.isDisabled .qmCharLimitText,
+      .qmDatePickerCalBtn.isDisabled,
+      .qmDatePickerInput.isDisabled::placeholder,
       .qmSelectDisplay.isDisabled,
       .qmSelectDisplay.isDisabled.isPlaceholder,
       .qmTextFieldInput.isField.isDisabled,
@@ -106,6 +128,10 @@ export default {
     [LIGHTEST_GRAY]: `
       .qmCharLimitText,
       .qmCheckboxLabel,
+      .qmDatePickerCalBtn,
+      .qmDatePickerCalColHead,
+      .qmDatePickerCalTitleText,
+      .qmDatePickerTimes .qmLabelContainer,
       .qmMenuLink,
       .qmMenuSubmenuLink,
       .qmRadioLabel,
@@ -116,6 +142,7 @@ export default {
 
     [WHITE]: `
       .qmButtonContent,
+      .qmDatePickerInput,
       .qmHeading,
       .qmLabelContainer,
       .qmSelectDisplay,
@@ -125,7 +152,11 @@ export default {
   },
 
   "fill": {
-    [LIGHTER_GRAY]: ".qmIcon.qmMenuSubmenuIcon",
+    [LIGHTER_GRAY]: `
+      .qmIcon.qmDatePickerCalIcon .qmPathIsFilled,
+      .qmIcon.qmMenuSubmenuIcon
+    `,
+
     [WHITE]: ".qmPathIsFilled",
   },
 
@@ -138,6 +169,9 @@ export default {
 
   "stroke": {
     [LIGHTER_GRAY]: `
+      .qmDatePickerControl .qmIcon.qmDatePickerControlIcon,
+      .qmDatePickerMonthBtn .qmIcon,
+      .qmIcon.qmDatePickerCalIcon,
       .qmIcon.qmSelectOpenIcon,
       .qmIcon.qmSelectClearIcon
     `,
@@ -149,6 +183,7 @@ export default {
     "0.2": ".qmCharLimitBarFill",
 
     "0.5": `
+      .qmDatePickerCalIconWrapper.isDisabled,
       .qmSelectOpenIconWrapper.isDisabled,
       .qmSelectClearIconWrapper.isDisabled
     `,

@@ -30,6 +30,7 @@ import {
   useClickPicker,
   useDateRangeFromValue,
   useFocusInput,
+  useCloseOnBlurContainer,
   useCloseOnClickAway,
   useFieldValue,
 } from "./hooks"
@@ -37,16 +38,6 @@ import {
 import DatePickerControls from "./DatePickerControls"
 import DatePickerCalendar from "./DatePickerCalendar"
 import DatePickerTimes from "./DatePickerTimes"
-
-/*
-TODO:
-- Allow showing/selecting times
-- Make as accessible as possible
-  - Tabbing to the field should open the calendar
-  - The calendar should be marked with aria attrs as an openable dialog
-  - Blurring the calendar should close the calendar
-- Make compatible with dark mode
-*/
 
 export interface DatePickerProps {
   changeHandler?: DatePickerChangeHandler
@@ -88,9 +79,6 @@ function DatePicker({
   weekStartsOnMonday,
 }: DatePickerProps) {
 
-  // TODO: What if past is disabled and we manually pass in a start date before today?
-  //   - probably just throw an error
-
   const isTop = position === "top"
   const isBottom = !isTop
 
@@ -109,12 +97,14 @@ function DatePicker({
   const [currentView, setCurrentView] = useState(startDate || now)
   const [isOpen, setOpen] = useState(false)
 
+  const containerRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
   const selectorsRef = useRef<HTMLDivElement>(null)
   const confirmRef = useRef<HTMLButtonElement>(null)
 
   const handleClickPicker = useClickPicker(
     confirmRef,
+    isDisabled,
     setOpen,
   )
 
@@ -136,6 +126,12 @@ function DatePicker({
     setOpen,
   )
 
+  useCloseOnBlurContainer(
+    containerRef,
+    isOpen,
+    setOpen,
+  )
+
   const labelProps: DynamicProps = {
     className: "qmTextFieldLabel",
     isRequired,
@@ -151,6 +147,7 @@ function DatePicker({
 
   const inputClasses = buildClassNames({
     isCompact,
+    isDisabled,
     isOpen,
   })
 
@@ -161,7 +158,7 @@ function DatePicker({
   })
 
   return (
-    <div className={`qmDatePickerContainer ${className || ""}`}>
+    <div className={`qmDatePickerContainer ${className || ""}`} ref={containerRef}>
 
       {label && <Label text={label} {...labelProps} />}
 
@@ -180,15 +177,6 @@ function DatePicker({
           readOnly
           type="text"
           value={fieldValue}
-        />
-
-        <DatePickerControls
-          changeHandler={changeHandler}
-          enableRange={enableRange}
-          isCompact={isCompact}
-          isOpen={isOpen}
-          setOpen={setOpen}
-          ref={confirmRef}
         />
 
         {isOpen && (
@@ -224,6 +212,16 @@ function DatePicker({
 
           </div>
         )}
+
+        <DatePickerControls
+          changeHandler={changeHandler}
+          enableRange={enableRange}
+          isCompact={isCompact}
+          isDisabled={isDisabled}
+          isOpen={isOpen}
+          setOpen={setOpen}
+          ref={confirmRef}
+        />
       </div>
 
       {hasError && errorText && (

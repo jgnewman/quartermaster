@@ -115,7 +115,7 @@ function Select({
 
   const selectValue = useValueSelector(isOpen, setIsOpen, changeHandler)
   const handleKeyDownSelect = useKeyDownHandler(value, currentOptions)
-  const handleFocusSelect = useFocusHandler(setIsFocused, setIsOpen)
+  const handleFocusSelect = useFocusHandler(isDisabled, setIsFocused, setIsOpen)
   const handleBlurSelect = useBlurHandler(setIsFocused)
   const handleClickClearButton = useClearButtonHandler(isDisabled, selectValue)
   const handleFocusClearButton = useClearButtonFocuser()
@@ -195,6 +195,7 @@ function Select({
           className={`qmSelectClickableWrapper ${clickableWrapperClasses}`}
           role="button"
           tabIndex={0}
+          aria-disabled={isDisabled}
           onFocus={handleFocusSelect}
           onBlur={handleBlurSelect}
           onKeyDown={handleKeyDownSelect}
@@ -208,6 +209,7 @@ function Select({
           {hasSelectedValue && (
             <button
               className={`qmSelectClearIconWrapper ${buttonClasses}`}
+              disabled={isDisabled}
               onClick={handleClickClearButton}
               onFocus={handleFocusClearButton}>
               <Ex
