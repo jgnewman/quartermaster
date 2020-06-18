@@ -193,12 +193,13 @@ export function isEarlierDayThan(a: Date | null, b: Date | null): boolean {
 export function getTimeMapFromDate(
   date: Date,
   disablePast: boolean | undefined,
+  isEndDate: boolean,
   now: Date,
   timeIncrement: number,
 ): TimeMap {
 
   const dateIsToday = isSameDay(date, now)
-  const firstPossibleTimeDate = new Date(now)
+  const firstPossibleTimeDate = new Date(isEndDate ? date : now)
 
   // if past is disabled and date is today, set to next increment from now
   // if past is disabled and date is before today, we should expect to have adjusted it to today

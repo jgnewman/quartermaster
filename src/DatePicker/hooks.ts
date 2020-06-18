@@ -418,6 +418,7 @@ export function useTimeMappings(
     const startDateMap = !startDate ? {} : getTimeMapFromDate(
       startDate,
       disablePast,
+      false, // isEndDate
       now,
       timeIncrement,
     )
@@ -425,6 +426,7 @@ export function useTimeMappings(
     const endDateMap = (!enableRange || !endDate) ? {} : getTimeMapFromDate(
       endDate,
       disablePast,
+      true, // isEndDate
       now,
       timeIncrement,
     )
@@ -444,10 +446,10 @@ export function useTimeMappings(
 export function useSliderValues(date: Date | null, timesMap: TimeMap): [number, number, number] {
   return useMemo(function () {
     const time = date ? date.getTime() : null
-    const mapKeys = Object.keys(timesMap).sort()
+    const mapKeys = Object.keys(timesMap)
 
-    const min: number = parseInt(mapKeys[0], 10)
-    const max: number = parseInt(mapKeys[mapKeys.length - 1], 10)
+    const min = 0
+    const max = mapKeys.length - 1
     let value = 0
 
     mapKeys.some(key => {
