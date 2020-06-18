@@ -25,6 +25,7 @@ export default {
       .qmRadioOverlay,
       .qmSelectClickableWrapper,
       .qmTextFieldInputWrapper,
+      .qmSliderInput,
       .qmToggleOverlay
     `,
 
@@ -43,7 +44,12 @@ export default {
 
     [LIGHT_GRAY]: ".qmAvatarInitials",
     [LIGHTER_GRAY]: ".qmSelectOpenIconWrapper::before",
-    [LIGHTEST_GRAY]: ".qmToggleSlider",
+
+    [LIGHTEST_GRAY]: `
+      .qmSliderTick::after,
+      .qmToggleSlider
+    `,
+
     [TRANSPARENCY]: ".qmCharLimitBar",
     [WHITE]: ".qmToggleSlider.isChecked",
     [WHITE_FADE_FLY]: ".qmToastClearButton .qmIconButtonEffect",

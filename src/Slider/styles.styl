@@ -6,6 +6,47 @@ BAR_HEIGHT = 5px
 
 .qmSliderContainer
   display: block
+  position: relative
+
+  &.hasTicks
+    padding-bottom: QUARTER_REM
+
+.qmSliderTicks
+  position: absolute
+  bottom: 0
+  left: 0
+  width: 100%
+  display: flex
+  justify-content: space-between
+
+.qmSliderTick
+  display: block
+  width: 1px
+  height: QUARTER_REM
+  position: relative
+
+  &::after
+    content: ""
+    display: block
+    height: 100%
+    width: 1px
+    background: BLACK_FADE_FEATHER
+    position: absolute
+    left: 50%
+    top: 0
+    transform: translateX(-50%)
+
+  &:first-child
+    margin-left: div(TOGGLE_SIZE, 2) - 1
+
+  &:last-child
+    margin-right: div(TOGGLE_SIZE, 2) - 1
+
+.qmSliderContainer.isCompact .qmSliderTick:first-child
+  margin-left: div(TOGGLE_COMPACT_SIZE, 2) - 1
+
+.qmSliderContainer.isCompact .qmSliderTick:last-child
+  margin-right: div(TOGGLE_COMPACT_SIZE, 2) - 1
 
 .qmSliderLabelWrapper
   display: flex

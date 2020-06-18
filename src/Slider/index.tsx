@@ -1,6 +1,7 @@
 import "./styles.styl"
 import React, {
   ChangeEventHandler,
+  ReactNode,
   memo,
 } from "react"
 
@@ -19,10 +20,33 @@ import {
   useFormattedValue,
 } from "./hooks"
 
+interface TicksProps {
+  max: number
+  min: number
+}
+
+const Ticks = memo(function ({ max, min }: TicksProps) {
+  const ticks: ReactNode[] = []
+
+  while (min <= max) {
+    ticks.push(<span key={min} className="qmSliderTick"></span>)
+    min += 1
+  }
+
+  return (
+    <div className="qmSliderTicks">
+      {ticks}
+    </div>
+  )
+})
+
+Ticks.displayName = "Ticks"
+
 export interface SliderProps {
   changeHandler?: ChangeEventHandler
   className?: string
   formatValue?: (n: number) => string
+  hasTicks?: boolean
   id?: string
   isCompact?: boolean
   isDisabled?: boolean
@@ -38,6 +62,7 @@ function Slider({
   changeHandler,
   className,
   formatValue,
+  hasTicks,
   id,
   isCompact,
   isDisabled,
@@ -77,6 +102,11 @@ function Slider({
     inputProps.onChange = changeHandler
   }
 
+  const containerClasses = buildClassNames({
+    isCompact,
+    hasTicks,
+  })
+
   const labelClasses = buildClassNames({
     isCompact,
   })
@@ -85,7 +115,8 @@ function Slider({
   const inputClasses = labelClasses
 
   return (
-    <div className={`qmSliderContainer ${className || ""}`}>
+    <div className={`qmSliderContainer ${containerClasses} ${className || ""}`}>
+      {hasTicks && <Ticks max={max} min={min} />}
 
       <div className="qmSliderLabelWrapper">
         <Text className="qmSliderValue" text={formattedValue} />
@@ -102,7 +133,6 @@ function Slider({
           {...inputProps}>
         </input>
       </div>
-
     </div>
   )
 }

@@ -356,7 +356,7 @@ class App extends React.Component {
             mygroup: "foo",
             myselect: null,
             mydate: [Date.now(), Date.now() + (1000 * 60 * 60 * 24 * 5)],
-            myslider: 50,
+            myslider: 10,
           }}>
             {({ formState, updateValueFor }) => (
               <>
@@ -442,8 +442,10 @@ class App extends React.Component {
                   <Slider
                     label="This is my slider"
                     changeHandler={updateValueFor("myslider")}
+                    hasTicks={true}
                     min={1}
-                    max={100}
+                    max={10}
+                    isCompact={true}
                     value={formState.myslider}
                     formatValue={n => `${n} units`}
                   />

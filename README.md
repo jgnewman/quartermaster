@@ -693,13 +693,14 @@ interface SelectOption {
 ```
 
 ### Slider
-Generates a draggable slider input field. Is controlled by a `value`, and its increment is controlled by a `min` and `max` prop. Takes a `changeHandler` for capturing value updates. If `isCompact` is true, it will generate a smaller version of the component. Optionally you can provide a `formatValue` function that controls how the slider's current value is displayed.
+Generates a draggable slider input field. Is controlled by a `value`, and its increment is controlled by a `min` and `max` prop. Takes a `changeHandler` for capturing value updates. If `isCompact` is true, it will generate a smaller version of the component. Optionally you can provide a `formatValue` function that controls how the slider's current value is displayed. You can also set `hasTicks` to true to enable visual tick marks showing where each value lies on the slider.
 
 ```typescript
 interface SliderProps {
   changeHandler?: React.ChangeEventHandler
   className?: string
   formatValue?: (n: number) => string
+  hasTicks?: boolean
   id?: string
   isCompact?: boolean
   isDisabled?: boolean
