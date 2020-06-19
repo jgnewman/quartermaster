@@ -1,0 +1,41 @@
+.qmAlignItem {
+  display: inline-block;
+  vertical-align: middle;
+}
+.qmAlignContainer.isLeft {
+  text-align: left;
+}
+.qmAlignContainer.isCenter {
+  text-align: center;
+}
+.qmAlignContainer.isRight {
+  text-align: right;
+}
+.qmAlignItem {
+  padding: 0;
+}
+.qmAlignItem.isXS {
+  padding: 0 3px;
+}
+.qmAlignItem.isS {
+  padding: 0 4px;
+}
+.qmAlignItem.isM {
+  padding: 0 6px;
+}
+.qmAlignItem.isI {
+  padding: 0 8px;
+}
+.qmAlignItem.isL {
+  padding: 0 12px;
+}
+.qmAlignItem.isXL {
+  padding: 0 24px;
+}
+.qmAlignItem:first-child {
+  padding-left: 0;
+}
+.qmAlignItem:last-child {
+  padding-right: 0;
+}
+

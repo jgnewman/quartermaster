@@ -1,0 +1,44 @@
+.qmModalContainer {
+  display: block;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+.qmModalContainer {
+  z-index: 9999;
+  background: rgba(0,0,0,0.85);
+  transform: scale(0);
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 1s ease;
+}
+.qmModalContainer.isOpen {
+  transition: opacity 0.5s ease, transform 0.3s ease;
+  transform: scale(1);
+  opacity: 1;
+}
+.qmModalContent {
+  display: block;
+  max-width: 100%;
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translateX(-50%) translateY(-50%);
+  text-align: center;
+  letter-spacing: 0;
+}
+.qmModalCloseWrapper {
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 9999;
+  padding: 16px;
+}
+.qmModalCloseWrapper .qmIconButtonEffect {
+  background: rgba(255,255,255,0.1);
+}
+.qmModalCloseWrapper .qmIcon {
+  stroke: #fff;
+}
+

@@ -1,0 +1,74 @@
+.qmAvatarContent,
+.qmAvatarImg,
+.qmAvatarInitials {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+.qmAvatarContainer {
+  display: inline-block;
+  vertical-align: middle;
+}
+.qmAvatarContent,
+.qmAvatarImg,
+.qmAvatarInitials {
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 50%;
+}
+.qmAvatarContainer {
+  width: 48px;
+  height: 48px;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 50%;
+  position: relative;
+  overflow: visible;
+  box-shadow: 0 0 0 2px #fff;
+  flex-grow: 0 !important;
+}
+.qmAvatarContainer.isCompact {
+  width: 32px;
+  height: 32px;
+}
+.qmAvatarImg {
+  background-size: cover;
+  background-position: center;
+  background-color: transparent;
+}
+.qmAvatarInitials {
+  background: #333;
+  color: #fff;
+  font-size: 13.6px;
+  letter-spacing: 1px;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+.qmAvatarIndicator {
+  width: 12px;
+  height: 12px;
+  box-sizing: border-box;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  background: #bdbdbd;
+}
+.qmAvatarIndicator.isCompact {
+  width: 10px;
+  height: 10px;
+  right: -1px;
+  bottom: -1px;
+}
+.qmAvatarIndicator.isActive {
+  background: #52c02c;
+}
+

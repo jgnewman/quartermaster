@@ -1,0 +1,296 @@
+.qmDatePickerInput {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.qmDatePickerError {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: 100%;
+  color: #f7364c;
+  font-size: 75%;
+  padding: 4px 0 5.333333333333333px;
+}
+.qmDatePickerContent {
+  box-sizing: border-box;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 4px;
+  display: block;
+  position: relative;
+  box-shadow: 0 0 0 transparent;
+}
+.qmDatePickerContent.isOpen {
+  border-color: transparent;
+}
+.qmDatePickerInput {
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 4px;
+  width: 100%;
+  height: 48px;
+  position: relative;
+  z-index: 4;
+  display: block;
+  margin: 0;
+  padding: 1.6px 3em 1.6px 12px;
+  color: #333;
+  background: transparent;
+  line-height: 1;
+  cursor: default;
+  outline: solid transparent !important;
+  transition: all 0.2s ease;
+}
+.qmDatePickerInput::placeholder {
+  color: #777;
+}
+.qmDatePickerInput[disabled]::placeholder {
+  color: #bdbdbd;
+}
+.qmDatePickerInput.isCompact {
+  height: 32px;
+}
+.qmDatePickerInput.isOpen {
+  padding-right: 4.25em;
+}
+.qmDatePickerControls {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  z-index: 4;
+}
+.qmDatePickerCalIconWrapper {
+  padding: 0.5em 0.75em;
+  position: relative;
+}
+.qmDatePickerCalIconWrapper::after {
+  width: 1px;
+  height: 50%;
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #bdbdbd;
+}
+.qmIcon.qmDatePickerCalIcon {
+  stroke: #bdbdbd;
+}
+.qmIcon.qmDatePickerCalIcon .qmPathIsFilled {
+  fill: #bdbdbd;
+}
+.qmDatePickerControl {
+  outline: solid transparent !important;
+  background: transparent;
+  border: 0;
+  padding: 0.5em 0.5em;
+}
+.qmDatePickerControl.isCompact {
+  padding: 0.5em 0.33em;
+}
+.qmDatePickerControl.isCheck {
+  margin-right: 0.25em;
+}
+.qmDatePickerControl .qmIcon.qmDatePickerControlIcon {
+  stroke: #bdbdbd;
+  transition: all 0.2s ease;
+}
+.qmDatePickerControl:hover .qmIcon.isEx,
+.qmDatePickerControl:focus .qmIcon.isEx {
+  stroke: #f7364c;
+}
+.qmDatePickerControl:hover .qmIcon.isCheck,
+.qmDatePickerControl:focus .qmIcon.isCheck {
+  stroke: #52c02c;
+}
+.qmDatePickerSelectors::before,
+.qmDatePickerTimes::before {
+  width: calc(100% - 32px);
+  height: 1px;
+  display: block;
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.1);
+}
+.qmDatePickerSelectors {
+  box-sizing: border-box;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 4px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+  background: #fff;
+  position: absolute;
+  left: 0;
+  z-index: 3;
+  width: calc(100% + 2px);
+  margin: -1px;
+}
+.qmDatePickerSelectors.isBottom {
+  top: 0;
+  padding-top: 48px;
+}
+.qmDatePickerSelectors.isBottom.isCompact {
+  padding-top: 32px;
+}
+.qmDatePickerSelectors.isTop {
+  bottom: 0;
+  padding-bottom: 48px;
+}
+.qmDatePickerSelectors.isTop.isCompact {
+  padding-bottom: 32px;
+}
+.qmDatePickerSelectors.isBottom::before {
+  top: 48px;
+}
+.qmDatePickerSelectors.isBottom.isCompact::before {
+  top: 32px;
+  width: calc(100% - 24px);
+}
+.qmDatePickerSelectors.isTop::before {
+  bottom: 48px;
+}
+.qmDatePickerSelectors.isTop.isCompact::before {
+  bottom: 32px;
+  width: calc(100% - 24px);
+}
+.qmDatePickerCal {
+  padding-bottom: 12px;
+}
+.qmDatePickerCal.isCompact {
+  padding-bottom: 8px;
+}
+.qmDatePickerCalNav {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0 12px;
+}
+.qmDatePickerCalNav.isCompact {
+  padding: 4px 0 4px;
+}
+.qmDatePickerCalTitle {
+  flex-grow: 2;
+}
+.qmDatePickerCalBtnWrapper {
+  width: calc(100% / 7);
+  text-align: center;
+}
+.qmDatePickerMonthBtn {
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 0;
+  display: inline-block;
+  background: transparent;
+  outline: solid transparent !important;
+  padding: 8px;
+}
+.qmDatePickerMonthBtn .qmIcon {
+  stroke: #bdbdbd;
+}
+.qmDatePickerMonthBtn:hover .qmIcon,
+.qmDatePickerMonthBtn:focus .qmIcon {
+  stroke: #3c97ff;
+}
+.qmDatePickerCalHead,
+.qmDatePickerCalBody {
+  display: flex;
+  justify-content: start;
+  flex-wrap: wrap;
+}
+.qmDatePickerCalColHead,
+.qmDatePickerCalDay {
+  flex-basis: calc(100% / 7);
+  text-align: center;
+  margin: 2px 0;
+  font-size: 13.6px;
+  color: #333;
+}
+.qmDatePickerCalColHead {
+  font-weight: BOLD;
+}
+.qmDatePickerCalDay {
+  position: relative;
+}
+.qmDatePickerCalDay.isInRange {
+  background: rgba(60,151,255,0.15);
+}
+.qmDatePickerCalDay.isStartDate::before,
+.qmDatePickerCalDay.isEndDate::before {
+  width: 50%;
+  height: 100%;
+  background: rgba(60,151,255,0.15);
+  display: block;
+  content: "";
+  position: absolute;
+  top: 0;
+  z-index: 1;
+}
+.qmDatePickerCalDay.isStartDate::before {
+  right: 0;
+}
+.qmDatePickerCalDay.isEndDate::before {
+  left: 0;
+}
+.qmDatePickerCalBtn {
+  box-sizing: border-box;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  position: relative;
+  z-index: 2;
+  outline: solid transparent !important;
+  background: transparent;
+  color: #333;
+  padding: 0;
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+  transition: all 0.2s ease;
+}
+.qmDatePickerCalBtn:hover {
+  background: rgba(0,0,0,0.1);
+}
+.qmDatePickerCalBtn:focus {
+  border-color: #3c97ff;
+}
+.qmDatePickerCalBtn.isCompact {
+  width: 24px;
+  height: 24px;
+}
+.qmDatePickerCalBtn.isDisabled {
+  background: transparent;
+  color: #bdbdbd;
+}
+.qmDatePickerCalBtn.isSelected {
+  border: 0;
+  background: #3c97ff;
+  color: #fff;
+}
+.qmDatePickerCalBtn.isToday {
+  border-color: #bdbdbd;
+  border-width: 1px;
+}
+.qmDatePickerTimes {
+  padding: 12px 16px 16px;
+  position: relative;
+}
+.qmDatePickerTimes::before {
+  top: 0;
+}
+.qmDatePickerTimes.isCompact {
+  padding: 8px 12px 12px;
+}
+.qmDatePickerTimes.isCompact::before {
+  width: calc(100% - 24px);
+}
+.qmDatePickerSlider .qmSliderValue {
+  font-size: 13.6px;
+}
+.qmDatePickerSlider.isEndDate {
+  margin-top: 12px;
+}
+

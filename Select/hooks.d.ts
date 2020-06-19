@@ -1,0 +1,17 @@
+import { Dispatch, FocusEvent, KeyboardEvent, MouseEvent, RefObject, SetStateAction } from "react";
+import { RefArray } from "../lib/internalHooks";
+import type { SelectProps } from "./types";
+export declare type ValueSelector = (newValue: string | null) => void;
+export declare function useValueSelector(isOpen: boolean, setIsOpen: Dispatch<SetStateAction<boolean>>, changeHandler: SelectProps['changeHandler']): ValueSelector;
+export declare function useCloseSelectOnClickAway(wrapperRef: RefObject<HTMLDivElement>, setIsOpen: Dispatch<SetStateAction<boolean>>): void;
+export declare function useSelectedOption(value: string | null, currentOptions: RefArray<HTMLSpanElement>): () => HTMLSpanElement | null;
+export declare function useSelectedOptionFocuser(value: string | null, currentOptions: RefArray<HTMLSpanElement>): () => void;
+export declare function useKeyDownHandler(value: string | null, currentOptions: RefArray<HTMLSpanElement>): (evt: KeyboardEvent<Element>) => void;
+export declare function useClickOptionHandler(selectValue: ValueSelector): (evt: MouseEvent<Element, globalThis.MouseEvent>) => void;
+export declare type SiblingOptionFocuser = (focusedElem: HTMLSpanElement, direction: "prev" | "next") => void;
+export declare function useSiblingOptionFocuser(currentOptions: RefArray<HTMLSpanElement>): SiblingOptionFocuser;
+export declare function useOptionKeyDownHandler(focusSiblingOption: SiblingOptionFocuser, selectValue: ValueSelector): (evt: KeyboardEvent<Element>) => void;
+export declare function useFocusHandler(isDisabled: boolean | undefined, setIsFocused: Dispatch<SetStateAction<boolean>>, setIsOpen: Dispatch<SetStateAction<boolean>>): () => void;
+export declare function useBlurHandler(setIsFocused: Dispatch<SetStateAction<boolean>>): () => void;
+export declare function useClearButtonHandler(isDisabled: boolean, selectValue: ValueSelector): () => void;
+export declare function useClearButtonFocuser(): (evt: FocusEvent<Element>) => void;
