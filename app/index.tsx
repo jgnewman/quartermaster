@@ -384,6 +384,7 @@ class App extends React.Component {
                     position="bottom"
                     timeIncrement={30}
                     value={formState.mydate}
+                    weekStartsOnMonday={false}
                   />
                 </Space>
 
