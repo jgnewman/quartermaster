@@ -198,11 +198,11 @@ export function getTimeMapFromDate(
   timeIncrement: number,
 ): TimeMap {
 
+  // if past is disabled and date is before today, we should expect to have already errored
   const dateIsToday = isSameDay(date, now)
-  const firstPossibleTimeDate = new Date(isEndDate ? date : now)
+  const firstPossibleTimeDate = new Date(dateIsToday && !isEndDate ? now : date)
 
   // if past is disabled and date is today, set to next increment from now
-  // if past is disabled and date is before today, we should expect to have adjusted it to today
   // if past is disabled and date is in future (else case), set to midnight
   if (disablePast && dateIsToday) {
     setDateToNextIncrement(firstPossibleTimeDate, timeIncrement, now)

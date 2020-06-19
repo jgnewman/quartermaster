@@ -91,7 +91,7 @@ function DatePickerTimes({
         changeHandler={setStartTime}
         className="qmDatePickerSlider isStartDate"
         formatValue={startTimeFormatter}
-        hasTicks={startMax < 25}
+        hasTicks={startMax < 50}
         id={startId}
         isCompact={isCompact}
         isDisabled={!startDate}
@@ -106,7 +106,7 @@ function DatePickerTimes({
           changeHandler={setEndTime}
           className="qmDatePickerSlider isEndDate"
           formatValue={endTimeFormatter}
-          hasTicks={startMax < 25}
+          hasTicks={endMax < 50}
           id={endId}
           isCompact={isCompact}
           isDisabled={!endDate}

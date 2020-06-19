@@ -59,7 +59,10 @@ function useFormState(initialState: SimpleObject): FormUtils {
           if (Array.isArray(evt) || evt === null) {
             setState({ ...state, [name]: evt })
           } else {
-            setState({ ...state, [name]: (evt.target as InputElem).value })
+            const target = evt.target as InputElem
+            const isRange = target.type === "range"
+            const value = isRange ? parseInt(target.value, 10) : target.value
+            setState({ ...state, [name]: value })
           }
 
       }

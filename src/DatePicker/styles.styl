@@ -12,6 +12,7 @@
 .qmDatePickerInput
   @extend $ellipsisText
   borders(0, QUARTER_REM)
+  size(100%, LARGER_ELEM_HEIGHT)
 
   position: relative
   z-index: 4
@@ -25,8 +26,6 @@
   line-height: 1
   cursor: default
 
-  width: 100%
-  height: LARGER_ELEM_HEIGHT
   outline: solid transparent !important
   transition: BASE_TRANSITION
 
@@ -57,13 +56,13 @@
   position: relative
 
   &::after
+    size(1px, 50%)
+
     content: ""
     display: block
     position: absolute
     left: 0
     top: 50%
-    width: 1px
-    height: 50%
     transform: translateY(-50%)
     background: LIGHTEST_GRAY
 
@@ -98,15 +97,15 @@
     stroke: GREEN
 
 $separatorLine
+  size("calc(100% - %s)" % (DOUBLE_REM), 1px)
+
   display: block
   content: ""
   position: absolute
   left: 50%
-  transform: translateX(-50%)
 
+  transform: translateX(-50%)
   background: BLACK_FADE_FLY
-  height: 1px
-  width: "calc(100% - %s)" % (DOUBLE_REM)
 
 .qmDatePickerSelectors
   borders(BASE_BORDER, QUARTER_REM)

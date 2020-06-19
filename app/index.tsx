@@ -134,7 +134,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <Theme data={this.state.darkThemeEnabled ? DarkTheme : DarkTheme}>
+      <Theme data={this.state.darkThemeEnabled ? DarkTheme : null}>
         <div style={{ padding: "1em 1em 5em", maxWidth: "500px" }}>
 
           <Heading size={1} text="Welcome to Quartermaster!"/>
@@ -356,7 +356,7 @@ class App extends React.Component {
             mygroup: "foo",
             myselect: null,
             mydate: [Date.now(), Date.now() + (1000 * 60 * 60 * 24 * 5)],
-            myslider: 10,
+            myslider: 5,
           }}>
             {({ formState, updateValueFor }) => (
               <>

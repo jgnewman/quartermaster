@@ -49,6 +49,7 @@ export default {
       .qmMenuSubmenuLink.isCollapsible:hover,
     `,
 
+    [HIGHLIGHTS]: ".qmDatePickerSlider .qmSliderTick.isActive::after",
     [LIGHT_GRAY]: ".qmAvatarInitials",
 
     [LIGHTER_GRAY]: `

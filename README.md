@@ -57,10 +57,6 @@ Quartermaster deliberately avoids styled-components for performance and bundle s
 - [Toast](#toast)
 - [Toggle](#toggle)
 
-TODO: Better outline state for tabbing through menu items
-TODO: Can we open submenus when tabbing to them?
-TODO: When DatePicker is done, update documentation.
-
 ### Alert
 Places a colored box with an alert icon in one of three forms: `info`, `danger`, or `warning`. The content of the alert box can be specified with either `text` or `children`.
 
@@ -175,13 +171,15 @@ interface ConfirmButtonProps extends Exclude<ButtonProps, "highlight"> {
 ```
 
 ### DatePicker
-Allows you to click a field, exposing a calendar from which you can select a date. You can enable the ability to select specific times in the day with the `showTimes` option. You can also turn off the ability to select any date in the past by way of the `disablePast` option. Note that `target.value` on the faux change event passed to the `changeHandler` will always return a number or null.
+Allows you to click a field, exposing a calendar from which you can select a date. You can enable the ability to select specific times in the day with the `enableTimes` option. You can also turn the component in to a date range selector by setting `enableRange` to true. The ability to select any date in the past can be removed by way of the `disablePast` option. Note that the `number` type used for the component's value is expected to be a JavaScript timestamp.
 
 ```typescript
 interface DatePickerProps {
-  changeHandler?: FauxChangeEventHandler
+  changeHandler?: (v: ValidValue | ValidValueRange) => void
   className?: string
   disablePast?: boolean
+  enableRange?: boolean
+  enableTimes?: boolean
   errorText?: string
   hasError?: boolean
   id?: string
@@ -190,24 +188,16 @@ interface DatePickerProps {
   isRequired?: boolean
   label?: string
   placeholder?: string
-  position?: "top" | "bottom" // Defaults to "bottom". Whether the calendar opens up or down from the field.
-  showTimes?: boolean
-  tabIndex?: number
-  timesIncrement?: 5 | 10 | 15 | 30 | 60 // Defaults to 60. Determines the granularity of selectable times.
-  value?: Date | number | string | null
+  position?: "top" | "bottom" // Defaults to "bottom". Whether the picker opens above or below the field.
+  timeIncrement?: 5 | 10 | 15 | 30 | 60 // Defaults to 60. Determines the granularity of selectable times.
+  value?: ValidValue | ValidValueRange
+  weekStartsOnMonday?: boolean
 }
 
 // Where...
 
-type FauxChangeEventHandler<T = Element> = (event: ChangeEvent<T> | FauxChangeEvent) => void
-
-// Where...
-
-interface FauxChangeEvent {
-  target: {
-    value: string | number | null
-  }
-}
+type ValidValue = number | null
+type ValidValueRange = [ValidValue?, ValidValue?]
 ```
 
 ### Form

@@ -545,5 +545,5 @@ export function useCloseOnBlurContainer(
     return function () {
       document.removeEventListener('focusin', focusWatcher)
     }
-  }, [containerRef, focusWatcher, isOpen, setOpen])
+  }, [focusWatcher])
 }

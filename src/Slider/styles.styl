@@ -24,15 +24,22 @@ BAR_HEIGHT = 5px
   position: relative
 
   &::after
+    size(1px, 100%)
+
     content: ""
     display: block
-    height: 100%
-    width: 1px
-    background: BLACK_FADE_FEATHER
     position: absolute
     left: 50%
     top: 0
     transform: translateX(-50%)
+
+    background: BLACK_FADE_FEATHER
+    transition: BASE_TRANSITION
+    border-radius: QUARTER_REM
+
+  &.isActive::after
+    size(3px, 200%)
+    background: HIGHLIGHTS
 
   &:first-child
     margin-left: div(TOGGLE_SIZE, 2) - 1
@@ -70,12 +77,10 @@ BAR_HEIGHT = 5px
 
 .qmSliderInput
   borders(0, REM)
+  size(100%, BAR_HEIGHT)
   outline: solid transparent !important
 
   display: block
-  width: 100%
-  height: BAR_HEIGHT
-
   position: absolute
   top: 50%
   left: 0

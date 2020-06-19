@@ -1,19 +1,13 @@
 import "./styles.styl"
+
 import React, {
-  Dispatch,
-  MouseEvent,
-  RefObject,
-  SetStateAction,
   memo,
-  useCallback,
-  useEffect,
   useRef,
   useState,
 } from "react"
 
 import {
   buildClassNames,
-  elemInEventPath,
 } from "../lib/helpers"
 
 import Animation, { AnimationProps } from "../Animation"
@@ -25,6 +19,13 @@ import {
  MenuState,
  SubAnimate,
 } from "./types"
+
+import {
+  useCloseMenuOnClickAway,
+  useCloseSubMenuOnBlur,
+  useSubmenuClickHandler,
+  useSubmenuKeyHandler,
+} from "./hooks"
 
 import { getInitialSubmenuState, genAnimProps } from "./helpers"
 import MenuLabel from "./MenuLabel"
@@ -50,27 +51,6 @@ interface SubmenuProps {
   type: "submenu"
 }
 
-function useSubmenuClickHandler(
-  isOpen: boolean,
-  menuKey: string | number,
-  menuState: MenuState,
-  setMenuState: SubmenuProps['setMenuState'],
-) {
-
-  return useCallback(function (evt: MouseEvent) {
-    evt.stopPropagation()
-    setMenuState({ ...menuState, [menuKey]: {
-      isOpen: !isOpen,
-      hasToggled: true,
-    }})
-  }, [
-    isOpen,
-    menuKey,
-    menuState,
-    setMenuState,
-  ])
-}
-
 const Submenu = memo(function ({
   animate,
   childIsLifted,
@@ -89,6 +69,7 @@ const Submenu = memo(function ({
   text,
 }: SubmenuProps) {
 
+  const submenuRef = useRef<HTMLDivElement>(null)
   const isLifted = typeof childIsLifted === "boolean" ? childIsLifted : !!parentIsLifted
   const { isOpen, hasToggled } = menuState[menuKey]
   const smallPad = isCompact ? "xs" : "s"
@@ -99,6 +80,15 @@ const Submenu = memo(function ({
     menuKey,
     menuState,
     setMenuState,
+  )
+
+  const keyHandler = useSubmenuKeyHandler(clickHandler)
+
+  useCloseSubMenuOnBlur(
+    menuKey,
+    menuState,
+    setMenuState,
+    submenuRef,
   )
 
   const animProps: boolean | AnimationProps = animate === true ? true : !animate ? false : {
@@ -156,7 +146,15 @@ const Submenu = memo(function ({
   })
 
   return (
-    <div className={`qmMenuSubmenuLink ${buttonClasses}`} onClick={clickHandler}>
+    <div
+      className={`qmMenuSubmenuLink ${buttonClasses}`}
+      onClick={clickHandler}
+      onKeyPress={keyHandler}
+      ref={submenuRef}
+      role="button"
+      tabIndex={0}
+      aria-label={text}
+    >
       <Space
         className="qmMenuLinkContent"
         top={smallPad}
@@ -204,42 +202,6 @@ export interface MenuProps {
   minWidth?: string
 }
 
-function useCloseMenuOnClickAway(
-  menuRef: RefObject<HTMLDivElement>,
-  setState: Dispatch<SetStateAction<MenuState>>,
-  state: MenuState,
-) {
-  const closeOnClickAway = useCallback(function (evt: any) {
-    const { current: currentMenuRef } = menuRef
-
-    if (elemInEventPath(currentMenuRef, evt)) {
-      return
-    }
-
-    const newState: MenuState = {}
-
-    Object.keys(state).forEach(key => {
-      const { isOpen, hasToggled } = state[key]
-      if (isOpen && hasToggled) {
-        newState[key] = { isOpen: false, hasToggled }
-      }
-    })
-
-    setState({ ...state, ...newState })
-  }, [
-    menuRef,
-    state,
-    setState,
-  ])
-
-  useEffect(function () {
-    document.addEventListener("click", closeOnClickAway)
-    return function () {
-      document.removeEventListener("click", closeOnClickAway)
-    }
-  }, [closeOnClickAway])
-}
-
 function Menu({
   animate,
   className,
@@ -279,51 +241,53 @@ function Menu({
       className={`qmMenuContainer ${helperClasses} ${className || ""}`}
       style={style}
       {...animProps}>
-      {data.map((item, index) => {
-        switch (item.type) {
+      <div className="qmMenuList" role="list" aria-expanded={!!isOpen}>
+        {data.map((item, index) => {
+          switch (item.type) {
 
-          case "label":
-            return (
-              <MenuLabel
-                key={index}
-                isCompact={isCompact}
-                text={item.text}
-              />
-            )
+            case "label":
+              return (
+                <MenuLabel
+                  key={index}
+                  isCompact={isCompact}
+                  text={item.text}
+                />
+              )
 
-          case "link":
-            return (
-              <MenuLink
-                {...item}
-                key={index}
-                isCompact={isCompact}
-              />
-            )
+            case "link":
+              return (
+                <MenuLink
+                  {...item}
+                  key={index}
+                  isCompact={isCompact}
+                />
+              )
 
-          case "submenu":
-            return (
-              <Submenu
-                {...item}
-                key={index}
-                childIsLifted={item.isLifted}
-                isCompact={isCompact}
-                menuKey={item.key}
-                menuState={state}
-                parentIsLifted={isLifted}
-                setMenuState={setState}
-              />
-            )
+            case "submenu":
+              return (
+                <Submenu
+                  {...item}
+                  key={index}
+                  childIsLifted={item.isLifted}
+                  isCompact={isCompact}
+                  menuKey={item.key}
+                  menuState={state}
+                  parentIsLifted={isLifted}
+                  setMenuState={setState}
+                />
+              )
 
-          case "separator":
-          default:
-            return (
-              <MenuSeparator
-                key={index}
-                isCompact={isCompact}
-              />
-            )
-        }
-      })}
+            case "separator":
+            default:
+              return (
+                <MenuSeparator
+                  key={index}
+                  isCompact={isCompact}
+                />
+              )
+          }
+        })}
+      </div>
     </Animation>
   )
 }

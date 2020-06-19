@@ -23,13 +23,16 @@ import {
 interface TicksProps {
   max: number
   min: number
+  value: number
 }
 
-const Ticks = memo(function ({ max, min }: TicksProps) {
+const Ticks = memo(function ({ max, min, value }: TicksProps) {
   const ticks: ReactNode[] = []
 
   while (min <= max) {
-    ticks.push(<span key={min} className="qmSliderTick"></span>)
+    ticks.push(
+      <span key={min} className={`qmSliderTick${value === min ? " isActive" : ""}`}></span>,
+    )
     min += 1
   }
 
@@ -117,7 +120,7 @@ function Slider({
 
   return (
     <div className={`qmSliderContainer ${containerClasses} ${className || ""}`}>
-      {hasTicks && <Ticks max={max} min={min} />}
+      {hasTicks && <Ticks max={max} min={min} value={value} />}
 
       <div className="qmSliderLabelWrapper">
         <Text className={`qmSliderValue ${valueClasses}`} text={formattedValue} />
