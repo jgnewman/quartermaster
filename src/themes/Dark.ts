@@ -45,8 +45,10 @@ export default {
     `,
 
     [BLACK_FADE_LIGHT]: `
+      .qmMenuLink:focus,
       .qmMenuLink:hover,
-      .qmMenuSubmenuLink.isCollapsible:hover,
+      .qmMenuSubmenuLink.isCollapsible:focus,
+      .qmMenuSubmenuLink.isCollapsible:hover
     `,
 
     [HIGHLIGHTS]: ".qmDatePickerSlider .qmSliderTick.isActive::after",
@@ -181,7 +183,7 @@ export default {
   },
 
   "opacity": {
-    "0.2": ".qmCharLimitBarFill",
+    "0.15": ".qmCharLimitBarFill",
 
     "0.5": `
       .qmDatePickerCalIconWrapper.isDisabled,
