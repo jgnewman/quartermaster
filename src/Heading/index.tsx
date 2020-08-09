@@ -11,6 +11,8 @@ import Text from "../Text"
 export interface HeadingProps {
   children?: ReactNode
   className?: string
+  isBlock?: boolean
+  isBold?: boolean
   size: 1 | 2 | 3 | 4 | 5 | 6
   text?: string
 }
@@ -18,6 +20,8 @@ export interface HeadingProps {
 function Heading({
   children,
   className,
+  isBlock = true,
+  isBold = true,
   size,
   text,
 }: HeadingProps) {
@@ -27,8 +31,8 @@ function Heading({
       className={`qmHeadingContainer ${className || ""}`}
       bottom="i">
       <Text
-        isBlock
-        isBold
+        isBlock={isBlock}
+        isBold={isBold}
         className={`qmHeading isH${size}`}
         tag={`h${size}`}
         text={text}>

@@ -318,6 +318,8 @@ Creates consistent heading text tags such as `h1`, `h2`, etc... Note that if you
 interface HeadingProps {
   children?: ReactNode
   className?: string
+  isBlock?: boolean // Defaults to true. Defines element display.
+  isBold?: boolean // Defaults to true. Defines font weight.
   size: 1 | 2 | 3 | 4 | 5 | 6
   text?: string
 }
