@@ -1,0 +1,124 @@
+.qmSliderContainer {
+  display: block;
+  position: relative;
+  padding-bottom: 4px;
+}
+.qmSliderTicks {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.qmSliderTick {
+  display: block;
+  width: 1px;
+  height: 4px;
+  position: relative;
+}
+.qmSliderTick::after {
+  width: 1px;
+  height: 100%;
+  content: "";
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.2);
+  transition: all 0.2s ease;
+  border-radius: 4px;
+}
+.qmSliderTick.isActive::after {
+  width: 3px;
+  height: 200%;
+  background: #3c97ff;
+}
+.qmSliderTick:first-child {
+  margin-left: 8px;
+}
+.qmSliderTick:last-child {
+  margin-right: 8px;
+}
+.qmSliderContainer.isCompact .qmSliderTick:first-child {
+  margin-left: 6px;
+}
+.qmSliderContainer.isCompact .qmSliderTick:last-child {
+  margin-right: 6px;
+}
+.qmSliderLabelWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-direction: row-reverse;
+}
+.qmSliderLabel.isCompact {
+  padding-bottom: 4px;
+}
+.qmSliderValue {
+  padding-bottom: 8px;
+}
+.qmSliderValue.isCompact {
+  padding-bottom: 4px;
+}
+.qmSliderInputWrapper {
+  position: relative;
+  height: 18px;
+}
+.qmSliderInputWrapper.isCompact {
+  height: 14px;
+}
+.qmSliderInput {
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 16px;
+  width: 100%;
+  height: 5px;
+  outline: solid transparent !important;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.1);
+  -webkit-appearance: none;
+  appearance: none;
+}
+.qmSliderInput::-webkit-slider-thumb {
+  width: 18px;
+  height: 18px;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.15);
+  transition: all 0.2s ease;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.qmSliderInput.isCompact::-webkit-slider-thumb {
+  width: 14px;
+  height: 14px;
+}
+.qmSliderInput::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.15);
+  transition: all 0.2s ease;
+}
+.qmSliderInput.isCompact::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+}
+.qmSliderInput:focus::-webkit-slider-thumb {
+  box-shadow: 0 0 0 2px #3c97ff;
+}
+.qmSliderInput:focus::-moz-range-thumb {
+  box-shadow: 0 0 0 2px #3c97ff;
+}
+

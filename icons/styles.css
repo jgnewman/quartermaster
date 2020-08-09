@@ -1,0 +1,18 @@
+.qmIcon {
+  display: block;
+  fill: none;
+  stroke: #333;
+  transition: all 0.2s ease;
+  font-size: 16px;
+}
+.qmIcon.isNoStroke {
+  stroke: none;
+}
+.qmPathIsFilled {
+  fill: #333;
+  transition: all 0.2s ease;
+}
+.qmPathIsNoStroke {
+  stroke: none;
+}
+

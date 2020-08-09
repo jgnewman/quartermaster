@@ -1,0 +1,89 @@
+.qmToastAreaContainer {
+  position: fixed;
+  z-index: 99999;
+}
+.qmToastAreaContainer.isBottom {
+  bottom: 16px;
+}
+.qmToastAreaContainer.isTop {
+  top: 16px;
+}
+.qmToastAreaContainer.isLeft {
+  left: 16px;
+}
+.qmToastAreaContainer.isRight {
+  right: 16px;
+}
+.qmToastAreaContainer.isCenter {
+  left: 50%;
+  transform: translateX(-50%);
+}
+.qmToast {
+  margin-bottom: 12px;
+  max-width: 350px;
+}
+.qmToast.isLX {
+  text-align: left;
+}
+.qmToast.isCX {
+  text-align: center;
+}
+.qmToast.isRX {
+  text-align: right;
+}
+.qmToastContentWrapper {
+  display: inline-block;
+  text-align: left;
+}
+.qmToastContent {
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 4px;
+  box-sizing: border-box;
+  background: #fff;
+  box-shadow: 0 3px 15px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  padding-right: 12px;
+  min-height: 48px;
+}
+.qmToastContent.isSuccess {
+  border-left: 3px solid #5dbb3b;
+}
+.qmToastContent.isWarning {
+  border-left: 3px solid #ffcb00;
+}
+.qmToastContent.isError {
+  border-left: 3px solid #f7364c;
+}
+.qmToastContent.isInfo {
+  border-left: 3px solid #3c97ff;
+}
+.qmToastIcon {
+  margin-left: 12px;
+}
+.qmToastIcon.isSuccess {
+  stroke: #5dbb3b;
+}
+.qmToastIcon.isError {
+  stroke: #f7364c;
+}
+.qmToastIcon.isWarning {
+  stroke: #ffcb00;
+}
+.qmToastIcon.isWarning .qmPathIsFilled {
+  fill: #ffcb00;
+}
+.qmToastIcon.isInfo {
+  stroke: #3c97ff;
+}
+.qmToastIcon.isInfo .qmPathIsFilled {
+  fill: #3c97ff;
+}
+.qmToastText {
+  padding: 12px 16px;
+}
+.qmToastClearButton {
+  flex-shrink: 0;
+}
+
