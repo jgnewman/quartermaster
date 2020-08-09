@@ -1,0 +1,26 @@
+.qmTextContainer {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 1.4;
+  color: #333;
+}
+.qmTextContainer.isBlock {
+  display: block;
+}
+.qmTextContainer.isBold {
+  font-weight: bold;
+}
+.qmTextContainer.isSmaller {
+  font-size: 13.6px;
+}
+.qmTextContainer.isSmallest {
+  font-size: 12px;
+}
+.qmTextContainer.isUppercase {
+  text-transform: uppercase;
+}
+

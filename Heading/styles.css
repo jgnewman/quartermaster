@@ -1,0 +1,22 @@
+.qmHeadingContainer {
+  display: block;
+}
+.qmHeading.isH1 {
+  font-size: 40px;
+}
+.qmHeading.isH2 {
+  font-size: 32px;
+}
+.qmHeading.isH3 {
+  font-size: 28px;
+}
+.qmHeading.isH4 {
+  font-size: 24px;
+}
+.qmHeading.isH5 {
+  font-size: 20px;
+}
+.qmHeading.isH6 {
+  font-size: 16px;
+}
+
