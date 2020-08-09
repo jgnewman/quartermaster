@@ -1,0 +1,12 @@
+import type { Day, TimeMap } from "./types";
+export declare function nullableDateFromValue(value?: number | null): Date | null;
+export declare function updatedDateFromValue(curItem: Date | null, newNum?: number | null): Date | null;
+export declare function getDayTotalForMonth(month: number, fullYear: number): number;
+export declare function getLocalizedDay(date: Date, weekStartsOnMonday: boolean): number;
+export declare function setDateToMidnight(date: Date): void;
+export declare function setDateToNextIncrement(date: Date, increment: number, from?: Date): void;
+export declare function setDateToLastMS(date: Date): void;
+export declare function getCalendarData(disablePast: boolean, referenceMonth: number, referenceYear: number, weekStartsOnMonday: boolean): Day[][];
+export declare function isSameDay(a: Date | null, b: Date | null): boolean;
+export declare function isEarlierDayThan(a: Date | null, b: Date | null): boolean;
+export declare function getTimeMapFromDate(date: Date, disablePast: boolean | undefined, isEndDate: boolean, now: Date, timeIncrement: number): TimeMap;

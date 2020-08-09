@@ -1,0 +1,137 @@
+.qmSelectValue {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.qmSelectMenu {
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 4px;
+  display: block;
+  position: absolute;
+  left: 0;
+  z-index: 3;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+.qmSelectContentWrapper {
+  display: block;
+  position: relative;
+  overflow: visible;
+  line-height: 1;
+}
+.qmSelectClickableWrapper {
+  box-sizing: border-box;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 4px;
+  height: 48px;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 0 0 transparent;
+  transition: all 0.2s ease;
+  outline: solid transparent !important;
+}
+.qmSelectClickableWrapper.isCompact {
+  height: 32px;
+}
+.qmSelectClickableWrapper.isFocused {
+  box-shadow: 0 0 0 2px #3c97ff;
+  border-color: #3c97ff;
+}
+.qmIcon.qmSelectOpenIcon,
+.qmIcon.qmSelectClearIcon {
+  stroke: #bdbdbd;
+  transition: all 0.2s ease;
+}
+.qmIcon.qmSelectOpenIcon.isTop {
+  transform: rotate(180deg);
+}
+.qmSelectOpenIconWrapper,
+.qmSelectClearIconWrapper {
+  display: block;
+  align-self: center;
+  position: relative;
+  padding: 0.5em 0.75em;
+  background: transparent;
+  border: 0;
+}
+.qmSelectOpenIconWrapper.isEnabled:hover .qmIcon.qmSelectOpenIcon,
+.qmSelectClearIconWrapper.isEnabled:hover .qmIcon.qmSelectOpenIcon {
+  stroke: #3c97ff;
+}
+.qmSelectOpenIconWrapper.isEnabled:hover .qmIcon.qmSelectClearIcon,
+.qmSelectClearIconWrapper.isEnabled:hover .qmIcon.qmSelectClearIcon {
+  stroke: #f7364c;
+}
+.qmSelectClearIconWrapper {
+  outline: solid transparent !important;
+}
+.qmSelectClearIconWrapper.isEnabled:focus .qmIcon.qmSelectClearIcon {
+  stroke: #f7364c;
+}
+.qmSelectOpenIconWrapper::before {
+  width: 1px;
+  height: 50%;
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #bdbdbd;
+}
+.qmSelectDisplay {
+  flex-grow: 1;
+  position: relative;
+  overflow: hidden;
+  color: #333;
+}
+.qmSelectDisplay.isPlaceholder {
+  color: #777;
+}
+.qmSelectDisplay.isDisabled {
+  color: #777;
+}
+.qmSelectDisplay.isDisabled.isPlaceholder {
+  color: #bdbdbd;
+}
+.qmSelectValue {
+  display: block;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 100%;
+  padding: 0 0 0 12px;
+}
+.qmSelectMenu.isBottom {
+  top: calc(100% + 4px);
+}
+.qmSelectMenu.isTop {
+  bottom: calc(100% + 4px);
+}
+.qmSelectMenuOption {
+  display: block;
+  background: #fff;
+  color: #333;
+  text-align: left;
+  padding: 8px 12px 10.666666666666666px;
+  transition: all 0.2s ease;
+  outline: solid transparent !important;
+}
+.qmSelectMenuOption.isSelected {
+  background: #3c97ff;
+  color: #fff;
+}
+.qmSelectMenuOption:hover,
+.qmSelectMenuOption:focus,
+.qmSelectMenuOption.isSelected:hover {
+  background: #3c97ff;
+  color: #fff;
+}
+
