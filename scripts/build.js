@@ -54,7 +54,7 @@ async function compileTypeScript() {
 async function transformCSSExtensions() {
   console.log("Transforming CSS import file extensions")
 
-  const distDirs = await getComponentDirs(distPath)
+  const distDirs = await getComponentDirs(distPath, "icons")
   return Promise.all(distDirs.map(async ({ name }) => {
     const dirPath = path.resolve(distPath, name)
     const files = await asyncReadDir(dirPath)
@@ -74,7 +74,7 @@ async function transformCSSExtensions() {
 // and compiles a css file to the corresponding directories in /dist.
 async function compileStylus() {
   console.log("Compiling Stylus")
-  const srcDirs = await getComponentDirs(srcPath)
+  const srcDirs = await getComponentDirs(srcPath, "icons")
 
   return Promise.all(srcDirs.map(async ({ name }) => {
     const dirPath = path.resolve(srcPath, name)
